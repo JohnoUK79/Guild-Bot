@@ -1,0 +1,173 @@
+Launched shard 0
+Database: warpath
+2022/07/10 16:32:50 - Logged in as - PH Family#8063
+Currently Serving Servers:
+[
+  '[~PA~] ~Phuccin-Avengers~ - 843131973131304990',
+  'Armia Krajowa -AK- - 853335832811536384',
+  'PH Family Server - 858148257499054090',
+  'PH40 - 868992863386632232',
+  'WARMASCHINE - 874016988400332841',
+  'PH AA/AK/EA - 957182156071903272',
+  'Test Server - 964496256057630720'
+]
+Successfully registered application commands
+================ BOT Ready! ================
+Presence Change: 2022/07/10 16:33:03 Server: PH AA/AK/EA User: [PH40]-Maul~ From: online To: idle
+Presence Change: 2022/07/10 16:33:03 Server: WARMASCHINE User: Dekes From: online To: idle
+Presence Change: 2022/07/10 16:33:03 Server: PH Family Server User: ~Maul~ From: online To: idle
+Presence Change: 2022/07/10 16:33:03 Server: PH40 User: Dekes From: online To: idle
+Presence Change: 2022/07/10 16:33:03 Server: Test Server User: Maul From: online To: idle
+Presence Change: 2022/07/10 16:33:03 Server: Armia Krajowa -AK- User: Dekes From: online To: idle
+Presence Change: 2022/07/10 16:33:03 Server: [~PA~] ~Phuccin-Avengers~ User: Dekes From: online To: idle
+Presence Change: 2022/07/10 16:33:05 Server: PH40 User: Noxyi From: idle To: online
+Msg Sent: 2022/07/10 16:33:14
+18
+<ref *1> Message {
+  channelId: '869770977414901910',
+  guildId: '868992863386632232',
+  id: '995729422915223594',
+  createdTimestamp: 1657470794181,
+  type: 'REPLY',
+  system: false,
+  content: 'OK hab gerade eine bekommen. Wo soll ich hin?',
+  author: User {
+    id: '587963396947705856',
+    bot: false,
+    system: false,
+    flags: UserFlags { bitfield: 0 },
+    username: 'Târk',
+    discriminator: '2421',
+    avatar: '3e869809e9ec3da4a8b450055e8006cd',
+    banner: undefined,
+    accentColor: undefined
+  },
+  pinned: false,
+  tts: false,
+  nonce: '995729422889779200',
+  embeds: [],
+  components: [],
+  attachments: Collection(0) [Map] {},
+  stickers: Collection(0) [Map] {},
+  editedTimestamp: null,
+  reactions: ReactionManager { message: [Circular *1] },
+  mentions: MessageMentions {
+    everyone: false,
+    users: Collection(1) [Map] { '868753992887443506' => [User] },
+    roles: Collection(0) [Map] {},
+    _members: null,
+    _channels: null,
+    crosspostedChannels: Collection(0) [Map] {},
+    repliedUser: User {
+      id: '868753992887443506',
+      bot: false,
+      system: false,
+      flags: [UserFlags],
+      username: 'Jensonic',
+      discriminator: '9201',
+      avatar: '154e64554239d7534bf9ed7e5cbabe43',
+      banner: undefined,
+      accentColor: undefined
+    }
+  },
+  webhookId: null,
+  groupActivityApplication: null,
+  applicationId: null,
+  activity: null,
+  flags: MessageFlags { bitfield: 0 },
+  reference: {
+    channelId: '869770977414901910',
+    guildId: '868992863386632232',
+    messageId: '995728719907921950'
+  },
+  interaction: null
+}
+587963396947705856
+Presence Change: 2022/07/10 16:33:28 Server: PH40 User: Târk From: online To: idle
+Presence Change: 2022/07/10 16:33:28 Server: PH Family Server User: Carpe Pugam From: online To: offline
+Presence Change: 2022/07/10 16:33:28 Server: [~PA~] ~Phuccin-Avengers~ User: Carpe Pugam From: online To: offline
+Presence Change: 2022/07/10 16:33:28 Server: PH40 User: Carpe Pugam From: online To: offline
+Presence Change: 2022/07/10 16:33:31 Server: PH Family Server User: mirosha From: online To: offline
+Presence Change: 2022/07/10 16:33:33 Server: PH40 User: Târk From: idle To: online
+Presence Change: 2022/07/10 16:33:33 Server: PH40 User: Noxyi From: online To: idle
+Presence Change: 2022/07/10 16:33:41 Server: PH40 User: Noxyi From: idle To: online
+Presence Change: 2022/07/10 16:33:45 Server: [~PA~] ~Phuccin-Avengers~ User: Xbox: BeastlyRD From: No Prior To: online
+Presence Change: 2022/07/10 16:33:51 Server: PH40 User: Târk From: online To: idle
+Presence Change: 2022/07/10 16:33:52 Server: PH40 User: Târk From: idle To: online
+Msg Sent: 2022/07/10 16:33:57
+37
+<ref *1> Message {
+  channelId: '869770977414901910',
+  guildId: '868992863386632232',
+  id: '995729604318859375',
+  createdTimestamp: 1657470837431,
+  type: 'REPLY',
+  system: false,
+  content: '',
+  author: User {
+    id: '587963396947705856',
+    bot: false,
+    system: false,
+    flags: UserFlags { bitfield: 0 },
+    username: 'Târk',
+    discriminator: '2421',
+    avatar: '3e869809e9ec3da4a8b450055e8006cd',
+    banner: undefined,
+    accentColor: undefined
+  },
+  pinned: false,
+  tts: false,
+  nonce: '995729598694031360',
+  embeds: [],
+  components: [],
+  attachments: Collection(1) [Map] {
+    '995729603421274214' => MessageAttachment {
+      attachment: 'https://cdn.discordapp.com/attachments/869770977414901910/995729603421274214/Screenshot_20220710-183326.png',
+      name: 'Screenshot_20220710-183326.png',
+      id: '995729603421274214',
+      size: 292904,
+      url: 'https://cdn.discordapp.com/attachments/869770977414901910/995729603421274214/Screenshot_20220710-183326.png',
+      proxyURL: 'https://media.discordapp.net/attachments/869770977414901910/995729603421274214/Screenshot_20220710-183326.png',
+      height: 577,
+      width: 1080,
+      contentType: 'image/png',
+      description: null,
+      ephemeral: false
+    }
+  },
+  stickers: Collection(0) [Map] {},
+  editedTimestamp: null,
+  reactions: ReactionManager { message: [Circular *1] },
+  mentions: MessageMentions {
+    everyone: false,
+    users: Collection(1) [Map] { '558748720229777420' => [User] },
+    roles: Collection(0) [Map] {},
+    _members: null,
+    _channels: null,
+    crosspostedChannels: Collection(0) [Map] {},
+    repliedUser: User {
+      id: '558748720229777420',
+      bot: false,
+      system: false,
+      flags: [UserFlags],
+      username: 'Carpe Pugam',
+      discriminator: '6760',
+      avatar: 'f233461d05a8ce156f8d78cb976e8f28',
+      banner: undefined,
+      accentColor: undefined
+    }
+  },
+  webhookId: null,
+  groupActivityApplication: null,
+  applicationId: null,
+  activity: null,
+  flags: MessageFlags { bitfield: 0 },
+  reference: {
+    channelId: '869770977414901910',
+    guildId: '868992863386632232',
+    messageId: '995728941388156978'
+  },
+  interaction: null
+}
+587963396947705856
+Presence Change: 2022/07/10 16:34:05 Server: PH40 User: Târk From: online To: idle

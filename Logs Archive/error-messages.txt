@@ -1,0 +1,8 @@
+Error: Could not connect
+    at Socket.onerror (C:\Users\Administrator\Desktop\Bot\node_modules\discord-rpc\src\transports\ipc.js:32:16)
+    at Object.onceWrapper (node:events:642:26)
+    at Socket.emit (node:events:527:28)
+    at emitErrorNT (node:internal/streams/destroy:157:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:122:3)
+    at processTicksAndRejections (node:internal/process/task_queues:83:21)
+^C

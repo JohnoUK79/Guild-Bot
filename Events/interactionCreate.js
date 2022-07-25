@@ -12,5 +12,7 @@ module.exports = {
         console.error((timestamp.utc('YYYY/MM/DD HH:mm:ss')), error);
         await interaction.reply({ content: 'There was an error executing this command!', ephemeral: true });
     }
+    if (!interaction.isButton()) return;
+	console.log(interaction);
     },
 };

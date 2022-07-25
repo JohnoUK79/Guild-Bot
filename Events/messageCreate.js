@@ -21,7 +21,7 @@ module.exports = {
             .setURL('http://www.phfamily.co.uk')
             .setThumbnail(message.member.displayAvatarURL())
             .setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
-            .setDescription(`Welcome ${message.member.displayName}!`)
+            .setDescription(`Welcome **${message.member.displayName}**!`)
             .addFields(
                 { name: `Name:`, value: `${message.member.displayName}` },
                 { name: `Points:`, value: `${score}` },
@@ -38,9 +38,8 @@ module.exports = {
 			level = 0
 			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${GuildName}');`)
 			message.reply({
-				content: `Welcome to the PH Family **${message.member.displayName}**. We look forward to you becoming a valued member of our community!`,
+				content: `Welcome to the PH Family **${message.member.displayName}**.\nWe look forward to you becoming a valued member of our community!`,
 				//components: [player],
-				ephemeral: true,
 				embeds: [newPlayer]
 			});
 
@@ -59,7 +58,7 @@ module.exports = {
             .setURL('http://www.phfamily.co.uk')
             .setThumbnail(message.member.displayAvatarURL())
             .setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
-            .setDescription(`Congratulations ${message.member.displayName} you have levelled up!`)
+            .setDescription(`Congratulations **${message.member.displayName}** you have levelled up!`)
             .addFields(
                 { name: `Name:`, value: `${message.member.displayName}` },
                 { name: `Points:`, value: `${newPoints}` },
@@ -133,7 +132,6 @@ module.exports = {
 /* 			message.reply({
 				content: `Congratulations **${message.member.displayName}**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
 				//components: [player],
-				ephemeral: true,
 				embeds: [levelup]
 			}); */	}
 		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`);

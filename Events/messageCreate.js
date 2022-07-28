@@ -1,5 +1,6 @@
 const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton } = require('discord.js');
 const sql = require("../config/Database");
+const interactionCreate = require('./interactionCreate');
 module.exports = {
 	name: 'messageCreate',
 	async execute(message) {
@@ -14,6 +15,17 @@ module.exports = {
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
 		GuildName = message.guild.name	
+		let Rank10 = Settings[0].Rank_10
+		console.log(Rank10)
+		Rank20 = Settings.Rank_20
+		Rank30 = Settings.Rank_30
+		Rank40 = Settings.Rank_40
+		Rank50 = Settings.Rank_50
+		Rank60 = Settings.Rank_60
+		Rank70 = Settings.Rank_70
+		Rank80 = Settings.Rank_80
+		Rank90 = Settings.Rank_90
+		Rank100 = Settings.Rank_100
 
 		const newPlayer = new MessageEmbed()
             .setColor('#0099ff')
@@ -73,51 +85,74 @@ module.exports = {
 		level = Math.floor((score + points) / 500 )
 
 		if (level === 10) {
+			if (!Rank10) {
+				console.log("Level 10") 
+				console.log("No Role Set")
+				//message.reply({ content: 'Congratulations you have Ranked Up with No Role - Please Contact Your Discord Admin' })
+			} else
+			await message.member.roles.add(Rank10).catch((e) => console.log(e));
+			//message.reply({ content: `Congratulations you have Ranked Up and achieved ${Rank10.name}`, empheral: true })
 			console.log("Level 10") 
 			
 		} 
 
+
 		if (level === 20) {
-			console.log("Level 20")
+			if (!Rank20) {
+				console.log("Level 20") 
+				console.log("No Role Set")
+				//message.reply({ content: 'Congratulations you have Ranked Up with No Role - Please Contact Your Discord Admin' })
+			} else
+			await message.member.roles.add(Rank20).catch((e) => console.log(e));
+			//message.reply({ content: `Congratulations you have Ranked Up and achieved ${Rank20}` })
+			console.log("Level 20") 
 			
-		}
+		} 
 
 		if (level === 30) {
+			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
 			console.log("Level 30")
 			
 		}
 
 		if (level === 40) {
+			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
 			console.log("Level 40")
 			
 		}
 
 		if (level === 50) {
+			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
 			console.log("Level 50")
 			
 		}
 
 		if (level === 60) {
+			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
 			console.log("Level 60")
 			
 		}
 
 		if (level === 70) {
+			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
 			console.log("Level 70")
 			
 		}
 
 		if (level === 80) {
+			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
 			console.log("Level 80")
 			
 		}
 
 		if (level === 90) {
+			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
 			console.log("Level 90")
 			
 		}
 
 		if (level === 100) {
+			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
 			console.log("Level 100")
 			
 		}

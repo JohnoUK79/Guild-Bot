@@ -11,16 +11,16 @@ module.exports = {
 		const buttonsCP =   new MessageActionRow()
 			        .addComponents(
                 new MessageButton()
-                    .setCustomId('100')
-                    .setLabel('Take 100 Points **OFF** CP')
+                    .setCustomId("100")
+                    .setLabel('Take 100 Points OFF CP')
                     .setStyle('PRIMARY'),
 				new MessageButton()
-					.setCustomId('200')
-					.setLabel('Take 200 Points **OFF** CP')
+					.setCustomId("200")
+					.setLabel('Take 200 Points OFF CP')
 					.setStyle('SUCCESS'),
 				new MessageButton()
-					.setCustomId('300')
-					.setLabel('Take 300 Points **OFF** CP')
+					.setCustomId("300")
+					.setLabel('Take 300 Points OFF CP')
 					.setStyle('DANGER'),
 				)
 		board = await sql.Execute(`select * from levels where 1 ORDER BY points DESC;`);

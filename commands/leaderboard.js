@@ -11,16 +11,16 @@ module.exports = {
 		const buttonsCP =   new MessageActionRow()
 			        .addComponents(
                 new MessageButton()
-                    .setCustomId("100")
-                    .setLabel('Take 100 Points OFF CP')
+                    .setCustomId("Top10")
+                    .setLabel('Show Top 10')
                     .setStyle('PRIMARY'),
 				new MessageButton()
-					.setCustomId("200")
-					.setLabel('Take 200 Points OFF CP')
+					.setCustomId("Top20")
+					.setLabel('Show Top 20')
 					.setStyle('SUCCESS'),
 				new MessageButton()
-					.setCustomId("300")
-					.setLabel('Take 300 Points OFF CP')
+					.setCustomId("Top30")
+					.setLabel('Show Top 30')
 					.setStyle('DANGER'),
 				)
 		board = await sql.Execute(`select * from levels where 1 ORDER BY points DESC;`);
@@ -46,14 +46,11 @@ module.exports = {
 			{ name: 'Best of the Rest:', value: `**Rank - Name - Level - Points**\n\n**Rank 4:** ${board[3].discord_username} - ${board[3].level} - ${board[3].points}\n\n**Rank 5:** ${board[4].discord_username} - ${board[4].level} - ${board[4].points}\n\n**Rank 6:** ${board[5].discord_username} - ${board[5].level} - ${board[5].points}\n\n**Rank 7:** ${board[6].discord_username} - ${board[6].level} - ${board[6].points}\n\n**Rank 8:** ${board[7].discord_username} - ${board[7].level} - ${board[7].points}\n\n**Rank 9:** ${board[8].discord_username} - ${board[8].level} - ${board[8].points}\n\n**Rank 10:** ${board[9].discord_username} - ${board[9].level} - ${board[9].points}` },
 
 			)
-		//.setImage(`${Data[0].player_image}`)
+		//.setImage(`${Data[0].player_image}`) // to be linked to player search gif 
 		.setTimestamp()
 		.setFooter({ text: 'PH Family Shit Talker Leaderboard.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
 
 
 		return interaction.reply({ embeds: [leaderBoard], components: [buttonsCP]})
-		            //components: [player],
-
-		//return interaction.reply(`${board}`);
 	},
 };

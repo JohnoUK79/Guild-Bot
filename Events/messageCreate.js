@@ -8,7 +8,7 @@ module.exports = {
 		if (message.author.bot === true) {
 			return;
 		}
-		
+
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
 
@@ -111,49 +111,49 @@ module.exports = {
 		} 	
 
 		if (level === 30) {
-			message.roles.add(Role30).catch((e) => console.log(e));
+			//message.roles.add(Role30).catch((e) => console.log(e));
 			console.log("Level 30")
 			
 		}
 
 		if (level === 40) {
-			message.roles.add(Role40).catch((e) => console.log(e));
+			//message.roles.add(Role40).catch((e) => console.log(e));
 			console.log("Level 40")
 			
 		}
 
 		if (level === 50) {
-			message.roles.add(Role50).catch((e) => console.log(e));
+			//message.roles.add(Role50).catch((e) => console.log(e));
 			console.log("Level 50")
 			
 		}
 
 		if (level === 60) {
-			message.roles.add(Role60).catch((e) => console.log(e));
+			//message.roles.add(Role60).catch((e) => console.log(e));
 			console.log("Level 60")
 			
 		}
 
 		if (level === 70) {
-			message.roles.add(Role70).catch((e) => console.log(e));
+			//message.roles.add(Role70).catch((e) => console.log(e));
 			console.log("Level 70")
 			
 		}
 
 		if (level === 80) {
-			message.roles.add(Role80).catch((e) => console.log(e));
+			//message.roles.add(Role80).catch((e) => console.log(e));
 			console.log("Level 80")
 			
 		}
 
 		if (level === 90) {
-			message.roles.add(Role90).catch((e) => console.log(e));
+			//message.roles.add(Role90).catch((e) => console.log(e));
 			console.log("Level 90")
 			
 		}
 
 		if (level === 100) {
-			message.roles.add(Role100).catch((e) => console.log(e));
+			//message.roles.add(Role100).catch((e) => console.log(e));
 			console.log("Level 100")
 			
 		}

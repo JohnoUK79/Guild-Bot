@@ -6,10 +6,9 @@ module.exports = {
 	async execute(message) {
 
 		if (message.author.bot === true) {
-			console.log(message)
 			return;
 		}
-		console.log(message)
+		
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
 

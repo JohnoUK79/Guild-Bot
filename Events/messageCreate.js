@@ -5,27 +5,13 @@ module.exports = {
 	name: 'messageCreate',
 	async execute(message) {
 
-
-
 		if (message.author.bot === true) {
+			console.log(message)
 			return;
 		}
-		
-		var score = Math.floor(Math.random() * 75) +1;
+		console.log(message)
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
-		GuildName = message.guild.name	
-		let Rank10 = Settings[0].Rank_10
-		console.log(Rank10)
-		Rank20 = Settings.Rank_20
-		Rank30 = Settings.Rank_30
-		Rank40 = Settings.Rank_40
-		Rank50 = Settings.Rank_50
-		Rank60 = Settings.Rank_60
-		Rank70 = Settings.Rank_70
-		Rank80 = Settings.Rank_80
-		Rank90 = Settings.Rank_90
-		Rank100 = Settings.Rank_100
 
 		const newPlayer = new MessageEmbed()
             .setColor('#0099ff')
@@ -43,8 +29,6 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: 'Welcome to the PH Family.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
 
-
-
 		if (Levels.length === 0) {
 			console.log("New Member")
 			level = 0
@@ -57,7 +41,25 @@ module.exports = {
 
 			return;
 		}
+
+		GuildName = message.guild.name	
+		let Rank10 = Settings[0].Rank_10
+		let Rank20 = Settings[0].Rank_20
+		let Rank30 = Settings[0].Rank_30
+		let Rank40 = Settings[0].Rank_40
+		let Rank50 = Settings[0].Rank_50
+		let Rank60 = Settings[0].Rank_60
+		let Rank70 = Settings[0].Rank_70
+		let Rank80 = Settings[0].Rank_80
+		let Rank90 = Settings[0].Rank_90
+		let Rank100 = Settings[0].Rank_100
+		let scoreLevel = Levels[0].level
 		
+		if (scoreLevel > 60) {
+			var score = Math.floor(Math.random() * 40) +1;
+		} else
+		var score = Math.floor(Math.random() * 100) +1;
+
 		points = Levels[0].points
 		newPoints = (points + score)
 		newLevel = (Levels[0].level + 1)
@@ -107,52 +109,52 @@ module.exports = {
 			//message.reply({ content: `Congratulations you have Ranked Up and achieved ${Rank20}` })
 			console.log("Level 20") 
 			
-		} 
+		} 	
 
 		if (level === 30) {
-			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
+			message.roles.add(Role30).catch((e) => console.log(e));
 			console.log("Level 30")
 			
 		}
 
 		if (level === 40) {
-			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
+			message.roles.add(Role40).catch((e) => console.log(e));
 			console.log("Level 40")
 			
 		}
 
 		if (level === 50) {
-			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
+			message.roles.add(Role50).catch((e) => console.log(e));
 			console.log("Level 50")
 			
 		}
 
 		if (level === 60) {
-			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
+			message.roles.add(Role60).catch((e) => console.log(e));
 			console.log("Level 60")
 			
 		}
 
 		if (level === 70) {
-			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
+			message.roles.add(Role70).catch((e) => console.log(e));
 			console.log("Level 70")
 			
 		}
 
 		if (level === 80) {
-			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
+			message.roles.add(Role80).catch((e) => console.log(e));
 			console.log("Level 80")
 			
 		}
 
 		if (level === 90) {
-			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
+			message.roles.add(Role90).catch((e) => console.log(e));
 			console.log("Level 90")
 			
 		}
 
 		if (level === 100) {
-			//message.roles.add(ROLE_ID).catch((e) => console.log(e));
+			message.roles.add(Role100).catch((e) => console.log(e));
 			console.log("Level 100")
 			
 		}
@@ -169,6 +171,8 @@ module.exports = {
 				//components: [player],
 				embeds: [levelup]
 			}); */	}
-		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`);
-	}
+
+
+		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`)}
+		
 };

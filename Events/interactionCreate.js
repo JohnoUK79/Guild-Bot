@@ -16,11 +16,11 @@ module.exports = {
                     .setStyle('PRIMARY'),
 				new MessageButton()
 					.setCustomId("Top20")
-					.setLabel('Show Top 20')
+					.setLabel('Show 11 -20')
 					.setStyle('SUCCESS'),
 				new MessageButton()
 					.setCustomId("Top30")
-					.setLabel('Show Top 30')
+					.setLabel('Show 21 - 30')
 					.setStyle('DANGER'),
 				)
 
@@ -85,13 +85,13 @@ module.exports = {
         console.log((timestamp.utc('YYYY/MM/DD HH:mm:ss')), `${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command.`);
 
         if (interaction.customId === "Top10") {
-            await interaction.reply( { embeds: [Top10], components: [Levels], ephemeral: false })
+            await interaction.update( { embeds: [Top10], components: [Levels], ephemeral: false })
         }
         if (interaction.customId === "Top20") {
-            await interaction.reply({ embeds: [Top20], components: [Levels], ephemeral: false })
+            await interaction.update({ embeds: [Top20], components: [Levels], ephemeral: false })
         }
         if (interaction.customId === "Top30") {
-            await interaction.reply({ embeds: [Top30], components: [Levels], ephemeral: false })
+            await interaction.update({ embeds: [Top30], components: [Levels], ephemeral: false })
         }
         if (!interaction.isCommand()) return;
     try {

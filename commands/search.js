@@ -66,7 +66,11 @@ module.exports = {
             .setRequired(true)
         ),
     async execute(Interaction) {
-        Data = await sql.Execute(`select * from players where player_id = '${Interaction.options.getString("id")}';`);
+        const id = parseInt(Interaction.options.getString("id"));
+        if(isNaN(id)) return Interaction.reply( {content: "You have entered invalid details, please input a valid User ID!"});
+        
+
+        Data = await sql.Execute(`select * from players where player_id = '${id}';`);
         console.log(timestamp.utc('YYYY/MM/DD HH:mm:ss'))
         console.log('Database Query', Data); //Log Returned Data
         if (Data.length === 0) return Interaction.reply({ content: `I could not find any player with the ID **${Interaction.options.getString("id")}**, please check the ID and try again! Any issues messages Genesis or Dekes.`, ephemeral: true });
@@ -90,7 +94,7 @@ module.exports = {
             .setFooter({ text: 'PH Family Search Tool.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
 
         Interaction.reply({
-            content: `Hey **${Interaction.member.displayName}**, I have found the following details for **${Interaction.options.getString("id")}**.`,
+            content: `Hey **${Interaction.member.displayName}**, I have found the following details for **${id}**.`,
             //components: [player],
             ephemeral: false,
             embeds: [playersearch]

@@ -70,10 +70,10 @@ module.exports = {
         if(isNaN(id)) return Interaction.reply( {content: "You have entered invalid details, please input a valid User ID!"});
         
 
-        Data = await sql.Execute(`select * from players where player_id = '${id}';`);
+        Data = await sql.Execute('select * from players where player_id = '+ id +';');
         console.log(timestamp.utc('YYYY/MM/DD HH:mm:ss'))
-        console.log('Database Query', Data); //Log Returned Data
-        if (Data.length === 0) return Interaction.reply({ content: `I could not find any player with the ID **${id}**, please check the ID and try again! Any issues messages Genesis or Dekes.`, ephemeral: true });
+        console.log(id)
+        if (Data.length === 0) return Interaction.reply({ content: `I could not find any player with the ID **${id}**, please check the ID and try again! Any issues messages Genesis or Dekes.`, ephemeral: false });
         const playersearch = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle('PH Family Player Database')
@@ -86,9 +86,8 @@ module.exports = {
                 { name: `Name: ${Data[0].last_known_name}`, value: `Affiliation: ${Data[0].affiliation}` },
                 { name: `Tag: ${Data[0].last_known_tag}`, value: `Server: ${Data[0].server}` },
                 { name: 'Known History of Player', value: `History: ${Data[0].history}`, inline: true },
-                //{ name: 'Additional Information', value: `Additional: ${Data[0].additional}`, inline: true }
+                { name: `Discord: ${Data[0].discord}`, value: `**Last Known City:** ${Data[0].last_city}`, inline: true }
             )
-            .addField(`Discord: ${Data[0].discord}`, `**Last Known City:** ${Data[0].last_city}`, true)
             .setImage(`${Data[0].player_image}`)
             .setTimestamp()
             .setFooter({ text: 'PH Family Search Tool.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });

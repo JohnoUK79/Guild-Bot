@@ -73,7 +73,7 @@ module.exports = {
         Data = await sql.Execute(`select * from players where player_id = '${id}';`);
         console.log(timestamp.utc('YYYY/MM/DD HH:mm:ss'))
         console.log('Database Query', Data); //Log Returned Data
-        if (Data.length === 0) return Interaction.reply({ content: `I could not find any player with the ID **${Interaction.options.getString("id")}**, please check the ID and try again! Any issues messages Genesis or Dekes.`, ephemeral: true });
+        if (Data.length === 0) return Interaction.reply({ content: `I could not find any player with the ID **${id}**, please check the ID and try again! Any issues messages Genesis or Dekes.`, ephemeral: true });
         const playersearch = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle('PH Family Player Database')

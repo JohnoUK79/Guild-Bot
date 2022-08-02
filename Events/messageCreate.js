@@ -56,6 +56,9 @@ module.exports = {
 		
 		if (scoreLevel > 60) {
 			var score = Math.floor(Math.random() * 40) +1;
+		} 
+		if (scoreLevel > 80) {
+			var score = Math.floor(Math.random() * 20) +1;
 		} else
 		var score = Math.floor(Math.random() * 100) +1;
 

@@ -12,15 +12,18 @@ module.exports = {
 			        .addComponents(
                 new MessageButton()
                     .setCustomId("Top10")
-                    .setLabel('Show Top 10')
+                    .setName("Top10")
+					.setLabel('Show Top 10')
                     .setStyle('PRIMARY'),
 				new MessageButton()
 					.setCustomId("Top20")
-					.setLabel('Show Top 20')
+					.setName("Top20")
+					.setLabel('Show 11 - 20')
 					.setStyle('SUCCESS'),
 				new MessageButton()
 					.setCustomId("Top30")
-					.setLabel('Show Top 30')
+					.setName("Top30")
+					.setLabel('Show 21 - 30')
 					.setStyle('DANGER'),
 				)
 		board = await sql.Execute(`select * from levels where 1 ORDER BY points DESC;`);

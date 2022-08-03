@@ -56,17 +56,25 @@ module.exports = {
 		
 		if (scoreLevel > 100) {
 			var score = Math.floor(Math.random() * 5) +1;
+			console.log(scoreLevel, score)
 		} 
 		if (scoreLevel > 90) {
+			console.log(scoreLevel, score)
 			var score = Math.floor(Math.random() * 10) +1;
 		} 
 		if (scoreLevel > 80) {
+			console.log(scoreLevel, score)
 			var score = Math.floor(Math.random() * 15) +1;
 		} 
 		if (scoreLevel > 70) {
+			console.log(scoreLevel, score)
 			var score = Math.floor(Math.random() * 25) + 1;
-		} else
-		var score = Math.floor(Math.random() * 100) +1;
+		} 
+		if (scoreLevel > 60) {
+			console.log(scoreLevel, score)
+			var score = Math.floor(Math.randon() * 50) + 1;
+		}	else var score = Math.floor(Math.random() * 100) * 5;
+			console.log(scoreLevel, score)
 		
 		points = Levels[0].points
 		newPoints = (points + score)
@@ -92,7 +100,7 @@ module.exports = {
 
 
 		let initiallevel = Levels[0].level
-		level = Math.floor((score + points) / 500 )
+		level = Math.floor((score + points) / 1500 )
 
 		if (level === 10) {
 			if (!Rank10) {

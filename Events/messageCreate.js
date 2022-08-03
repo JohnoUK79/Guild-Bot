@@ -54,19 +54,25 @@ module.exports = {
 		let Rank100 = Settings[0].Rank_100
 		let scoreLevel = Levels[0].level
 		
-		if (scoreLevel > 60) {
-			var score = Math.floor(Math.random() * 40) +1;
+		if (scoreLevel > 100) {
+			var score = Math.floor(Math.random() * 5) +1;
+		} 
+		if (scoreLevel > 90) {
+			var score = Math.floor(Math.random() * 10) +1;
 		} 
 		if (scoreLevel > 80) {
-			var score = Math.floor(Math.random() * 20) +1;
+			var score = Math.floor(Math.random() * 15) +1;
+		} 
+		if (scoreLevel > 70) {
+			var score = Math.floor(Math.random() * 25) + 1;
 		} else
 		var score = Math.floor(Math.random() * 100) +1;
-
+		
 		points = Levels[0].points
 		newPoints = (points + score)
 		newLevel = (Levels[0].level + 1)
 		let LevelUpChannel = Settings[0].level_up_channel_id
-		console.log(GuildName, LevelUpChannel, points, score, newPoints, newLevel)
+		console.log(message.member.displayName, GuildName, score)
 		
 		const levelup = new MessageEmbed()
             .setColor('#0099ff')

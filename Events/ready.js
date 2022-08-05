@@ -20,6 +20,11 @@ module.exports = {
             .catch(console.error);
 
         console.log('================ BOT Ready! ================');
+        var checkminutes = 1, checkthe_interval = checkminutes * 60 * 1000; //This checks every 60 minutes, change 60 to whatever minute you'd like
+            setInterval(function() {
+                console.log("Interval")
+                }, checkthe_interval);
+
     },
     
 };

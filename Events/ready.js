@@ -2,6 +2,7 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v10');
 const { token, CLIENT_ID, GUILD_ID } = require('../config.json');
 const timestamp = require('time-stamp');
+const nodeCron = require("node-cron");
 
 module.exports = {
     name: 'ready',
@@ -20,10 +21,68 @@ module.exports = {
             .catch(console.error);
 
         console.log('================ BOT Ready! ================');
-        var checkminutes = 1, checkthe_interval = checkminutes * 60 * 1000; //This checks every 60 minutes, change 60 to whatever minute you'd like
-            setInterval(function() {
-                console.log("Interval")
-                }, checkthe_interval);
+        const jurisdiction = nodeCron.schedule("0 0,4,8,12,16,20 * * *", () => {
+            console.log(new Date().toLocaleString(), "Jurisdiction Event Starting");
+            const { MessageEmbed } = require('discord.js');
+                    const jurisdictions = require('../data/jurisdictions');
+                    const jurisdictionsChannelIDs = [
+                    //'915034347030073404',  // OP
+                    //'938098999007772753',  // NVX
+                    '940013410207281283',  // PH40
+                    //'940700957694656583',  // EFO
+                    //'958408697703432274',  // PHEA
+                    //'959761836054552636',  // New NVX
+                    //'964673391917400104', // CAC 
+                    //'995668352192229437', //??
+                    '1000526899124117535', //Test Server
+                    ];
+                    const hourUTC = (new Date()).getUTCHours();
+                    const dayOfWeeek = (new Date()).getDay();
+
+                    if( (hourUTC % 4) !== 0) return;
+
+                    const padHour = (hour) => (hour.length === 1) ? '0'+hour : hour;
+                    const startHour = padHour(hourUTC+'');
+                    const endHour = padHour((hourUTC === 20) ? '00' : (hourUTC+4)+'');
+
+                    const jurisdiction = jurisdictions[dayOfWeeek+'-'+startHour];
+
+                    if(!jurisdiction) {
+                    console.log(`ERROR: ${dayOfWeeek+'-'+startHour} not found`);
+                    return;
+                    }
+
+                    const jurisdictionEmbed = new MessageEmbed()
+                        .setColor('#0099ff')
+                        .setTitle(jurisdiction.title)
+                        .setURL('http://www.phfamily.co.uk')
+                        .setDescription(`Start: ${startHour}H00 UTC    -    End: ${endHour}H00 UTC`)
+                        .addFields(
+                            { name: `Missions:`, value: jurisdiction.missions.join('\n'), inline: false },
+                            { name: `Rank 1`, value: `${jurisdiction.rank1} Points`, inline: true },
+                            { name: `Rank 2`, value: `${jurisdiction.rank2} Points`, inline: true },
+                            { name: `Rank 3`, value: `${jurisdiction.rank3} Points`, inline: true },
+
+                        )
+                        .setTimestamp()
+                        .setFooter({ text: `${jurisdiction.title}.`, iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+
+
+                    for (let i = 0; i < jurisdictionsChannelIDs.length; i++) {
+                    let jurisdictionsChannelID = jurisdictionsChannelIDs[i];
+                    
+                    try {  
+                        console.log(client.guilds)
+                        let sendChannel = client.channels.cache.get(jurisdictionsChannelID)                  
+                        sendChannel.send({ content: '**New Jurisdiction**', embeds: [jurisdictionEmbed] })
+
+                    }
+                    catch (e) {
+                        console.log(e);
+                        console.log(jurisdictionsChannelID);
+                    }
+}
+                  });
 
     },
     

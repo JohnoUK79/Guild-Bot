@@ -21,25 +21,25 @@ module.exports = {
             .catch(console.error);
 
         console.log('================ BOT Ready! ================');
-        const jurisdiction = nodeCron.schedule("0 0,4,8,12,16,20 * * *", () => {
+            const job = nodeCron.schedule("0 0,4,8,12,16,20 * * *", () => {
+                const jurisdictions = require('../data/jurisdictions');
+                const jurisdictionsChannelIDs = [
+                //'915034347030073404',  // OP
+                //'938098999007772753',  // NVX
+                '940013410207281283',  // PH40
+                //'940700957694656583',  // EFO
+                //'958408697703432274',  // PHEA
+                //'959761836054552636',  // New NVX
+                //'964673391917400104', // CAC 
+                //'995668352192229437', //?
+                '1000526899124117535', //Test Server
+                ];
+                const hourUTC = (new Date()).getUTCHours();
+                const dayOfWeeek = (new Date()).getDay();
             console.log(new Date().toLocaleString(), "Jurisdiction Event Starting");
             const { MessageEmbed } = require('discord.js');
-                    const jurisdictions = require('../data/jurisdictions');
-                    const jurisdictionsChannelIDs = [
-                    //'915034347030073404',  // OP
-                    //'938098999007772753',  // NVX
-                    '940013410207281283',  // PH40
-                    //'940700957694656583',  // EFO
-                    //'958408697703432274',  // PHEA
-                    //'959761836054552636',  // New NVX
-                    //'964673391917400104', // CAC 
-                    //'995668352192229437', //??
-                    '1000526899124117535', //Test Server
-                    ];
-                    const hourUTC = (new Date()).getUTCHours();
-                    const dayOfWeeek = (new Date()).getDay();
-
-                    if( (hourUTC % 4) !== 0) return;
+                    
+                    if( (hourUTC % 4) !== 0) return console.log('Jurisdiction Already Running!');
 
                     const padHour = (hour) => (hour.length === 1) ? '0'+hour : hour;
                     const startHour = padHour(hourUTC+'');

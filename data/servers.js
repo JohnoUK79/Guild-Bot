@@ -46,11 +46,13 @@ const SERVER_15 = {
   
   module.exports = {
     '905071244171440128': { allianceName: 'OP', wpServer: 17, citiesGold: SERVER_17 },
-    '868992863386632232': { allianceName: 'WD40', wpServer: 17, citiesGold: SERVER_17 },
+    '868992863386632232': { allianceName: 'PH40', wpServer: 17, citiesGold: SERVER_17 },
     '855784080322985984': { allianceName: 'NVX', wpServer: 15, citiesGold: SERVER_15 },
     '890675370662182913': { allianceName: 'EFO', wpServer: 23  , citiesGold: SERVER_17 },
     '957182156071903272': { allianceName: 'PHEA', wpServer: 17, citiesGold: SERVER_17 },
     '837669934452047873': { allianceName: 'TWPC', wpServer: 15, citiesGold: SERVER_15 },
     '219007607195566080': { allianceName: 'CAC', wpServer: 15, citiesGold: SERVER_15 },
     '991717149276110928': { allianceName: 'CAC', wpServer: 17, citiesGold: SERVER_17 },
+    '964496256057630720': { allianceName: 'TEST', wpServer: 17, citiesGold: SERVER_17 },
+    '874016988400332841': { allianceName: 'PHWR', wpServer: 17, citiesGold: SERVER_17 },
   };

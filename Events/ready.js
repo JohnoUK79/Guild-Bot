@@ -33,6 +33,9 @@ module.exports = {
                 //'964673391917400104', // CAC 
                 //'995668352192229437', //?
                 '1000526899124117535', //Test Server
+                '1005576978767806575', //PH Family Server
+                '874703585626165288', //WARMACHINE
+                '958408697703432274', //PHAK / EA / AA Server
                 ];
                 const hourUTC = (new Date()).getUTCHours();
                 const dayOfWeeek = (new Date()).getDay();

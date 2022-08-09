@@ -21,7 +21,7 @@ module.exports = {
 		const checkLevel = new MessageEmbed()
 		.setColor('#0099ff')
 		.setTitle('PH Family Rank Card')
-		.setURL('http://www.phfamily.co.uk')
+		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
 		.setDescription(`Your Rank **${interaction.member.displayName}**!`)

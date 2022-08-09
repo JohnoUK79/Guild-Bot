@@ -34,7 +34,7 @@ module.exports = {
 		const leaderBoard = new MessageEmbed()
 		.setColor('#0099ff')
 		.setTitle('PH Family Levels Leaderboard')
-		.setURL('http://www.phfamily.co.uk')
+		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)

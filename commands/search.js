@@ -77,7 +77,7 @@ module.exports = {
         const playersearch = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle('PH Family Player Database')
-            .setURL('http://www.phfamily.co.uk')
+            .setURL('http://www.phfamily.co.uk/player.html')
             .setThumbnail(Interaction.user.displayAvatarURL())
             .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
             .setDescription(` Player ID: ${Data[0].player_id}`)

@@ -4,6 +4,7 @@ const interactionCreate = require('./interactionCreate');
 module.exports = {
 	name: 'messageCreate',
 	async execute(message) {
+		GuildName = message.guild.name	
 
 		if (message.author.bot === true) {
 			return;
@@ -11,6 +12,13 @@ module.exports = {
 
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
+		Players = await sql.Execute(`select * from players where player_id = ${Levels[0].player_id}`);
+
+		if (!Players) {
+			let playerImage = "https://i.ibb.co/gm9c3x5/no-image-icon-10.png"
+			console.log(playerImage)
+		} else var playerImage = Players[0].player_image
+		console.log(playerImage)
 
 		const newPlayer = new MessageEmbed()
             .setColor('#0099ff')
@@ -24,13 +32,14 @@ module.exports = {
                 { name: `Points:`, value: `${score}` },
                 { name: 'Welcome to the PH Family.', value: `Stay active in our servers for regular rewards!`, inline: true },
                 )
-            //.setImage(`${Data[0].player_image}`)
+            //.setImage(`${playerImage}`)
             .setTimestamp()
             .setFooter({ text: 'Welcome to the PH Family.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
 
 		if (Levels.length === 0) {
 			console.log("New Member")
 			level = 0
+			var score = Math.floor(Math.random() * 150) * 3; //This may need moving
 			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${GuildName}');`)
 			message.reply({
 				content: `Welcome to the PH Family **${message.member.displayName}**.\nWe look forward to you becoming a valued member of our community!`,
@@ -41,7 +50,6 @@ module.exports = {
 			return;
 		}
 
-		GuildName = message.guild.name	
 		let rank10 = Settings[0].Rank_10
 		let rank20 = Settings[0].Rank_20
 		let rank30 = Settings[0].Rank_30
@@ -102,7 +110,7 @@ module.exports = {
                 { name: `Points:`, value: `${newPoints}` },
                 { name: 'Level', value: `${newLevel}`, inline: true },
                 )
-            //.setImage(`${Data[0].player_image}`) // to be added once Levels & Search tables are joined
+            .setImage(playerImage) // to be added once Levels & Search tables are joined
             .setTimestamp()
             .setFooter({ text: 'Level Up - PH Family.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
 

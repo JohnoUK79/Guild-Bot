@@ -84,6 +84,14 @@ module.exports = {
 
         console.log((timestamp.utc('YYYY/MM/DD HH:mm:ss')), `${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command.`);
 
+		if (interaction.customId === "UID") {
+			await interaction.reply( { content: "Coming Soon!", ephemeral: true } );
+		}
+
+		if (interaction.customId === "GIF") {
+			await interaction.reply( { content: "Coming Soon!", ephemeral: true } );
+		}
+
         if (interaction.customId === "Top10") {
             await interaction.update( { embeds: [Top10], components: [Levels], ephemeral: false })
         }

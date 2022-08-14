@@ -12,7 +12,7 @@ module.exports = {
         const newMemberEmbed = new Discord.MessageEmbed()
             .setColor("#d81e5b")
             .setTitle("New Player!")
-            .setDescription(`${member.user} has joined the server! \nWe hope you enjoy your time here.`)
+            .setDescription(`<@${member.user.id}> has joined the server! \nWe hope you enjoy your time here.`)
             .setThumbnail(member.user.displayAvatarURL())
             .setFooter({ text: `${GUILD}`, iconURL: 'https://i.imgur.com/IxBdjfl.jpg' })
             .setTimestamp();

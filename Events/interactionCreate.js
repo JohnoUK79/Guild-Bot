@@ -87,7 +87,7 @@ module.exports = {
         console.log((timestamp.utc('YYYY/MM/DD HH:mm:ss')), `${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
 
 		//Modal Test
-		if (interaction.customId === 'Add') {
+		if (interaction.customId === 'UID') {
 			const modal = new Modal()
 			.setCustomId('UpdateUID')
 			.setTitle('Add your in Game User ID to Bot Profile')
@@ -131,13 +131,34 @@ module.exports = {
 			const usernameInput = interaction.fields.getTextInputValue('AddUsername');
 			const tagInput = interaction.fields.getTextInputValue('AddTag');
 			const cityInput = interaction.fields.getTextInputValue('AddCity');
+			const id = parseInt(uidInput);
+        	if(isNaN(id)) return interaction.reply( {content: `You have entered invalid details, please input a valid User ID (${uidInput})!`});
+			lookup = await sql.Execute(`select * from players where player_id = ${id};`);
+			if (lookup.length === 0) return interaction.reply ( {content: `You have entered an unrecognised User ID (${id}), please contact @Admin`});
+			//Information Already on Bot
+			let idLookup = lookup[0].player_id
+			let nameLookup = lookup[0].last_known_name
+			let tagLookup = lookup[0].last_known_tag
+			let cityLookup = lookup[0].last_city
+			let discordLookup = lookup[0].discord
+			console.log(idLookup, nameLookup, tagLookup, cityLookup, discordLookup )
 
-
-			await interaction.reply({ content: `Your submission of User ID: ${uidInput} Username: ${usernameInput} Alliance Tag: ${tagInput} City: ${cityInput} was recieved successfully!` });
+			console.log(discordLookup, interaction.member.id)
+			if (discordLookup === interaction.member.id) {
+				console.log ('Player Already Registered')
+				return interaction.reply ( {content: `That User ID has already been registered to <@${discordLookup}>. Please contact @Admin` })
+			}
+			await interaction.reply({ content: `Your submission of User ID: **${uidInput}** \nUsername: **${usernameInput}** Alliance Tag: **${tagInput}** \nCity: **${cityInput}** was updated successfully!\nYour previous History of \nName: **${nameLookup}** Tag: **${tagLookup}** \nCity: **${cityLookup}** have sucessfully been archived in your History!` });
 		}
 
+
+
+
+
+
+
 		//Unregistered Levels Buttons
-		if (interaction.customId === 'UID') {
+		if (interaction.customId === 'myUID') {
 			await interaction.reply( { content: 'Coming Soon!', ephemeral: true } );
 		}
 

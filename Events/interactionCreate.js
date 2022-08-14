@@ -132,9 +132,9 @@ module.exports = {
 			const tagInput = interaction.fields.getTextInputValue('AddTag');
 			const cityInput = interaction.fields.getTextInputValue('AddCity');
 			const id = parseInt(uidInput);
-        	if(isNaN(id)) return interaction.reply( {content: `You have entered invalid details, please input a valid User ID (${uidInput})!`});
+        	if(isNaN(id)) return interaction.reply( {content: `**${interaction.member.displayName}**, You have entered invalid details, please input a valid User ID **${uidInput}**!`});
 			lookup = await sql.Execute(`select * from players where player_id = ${id};`);
-			if (lookup.length === 0) return interaction.reply ( {content: `You have entered an unrecognised User ID (${id}), please contact @Admin`});
+			if (lookup.length === 0) return interaction.reply ( {content: `**${interaction.member.displayName}**, You have entered an unrecognised User ID **${id}**, please contact **@Admin**`});
 			//Information Already on Bot
 			let idLookup = lookup[0].player_id
 			let nameLookup = lookup[0].last_known_name
@@ -146,9 +146,9 @@ module.exports = {
 			console.log(discordLookup, interaction.member.id)
 			if (discordLookup === interaction.member.id) {
 				console.log ('Player Already Registered')
-				return interaction.reply ( {content: `That User ID has already been registered to <@${discordLookup}>. Please contact @Admin` })
+				return interaction.reply ( {content: `**${interaction.member.displayName}**, That User ID has already been registered to **<@${discordLookup}>**. Please contact **@Admin**` })
 			}
-			await interaction.reply({ content: `Your submission of User ID: **${uidInput}** \nUsername: **${usernameInput}** Alliance Tag: **${tagInput}** \nCity: **${cityInput}** was updated successfully!\nYour previous History of \nName: **${nameLookup}** Tag: **${tagLookup}** \nCity: **${cityLookup}** have sucessfully been archived in your History!` });
+			await interaction.reply({ content: `**${interaction.member.displayName}**, Your submission of User ID: **${uidInput}** \nUsername: **${usernameInput}** Alliance Tag: **${tagInput}** \nCity: **${cityInput}** was updated successfully!\nYour previous History of \nName: **${nameLookup}** Tag: **${tagLookup}** \nCity: **${cityLookup}** have sucessfully been archived in your **Player History!**` });
 		}
 
 

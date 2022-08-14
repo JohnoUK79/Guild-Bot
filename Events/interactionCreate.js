@@ -141,9 +141,8 @@ module.exports = {
 			let tagLookup = lookup[0].last_known_tag
 			let cityLookup = lookup[0].last_city
 			let discordLookup = lookup[0].discord
-			console.log(idLookup, nameLookup, tagLookup, cityLookup, discordLookup )
+			console.log(`Player ID: ${idLookup} Player Name: ${nameLookup} Alliance Tag: ${tagLookup} Last Known City: ${cityLookup}, Current Discord: ${discordLookup} `)
 
-			console.log(discordLookup, interaction.member.id)
 			if (discordLookup === interaction.member.id) {
 				console.log ('Player Already Registered')
 				return interaction.reply ( {content: `**${interaction.member.displayName}**, That User ID has already been registered to **<@${discordLookup}>**. Please contact **@Admin**` })

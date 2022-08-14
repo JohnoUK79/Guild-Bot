@@ -1,6 +1,8 @@
 const timestamp = require('time-stamp');
 const sql = require("../config/Database");
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton } = require('discord.js');
+const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Modal, TextInputComponent } = require('discord.js');
+const { ModalBuilder } = require('@discordjs/builders');
+const { TextInputStyle } = require('discord-api-types/v10');
 
 
 module.exports = {
@@ -82,25 +84,77 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: 'PH Family Shit Talker Leaderboard.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
 
-        console.log((timestamp.utc('YYYY/MM/DD HH:mm:ss')), `${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command.`);
+        console.log((timestamp.utc('YYYY/MM/DD HH:mm:ss')), `${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
 
-		if (interaction.customId === "UID") {
-			await interaction.reply( { content: "Coming Soon!", ephemeral: true } );
+		//Modal Test
+		if (interaction.customId === 'Add') {
+			const modal = new Modal()
+			.setCustomId('UpdateUID')
+			.setTitle('Add your in Game User ID to Bot Profile')
+			
+			const uidInput = new TextInputComponent()
+				.setCustomId('AddUID')
+				.setLabel('Please provide your Account User ID')
+				.setStyle(TextInputStyle.Short);
+
+			const usernameInput = new TextInputComponent()
+				.setCustomId('AddUsername')
+				.setLabel('Add your current in game name (Be Exact!).')
+				.setStyle(TextInputStyle.Short);
+
+			const allianceTagInput = new TextInputComponent()
+				.setCustomId('AddTag')
+				.setLabel('Add your current Alliance TAG (Be Exact!).')
+				.setStyle(TextInputStyle.Short);
+
+			const cityInput = new TextInputComponent()
+				.setCustomId('AddCity')
+				.setLabel('Add current in game City (Be Exact!).')
+				.setStyle(TextInputStyle.Short);
+
+
+
+			const firstActionRow = new MessageActionRow().addComponents(uidInput);
+			const secondActionRow = new MessageActionRow().addComponents(usernameInput);
+			const thirdActionRow = new MessageActionRow().addComponents(allianceTagInput);
+			const fourthActionRow = new MessageActionRow().addComponents(cityInput);
+
+
+			modal.addComponents(firstActionRow, secondActionRow, thirdActionRow, fourthActionRow );
+
+			await interaction.showModal(modal);
 		}
 
-		if (interaction.customId === "GIF") {
-			await interaction.reply( { content: "Coming Soon!", ephemeral: true } );
+		//Modal Responses
+		if (interaction.customId === 'UpdateUID') {
+			const uidInput = interaction.fields.getTextInputValue('AddUID');
+			const usernameInput = interaction.fields.getTextInputValue('AddUsername');
+			const tagInput = interaction.fields.getTextInputValue('AddTag');
+			const cityInput = interaction.fields.getTextInputValue('AddCity');
+
+
+			await interaction.reply({ content: `Your submission of User ID: ${uidInput} Username: ${usernameInput} Alliance Tag: ${tagInput} City: ${cityInput} was recieved successfully!` });
 		}
 
-        if (interaction.customId === "Top10") {
+		//Unregistered Levels Buttons
+		if (interaction.customId === 'UID') {
+			await interaction.reply( { content: 'Coming Soon!', ephemeral: true } );
+		}
+
+		if (interaction.customId === 'GIF') {
+			await interaction.reply( { content: 'Coming Soon!', ephemeral: true } );
+		}
+		//Leaderboard Buttons
+        if (interaction.customId === 'Top10') {
             await interaction.update( { embeds: [Top10], components: [Levels], ephemeral: false })
         }
-        if (interaction.customId === "Top20") {
+        if (interaction.customId === 'Top20') {
             await interaction.update({ embeds: [Top20], components: [Levels], ephemeral: false })
         }
-        if (interaction.customId === "Top30") {
+        if (interaction.customId === 'Top30') {
             await interaction.update({ embeds: [Top30], components: [Levels], ephemeral: false })
         }
+
         if (!interaction.isCommand()) return;
     try {
         const command = interaction.client.commands.get(interaction.commandName)
@@ -110,5 +164,6 @@ module.exports = {
         console.error((timestamp.utc('YYYY/MM/DD HH:mm:ss')), error);
         await interaction.reply({ content: 'There was an error executing this command!', ephemeral: true });
     }
+
     },
 };

@@ -86,7 +86,7 @@ module.exports = {
                 { name: `Name: ${Data[0].last_known_name}`, value: `Affiliation: ${Data[0].affiliation}` },
                 { name: `Tag: ${Data[0].last_known_tag}`, value: `Server: ${Data[0].server}` },
                 { name: 'Known History of Player', value: `History: ${Data[0].history}`, inline: true },
-                { name: `Discord: ${Data[0].discord}`, value: `**Last Known City:** ${Data[0].last_city}`, inline: true }
+                { name: `Discord: <@${Data[0].discord}>`, value: `**Last Known City:** ${Data[0].last_city}`, inline: true }
             )
             .setImage(`${Data[0].player_image}`)
             .setTimestamp()

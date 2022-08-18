@@ -135,18 +135,32 @@ module.exports = {
         	if(isNaN(id)) return interaction.reply( {content: `**${interaction.member.displayName}**, You have entered invalid details, please input a valid User ID **${uidInput}**!`});
 			lookup = await sql.Execute(`select * from players where player_id = ${id};`);
 			if (lookup.length === 0) return interaction.reply ( {content: `**${interaction.member.displayName}**, You have entered an unrecognised User ID **${id}**, please contact **@Admin**`});
+			registerCheck = await sql.Execute(`select * from levels where discord_id = ${interaction.member.id}`)
+			console.log(registerCheck)
+			
 			//Information Already on Bot
 			let idLookup = lookup[0].player_id
 			let nameLookup = lookup[0].last_known_name
 			let tagLookup = lookup[0].last_known_tag
 			let cityLookup = lookup[0].last_city
 			let discordLookup = lookup[0].discord
-			console.log(`Player ID: ${idLookup} Player Name: ${nameLookup} Alliance Tag: ${tagLookup} Last Known City: ${cityLookup}, Current Discord: ${discordLookup} `)
+			let registerLookup = registerCheck[0].player_id
+			let levelDiscord = registerCheck.discord_username
+			console.log(`Registered ID: ${registerLookup} Player ID: ${idLookup} Player Name: ${nameLookup} Alliance Tag: ${tagLookup} Last Known City: ${cityLookup}, Current Discord: ${discordLookup} `)
 
-			if (discordLookup === interaction.member.id) {
+			if (!registerLookup) {
+				console.log('No UID Found')
+			} else {
+				console.log('Already Registered')
+				return interaction.reply ( {content: `**${interaction.member.displayName}**, That User ID has already been registered to **<@${levelDiscord}>**. Please contact **@Admin**` })
+
+			}
+
+/* 			if (discordLookup === interaction.member.id) {
 				console.log ('Player Already Registered')
 				return interaction.reply ( {content: `**${interaction.member.displayName}**, That User ID has already been registered to **<@${discordLookup}>**. Please contact **@Admin**` })
-			}
+			} */
+			console.log('Player Registration')
 			await interaction.reply({ content: `**${interaction.member.displayName}**, Your submission of User ID: **${uidInput}** \nUsername: **${usernameInput}** Alliance Tag: **${tagInput}** \nCity: **${cityInput}** was updated successfully!\nYour previous History of \nName: **${nameLookup}** Tag: **${tagLookup}** \nCity: **${cityLookup}** have sucessfully been archived in your **Player History!**` });
 		}
 

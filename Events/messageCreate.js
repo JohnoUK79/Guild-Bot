@@ -9,17 +9,19 @@ module.exports = {
 		if (message.author.bot === true) {
 			return;
 		}
-
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
 		Players = await sql.Execute(`select * from players where player_id = ${Levels[0].player_id}`);
-
+		setDate = Date.now()
+		console.log(setDate)
 		if (!Players) {
 			let playerImage = "https://i.ibb.co/gm9c3x5/no-image-icon-10.png"
-			console.log(playerImage)
+			console.log(`Player Not Registered - ${playerImage}`)
 		} else var playerImage = Players[0].player_image
-		console.log(playerImage)
-
+			playerId = Levels[0].player_id
+			console.log(`Player Registered - ${playerImage}`)
+			let updatePlayers = await sql.Execute(`UPDATE players SET date_last_known = '${setDate}', discord ='${message.author.id}', discord_server = '${GuildName}' WHERE player_id = ${playerId}`)
+			console.log(updatePlayers)
 		const newPlayer = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Welcome to the PH Family')

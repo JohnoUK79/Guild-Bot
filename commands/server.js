@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription('Display info about this server.'),
 	async execute(Interaction) {
 		await interaction.callback.reply(Interaction, {
-			ephemeral: false,
+			ephemeral: true,
 			content: `Server name: ${Interaction.guild.name}\nTotal members: ${Interaction.guild.memberCount}`,
 		})
 	},

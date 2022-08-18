@@ -98,7 +98,6 @@ module.exports = {
 		newPoints = (points + score)
 		newLevel = (Levels[0].level + 1)
 		let LevelUpChannel = Settings[0].level_up_channel_id
-		console.log(message.member.displayName, GuildName, score)
 		
 		const levelup = new MessageEmbed()
             .setColor('#0099ff')
@@ -106,9 +105,9 @@ module.exports = {
             .setURL('http://www.phfamily.co.uk')
             .setThumbnail(message.member.displayAvatarURL())
             .setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
-            .setDescription(`Congratulations **${message.member.displayName}** you have levelled up!`)
+            .setDescription(`Congratulations **<@${message.member.id}>** you have levelled up!`)
             .addFields(
-                { name: `Name:`, value: `${message.member.displayName}` },
+                { name: `Name:`, value: `<@${message.member.id}>` },
                 { name: `Points:`, value: `${newPoints}` },
                 { name: 'Level', value: `${newLevel}`, inline: true },
                 )
@@ -225,7 +224,7 @@ module.exports = {
 			
 			console.log("Level Up")
 			message.guild.channels.cache.get(LevelUpChannel).send({
-				content: `Congratulations **${message.member.displayName}**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
+				content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
 				embeds: [levelup]
 			})
 /* 			message.reply({

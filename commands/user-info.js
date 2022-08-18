@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription('Display info about yourself.'),
 	async execute(Interaction) {
 		await interaction.callback.reply(Interaction, {
-			ephemeral: false,
+			ephemeral: true,
 			content: `Your username: ${Interaction.user.username}\nYour ID: ${Interaction.user.id}`,
 		})
 	},

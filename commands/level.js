@@ -23,8 +23,7 @@ module.exports = {
 		//discord_last_seen = level[0].last_seen_server
 
 		search = await sql.Execute(`select * from players where player_id = '${player}';`);
-				console.log(level)
-
+		
 		const updatePlayer =  new MessageActionRow()
 				.addComponents(
 		new MessageButton()

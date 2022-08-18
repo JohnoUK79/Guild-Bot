@@ -145,21 +145,16 @@ module.exports = {
 			let cityLookup = lookup[0].last_city
 			let discordLookup = lookup[0].discord
 			let registerLookup = registerCheck[0].player_id
-			let levelDiscord = registerCheck.discord_username
-			console.log(`Registered ID: ${registerLookup} Player ID: ${idLookup} Player Name: ${nameLookup} Alliance Tag: ${tagLookup} Last Known City: ${cityLookup}, Current Discord: ${discordLookup} `)
+			let levelDiscord = registerCheck[0].discord_id
 
 			if (!registerLookup) {
 				console.log('No UID Found')
 			} else {
 				console.log('Already Registered')
-				return interaction.reply ( {content: `**${interaction.member.displayName}**, That User ID has already been registered to **<@${levelDiscord}>**. Please contact **@Admin**` })
+				return interaction.reply ( {content: `**<@${interaction.member.id}>**, That User ID has already been registered to **<@${levelDiscord}>**. Please contact **@Admin**` })
 
 			}
 
-/* 			if (discordLookup === interaction.member.id) {
-				console.log ('Player Already Registered')
-				return interaction.reply ( {content: `**${interaction.member.displayName}**, That User ID has already been registered to **<@${discordLookup}>**. Please contact **@Admin**` })
-			} */
 			console.log('Player Registration')
 			await interaction.reply({ content: `**${interaction.member.displayName}**, Your submission of User ID: **${uidInput}** \nUsername: **${usernameInput}** Alliance Tag: **${tagInput}** \nCity: **${cityInput}** was updated successfully!\nYour previous History of \nName: **${nameLookup}** Tag: **${tagLookup}** \nCity: **${cityLookup}** have sucessfully been archived in your **Player History!**` });
 		}

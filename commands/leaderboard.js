@@ -21,7 +21,16 @@ module.exports = {
 				new MessageButton()
 					.setCustomId("Top30")
 					.setLabel('Show 21 - 30')
+					.setStyle('SUCCESS'),
+				new MessageButton()
+					.setCustomId("Top40")
+					.setLabel('Show 31 - 40')
 					.setStyle('DANGER'),
+				new MessageButton()
+					.setCustomId("Top50")
+					.setLabel('Show 41 - 50')
+					.setStyle('DANGER'),
+
 				)
 		board = await sql.Execute(`select * from levels where 1 ORDER BY points DESC;`);
 		user = board[0].discord_username

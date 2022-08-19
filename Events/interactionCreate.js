@@ -23,7 +23,16 @@ module.exports = {
 				new MessageButton()
 					.setCustomId("Top30")
 					.setLabel('Show 21 - 30')
+					.setStyle('SUCCESS'),
+				new MessageButton()
+					.setCustomId("Top40")
+					.setLabel('Show 31 - 40')
 					.setStyle('DANGER'),
+				new MessageButton()
+					.setCustomId("Top50")
+					.setLabel('Show 41 - 50')
+					.setStyle('DANGER'),
+
 				)
 
         const Top10 = new MessageEmbed()
@@ -95,6 +104,60 @@ module.exports = {
 		//.setImage(`${Data[0].player_image}`) // to be linked to player search gif 
 		.setTimestamp()
 		.setFooter({ text: 'PH Family Shit Talker Leaderboard.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+
+        const Top40 = new MessageEmbed()
+		.setColor('#0099ff')
+		.setTitle('PH Family Levels Leaderboard')
+		.setURL('http://www.phfamily.co.uk/leaderboard.php')
+		.setThumbnail(interaction.member.displayAvatarURL())
+		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
+		.addFields(
+			{ name: `PH Family Levels Board`, value: `**Name - Level - Points**\n` },
+			{ name: `Rank 31 :`, value: `${board[30].discord_username} - ${board[30].level} - ${board[30].points}` },
+			{ name: `Rank 32 :`, value: `${board[31].discord_username} - ${board[31].level} - ${board[31].points}` },
+			{ name: 'Rank 33 :', value: `${board[32].discord_username} - ${board[32].level} - ${board[32].points}` },
+			{ name: 'Rank 34 :', value: `${board[33].discord_username} - ${board[33].level} - ${board[33].points}` },
+			{ name: 'Rank 35 :', value: `${board[34].discord_username} - ${board[34].level} - ${board[34].points}` },
+			{ name: 'Rank 36 :', value: `${board[35].discord_username} - ${board[35].level} - ${board[35].points}` },
+			{ name: 'Rank 37 :', value: `${board[36].discord_username} - ${board[36].level} - ${board[36].points}` },
+			{ name: 'Rank 38 :', value: `${board[37].discord_username} - ${board[37].level} - ${board[37].points}` },
+			{ name: 'Rank 39 :', value: `${board[38].discord_username} - ${board[38].level} - ${board[38].points}` },
+			{ name: 'Rank 40 :', value: `${board[39].discord_username} - ${board[39].level} - ${board[39].points}` },
+
+			)
+		//.setImage(`${Data[0].player_image}`) // to be linked to player search gif 
+		.setTimestamp()
+		.setFooter({ text: 'PH Family Shit Talker Leaderboard.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+
+
+		const Top50 = new MessageEmbed()
+		.setColor('#0099ff')
+		.setTitle('PH Family Levels Leaderboard')
+		.setURL('http://www.phfamily.co.uk/leaderboard.php')
+		.setThumbnail(interaction.member.displayAvatarURL())
+		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
+		.addFields(
+			{ name: `PH Family Levels Board`, value: `**Name - Level - Points**\n` },
+			{ name: `Rank 41 :`, value: `${board[40].discord_username} - ${board[40].level} - ${board[40].points}` },
+			{ name: `Rank 42 :`, value: `${board[41].discord_username} - ${board[41].level} - ${board[41].points}` },
+			{ name: 'Rank 43 :', value: `${board[42].discord_username} - ${board[42].level} - ${board[42].points}` },
+			{ name: 'Rank 44 :', value: `${board[43].discord_username} - ${board[43].level} - ${board[43].points}` },
+			{ name: 'Rank 45 :', value: `${board[44].discord_username} - ${board[44].level} - ${board[44].points}` },
+			{ name: 'Rank 46 :', value: `${board[45].discord_username} - ${board[45].level} - ${board[45].points}` },
+			{ name: 'Rank 47 :', value: `${board[46].discord_username} - ${board[46].level} - ${board[46].points}` },
+			{ name: 'Rank 48 :', value: `${board[47].discord_username} - ${board[47].level} - ${board[47].points}` },
+			{ name: 'Rank 49 :', value: `${board[48].discord_username} - ${board[48].level} - ${board[48].points}` },
+			{ name: 'Rank 50 :', value: `${board[49].discord_username} - ${board[49].level} - ${board[49].points}` },
+
+			)
+		//.setImage(`${Data[0].player_image}`) // to be linked to player search gif 
+		.setTimestamp()
+		.setFooter({ text: 'PH Family Shit Talker Leaderboard.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+
+
+
 
         console.log((timestamp.utc('YYYY/MM/DD HH:mm:ss')), `${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
 

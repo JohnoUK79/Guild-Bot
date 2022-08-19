@@ -57,7 +57,13 @@ module.exports = {
 			{ name: `Rank 11 :`, value: `${board[10].discord_username} - ${board[10].level} - ${board[10].points}` },
 			{ name: `Rank 12 :`, value: `${board[11].discord_username} - ${board[11].level} - ${board[11].points}` },
 			{ name: 'Rank 13 :', value: `${board[12].discord_username} - ${board[12].level} - ${board[12].points}` },
-			{ name: 'Best of the Rest:', value: `**Rank - Name - Level - Points**\n\n**Rank 14:** ${board[13].discord_username} - ${board[13].level} - ${board[13].points}\n\n**Rank 15:** ${board[14].discord_username} - ${board[14].level} - ${board[14].points}\n\n**Rank 16:** ${board[15].discord_username} - ${board[15].level} - ${board[15].points}\n\n**Rank 17:** ${board[16].discord_username} - ${board[16].level} - ${board[16].points}\n\n**Rank 18:** ${board[17].discord_username} - ${board[17].level} - ${board[17].points}\n\n**Rank 19:** ${board[18].discord_username} - ${board[18].level} - ${board[18].points}\n\n**Rank 20:** ${board[19].discord_username} - ${board[19].level} - ${board[19].points}` },
+			{ name: 'Rank 14 :', value: `${board[13].discord_username} - ${board[13].level} - ${board[12].points}` },
+			{ name: 'Rank 15 :', value: `${board[14].discord_username} - ${board[14].level} - ${board[12].points}` },
+			{ name: 'Rank 16 :', value: `${board[15].discord_username} - ${board[15].level} - ${board[12].points}` },
+			{ name: 'Rank 17 :', value: `${board[16].discord_username} - ${board[16].level} - ${board[12].points}` },
+			{ name: 'Rank 18 :', value: `${board[17].discord_username} - ${board[17].level} - ${board[12].points}` },
+			{ name: 'Rank 19 :', value: `${board[18].discord_username} - ${board[18].level} - ${board[12].points}` },
+			{ name: 'Rank 20 :', value: `${board[19].discord_username} - ${board[19].level} - ${board[12].points}` },
 
 			)
 		//.setImage(`${Data[0].player_image}`) // to be linked to player search gif 
@@ -77,7 +83,13 @@ module.exports = {
 			{ name: `Rank 21 :`, value: `${board[20].discord_username} - ${board[20].level} - ${board[20].points}` },
 			{ name: `Rank 22 :`, value: `${board[21].discord_username} - ${board[21].level} - ${board[21].points}` },
 			{ name: 'Rank 23 :', value: `${board[22].discord_username} - ${board[22].level} - ${board[22].points}` },
-			{ name: 'Best of the Rest:', value: `**Rank - Name - Level - Points**\n\n**Rank 24:** ${board[23].discord_username} - ${board[23].level} - ${board[23].points}\n\n**Rank 25:** ${board[24].discord_username} - ${board[24].level} - ${board[24].points}\n\n**Rank 26:** ${board[25].discord_username} - ${board[25].level} - ${board[25].points}\n\n**Rank 27:** ${board[26].discord_username} - ${board[26].level} - ${board[26].points}\n\n**Rank 28:** ${board[27].discord_username} - ${board[27].level} - ${board[27].points}\n\n**Rank 29:** ${board[28].discord_username} - ${board[28].level} - ${board[28].points}\n\n**Rank 30:** ${board[29].discord_username} - ${board[29].level} - ${board[29].points}` },
+			{ name: 'Rank 24 :', value: `${board[23].discord_username} - ${board[23].level} - ${board[23].points}` },
+			{ name: 'Rank 25 :', value: `${board[24].discord_username} - ${board[24].level} - ${board[24].points}` },
+			{ name: 'Rank 26 :', value: `${board[25].discord_username} - ${board[25].level} - ${board[25].points}` },
+			{ name: 'Rank 27 :', value: `${board[26].discord_username} - ${board[26].level} - ${board[26].points}` },
+			{ name: 'Rank 28 :', value: `${board[27].discord_username} - ${board[27].level} - ${board[27].points}` },
+			{ name: 'Rank 29 :', value: `${board[28].discord_username} - ${board[28].level} - ${board[28].points}` },
+			{ name: 'Rank 30 :', value: `${board[29].discord_username} - ${board[29].level} - ${board[29].points}` },
 
 			)
 		//.setImage(`${Data[0].player_image}`) // to be linked to player search gif 

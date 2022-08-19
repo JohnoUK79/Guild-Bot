@@ -98,7 +98,7 @@ module.exports = {
 
         console.log((timestamp.utc('YYYY/MM/DD HH:mm:ss')), `${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
 
-		//Modal Test
+		//Add Player ID to Bot Modal
 		if (interaction.customId === 'UID') {
 			const modal = new Modal()
 			.setCustomId('UpdateUID')
@@ -161,14 +161,16 @@ module.exports = {
 
 			if (!registerLookup) {
 				console.log('No UID Found')
+				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${tagInput}', '${cityInput}');`)
 			} else {
 				console.log('Already Registered')
-				return interaction.reply ( {content: `**<@${interaction.member.id}>**, That User ID has already been registered to **<@${levelDiscord}>**. Please contact **@Admin**` })
+				return interaction.reply ( {
+					content: `**<@${interaction.member.id}>**, That User ID has already been registered to **<@${levelDiscord}>**. Please contact **@Admin**`, empheral: true })
 
 			}
 
 			console.log('Player Registration')
-			await interaction.reply({ content: `**${interaction.member.displayName}**, Your submission of User ID: **${uidInput}** \nUsername: **${usernameInput}** Alliance Tag: **${tagInput}** \nCity: **${cityInput}** was updated successfully!\nYour previous History of \nName: **${nameLookup}** Tag: **${tagLookup}** \nCity: **${cityLookup}** have sucessfully been archived in your **Player History!**` });
+			await interaction.reply({ content: `**${interaction.member.displayName}**, Your submission of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **@Admin**` });
 		}
 
 

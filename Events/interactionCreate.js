@@ -224,7 +224,8 @@ module.exports = {
 
 			if (!registerLookup) {
 				console.log('No UID Found')
-				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${tagInput}', '${cityInput}');`)
+				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.name}', '${tagInput}', '${cityInput}');`)
+				console.log(result)
 			} else {
 				console.log('Already Registered')
 				return interaction.reply ( {
@@ -236,16 +237,7 @@ module.exports = {
 			await interaction.reply({ content: `**${interaction.member.displayName}**, Your submission of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **@Admin**` });
 		}
 
-
-
-
-
-
-
 		//Unregistered Levels Buttons
-		if (interaction.customId === 'myUID') {
-			await interaction.reply( { content: 'Coming Soon!', ephemeral: true } );
-		}
 
 		if (interaction.customId === 'GIF') {
 			await interaction.reply( { content: 'Coming Soon!', ephemeral: true } );

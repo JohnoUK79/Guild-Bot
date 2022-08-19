@@ -30,10 +30,6 @@ module.exports = {
 				.setCustomId('UID')
 				.setLabel('Add in Game User ID to profile!')
 				.setStyle('PRIMARY'),
-		new MessageButton()
-				.setCustomId('GIF')
-				.setLabel('Request GIF to be uploaded to profile!')
-				.setStyle('SECONDARY'),
 		)
 
 

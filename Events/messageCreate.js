@@ -11,35 +11,29 @@ module.exports = {
 		}
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
-		Players = await sql.Execute(`select * from players where player_id = ${Levels[0].player_id}`);
-		setDate = Date.now()
-		console.log(setDate)
-		if (!Players) {
-			let playerImage = "https://i.ibb.co/gm9c3x5/no-image-icon-10.png"
-			console.log(`Player Not Registered - ${playerImage}`)
-		} else var playerImage = Players[0].player_image
-			playerId = Levels[0].player_id
-			console.log(`Player Registered - ${playerImage}`)
-			let updatePlayers = await sql.Execute(`UPDATE players SET date_last_known = '${setDate}', discord ='${message.author.id}', discord_server = '${GuildName}' WHERE player_id = ${playerId}`)
-			console.log(updatePlayers)
+		var score = Math.floor(Math.random() * 150) * 3; //This may need moving
+
 		const newPlayer = new MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Welcome to the PH Family')
-            .setURL('http://www.phfamily.co.uk')
-            .setThumbnail(message.member.displayAvatarURL())
-            .setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
-            .setDescription(`Welcome **${message.member.displayName}**!`)
-            .addFields(
-                { name: `Name:`, value: `${message.member.displayName}` },
-                { name: `Points:`, value: `${score}` },
-                { name: 'Welcome to the PH Family.', value: `Stay active in our servers for regular rewards!`, inline: true },
-                )
-            //.setImage(`${playerImage}`)
-            .setTimestamp()
-            .setFooter({ text: 'Welcome to the PH Family.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+		.setColor('#0099ff')
+		.setTitle('Welcome to the PH Family')
+		.setURL('http://www.phfamily.co.uk')
+		.setThumbnail(message.member.displayAvatarURL())
+		.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setDescription(`Welcome **${message.member.displayName}**!`)
+		.addFields(
+			{ name: `Name:`, value: `${message.member.displayName}` },
+			{ name: `Points:`, value: `${score}` },
+			{ name: 'Welcome to the PH Family.', value: `Stay active in our servers for regular rewards!`, inline: true },
+			)
+		//.setImage(`${playerImage}`)
+		.setTimestamp()
+		.setFooter({ text: 'Welcome to the PH Family.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+
+
 
 		if (Levels.length === 0) {
 			console.log("New Member")
+			playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
 			level = 0
 			var score = Math.floor(Math.random() * 150) * 3; //This may need moving
 			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${GuildName}');`)
@@ -51,6 +45,21 @@ module.exports = {
 
 			return;
 		}
+
+
+		Lookup = Levels[0].player_id
+		if (Lookup.length === 0) {Players = null} else {
+		Players = await sql.Execute(`select * from players where player_id = ${Levels[0].player_id}`);}
+		setDate = Date.now()
+		console.log(setDate)
+
+		if (!Players) {
+			let playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
+			console.log(`Player Not Registered - ${playerImage}`)
+		} else {var playerImage = Players[0].player_image
+			playerId = Levels[0].player_id
+			console.log(`Player Registered - ${playerImage}`)
+			let updatePlayers = await sql.Execute(`UPDATE players SET date_last_known = '${setDate}', discord ='${message.author.id}', discord_server = '${GuildName}' WHERE player_id = ${playerId}`)}
 
 		let rank10 = Settings[0].Rank_10
 		let rank20 = Settings[0].Rank_20

@@ -260,6 +260,13 @@ module.exports = {
         if (interaction.customId === 'Top30') {
             await interaction.update({ embeds: [Top30], components: [Levels], ephemeral: false })
         }
+		if (interaction.customId === 'Top40') {
+            await interaction.update({ embeds: [Top40], components: [Levels], ephemeral: false })
+        }
+        if (interaction.customId === 'Top50') {
+            await interaction.update({ embeds: [Top50], components: [Levels], ephemeral: false })
+        }
+
 
         if (!interaction.isCommand()) return;
     try {

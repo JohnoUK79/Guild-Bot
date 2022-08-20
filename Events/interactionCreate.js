@@ -211,6 +211,10 @@ module.exports = {
 			lookup = await sql.Execute(`select * from players where player_id = ${id};`);
 			if (lookup.length === 0) return interaction.reply ( {content: `**${interaction.member.displayName}**, You have entered an unrecognised User ID **${id}**, please contact **@Admin**`});
 			registerCheck = await sql.Execute(`select * from levels where discord_id = ${interaction.member.id}`)
+			if (!registerCheck) {
+				console.log('Not Registered for Levels')
+				return interaction.reply({ content: 'You have not registered on the server yet, please say Hi! and try again', empheral: true })
+			}
 			console.log(registerCheck)
 			
 			//Information Already on Bot

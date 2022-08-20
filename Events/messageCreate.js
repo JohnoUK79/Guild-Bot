@@ -74,34 +74,45 @@ module.exports = {
 		let scoreLevel = Levels[0].level
 		let r10name = message.guild.roles.cache.find( r => r.id === rank10 )
 		
-		if (scoreLevel > 100) {
-			var score = Math.floor(Math.random() * 5) +1;
-			console.log(scoreLevel, score)
-		} 
-		if (scoreLevel > 90) {
-			var score = Math.floor(Math.random() * 10) +1;
-		} 
-		if (scoreLevel > 80) {
-			var score = Math.floor(Math.random() * 15) +1;
-		} 
-		if (scoreLevel > 70) {
-			var score = Math.floor(Math.random() * 25) + 1;
-		} 
-		if (scoreLevel > 60) {
-			var score = Math.floor(Math.random() * 50) * 2;
+		var score = Math.floor(Math.random() * 150) * 3;
+
+		if (scoreLevel > 20) {
+			var score = Math.floor(Math.random() * 150) * 2;
+		}
+
+		if (scoreLevel > 30) {
+			var score = Math.floor(Math.random() * 125) * 2;
+		}
+
+		if (scoreLevel > 40) {
+			var score = Math.floor(Math.random() * 100) * 1.5;
 		}	
+
 		if (scoreLevel > 50) {
 			var score = Math.floor(Math.random() * 75) * 2;
 		}	
-		if (scoreLevel > 40) {
-			var score = Math.floor(Math.random() * 100) * 1.5;
-		}
-		if (scoreLevel > 30) {
-			var score = Math.floor(Math.random() * 125) * 2;
-		}		
-		if (scoreLevel > 20) {
-			var score = Math.floor(Math.random() * 150) * 2;
-		} else var score = Math.floor(Math.random() * 150) * 3;
+
+		if (scoreLevel > 60) {
+			var score = Math.floor(Math.random() * 50) * 2;
+		}	
+
+		if (scoreLevel > 70) {
+			var score = Math.floor(Math.random() * 25) + 1;
+		} 
+
+		if (scoreLevel > 80) {
+			var score = Math.floor(Math.random() * 15) +1;
+		} 
+
+		if (scoreLevel > 90) {
+			var score = Math.floor(Math.random() * 10) +1;
+		} 
+
+		if (scoreLevel > 100) {
+			var score = Math.floor(Math.random() * 5) +1;
+		} 
+
+		console.log(message.member.displayName, scoreLevel, score)
 			
 		points = Levels[0].points
 		newPoints = (points + score)
@@ -126,7 +137,7 @@ module.exports = {
 
 
 		let initiallevel = Levels[0].level
-		level = Math.floor((score + points) / 2333 )
+		level = Math.floor((score + points) / 3666 )
 /*
 		  if (level === 10) {
 			if (!rank10) {

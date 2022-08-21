@@ -13,6 +13,14 @@ module.exports = {
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
 		var score = Math.floor(Math.random() * 150) * 3; //This may need moving
 
+		const updatePlayer =  new MessageActionRow()
+				.addComponents(
+		new MessageButton()
+				.setCustomId('UID')
+				.setLabel('Add / Update your Bot Profile!')
+				.setStyle('PRIMARY'),
+		)
+
 		const newPlayer = new MessageEmbed()
 		.setColor('#0099ff')
 		.setTitle('Welcome to the PH Family')
@@ -85,7 +93,7 @@ module.exports = {
 		}
 
 		if (scoreLevel > 40) {
-			var score = Math.floor(Math.random() * 100) * 1.5;
+			var score = Math.floor(Math.random() * 100) * 2;
 		}	
 
 		if (scoreLevel > 50) {
@@ -245,7 +253,8 @@ module.exports = {
 			console.log("Level Up")
 			message.guild.channels.cache.get(LevelUpChannel).send({
 				content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
-				embeds: [levelup]
+				embeds: [levelup],
+				components: [updatePlayer]
 			})
 		}
 

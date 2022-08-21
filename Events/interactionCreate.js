@@ -228,7 +228,7 @@ module.exports = {
 
 			if (!registerLookup) {
 				console.log('No UID Found')
-				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.name}', '${tagInput}', '${cityInput}');`)
+				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.username}', '${tagInput}', '${cityInput}');`)
 				console.log(result)
 			} else {
 				console.log('Already Registered')

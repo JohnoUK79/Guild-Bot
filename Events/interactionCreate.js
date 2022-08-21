@@ -1,4 +1,5 @@
 const timestamp = require('time-stamp');
+const time = require('../config/timestamp')
 const sql = require("../config/Database");
 const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Modal, TextInputComponent } = require('discord.js');
 const { ModalBuilder } = require('@discordjs/builders');
@@ -8,6 +9,7 @@ const { TextInputStyle } = require('discord-api-types/v10');
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
+		const setDate = time.default()
         board = await sql.Execute(`select * from levels where 1 ORDER BY points DESC;`);
 
         const Levels =   new MessageActionRow()
@@ -159,9 +161,9 @@ module.exports = {
 
 
 
-        console.log((timestamp.utc('YYYY/MM/DD HH:mm:ss')), `${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
-
+        console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
 		//Add Player ID to Bot Modal
+
 		if (interaction.customId === 'UID') {
 			const modal = new Modal()
 			.setCustomId('UpdateUID')
@@ -187,13 +189,10 @@ module.exports = {
 				.setLabel('Add current in game City (Be Exact!).')
 				.setStyle(TextInputStyle.Short);
 
-
-
 			const firstActionRow = new MessageActionRow().addComponents(uidInput);
 			const secondActionRow = new MessageActionRow().addComponents(usernameInput);
 			const thirdActionRow = new MessageActionRow().addComponents(allianceTagInput);
 			const fourthActionRow = new MessageActionRow().addComponents(cityInput);
-
 
 			modal.addComponents(firstActionRow, secondActionRow, thirdActionRow, fourthActionRow );
 
@@ -211,9 +210,9 @@ module.exports = {
 			lookup = await sql.Execute(`select * from players where player_id = ${id};`);
 			if (lookup.length === 0) return interaction.reply ( {content: `**${interaction.member.displayName}**, You have entered an unrecognised User ID **${id}**, please contact **@Admin**`});
 			registerCheck = await sql.Execute(`select * from levels where discord_id = ${interaction.member.id}`)
-			if (!registerCheck) {
+			if (registerCheck.length === 0) {
 				console.log('Not Registered for Levels')
-				return interaction.reply({ content: 'You have not registered on the server yet, please say Hi! and try again', empheral: true })
+				return interaction.reply({ content: `**${interaction.member.displayName}**, You have not registered on the server yet, please say Hi! and try again`, empheral: true })
 			}
 			console.log(registerCheck)
 			
@@ -228,13 +227,24 @@ module.exports = {
 
 			if (!registerLookup) {
 				console.log('No UID Found')
-				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.username}', '${tagInput}', '${cityInput}');`)
+				if (discordLookup.length === 0) {
+					console.log("New Registration")
+					let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}');`)
+					return interaction.reply({ content: `**${interaction.member.displayName}**, Your submission of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **@Admin**` });
+				}
+				if (discordLookup !== interaction.member.id) {
+					console.log('Already Registered')
+					return interaction.reply ( {content: `**<@${interaction.member.id}>**, That User ID has already been registered to **<@${discordLookup}>**. Please contact **@Admin**`})
+				}
+				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}');`)
 				console.log(result)
 			} else {
-				console.log('Already Registered')
-				return interaction.reply ( {
-					content: `**<@${interaction.member.id}>**, That User ID has already been registered to **<@${levelDiscord}>**. Please contact **@Admin**`, empheral: true })
+				console.log(discordLookup, interaction.member.id)
+				if (discordLookup === interaction.member.id) {
+					console.log("Lookup Match")
+					let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}');`)
 
+				} 
 			}
 
 			console.log('Player Registration')
@@ -270,7 +280,7 @@ module.exports = {
         await command.execute(interaction);
         
     } catch (error) {
-        console.error((timestamp.utc('YYYY/MM/DD HH:mm:ss')), error);
+        console.error(setDate, error);
         await interaction.reply({ content: 'There was an error executing this command!', ephemeral: true });
     }
 

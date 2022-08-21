@@ -1,6 +1,9 @@
 const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton } = require('discord.js');
 const sql = require("../config/Database");
 const interactionCreate = require('./interactionCreate');
+time = require('../config/timestamp')
+setDate = time.UTCdefault()
+
 module.exports = {
 	name: 'messageCreate',
 	async execute(message) {
@@ -17,7 +20,7 @@ module.exports = {
 				.addComponents(
 		new MessageButton()
 				.setCustomId('UID')
-				.setLabel('Add / Update your Bot Profile!')
+				.setLabel('Add / Update your Search Profile!')
 				.setStyle('PRIMARY'),
 		)
 
@@ -33,9 +36,9 @@ module.exports = {
 			{ name: `Points:`, value: `${score}` },
 			{ name: 'Welcome to the PH Family.', value: `Stay active in our servers for regular rewards!`, inline: true },
 			)
-		//.setImage(`${playerImage}`)
+		.setImage(`http://phfamily.co.uk/img/gifs/PH-Family-Dark.jpg`)
 		.setTimestamp()
-		.setFooter({ text: 'Welcome to the PH Family.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+		.setFooter({ text: 'Welcome to the PH Family.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Dark.jpg' });
 
 
 
@@ -54,20 +57,18 @@ module.exports = {
 			return;
 		}
 
-
 		Lookup = Levels[0].player_id
 		if (Lookup.length === 0) {Players = null} else {
 		Players = await sql.Execute(`select * from players where player_id = ${Levels[0].player_id}`);}
-		setDate = Date.now()
-		console.log(setDate)
-
+				
 		if (!Players) {
 			let playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
-			console.log(`Player Not Registered - ${playerImage}`)
+			console.log(`${setDate} - Player Not Registered - ${playerImage}`)
 		} else {var playerImage = Players[0].player_image
 			playerId = Levels[0].player_id
-			console.log(`Player Registered - ${playerImage}`)
-			let updatePlayers = await sql.Execute(`UPDATE players SET date_last_known = '${setDate}', discord ='${message.author.id}', discord_server = '${GuildName}' WHERE player_id = ${playerId}`)}
+			console.log(`${setDate} - Player Registered - ${playerImage}`)
+			updatePlayers = await sql.Execute(`UPDATE players SET date_last_known = '${setDate}', discord ='${message.author.id}', discord_server = '${GuildName}' WHERE player_id = ${playerId}`)}
+
 
 		let rank10 = Settings[0].Rank_10
 		let rank20 = Settings[0].Rank_20
@@ -141,7 +142,7 @@ module.exports = {
                 )
             .setImage(playerImage) // to be added once Levels & Search tables are joined
             .setTimestamp()
-            .setFooter({ text: 'Level Up - PH Family.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+            .setFooter({ text: 'Level Up - PH Family.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Dark.jpg' });
 
 
 		let initiallevel = Levels[0].level

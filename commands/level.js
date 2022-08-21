@@ -69,7 +69,7 @@ module.exports = {
 
 		if (!player) {
 			return interaction.reply({ embeds: [unknownLevel], components: [updatePlayer] });
-		} else return interaction.reply({ embeds: [playerLevel] });
+		} else return interaction.reply({ embeds: [playerLevel], components: [updatePlayer] });
 		
 	},
 };

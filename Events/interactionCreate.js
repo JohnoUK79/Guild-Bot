@@ -214,7 +214,6 @@ module.exports = {
 				console.log('Not Registered for Levels')
 				return interaction.reply({ content: `**${interaction.member.displayName}**, You have not registered on the server yet, please say Hi! and try again`, empheral: true })
 			}
-			console.log(registerCheck)
 			
 			//Information Already on Bot
 			let idLookup = lookup[0].player_id
@@ -227,28 +226,28 @@ module.exports = {
 
 			if (!registerLookup) {
 				console.log('No UID Found')
+
 				if (discordLookup.length === 0) {
 					console.log("New Registration")
 					let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}');`)
 					return interaction.reply({ content: `**${interaction.member.displayName}**, Your submission of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **@Admin**` });
 				}
-				if (discordLookup !== interaction.member.id) {
-					console.log('Already Registered')
-					return interaction.reply ( {content: `**<@${interaction.member.id}>**, That User ID has already been registered to **<@${discordLookup}>**. Please contact **@Admin**`})
-				}
-				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}');`)
-				console.log(result)
-			} else {
-				console.log(discordLookup, interaction.member.id)
-				if (discordLookup === interaction.member.id) {
-					console.log("Lookup Match")
-					let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}');`)
-
-				} 
+ 
 			}
 
 			console.log('Player Registration')
-			await interaction.reply({ content: `**${interaction.member.displayName}**, Your submission of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **@Admin**` });
+			if (discordLookup === interaction.member.id) {
+				console.log("Lookup Match")
+				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}');`)
+				return interaction.reply({ empheral: true, content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **@Admin**` })
+			}
+			if (discordLookup !== interaction.member.id) {
+				console.log('Already Registered')
+				return interaction.reply ( {
+					empheral: true,
+					content: `**<@${interaction.member.id}>**, That User ID has already been registered to **<@${discordLookup}>**. Please contact **@Admin**`})
+			}
+			await interaction.reply({ content: `**${interaction.member.displayName}**, Your **Submission** of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **@Admin**` });
 		}
 
 		//Unregistered Levels Buttons

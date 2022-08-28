@@ -262,7 +262,7 @@ module.exports = {
 				embeds: [levelup],
 				components: [updatePlayer],
 			})
-		} else return
+		}
 
 		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`)}
 

@@ -16,7 +16,7 @@ module.exports = {
             .setFooter({ text: `${GUILD}`, iconURL: 'https://i.imgur.com/IxBdjfl.jpg' })
             .setTimestamp();
 
-            member.guild.channels.cache.get(Channel_ID).send(
+            await member.guild.channels.cache.get(Channel_ID).send(
                 {
                     embeds: [goodByeEmbed]
                 }

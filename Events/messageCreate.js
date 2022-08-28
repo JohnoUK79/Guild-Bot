@@ -7,7 +7,8 @@ setDate = time.UTCdefault()
 module.exports = {
 	name: 'messageCreate',
 	async execute(message) {
-		GuildName = message.guild.name	
+		var GuildName = message.member.guild.name	
+		if (!GuildName){ var GuildName = 'Test'}
 
 		if (message.author.bot === true) {
 			return;
@@ -48,13 +49,13 @@ module.exports = {
 			level = 0
 			var score = Math.floor(Math.random() * 150) * 3; //This may need moving
 			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${GuildName}');`)
-			message.reply({
+			return message.reply({
 				content: `Welcome to the PH Family **${message.member.displayName}**.\nWe look forward to you becoming a valued member of our community!`,
 				//components: [player],
 				embeds: [newPlayer]
 			});
 
-			return;
+			
 		}
 
 		Lookup = Levels[0].player_id

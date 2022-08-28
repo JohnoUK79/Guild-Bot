@@ -9,6 +9,7 @@ module.exports = {
         CHANNEL_ID = Data[0].welcome_channel_id
         ROLE_ID = Data[0].welcome_role_id
         GUILD = member.guild.name
+
         const newMemberEmbed = new Discord.MessageEmbed()
             .setColor("#d81e5b")
             .setTitle("New Player!")
@@ -16,6 +17,7 @@ module.exports = {
             .setThumbnail(member.user.displayAvatarURL())
             .setFooter({ text: `${GUILD}`, iconURL: 'https://i.imgur.com/IxBdjfl.jpg' })
             .setTimestamp();
+            
         const welcomeEmbed = new Discord.MessageEmbed()
             .setColor("#d81e5b")
             .setTitle(`Welcome to ${GUILD}`)
@@ -25,12 +27,12 @@ module.exports = {
 
             .setTimestamp();
             await member.roles.add(ROLE_ID).catch((e) => console.log(e));
-            member.user.send(
+            await member.user.send(
                 {
                     embeds: [welcomeEmbed]
                 }
             );
-            member.guild.channels.cache.get(CHANNEL_ID).send(
+            await member.guild.channels.cache.get(CHANNEL_ID).send(
                 {
                     embeds: [newMemberEmbed]
                 }

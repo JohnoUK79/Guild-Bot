@@ -4,6 +4,7 @@ const sql = require(`../config/Database`)
 module.exports = {
     name: "guildMemberAdd",
     async execute(member) {
+
         console.log("Member Joined")
         Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         CHANNEL_ID = Data[0].welcome_channel_id
@@ -32,10 +33,10 @@ module.exports = {
                     embeds: [welcomeEmbed]
                 }
             );
-            await member.guild.channels.cache.get(CHANNEL_ID).send(
+/*             await member.guild.channels.cache.get(CHANNEL_ID).send(
                 {
                     embeds: [newMemberEmbed]
                 }
             )
-    }
+ */    }
 }

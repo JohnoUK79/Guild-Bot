@@ -14,7 +14,11 @@ module.exports = {
 			return;
 		}
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
+		//console.log('Settings', Settings)
+
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
+		//console.log('Levels', Levels)
+
 		var score = Math.floor(Math.random() * 150) * 3; //This may need moving
 
 		const updatePlayer =  new MessageActionRow()
@@ -256,11 +260,10 @@ module.exports = {
 			message.guild.channels.cache.get(LevelUpChannel).send({
 				content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
 				embeds: [levelup],
-				components: [updatePlayer]
+				components: [updatePlayer],
 			})
-		}
-
+		} else return
 
 		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`)}
-		
-};
+
+}; 

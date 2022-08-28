@@ -11,8 +11,6 @@ module.exports = {
     async execute(client, commands) {     
         console.log("Guild ID - Guild Name - Guild Icon - Owner ID - Guild Description - Locale - Updates Channel - System Channel - Rules Channel")
         console.log(client.guilds.cache.map(r => `${r.id} - ${r.name} - ${r.icon} - ${r.ownerId} - ${r.description} - ${r.preferredLocale} - ${r.publicUpdatesChannelId} - ${r.systemChannelId} - ${r.rulesChannelId}`));
-        const guild = client.guilds.cache
-        //console.log(guild)
         console.log(`${setDate} - Logged in as - ${client.user.tag}`);
         const rest = new REST({ version: '10' }).setToken(token);
         await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), { body: commands })
@@ -25,22 +23,15 @@ module.exports = {
             const job = nodeCron.schedule("0 0,4,8,12,16,20 * * *", () => {
                 const jurisdictions = require('../data/jurisdictions');
                 const jurisdictionsChannelIDs = [
-                //'915034347030073404',  // OP
-                //'938098999007772753',  // NVX
-                '940013410207281283',  // PH40
-                //'940700957694656583',  // EFO
-                //'958408697703432274',  // PHEA
-                //'959761836054552636',  // New NVX
-                //'964673391917400104', // CAC 
-                //'995668352192229437', //?
-                '1000526899124117535', //Test Server
                 '1005576978767806575', //PH Family Server
                 '874703585626165288', //WARMACHINE
                 '958408697703432274', //PHAK / EA / AA Server
+                '979762566861561906', //PH40 Reborn 
                 ];
                 const hourUTC = (new Date()).getUTCHours();
                 const dayOfWeeek = (new Date()).getDay();
             console.log(new Date().toLocaleString(), "Jurisdiction Event Starting");
+
             const { MessageEmbed } = require('discord.js');
                     
                     if( (hourUTC % 4) !== 0) return console.log('Jurisdiction Already Running!');
@@ -76,7 +67,6 @@ module.exports = {
                     let jurisdictionsChannelID = jurisdictionsChannelIDs[i];
                     
                     try {  
-                        console.log(client.guilds)
                         let sendChannel = client.channels.cache.get(jurisdictionsChannelID)                  
                         sendChannel.send({ content: '**New Jurisdiction**', embeds: [jurisdictionEmbed] })
 

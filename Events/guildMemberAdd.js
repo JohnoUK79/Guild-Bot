@@ -16,7 +16,7 @@ module.exports = {
             .setTitle("New Player!")
             .setDescription(`<@${member.user.id}> has joined the server! \nWe hope you enjoy your time here.`)
             .setThumbnail(member.user.displayAvatarURL())
-            .setFooter({ text: `${GUILD}`, iconURL: 'https://i.imgur.com/IxBdjfl.jpg' })
+            .setFooter({ text: `${GUILD}`, iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg' })
             .setTimestamp();
             
         const welcomeEmbed = new Discord.MessageEmbed()
@@ -24,7 +24,7 @@ module.exports = {
             .setTitle(`Welcome to ${GUILD}`)
             .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here.`)
             .setThumbnail(Data[0].welcome_logo)
-            .setFooter({ text: `${GUILD}`, iconURL: 'https://i.imgur.com/IxBdjfl.jpg' })
+            .setFooter({ text: `${GUILD}`, iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg' })
 
             .setTimestamp();
             await member.roles.add(ROLE_ID).catch((e) => console.log(e));
@@ -33,10 +33,10 @@ module.exports = {
                     embeds: [welcomeEmbed]
                 }
             );
-/*             await member.guild.channels.cache.get(CHANNEL_ID).send(
+             await member.guild.channels.cache.get(CHANNEL_ID).send(
                 {
                     embeds: [newMemberEmbed]
                 }
             )
- */    }
+     }
 }

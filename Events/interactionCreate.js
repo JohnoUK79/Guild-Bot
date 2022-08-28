@@ -248,7 +248,7 @@ module.exports = {
 					empheral: true,
 					content: `**<@${interaction.member.id}>**, That User ID has already been registered to **<@${discordLookup}>**. Please contact **@Admin**`})
 			} else
-			await interaction.reply({ content: `**${interaction.member.displayName}**, Your **Submission** of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **@Admin**` });
+			return interaction.reply({ content: `**${interaction.member.displayName}**, Your **Submission** of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **@Admin**` });
 		}
 
 		//Unregistered Levels Buttons

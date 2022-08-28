@@ -92,38 +92,55 @@ module.exports = {
 
 		if (scoreLevel > 20) {
 			var score = Math.floor(Math.random() * 150) * 2;
+			console.log('Level 20', score)
 		}
 
 		if (scoreLevel > 30) {
 			var score = Math.floor(Math.random() * 125) * 2;
+			console.log('Level 30', score)
+
 		}
 
 		if (scoreLevel > 40) {
 			var score = Math.floor(Math.random() * 100) * 2;
+			console.log('Level 40', score)
+
 		}	
 
 		if (scoreLevel > 50) {
 			var score = Math.floor(Math.random() * 75) * 2;
+			console.log('Level 50', score)
+
 		}	
 
 		if (scoreLevel > 60) {
 			var score = Math.floor(Math.random() * 50) * 2;
+			console.log('Level 60', score)
+
 		}	
 
 		if (scoreLevel > 70) {
 			var score = Math.floor(Math.random() * 25) + 1;
+			console.log('Level 70', score)
+
 		} 
 
 		if (scoreLevel > 80) {
 			var score = Math.floor(Math.random() * 15) +1;
+			console.log('Level 80', score)
+
 		} 
 
 		if (scoreLevel > 90) {
 			var score = Math.floor(Math.random() * 10) +1;
+			console.log('Level 90', score)
+
 		} 
 
 		if (scoreLevel > 100) {
 			var score = Math.floor(Math.random() * 5) +1;
+			console.log('Level 100', score)
+
 		} 
 
 		console.log(message.member.displayName, scoreLevel, score)
@@ -164,104 +181,21 @@ module.exports = {
 				message.reply({ content: `Congratulations you have Ranked Up and achieved the rank of ${r10name}` })
 		}  
  
-
-		if (level === 20) {
-			if (!Rank20) {
-				console.log("No Role Set")
-				message.reply({ content: 'Congratulations you have Ranked Up You are now **CAPTAIN**'})
-			} else await message.member.roles.add(Rank20).catch((e) => console.log(e));
-					message.reply({ content: `Congratulations you have Ranked Up and achieved @<${Rank20}>` })
-		} 
-
-		if (level === 30) {
-			if (!Rank30) {
-				console.log(message.user.displayName, message.GuildName + "Level 30") 
-				console.log("No Role Set")
-				message.reply({ content: 'Congratulations you have Ranked Up You are now **SARGEANT**'})
-			} else await message.member.roles.add(Rank30).catch((e) => console.log(e));
-					message.reply({ content: `Congratulations you have Ranked Up and achieved @<${Rank30}>` })
-		} 
-
-		if (level === 40) {
-			if (!Rank40) {
-				console.log(message.user.displayName, message.GuildName + "Level 40") 
-				console.log("No Role Set")
-				message.reply({ content: 'Congratulations you have Ranked Up You are now **MAJOR**'})
-			} else
-			await message.member.roles.add(Rank40).catch((e) => console.log(e));
-			message.reply({ content: `Congratulations you have Ranked Up and achieved ${Rank40}` })
-			console.log(message.user.displayName, message.GuildName + "Level 40") 			
-		} 
-
-		if (level === 50) {
-			if (!Rank50) {
-				console.log(message.user.displayName, message.GuildName + "Level 50") 
-				console.log("No Role Set")
-				message.reply({ content: 'Congratulations you have Ranked Up You are now **GENERAL**'})
-			} else
-			await message.member.roles.add(Rank50).catch((e) => console.log(e));
-			message.reply({ content: `Congratulations you have Ranked Up and achieved ${Rank50}` })
-			console.log(message.user.displayName, message.GuildName + "Level 50") 			
-		} 
-
-		if (level === 60) {
-			if (!Rank60) {
-				console.log(message.user.displayName, message.GuildName + "Level 60") 
-				console.log("No Role Set")
-				message.reply({ content: 'Congratulations you have Ranked Up You are now **MAJOR GENERAL**' })
-			} else
-			await message.member.roles.add(Rank60).catch((e) => console.log(e));
-			message.reply({ content: `Congratulations you have Ranked Up and achieved ${Rank60}`, })
-			console.log(message.user.displayName, message.GuildName + "Level 60") 			
-		} 
-
-		if (level === 70) {
-			if (!Rank10) {
-				console.log(message.user.displayName, message.GuildName + "Level 70") 
-				console.log("No Role Set")
-				message.reply({ content: 'Congratulations you have Ranked Up You are now **FIELD MARSHALL**'})
-			} else
-			await message.member.roles.add(Rank70).catch((e) => console.log(e));
-			message.reply({ content: `Congratulations you have Ranked Up and achieved ${Rank70}` })
-			console.log(message.user.displayName, message.GuildName + "Level 70") 			
-		} 
-
-		if (level === 80) {
-			if (!Rank80) {
-				console.log(message.user.displayName, message.GuildName + "Level 80") 
-				console.log("No Role Set")
-				message.reply({ content: 'Congratulations you have Ranked Up You are now **PRESIDENT**'})
-			} else
-			await message.member.roles.add(Rank80).catch((e) => console.log(e));
-			message.reply({ content: `Congratulations you have Ranked Up and achieved ${Rank80}`})
-			console.log(message.user.displayName, message.GuildName + "Level 80") 			
-		} 
-
-		if (level === 90) {
-			if (!Rank90) {
-				console.log(message.user.displayName, message.GuildName + "Level 90") 
-				console.log("No Role Set")
-				message.reply({ content: 'Congratulations you have Ranked Up You are now **GOD**'})
-			} else
-			await message.member.roles.add(Rank90).catch((e) => console.log(e));
-			message.reply({ content: `Congratulations you have Ranked Up and achieved ${Rank90}`})
-			console.log(message.user.displayName, message.GuildName + "Level 90") 			
-		} 
-
-		if (level === 100) {
-			//message.roles.add(Role100).catch((e) => console.log(e));
-			console.log("Level 100")
-			
-		}
- */ 
+*/
 		if (level > initiallevel) {
-			
 			console.log("Level Up")
-			message.guild.channels.cache.get(LevelUpChannel).send({
+
+			message.reply({
 				content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
 				embeds: [levelup],
 				components: [updatePlayer],
 			})
+			
+/* 			message.guild.channels.cache.get(LevelUpChannel).send({
+				content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
+				embeds: [levelup],
+				components: [updatePlayer],
+			}) */
 		}
 
 		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`)}

@@ -92,54 +92,45 @@ module.exports = {
 
 		if (scoreLevel > 20) {
 			var score = Math.floor(Math.random() * 150) * 2;
-			console.log('Level 20', score)
 		}
 
 		if (scoreLevel > 30) {
 			var score = Math.floor(Math.random() * 125) * 2;
-			console.log('Level 30', score)
 
 		}
 
 		if (scoreLevel > 40) {
 			var score = Math.floor(Math.random() * 100) * 2;
-			console.log('Level 40', score)
 
 		}	
 
 		if (scoreLevel > 50) {
 			var score = Math.floor(Math.random() * 75) * 2;
-			console.log('Level 50', score)
 
 		}	
 
 		if (scoreLevel > 60) {
 			var score = Math.floor(Math.random() * 50) * 2;
-			console.log('Level 60', score)
 
 		}	
 
 		if (scoreLevel > 70) {
 			var score = Math.floor(Math.random() * 25) + 1;
-			console.log('Level 70', score)
 
 		} 
 
 		if (scoreLevel > 80) {
 			var score = Math.floor(Math.random() * 15) +1;
-			console.log('Level 80', score)
 
 		} 
 
 		if (scoreLevel > 90) {
 			var score = Math.floor(Math.random() * 10) +1;
-			console.log('Level 90', score)
 
 		} 
 
 		if (scoreLevel > 100) {
 			var score = Math.floor(Math.random() * 5) +1;
-			console.log('Level 100', score)
 
 		} 
 
@@ -185,17 +176,17 @@ module.exports = {
 		if (level > initiallevel) {
 			console.log("Level Up")
 
-			message.reply({
-				content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
-				embeds: [levelup],
-				components: [updatePlayer],
-			})
-			
-/* 			message.guild.channels.cache.get(LevelUpChannel).send({
+/* 			message.reply({
 				content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
 				embeds: [levelup],
 				components: [updatePlayer],
 			}) */
+			
+ 			message.guild.channels.cache.get(LevelUpChannel).send({
+				content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
+				embeds: [levelup],
+				//components: [updatePlayer],
+			}) 
 		}
 
 		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`)}

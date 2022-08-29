@@ -15,7 +15,7 @@ module.exports = {
         const rest = new REST({ version: '10' }).setToken(token);
         await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), { body: commands })
             .then(() => {
-                console.log('Successfully registered application commands');
+                console.log('Successfully registered guild application commands');
             })
             .catch(console.error);
 
@@ -28,6 +28,7 @@ module.exports = {
                 '958408697703432274', //PHAK / EA / AA Server
                 '979762566861561906', //PH40 Reborn 
                 ];
+                console.log(jurisdictionsChannelIDs)
                 const hourUTC = (new Date()).getUTCHours();
                 const dayOfWeeek = (new Date()).getDay();
             console.log(new Date().toLocaleString(), "Jurisdiction Event Starting");

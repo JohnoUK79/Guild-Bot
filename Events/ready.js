@@ -23,11 +23,9 @@ module.exports = {
             const job = nodeCron.schedule("0 0,4,8,12,16,20 * * *", () => {
                 const jurisdictions = require('../data/jurisdictions');
                 const jurisdictionsChannelIDs = [
-                '1005576978767806575', //PH Family Server
-                '874703585626165288', //WARMACHINE
-                '958408697703432274', //PHAK / EA / AA Server
                 '979762566861561906', //PH40 Reborn 
                 ];
+                
                 console.log(jurisdictionsChannelIDs)
                 const hourUTC = (new Date()).getUTCHours();
                 const dayOfWeeek = (new Date()).getDay();
@@ -68,7 +66,8 @@ module.exports = {
                     let jurisdictionsChannelID = jurisdictionsChannelIDs[i];
                     
                     try {  
-                        let sendChannel = client.channels.cache.get(jurisdictionsChannelID)                  
+                        let sendChannel = client.channels.cache.get(jurisdictionsChannelID)                
+                        console.log(jurisdictionsChannelID);
                         sendChannel.send({ content: '**New Jurisdiction**', embeds: [jurisdictionEmbed] })
 
                     }

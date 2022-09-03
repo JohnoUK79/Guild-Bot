@@ -9,17 +9,13 @@ module.exports = {
 	async execute(message) {
 		var GuildName = message.member.guild.name	
 		if (!GuildName){ var GuildName = 'Test'}
-
+		var playerDisplayName = message.member.displayName
+		if (!playerDisplayName){ var playerDisplayName = message.member.author}
 		if (message.author.bot === true) {
 			return;
 		}
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
-		//console.log('Settings', Settings)
-
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
-		//console.log('Levels', Levels)
-
-		var score = Math.floor(Math.random() * 150) * 3; //This may need moving
 
 		const updatePlayer =  new MessageActionRow()
 				.addComponents(
@@ -34,10 +30,10 @@ module.exports = {
 		.setTitle('Welcome to the PH Family')
 		.setURL('http://www.phfamily.co.uk')
 		.setThumbnail(message.member.displayAvatarURL())
-		.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
-		.setDescription(`Welcome **${message.member.displayName}**!`)
+		.setAuthor({ name: playerDisplayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setDescription(`Welcome **${playerDisplayName}**!`)
 		.addFields(
-			{ name: `Name:`, value: `${message.member.displayName}` },
+			{ name: `Name:`, value: `${playerDisplayName}` },
 			{ name: `Points:`, value: `${score}` },
 			{ name: 'Welcome to the PH Family.', value: `Stay active in our servers for regular rewards!`, inline: true },
 			)
@@ -54,8 +50,8 @@ module.exports = {
 			var score = Math.floor(Math.random() * 150) * 3; //This may need moving
 			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${GuildName}');`)
 			return message.reply({
-				content: `Welcome to the PH Family **${message.member.displayName}**.\nWe look forward to you becoming a valued member of our community!`,
-				//components: [player],
+				content: `Welcome to the PH Family **${playerDisplayName}**.\nWe look forward to you becoming a valued member of our community!`,
+				components: [updatePlayer],
 				embeds: [newPlayer]
 			});
 
@@ -68,25 +64,23 @@ module.exports = {
 				
 		if (!Players) {
 			let playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
-			console.log(`${setDate} - Player Not Registered - ${playerImage}`)
 		} else {var playerImage = Players[0].player_image
 			playerId = Levels[0].player_id
-			console.log(`${setDate} - Player Registered - ${playerImage}`)
 			updatePlayers = await sql.Execute(`UPDATE players SET date_last_known = '${setDate}', discord ='${message.author.id}', discord_server = '${GuildName}' WHERE player_id = ${playerId}`)}
 
 
-		let rank10 = Settings[0].Rank_10
-		let rank20 = Settings[0].Rank_20
-		let rank30 = Settings[0].Rank_30
-		let rank40 = Settings[0].Rank_40
-		let rank50 = Settings[0].Rank_50
-		let rank60 = Settings[0].Rank_60
-		let rank70 = Settings[0].Rank_70
-		let rank80 = Settings[0].Rank_80
-		let rank90 = Settings[0].Rank_90
-		let rank100 = Settings[0].Rank_100
+		//let roleRank10 = Settings[0].Rank_10
+		//let roleRank20 = Settings[0].Rank_20
+		//let roleRank30 = Settings[0].Rank_30
+		//let roleRank40 = Settings[0].Rank_40
+		//let roleRank50 = Settings[0].Rank_50
+		//let roleRank60 = Settings[0].Rank_60
+		//let roleRank70 = Settings[0].Rank_70
+		//let roleRank80 = Settings[0].Rank_80
+		//let roleRank90 = Settings[0].Rank_90
+		//let roleRank100 = Settings[0].Rank_100
 		let scoreLevel = Levels[0].level
-		let r10name = message.guild.roles.cache.find( r => r.id === rank10 )
+		//let r10name = message.guild.roles.cache.find( r => r.id === rank10 )
 		
 		var score = Math.floor(Math.random() * 150) * 3;
 
@@ -133,8 +127,6 @@ module.exports = {
 			var score = Math.floor(Math.random() * 5) +1;
 
 		} 
-
-		console.log(message.member.displayName, scoreLevel, score)
 			
 		points = Levels[0].points
 		newPoints = (points + score)
@@ -146,7 +138,7 @@ module.exports = {
             .setTitle('Level Up')
             .setURL('http://www.phfamily.co.uk')
             .setThumbnail(message.member.displayAvatarURL())
-            .setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
+            .setAuthor({ name: playerDisplayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
             .setDescription(`Congratulations **<@${message.member.id}>** you have levelled up!`)
             .addFields(
                 { name: `Name:`, value: `<@${message.member.id}>` },
@@ -176,19 +168,11 @@ module.exports = {
 		if (level > initiallevel) {
 			console.log("Level Up")
 
-/* 			message.reply({
-				content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
-				embeds: [levelup],
-				components: [updatePlayer],
-			}) */
-			
  			message.guild.channels.cache.get(LevelUpChannel).send({
 				content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
 				embeds: [levelup],
-				//components: [updatePlayer],
+				components: [updatePlayer],
 			}) 
 		}
-
-		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`)}
-
+		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${playerDisplayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`)}
 }; 

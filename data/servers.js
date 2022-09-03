@@ -46,7 +46,7 @@ const SERVER_15 = {
   
   module.exports = {
     '905071244171440128': { allianceName: 'OP', wpServer: 17, citiesGold: SERVER_17 },
-    '868992863386632232': { allianceName: 'PH40', wpServer: 17, citiesGold: SERVER_17 },
+    '979762566861561906': { allianceName: 'PH40', wpServer: 17, citiesGold: SERVER_17 },
     '855784080322985984': { allianceName: 'NVX', wpServer: 15, citiesGold: SERVER_15 },
     '890675370662182913': { allianceName: 'EFO', wpServer: 23  , citiesGold: SERVER_17 },
     '957182156071903272': { allianceName: 'PHEA', wpServer: 17, citiesGold: SERVER_17 },

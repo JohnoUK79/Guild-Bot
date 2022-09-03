@@ -7,20 +7,19 @@ module.exports = {
 		.setName('level')
 		.setDescription('Check your current Levels Rank!'),
 	async execute(interaction) {
-		level = await sql.Execute(`select * from levels where discord_id = '${interaction.user.id}';`);
 		
+		level = await sql.Execute(`select * from levels where discord_id = '${interaction.user.id}';`);
 		player = level[0].player_id
-
 		Players = await sql.Execute(`select * from players where player_id = ${player}`)
-
 		discord = interaction.member.username
 		points = level[0].points
 		level = level[0].level
+
 		if (!player) {
 			var playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
 		} else var playerImage = Players[0].player_image
 		//seen = level[0].last_seen
-		//discord_last_seen = level[0].last_seen_server
+		//seenDiscord = level[0].last_seen_server
 
 		search = await sql.Execute(`select * from players where player_id = '${player}';`);
 		
@@ -45,7 +44,7 @@ module.exports = {
 			{ name: `Points:`, value: `${points}` },
 			{ name: 'Level.', value: `${level}`, inline: true },
 			)
-		//.setImage(`${search[0].player_image}`)
+		.setImage(playerImage)
 		.setTimestamp()
 		.setFooter({ text: `PH Family Rank - ${interaction.member.displayName}.`, iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
 
@@ -60,6 +59,8 @@ module.exports = {
 			{ name: `Name:`, value: `${interaction.member.displayName}` },
 			{ name: `Points:`, value: `${points}` },
 			{ name: 'Level.', value: `${level}`, inline: true },
+			//{ name: 'Last Seen.', value: `${seen}`, inline: true },
+			//{ name: 'Last Seen Discord Server.', value: `${seenDiscord}`, inline: true },
 			)
 		.setImage(playerImage)
 		.setTimestamp()

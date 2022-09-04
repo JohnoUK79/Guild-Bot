@@ -47,7 +47,7 @@ module.exports = {
 			console.log("New Member")
 			playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
 			level = 0
-			var score = Math.floor(Math.random() * 150) * 3; //This may need moving
+			var score = Math.floor(Math.random() * 150) * 3; 
 			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${GuildName}');`)
 			return message.reply({
 				content: `Welcome to the PH Family **${playerDisplayName}**.\nWe look forward to you becoming a valued member of our community!`,
@@ -145,7 +145,7 @@ module.exports = {
                 { name: `Points:`, value: `${newPoints}` },
                 { name: 'Level', value: `${newLevel}`, inline: true },
                 )
-            .setImage(playerImage) // to be added once Levels & Search tables are joined
+            .setImage(playerImage)
             .setTimestamp()
             .setFooter({ text: 'Level Up - PH Family.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Dark.jpg' });
 
@@ -169,7 +169,7 @@ module.exports = {
 			console.log("Level Up")
 
  			message.guild.channels.cache.get(LevelUpChannel).send({
-				content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
+				//content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
 				embeds: [levelup],
 				components: [updatePlayer],
 			}) 

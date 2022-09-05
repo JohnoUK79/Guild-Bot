@@ -49,11 +49,12 @@ module.exports = {
 			level = 0
 			var score = Math.floor(Math.random() * 150) * 3; 
 			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${GuildName}');`)
-			return message.reply({
+			await message.reply({
 				content: `Welcome to the PH Family **${playerDisplayName}**.\nWe look forward to you becoming a valued member of our community!`,
 				components: [updatePlayer],
 				embeds: [newPlayer]
 			});
+			return;
 
 			
 		}
@@ -167,8 +168,8 @@ module.exports = {
 */
 		if (level > initiallevel) {
 			console.log("Level Up")
-
- 			message.guild.channels.cache.get(LevelUpChannel).send({
+			console.log(LevelUpChannel)
+ 			await message.guild.channels.cache.get(LevelUpChannel).send({
 				//content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
 				embeds: [levelup],
 				components: [updatePlayer],

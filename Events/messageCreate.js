@@ -158,11 +158,13 @@ module.exports = {
 			if (!rank10) {
 				console.log("No Role Set")
 				let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`)
-				message.reply({ content: 'Congratulations you have Ranked Up and achieved the rank of **PRIVATE**'})
+				await message.reply({ content: 'Congratulations you have Ranked Up and achieved the rank of **PRIVATE**'})
+				return;
 				
 			} else await message.member.roles.add(rank10).catch((e) => console.log(e))
 				let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`)
-				message.reply({ content: `Congratulations you have Ranked Up and achieved the rank of ${r10name}` })
+				await message.reply({ content: `Congratulations you have Ranked Up and achieved the rank of ${r10name}` })
+				return:
 		}  
  
 */

@@ -11,7 +11,6 @@ module.exports = {
 		if (!GuildName){ var GuildName = 'Test'}
 		var playerDisplayName = message.member.displayName
 		if (!playerDisplayName){ var playerDisplayName = message.member.username}
-		console.log(playerDisplayName)
 		if (message.author.bot === true) {
 			return;
 		}
@@ -43,7 +42,6 @@ module.exports = {
 		.setFooter({ text: 'Welcome to the PH Family.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Dark.jpg' });
 
 		var score = Math.floor(Math.random() * 150) * 3;
-		console.log(score)
 
 		if (Levels.length === 0) {
 			console.log("New Member")
@@ -169,7 +167,6 @@ module.exports = {
 */
 		if (level > initiallevel) {
 			console.log("Level Up")
-			console.log(LevelUpChannel)
  			await message.guild.channels.cache.get(LevelUpChannel).send({
 				//content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
 				embeds: [levelup],

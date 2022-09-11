@@ -7,10 +7,11 @@ setDate = time.UTCdefault()
 module.exports = {
 	name: 'messageCreate',
 	async execute(message) {
-		var GuildName = message.member.guild.name	
+		var GuildName = message.guild.name
 		if (!GuildName){ var GuildName = 'Test'}
 		var playerDisplayName = message.member.displayName
-		if (!playerDisplayName){ var playerDisplayName = message.member.author}
+		if (!playerDisplayName){ var playerDisplayName = message.member.username}
+		console.log(playerDisplayName)
 		if (message.author.bot === true) {
 			return;
 		}
@@ -41,13 +42,13 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: 'Welcome to the PH Family.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Dark.jpg' });
 
-
+		var score = Math.floor(Math.random() * 150) * 3;
+		console.log(score)
 
 		if (Levels.length === 0) {
 			console.log("New Member")
 			playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
 			level = 0
-			var score = Math.floor(Math.random() * 150) * 3; 
 			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${GuildName}');`)
 			await message.reply({
 				content: `Welcome to the PH Family **${playerDisplayName}**.\nWe look forward to you becoming a valued member of our community!`,
@@ -83,8 +84,6 @@ module.exports = {
 		let scoreLevel = Levels[0].level
 		//let r10name = message.guild.roles.cache.find( r => r.id === rank10 )
 		
-		var score = Math.floor(Math.random() * 150) * 3;
-
 		if (scoreLevel > 20) {
 			var score = Math.floor(Math.random() * 150) * 2;
 		}

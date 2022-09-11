@@ -10,11 +10,13 @@ module.exports = {
         CHANNEL_ID = Data[0].welcome_channel_id
         ROLE_ID = Data[0].welcome_role_id
         GUILD = member.guild.name
-
+        var playerDisplayName = message.member.displayName
+		if (!playerDisplayName){ var playerDisplayName = message.member.username}
+        
         const newMemberEmbed = new Discord.MessageEmbed()
             .setColor("#d81e5b")
             .setTitle("New Player!")
-            .setDescription(`<@${member.user.id}> has joined the server! \nWe hope you enjoy your time here.`)
+            .setDescription(`<@${playerDisplayName}> has joined the server! \nWe hope you enjoy your time here.`)
             .setThumbnail(member.user.displayAvatarURL())
             .setFooter({ text: `${GUILD}`, iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg' })
             .setTimestamp();

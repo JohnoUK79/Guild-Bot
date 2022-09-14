@@ -4,14 +4,13 @@ const sql = require(`../config/Database`)
 module.exports = {
     name: "guildMemberAdd",
     async execute(member) {
-
         console.log("Member Joined")
         Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         CHANNEL_ID = Data[0].welcome_channel_id
         ROLE_ID = Data[0].welcome_role_id
         GUILD = member.guild.name
-        var playerDisplayName = message.member.displayName
-		if (!playerDisplayName){ var playerDisplayName = message.member.username}
+        var playerDisplayName = member.displayName
+		if (!playerDisplayName){ var playerDisplayName = member.username}
         
         const newMemberEmbed = new Discord.MessageEmbed()
             .setColor("#d81e5b")

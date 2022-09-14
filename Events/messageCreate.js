@@ -47,6 +47,7 @@ module.exports = {
 			console.log("New Member")
 			playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
 			level = 0
+			var score = Math.floor(Math.random() * 150) * 3;
 			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${GuildName}');`)
 			await message.reply({
 				content: `Welcome to the PH Family **${playerDisplayName}**.\nWe look forward to you becoming a valued member of our community!`,

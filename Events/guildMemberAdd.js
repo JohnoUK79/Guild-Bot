@@ -11,11 +11,12 @@ module.exports = {
         GUILD = member.guild.name
         var playerDisplayName = member.displayName
 		if (!playerDisplayName){ var playerDisplayName = member.username}
+        console.log(playerDisplayName)
         
         const newMemberEmbed = new Discord.MessageEmbed()
             .setColor("#d81e5b")
             .setTitle("New Player!")
-            .setDescription(`<@${playerDisplayName}> has joined the server! \nWe hope you enjoy your time here.`)
+            .setDescription(`<@${member.id}> has joined the server! \nWe hope you enjoy your time here.`)
             .setThumbnail(member.user.displayAvatarURL())
             .setFooter({ text: `${GUILD}`, iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg' })
             .setTimestamp();

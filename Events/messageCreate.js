@@ -7,13 +7,10 @@ setDate = time.UTCdefault()
 module.exports = {
 	name: 'messageCreate',
 	async execute(message) {
-		var GuildName = message.guild.name
-		if (!GuildName){ var GuildName = 'Test'}
-		var playerDisplayName = message.member.displayName
-		if (!playerDisplayName){ var playerDisplayName = message.member.username}
 		if (message.author.bot === true) {
 			return;
 		}
+		
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
 

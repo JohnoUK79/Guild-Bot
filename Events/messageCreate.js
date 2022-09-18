@@ -1,4 +1,4 @@
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton } = require('discord.js');
+const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Guild } = require('discord.js');
 const sql = require("../config/Database");
 const interactionCreate = require('./interactionCreate');
 time = require('../config/timestamp')
@@ -14,6 +14,8 @@ module.exports = {
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
 
+		GuildName = message.guild.name
+
 		const updatePlayer =  new MessageActionRow()
 				.addComponents(
 		new MessageButton()
@@ -27,10 +29,10 @@ module.exports = {
 		.setTitle('Welcome to the PH Family')
 		.setURL('http://www.phfamily.co.uk')
 		.setThumbnail(message.member.displayAvatarURL())
-		.setAuthor({ name: playerDisplayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
-		.setDescription(`Welcome **${playerDisplayName}**!`)
+		.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setDescription(`Welcome **<@${message.member.id}>**!`)
 		.addFields(
-			{ name: `Name:`, value: `${playerDisplayName}` },
+			{ name: `Name:`, value: `${message.member.displayName}` },
 			{ name: `Points:`, value: `${score}` },
 			{ name: 'Welcome to the PH Family.', value: `Stay active in our servers for regular rewards!`, inline: true },
 			)
@@ -47,7 +49,7 @@ module.exports = {
 			var score = Math.floor(Math.random() * 150) * 3;
 			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${GuildName}');`)
 			await message.reply({
-				content: `Welcome to the PH Family **${playerDisplayName}**.\nWe look forward to you becoming a valued member of our community!`,
+				content: `Welcome to the PH Family **${message.member.displayName}**.\nWe look forward to you becoming a valued member of our community!`,
 				components: [updatePlayer],
 				embeds: [newPlayer]
 			});
@@ -134,7 +136,7 @@ module.exports = {
             .setTitle('Level Up')
             .setURL('http://www.phfamily.co.uk')
             .setThumbnail(message.member.displayAvatarURL())
-            .setAuthor({ name: playerDisplayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
+            .setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
             .setDescription(`Congratulations **<@${message.member.id}>** you have levelled up!`)
             .addFields(
                 { name: `Name:`, value: `<@${message.member.id}>` },
@@ -171,5 +173,5 @@ module.exports = {
 				components: [updatePlayer],
 			}) 
 		}
-		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${playerDisplayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`)}
+		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`)}
 }; 

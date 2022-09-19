@@ -22,7 +22,7 @@ module.exports = {
 
         console.log('================ PH40 BOT Ready! ================');
         
-             const guildSettingsUpdate = nodeCron.schedule("0 0 * * *", () => {
+              const guildSettingsUpdate = nodeCron.schedule("0 0 * * *", () => {
                 console.log("Guild Settings Update")
 
                 client.guilds.cache.map(r => {
@@ -39,7 +39,7 @@ module.exports = {
                     guildUpdate = sql.Execute(`INSERT INTO settings (guild_id, guild_name, owner_id, guild_description, updates_channel, system_channel, rules_channel) VALUES ('${id}', '${name}', '${owner}', '${description}', '${updates}', '${system}', '${rules}') ON DUPLICATE KEY UPDATE guild_name = '${name}', owner_id = '${owner}', guild_description = '${description}', updates_channel = '${updates}', system_channel = '${system}', rules_channel = '${rules}'`)
                 })       
                 console.log(`Guild Settings Updated`)      
-            }) 
+            })  
 
             const job = nodeCron.schedule("0 0,4,8,12,16,20 * * *", () => {
                 const jurisdictions = require('../data/jurisdictions');

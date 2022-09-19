@@ -235,10 +235,10 @@ module.exports = {
  
 			}
 
-			console.log('Player Registration')
+			console.log('Profile Updates')
 			if (discordLookup === interaction.member.id) {
-				console.log("Lookup Match")
-				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}');`)
+				console.log("Player Update")
+				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}') ON DUPLICATE KEY UPDATE request_name = '${usernameInput}', request_discord_id = '${interaction.member.id}', request_discord_username = '${interaction.member.displayName}', request_tag = '${tagInput}', request_city = '${cityInput}';`)
 				return interaction.reply({ empheral: true, content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **@Admin**` })
 			} else
 			if (discordLookup !== interaction.member.id) {

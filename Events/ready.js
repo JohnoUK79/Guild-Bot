@@ -2,15 +2,15 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v10');
 const { token, CLIENT_ID, GUILD_ID } = require('../config.json');
 const nodeCron = require("node-cron");
-const time = require('../config/timestamp');
-setDate = time.UTCdefault()
+const timestamp = require('../config/timestamp');
+setDate = timestamp.UTCdefault()
+const sql = require("../config/Database");
+
 
 module.exports = {
     name: 'ready',
     once: true,
     async execute(client, commands) {     
-        console.log("Guild ID - Guild Name - Guild Icon - Owner ID - Guild Description - Locale - Updates Channel - System Channel - Rules Channel")
-        console.log(client.guilds.cache.map(r => `${r.id} - ${r.name} - ${r.icon} - ${r.ownerId} - ${r.description} - ${r.preferredLocale} - ${r.publicUpdatesChannelId} - ${r.systemChannelId} - ${r.rulesChannelId}`));
         console.log(`${setDate} - Logged in as - ${client.user.tag}`);
         const rest = new REST({ version: '10' }).setToken(token);
         await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), { body: commands })
@@ -20,6 +20,24 @@ module.exports = {
             .catch(console.error);
 
         console.log('================ BOT Ready! ================');
+        
+             const guildSettingsUpdate = nodeCron.schedule("0 0 * * *", () => {
+                console.log("Guild Settings Update")
+                client.guilds.cache.map(r => {
+                    const id = r.id
+                    const name = r.name
+                    const icon = r.icon
+                    const owner = r.ownerId
+                    const description = r.description
+                    const system = r.systemChannelId
+                    const rules = r.rulesChannelId
+                    const updates = r.publicUpdatesChannelId
+                    console.log("Guild ID - Guild Name - Owner ID - Guild Description - Updates Channel - System Channel - Rules Channel")
+                    console.log(id, name, icon, owner, description, system, rules, updates)
+                    guildUpdate = sql.Execute(`INSERT INTO settings (guild_id, guild_name, owner_id, guild_description, updates_channel, system_channel, rules_channel) VALUES ('${id}', '${name}', '${owner}', '${description}', '${updates}', '${system}', '${rules}') ON DUPLICATE KEY UPDATE guild_name = '${name}', owner_id = '${owner}', guild_description = '${description}', updates_channel = '${updates}', system_channel = '${system}', rules_channel = '${rules}'`)
+                })             
+            }) 
+
             const job = nodeCron.schedule("0 0,4,8,12,16,20 * * *", () => {
                 const jurisdictions = require('../data/jurisdictions');
                 const jurisdictionsChannelIDs = [
@@ -42,7 +60,7 @@ module.exports = {
                 const dayOfWeeek = (new Date()).getDay();
             console.log(new Date().toLocaleString(), "Jurisdiction Event Starting");
 
-            const { MessageEmbed } = require('discord.js');
+            const { MessageEmbed, Client } = require('discord.js');
                     
                     if( (hourUTC % 4) !== 0) return console.log('Jurisdiction Already Running!');
 
@@ -70,7 +88,7 @@ module.exports = {
 
                         )
                         .setTimestamp()
-                        .setFooter({ text: `${jurisdiction.title}.`, iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+                        .setFooter({ text: `${jurisdiction.title}.`, iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg' });
 
 
                     for (let i = 0; i < jurisdictionsChannelIDs.length; i++) {

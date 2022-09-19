@@ -1,7 +1,7 @@
 const timestamp = require('time-stamp');
 const time = require('../config/timestamp')
 const sql = require("../config/Database");
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Modal, TextInputComponent } = require('discord.js');
+const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Modal, TextInputComponent, Guild } = require('discord.js');
 const { ModalBuilder } = require('@discordjs/builders');
 const { TextInputStyle } = require('discord-api-types/v10');
 
@@ -10,6 +10,8 @@ module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
 		const setDate = time.default()
+		GuildName = interaction.guild.name
+		console.log(GuildName)
         board = await sql.Execute(`select * from levels where 1 ORDER BY points DESC;`);
 
         const Levels =   new MessageActionRow()
@@ -238,8 +240,12 @@ module.exports = {
 			console.log('Profile Updates')
 			if (discordLookup === interaction.member.id) {
 				console.log("Player Update")
+				var oldInfo = (`${nameLookup} - ${tagLookup} - ${cityLookup}`)
+				var newInfo = (`${usernameInput} - ${tagInput} - ${cityInput}`)
 				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}') ON DUPLICATE KEY UPDATE request_name = '${usernameInput}', request_discord_id = '${interaction.member.id}', request_discord_username = '${interaction.member.displayName}', request_tag = '${tagInput}', request_city = '${cityInput}';`)
-				return interaction.reply({ empheral: true, content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **@Admin**` })
+				let updatePlayers = await sql.Execute(`UPDATE players SET last_known_name = '${usernameInput}', last_known_tag = '${tagInput}', date_last_known = '${setDate}', discord ='${interaction.member.id}', discord_name = '${interaction.member.displayName}', discord_server = '${GuildName}', last_city = '${cityInput}' WHERE player_id = ${uidInput}`)
+				let changeLog = await sql.Execute(`INSERT INTO changelog (player_id, discord_id, discord_name, old_info, new_info) VALUES ('${uidInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${oldInfo}', '${newInfo}')`)
+				return interaction.reply({ content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been completed.\n\nUse the **/search** command to see your new details. Any issues message **@Dekes**` })
 			} else
 			if (discordLookup !== interaction.member.id) {
 				console.log('Already Registered')

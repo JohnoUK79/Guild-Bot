@@ -47,8 +47,8 @@ module.exports = {
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
             .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
-            .setDescription(pollTitle)
-            .setThumbnail('https://i.ibb.co/xXQ3mmb/7084-E1-DD-6260-4771-92-FD-03-CE9-C8-E5-F89.jpg')
+            .setDescription(`**${pollTitle}**`)
+            .setThumbnail('http://phfamily.co.uk/img/gifs/Poll.gif')
             .addFields(
                 { name: `🅰️`, value: `${pollOption1}` },
                 { name: `🅱️`, value: `${pollOption2}` },
@@ -56,9 +56,9 @@ module.exports = {
                 { name: `❎`, value: `${pollOption4}` },
 
             )
-            //.setImage(`${Data[0].player_image}`)
+            //.setImage(`http://phfamily.co.uk/img/gifs/Poll.gif`)
             .setTimestamp()
-            .setFooter({ text: 'PH Family Vote.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+            .setFooter({ text: 'PH Family Vote.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg' });
         const replied = await Interaction.reply({
 
             ephemeral: false,

@@ -15,15 +15,17 @@ module.exports = {
         const rest = new REST({ version: '10' }).setToken(token);
         await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), { body: commands })
             .then(() => {
-                console.log('Successfully registered guild application commands');
+                console.log(`Successfully registered guild application commands for Guild: ${GUILD_ID}`);
             })
             .catch(console.error);
 
-        console.log('================ BOT Ready! ================');
+        console.log('================ PH40 BOT Ready! ================');
         
              const guildSettingsUpdate = nodeCron.schedule("0 0 * * *", () => {
                 console.log("Guild Settings Update")
+
                 client.guilds.cache.map(r => {
+                    //console.log(r.roles.map())
                     const id = r.id
                     const name = r.name
                     const icon = r.icon
@@ -32,10 +34,11 @@ module.exports = {
                     const system = r.systemChannelId
                     const rules = r.rulesChannelId
                     const updates = r.publicUpdatesChannelId
-                    console.log("Guild ID - Guild Name - Owner ID - Guild Description - Updates Channel - System Channel - Rules Channel")
+                    console.log("Guild ID - Guild Name - Guild Icon - Owner ID - Guild Description - System Channel - Rules Channel - Updates Channel")
                     console.log(id, name, icon, owner, description, system, rules, updates)
                     guildUpdate = sql.Execute(`INSERT INTO settings (guild_id, guild_name, owner_id, guild_description, updates_channel, system_channel, rules_channel) VALUES ('${id}', '${name}', '${owner}', '${description}', '${updates}', '${system}', '${rules}') ON DUPLICATE KEY UPDATE guild_name = '${name}', owner_id = '${owner}', guild_description = '${description}', updates_channel = '${updates}', system_channel = '${system}', rules_channel = '${rules}'`)
-                })             
+                })       
+                console.log(`Guild Settings Updated`)      
             }) 
 
             const job = nodeCron.schedule("0 0,4,8,12,16,20 * * *", () => {

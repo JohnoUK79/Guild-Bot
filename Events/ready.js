@@ -11,6 +11,7 @@ module.exports = {
     name: 'ready',
     once: true,
     async execute(client, commands) {     
+        
         console.log(`${setDate} - Logged in as - ${client.user.tag}`);
         const rest = new REST({ version: '10' }).setToken(token);
         await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), { body: commands })
@@ -25,7 +26,6 @@ module.exports = {
                 console.log("Guild Settings Update")
 
                 client.guilds.cache.map(r => {
-                    //console.log(r.roles.map())
                     const id = r.id
                     const name = r.name
                     const icon = r.icon

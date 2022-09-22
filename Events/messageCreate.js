@@ -168,7 +168,6 @@ module.exports = {
 		if (level > initiallevel) {
 			console.log("Level Up")
  			await message.guild.channels.cache.get(LevelUpChannel).send({
-				//content: `**Congratulations**, You are now **Level ${level}**.\n**Thank You** for being a valued member of our community!`,
 				embeds: [levelup],
 				components: [updatePlayer],
 			}) 

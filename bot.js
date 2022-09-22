@@ -22,7 +22,8 @@ const client = new Client({
         Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
         Intents.FLAGS.DIRECT_MESSAGE_TYPING,
         Intents.FLAGS.GUILD_SCHEDULED_EVENTS,
-    ]
+    ],
+    partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 })
 
 //RPC client

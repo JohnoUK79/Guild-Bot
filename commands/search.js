@@ -32,6 +32,14 @@ const player =  new MessageActionRow()
                         .setLabel('Request Player Update')
                         .setStyle('SECONDARY'),
                 )
+
+const updatePlayer =  new MessageActionRow()
+				.addComponents(
+		new MessageButton()
+				.setCustomId('UID')
+				.setLabel('Add in Game User ID to profile!')
+				.setStyle('PRIMARY'),
+		)
     
 
 const full = new MessageActionRow()
@@ -67,13 +75,13 @@ module.exports = {
         ),
     async execute(Interaction) {
         const id = parseInt(Interaction.options.getString("id"));
-        if(isNaN(id)) return Interaction.reply( {content: "You have entered invalid details, please input a valid User ID!"});
+        if(isNaN(id)) return Interaction.reply( {content: "You have entered invalid details, please input a valid User ID! Any issues message **<@322100798651760640>**"});
         
 
         Data = await sql.Execute('select * from players where player_id = '+ id +';');
         console.log(timestamp.utc('YYYY/MM/DD HH:mm:ss'))
         console.log(id)
-        if (Data.length === 0) return Interaction.reply({ content: `I could not find any player with the ID **${id}**, please check the ID and try again! Any issues messages Genesis or Dekes.`, ephemeral: false });
+        if (Data.length === 0) return Interaction.reply({ content: `I could not find any player with the ID **${id}**, please check the ID and try again! Any issues messages Genesis or **<@322100798651760640>**.`, ephemeral: false });
         const playersearch = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle('PH Family Player Database')
@@ -96,7 +104,7 @@ module.exports = {
 
         Interaction.reply({
             content: `Hey **${Interaction.member.displayName}**, I have found the following details for **${id}**.`,
-            //components: [player],
+            components: [updatePlayer],
             ephemeral: false,
             embeds: [playersearch]
         });

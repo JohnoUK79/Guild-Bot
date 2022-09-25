@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
+const sql = require("../config/Database");
 
 module.exports = {
 
@@ -29,7 +30,7 @@ module.exports = {
         var message = Interaction.options.getString('message');
         var emoji = Interaction.options.getString('emoji');
         var role = Interaction.options.getString('role');
-        
+        //console.log(Interaction)
         const addRole = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle(`PH Family`)
@@ -52,6 +53,8 @@ module.exports = {
             embeds: [addRole],
         });
         
-        
+        addRoleDB = await sql.Execute(`INSERT INTO reactions (guild_id, message_id, emoji, role_id, server_name, added_by) VALUES ('${guildId}', '${message}', '${emoji}', '${role}', '${Interaction.member.guild.name}', '${Interaction.member.nickname}');`)
+        console.log(addRoleDB)
+        console.log(Interaction.member.guild.channels.fetch(Interaction.channelId))
     },
 };

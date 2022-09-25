@@ -63,6 +63,7 @@ module.exports = {
 		Players = await sql.Execute(`select * from players where player_id = ${Levels[0].player_id}`);}
 				
 		if (!Players) {
+			var score = Math.floor(Math.random() * 150) * 3;
 			let playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
 		} else {var playerImage = Players[0].player_image
 			playerId = Levels[0].player_id

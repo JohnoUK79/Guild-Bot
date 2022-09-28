@@ -1,57 +1,51 @@
-const { Interaction, ReactionUserManager, ReactionCollector, ReactionEmoji, ReactionManager, Message, Collector, Client, ClientUser, RoleManager, User } = require("discord.js");
+const { Interaction, MessageReaction, ReactionUserManager, ReactionCollector, ReactionEmoji, ReactionManager, Message, Collector, Client, ClientUser, RoleManager, User } = require("discord.js");
 const sql = require("../config/Database");
 
 
-
 module.exports = {
+    class:'extends',
     name: 'messageReactionAdd',
-        async execute(reaction, user) { 
+        async execute(messageReaction, user) { 
+            //if(this.client.user === user) return;
+            const { message, emoji } = messageReaction;
+            const member = message.guild.members.cache.get(user.id);
+            let userAddRole = user.id         
+            let messageId = messageReaction.message.id
+            let emojiName = messageReaction.emoji.name
+            let guildId = messageReaction.message.guildId
+            let newuser = user
 
-            if (reaction.partial) {
+            if (messageReaction.partial) {
                 // If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled
                 try {
-                    await reaction.fetch();
+                    await messageReaction.fetch();
                     //console.log(reaction)
-                    let messageId = reaction.message.id
-                    let emoji = reaction.emoji.name
-                    let guildId = reaction.message.guildId
+                    let messageId = messageReaction.message.id
+                    let emojiName = messageReaction.emoji.name
+                    let guildId = messageReaction.message.guildId
                     let newuser = user
-                    console.log(`Partial - ${emoji}  from ${messageId} in ${guildId} by ${newuser}`);
+                    console.log(`Partial - ${emojiName}  from ${messageId} in ${guildId} by ${newuser}`);
                     //addRole = await sql.Execute(`SELECT * FROM reactions WHERE guild_id = '${guildId}' AND message_id = '${messageId}' AND emoji = '${emoji}';`)
-                    //console.log(addRole);
+                    //console.log(discord)
                     return;
 
                 } catch (error) {
                     console.error('Something went wrong when fetching the message:', error);
                     return;
                 }
-            } 
+            }
 
-            let userAddRole = user.id         
-            let messageId = reaction.message.id
-            let emoji = reaction.emoji.name
-            let guildId = reaction.message.guildId
-            let newuser = user
-            console.log(`Full - ${emoji} on ${messageId} in ${guildId} by ${newuser}`);
+            console.log(`Full - ${emojiName} on ${messageId} in ${guildId} by ${newuser}`);
             const addRole = await sql.Execute(`SELECT * FROM reactions WHERE guild_id = '${guildId}' AND message_id = '${messageId}' AND emoji = '${emoji}';`)
             if (addRole) {
                 for (let i = 0; i < addRole.length; i++) {
                     let roleId = addRole[i].role_id
                     console.log(roleId)
-                    console.log(userAddRole)
-                    console.log(addRole[i])
-                    //console.log(reaction)
-
-
-
-
-                    //var guild = await reaction.guilds.fetch(guildId)
-                    //const member = await guild.members.fetch(userAddRole)
-                    //const role = await guild.roles.fetch(roleId)
-                    //member.roles.add(role) 
-
-
-
+                    //console.log(userAddRole)
+                    //console.log(addRole[i])
+                    let rrRole = '964880198086578197'//message.guild.roles.cache.get(roleId)
+                                        
+                    await member.roles.add(rrRole)  
 
                 }
             } else return

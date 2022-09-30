@@ -3,7 +3,7 @@ const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, Messa
 const sql = require("../config/Database");
 
 module.exports = {
-
+    userPerms:("ADMINISTRATOR"),
     data: new SlashCommandBuilder()
         .setName("add-role")
         .setDescription("Add Reactions Roles to Selected Message!")
@@ -44,7 +44,7 @@ module.exports = {
                 { name: `Emoji`, value: `${emoji}` },
                 { name: `Role`, value: `${role}` },
             )
-            .setImage(`http://phfamily.co.uk/img/gifs/PH-Family-Dark.jpg`)
+            .setImage(`http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg`)
             .setTimestamp()
             .setFooter({ text: 'PH Family - Reaction Roles.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg' });
             await Interaction.reply({
@@ -53,8 +53,8 @@ module.exports = {
             embeds: [addRole],
         });
         
-        addRoleDB = await sql.Execute(`INSERT INTO reactions (guild_id, message_id, emoji, role_id, server_name, added_by) VALUES ('${guildId}', '${message}', '${emoji}', '${role}', '${Interaction.member.guild.name}', '${Interaction.member.nickname}');`)
+        let id = role.replace(/\D+/g, '');
+        addRoleDB = await sql.Execute(`INSERT INTO reactions (guild_id, message_id, emoji, role_id, server_name, added_by) VALUES ('${guildId}', '${message}', '${emoji}', '${id}', '${Interaction.member.guild.name}', '${Interaction.member.nickname}');`)
         console.log(addRoleDB)
-        console.log(Interaction.member.guild.channels.fetch(Interaction.channelId))
     },
 };

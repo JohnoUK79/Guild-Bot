@@ -1,20 +1,55 @@
+const { Interaction, MessageReaction, ReactionUserManager, ReactionCollector, ReactionEmoji, ReactionManager, Message, Collector, Client, ClientUser, RoleManager, User } = require("discord.js");
 const sql = require("../config/Database");
 
 module.exports = {
+    class:'extends',
     name: 'messageReactionRemove',
-    async execute(reaction) { 
-        if (reaction.partial) {
+    async execute(messageReaction, user) { 
+        const { message, emoji } = messageReaction;
+        const member = message.guild.members.cache.get(user.id);
+        let userAddRole = user.id         
+        let messageId = messageReaction.message.id
+        let emojiName = messageReaction.emoji.name
+        let guildId = messageReaction.message.guildId
+        let newuser = user
+
+        if (messageReaction.partial) {
             // If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled
             try {
-                await reaction.fetch();
-                console.log(`Partial`, reaction.message.channelId)
+                await messageReaction.fetch();
+                let messageId = messageReaction.message.id
+                let emojiName = messageReaction.emoji.name
+                let guildId = messageReaction.message.guildId
+                let newuser = user
+                console.log(`Partial Emoji Removed - ${emojiName}  from ${messageId} in ${guildId} by ${newuser}`);
+                const addRole = await sql.Execute(`SELECT * FROM reactions WHERE guild_id = '${guildId}' AND message_id = '${messageId}' AND emoji = '${emoji}';`)
+            if (addRole) {
+                for (let i = 0; i < addRole.length; i++) {
+                let roleId = addRole[i].role_id
+                let rrRole = message.guild.roles.cache.get(roleId)                                       
+                await member.roles.remove(rrRole)  
+
+            }
+        } else return
+                return;
+
             } catch (error) {
                 console.error('Something went wrong when fetching the message:', error);
-                // Return as `reaction.message.author` may be undefined/null
                 return;
             }
-        } else {            
-        console.log(reaction.message.channelId)
-    }
+        }
+
+        console.log(`Full Emoji Removed - ${emojiName} on ${messageId} in ${guildId} by ${newuser}`);
+        const addRole = await sql.Execute(`SELECT * FROM reactions WHERE guild_id = '${guildId}' AND message_id = '${messageId}' AND emoji = '${emoji}';`)
+        if (addRole) {
+            for (let i = 0; i < addRole.length; i++) {
+                let roleId = addRole[i].role_id
+                let rrRole = message.guild.roles.cache.get(roleId)                                       
+                await member.roles.remove(rrRole)  
+
+            }
+        } else return
+        
+
     }
 };

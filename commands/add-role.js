@@ -1,10 +1,13 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const { PermissionFlagsBits } = require('discord-api-types/v10');
 const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
 const sql = require("../config/Database");
 
 module.exports = {
     userPerms:("ADMINISTRATOR"),
     data: new SlashCommandBuilder()
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
+
         .setName("add-role")
         .setDescription("Add Reactions Roles to Selected Message!")
 

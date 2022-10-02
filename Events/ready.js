@@ -34,35 +34,18 @@ module.exports = {
                     const system = r.systemChannelId
                     const rules = r.rulesChannelId
                     const updates = r.publicUpdatesChannelId
-                    console.log("Guild ID - Guild Name - Guild Icon - Owner ID - Guild Description - System Channel - Rules Channel - Updates Channel")
-                    console.log(id, name, icon, owner, description, system, rules, updates)
                     guildUpdate = sql.Execute(`INSERT INTO settings (guild_id, guild_name, owner_id, guild_description, updates_channel, system_channel, rules_channel) VALUES ('${id}', '${name}', '${owner}', '${description}', '${updates}', '${system}', '${rules}') ON DUPLICATE KEY UPDATE guild_name = '${name}', owner_id = '${owner}', guild_description = '${description}', updates_channel = '${updates}', system_channel = '${system}', rules_channel = '${rules}'`)
                 })       
                 console.log(`Guild Settings Updated`)      
             })  
-
             const job = nodeCron.schedule("0 0,4,8,12,16,20 * * *", () => {
                 const jurisdictions = require('../data/jurisdictions');
-                const jurisdictionsChannelIDs = [
-                //'915034347030073404',  // OP
-                //'938098999007772753',  // NVX
-                //'940013410207281283',  // PH40
-                //'940700957694656583',  // EFO
-                //'958408697703432274',  // PHEA
-                //'959761836054552636',  // New NVX
-                //'964673391917400104', // CAC 
-                //'995668352192229437', //?
-                //'1000526899124117535', //Test Server
-                '1005576978767806575', //PH Family Server
-                '874703585626165288', //WARMACHINE
-                '1013022541561995284', //PH40 Reborn
-                '958408697703432274', //PHAK / EA / AA Server
-                ];
+                const jurisdictionsChannelIDs = require(`../data/jurisdictionsChannelIDs`).jurisdictionsChannelIDs
                 console.log(jurisdictionsChannelIDs)
                 const hourUTC = (new Date()).getUTCHours();
                 const dayOfWeeek = (new Date()).getDay();
-            console.log(new Date().toLocaleString(), "Jurisdiction Event Starting");
 
+            console.log(new Date().toLocaleString(), "Jurisdiction Event Starting");
             const { MessageEmbed, Client } = require('discord.js');
                     
                     if( (hourUTC % 4) !== 0) return console.log('Jurisdiction Already Running!');

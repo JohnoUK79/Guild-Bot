@@ -20,18 +20,15 @@ module.exports = {
                 let messageId = messageReaction.message.id
                 let emojiName = messageReaction.emoji.name
                 let guildId = messageReaction.message.guildId
-                let newuser = user
-                console.log(`Partial Emoji Removed - ${emojiName}  from ${messageId} in ${guildId} by ${newuser}`);
-                const addRole = await sql.Execute(`SELECT * FROM reactions WHERE guild_id = '${guildId}' AND message_id = '${messageId}' AND emoji = '${emoji}';`)
+                const addRole = await sql.Execute(`SELECT * FROM reactions WHERE guild_id = '${guildId}' AND message_id = '${messageId}' AND emoji = '${emojiName}';`)
             if (addRole) {
                 for (let i = 0; i < addRole.length; i++) {
                 let roleId = addRole[i].role_id
                 let rrRole = message.guild.roles.cache.get(roleId)                                       
                 await member.roles.remove(rrRole)  
-
+                console.log(`Partial Reaction Role ${rrRole.name} Removed by ${user}`)
             }
-        } else return
-                return;
+        } else return;
 
             } catch (error) {
                 console.error('Something went wrong when fetching the message:', error);
@@ -39,13 +36,14 @@ module.exports = {
             }
         }
 
-        console.log(`Full Emoji Removed - ${emojiName} on ${messageId} in ${guildId} by ${newuser}`);
-        const addRole = await sql.Execute(`SELECT * FROM reactions WHERE guild_id = '${guildId}' AND message_id = '${messageId}' AND emoji = '${emoji}';`)
+        const addRole = await sql.Execute(`SELECT * FROM reactions WHERE guild_id = '${guildId}' AND message_id = '${messageId}' AND emoji = '${emojiName}';`)
         if (addRole) {
             for (let i = 0; i < addRole.length; i++) {
                 let roleId = addRole[i].role_id
                 let rrRole = message.guild.roles.cache.get(roleId)                                       
                 await member.roles.remove(rrRole)  
+                console.log(`Full Reaction Role ${rrRole.name} Removed by ${user}`)
+
 
             }
         } else return

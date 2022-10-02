@@ -4,7 +4,6 @@ const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, Messa
 const sql = require("../config/Database");
 
 module.exports = {
-    userPerms:("ADMINISTRATOR"),
     data: new SlashCommandBuilder()
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
 

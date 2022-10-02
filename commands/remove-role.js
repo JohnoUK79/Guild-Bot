@@ -1,9 +1,11 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const { PermissionFlagsBits } = require('discord-api-types/v10');
 const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
 
 module.exports = {
 
     data: new SlashCommandBuilder()
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
         .setName("remove-role")
         .setDescription("Remove Reactions Roles from Selected Message!")
 

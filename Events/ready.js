@@ -22,7 +22,7 @@ module.exports = {
 
         console.log('================ PH40 BOT Ready! ================');
         
-              const guildSettingsUpdate = nodeCron.schedule("0 0 * * *", () => {
+              const guildSettingsUpdate = nodeCron.schedule("0 21 * * *", () => {
                 console.log("Guild Settings Update")
 
                 client.guilds.cache.map(r => {
@@ -34,7 +34,7 @@ module.exports = {
                     const system = r.systemChannelId
                     const rules = r.rulesChannelId
                     const updates = r.publicUpdatesChannelId
-                    guildUpdate = sql.Execute(`INSERT INTO settings (guild_id, guild_name, owner_id, guild_description, updates_channel, system_channel, rules_channel) VALUES ('${id}', '${name}', '${owner}', '${description}', '${updates}', '${system}', '${rules}') ON DUPLICATE KEY UPDATE guild_name = '${name}', owner_id = '${owner}', guild_description = '${description}', updates_channel = '${updates}', system_channel = '${system}', rules_channel = '${rules}'`)
+                    guildUpdate = sql.Execute(`INSERT INTO settings (guild_id, guild_name, owner_id, guild_description, updates_channel, system_channel, rules_channel) VALUES ('${id}', '${name}', '${owner}', '${description}', '${updates}', '${system}', '${rules}') ON DUPLICATE KEY UPDATE guild_name = '${name}', owner_id = '${owner}', guild_description = '${description}', updates_channel = '${updates}', system_channel = '${system}', rules_channel = '${rules}', last_updated = '${setDate}'`)
                 })       
                 console.log(`Guild Settings Updated`)      
             })  

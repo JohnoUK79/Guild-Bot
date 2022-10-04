@@ -12,6 +12,7 @@ const jurisdictionsChannelIDs = [
     '874703585626165288', //WARMACHINE
     '1013022541561995284', //PH40 Reborn
     '958408697703432274', //PHAK / EA / AA Server
+    '1026959441708470302', //PHU - UNIVERSITY
     ];
 module.exports = {
     'jurisdictionsChannelIDs':     jurisdictionsChannelIDs,

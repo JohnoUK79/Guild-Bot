@@ -2,10 +2,35 @@ const fs = require('node:fs');
 const { Client, Intents, Collection } = require("discord.js");
 const rpc = require("discord-rpc");
 const { token, CLIENT_ID } = require('./config.json');
+const Discord = require('discord.js');
 
 //Discord client
 const client = new Client({
-    intents: [
+    makeCache: Discord.Options.cacheWithLimits({
+        ApplicationCommandManager: 0, // guild.commands
+        BaseGuildEmojiManager: 0, // guild.emojis
+        ChannelManager: 0, // client.channels
+        GuildChannelManager: 0, // guild.channels
+        GuildBanManager: 0, // guild.bans
+        GuildInviteManager: 0, // guild.invites
+        GuildManager: Infinity, // client.guilds
+        GuildMemberManager: 0, // guild.members
+        GuildStickerManager: 0, // guild.stickers
+        GuildScheduledEventManager: 0, // guild.scheduledEvents
+        MessageManager: 0, // channel.messages
+        PermissionOverwriteManager: 0, // channel.permissionOverwrites
+        PresenceManager: 0, // guild.presences
+        ReactionManager: 0, // message.reactions
+        ReactionUserManager: 0, // reaction.users
+        RoleManager: 0, // guild.roles
+        StageInstanceManager: 0, // guild.stageInstances
+        ThreadManager: 0, // channel.threads
+        ThreadMemberManager: 0, // threadchannel.members
+        UserManager: 0, // client.users
+        VoiceStateManager: 0 // guild.voiceStates
+      }),
+
+      intents: [
         Intents.FLAGS.GUILDS,
         Intents.FLAGS.GUILD_MEMBERS,
         Intents.FLAGS.GUILD_BANS,

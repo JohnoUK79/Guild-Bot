@@ -132,7 +132,6 @@ module.exports = {
 		newPoints = (points + score)
 		newLevel = (Levels[0].level + 1)
 		let LevelUpChannel = Settings[0].level_up_channel_id
-		console.log(LevelUpChannel)
 
 		const levelup = new MessageEmbed()
             .setColor('#0099ff')

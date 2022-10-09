@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { PermissionFlagsBits } = require('discord-api-types/v10');
+const sql = require("../config/Database");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -202,6 +203,8 @@ module.exports = {
 			hoist: true,
 		})
 		}
+		addRanks = await sql.Execute(`INSERT INTO settings (guild_id, Rank_10, Rank_20, Rank_30, Rank_40, Rank_50, Rank_60, Rank_70, Rank_80, Rank_90, Rank_100) VALUES ('${interaction.guild.id}', '${rolePrivate.id}', '${roleCorporal.id}', '${roleSergeant.id}', '${roleLieutenant.id}', '${roleCaptain.id}', '${roleMajor.id}', '${roleColonel.id}', '${roleMajorGeneral.id}', '${roleGeneral.id}', '${roleMajorGeneral.id}') ON DUPLICATE KEY UPDATE Rank_10 = '${rolePrivate.id}', Rank_20 = '${roleCorporal.id}', Rank_30 = '${roleSergeant.id}', Rank_40 = '${roleLieutenant.id}', Rank_50 = '${roleCaptain.id}', Rank_60 = '${roleMajor.id}', Rank_70 = '${roleColonel.id}', Rank_80 = '${roleMajorGeneral.id}', Rank_90 = '${roleGeneral.id}', Rank_100 = '${roleGeneralArmy.id}';`)
+        console.log(addRanks)
 		await interaction.editReply({ empheral: true, content: `Congratulations <@${interaction.user.id}>, Rank Roles Added!` })
 	},
 };

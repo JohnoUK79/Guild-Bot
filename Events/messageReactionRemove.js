@@ -9,7 +9,7 @@ module.exports = {
         const member = message.guild.members.cache.get(user.id);
         let userAddRole = user.id         
         let messageId = messageReaction.message.id
-        let emojiName = messageReaction.emoji.name
+        let emojiName = messageReaction.emoji.id
         let guildId = messageReaction.message.guildId
         let newuser = user
 
@@ -18,7 +18,7 @@ module.exports = {
             try {
                 await messageReaction.fetch();
                 let messageId = messageReaction.message.id
-                let emojiName = messageReaction.emoji.name
+                let emojiName = messageReaction.emoji.id
                 let guildId = messageReaction.message.guildId
                 const addRole = await sql.Execute(`SELECT * FROM reactions WHERE guild_id = '${guildId}' AND message_id = '${messageId}' AND emoji = '${emojiName}';`)
             if (addRole) {

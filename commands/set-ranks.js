@@ -2,6 +2,8 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { PermissionFlagsBits } = require('discord-api-types/v10');
 const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
 const sql = require("../config/Database");
+const timestamp = require('../config/timestamp');
+setDate = timestamp.UTCdefault()
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -73,10 +75,6 @@ module.exports = {
     async execute(Interaction) {
         
         var guildId = Interaction.guildId
-        var message = Interaction.options.getString('message');
-        var emoji = Interaction.options.getString('emoji');
-        var role = Interaction.options.getString('role');
-
         var level10 = Interaction.options.getString('rank10');
         var level20 = Interaction.options.getString('rank20');
         var level30 = Interaction.options.getString('rank30');
@@ -88,10 +86,6 @@ module.exports = {
         var level90 = Interaction.options.getString('rank90');
         var level100 = Interaction.options.getString('rank100');
 
-
-
-
-        //console.log(Interaction)
         const addRanks = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle(`PH Family`)
@@ -133,7 +127,7 @@ module.exports = {
         let r100 = level100.replace(/\D+/g, '');
 
 
-        updateRanks = await sql.Execute(`INSERT INTO settings (guild_id, Rank_10, Rank_20, Rank_30, Rank_40, Rank_50, Rank_60, Rank_70, Rank_80, Rank_90, Rank_100) VALUES ('${guildId}', '${r10}', '${r20}', '${r30}', '${r40}', '${r50}', '${r60}', '${r70}', '${r80}', '${r90}', '${r100}') ON DUPLICATE KEY UPDATE Rank_10 = '${r10}', Rank_20 = '${r20}', Rank_30 = '${r30}', Rank_40 = '${r40}', Rank_50 = '${r50}', Rank_60 = '${r60}', Rank_70 = '${r70}', Rank_80 = '${r80}', Rank_90 = '${r90}', Rank_100 = '${r100}';`)
+        updateRanks = await sql.Execute(`INSERT INTO settings (guild_id, Rank_10, Rank_20, Rank_30, Rank_40, Rank_50, Rank_60, Rank_70, Rank_80, Rank_90, Rank_100) VALUES ('${guildId}', '${r10}', '${r20}', '${r30}', '${r40}', '${r50}', '${r60}', '${r70}', '${r80}', '${r90}', '${r100}') ON DUPLICATE KEY UPDATE Rank_10 = '${r10}', Rank_20 = '${r20}', Rank_30 = '${r30}', Rank_40 = '${r40}', Rank_50 = '${r50}', Rank_60 = '${r60}', Rank_70 = '${r70}', Rank_80 = '${r80}', Rank_90 = '${r90}', Rank_100 = '${r100}', last_updated = '${setDate}';`)
         console.log(updateRanks)
     },
 };

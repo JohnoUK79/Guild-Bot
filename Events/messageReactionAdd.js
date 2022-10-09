@@ -12,8 +12,7 @@ module.exports = {
             let messageId = messageReaction.message.id
             let emojiName = messageReaction.emoji.name
             let guildId = messageReaction.message.guildId
-            let newuser = user
-
+            
             if (messageReaction.partial) {
                 // If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled
                 try {
@@ -21,6 +20,7 @@ module.exports = {
                     let messageId = messageReaction.message.id
                     let emojiName = messageReaction.emoji.name
                     let guildId = messageReaction.message.guildId
+
                     const addRole = await sql.Execute(`SELECT * FROM reactions WHERE guild_id = '${guildId}' AND message_id = '${messageId}' AND emoji = '${emojiName}';`)
                 if (addRole) {
                     for (let i = 0; i < addRole.length; i++) {
@@ -44,8 +44,6 @@ module.exports = {
                     let rrRole = message.guild.roles.cache.get(roleId)                                       
                     await member.roles.add(rrRole)  
                     console.log(`Full Reaction Role ${rrRole.name} Added by ${user}`)
-
-
                 }
             } else return
             

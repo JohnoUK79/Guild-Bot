@@ -2,6 +2,8 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { PermissionFlagsBits } = require('discord-api-types/v10');
 const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
 const sql = require("../config/Database");
+const timestamp = require('../config/timestamp');
+setDate = timestamp.UTCdefault()
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -27,12 +29,12 @@ module.exports = {
         ),
 
     async execute(Interaction) {
-        
+        var channel = Interaction.channel.name
         var guildId = Interaction.guildId
         var message = Interaction.options.getString('message');
         var emoji = Interaction.options.getString('emoji');
         var role = Interaction.options.getString('role');
-        //console.log(Interaction)
+        console.log(emoji)
         const addRole = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle(`PH Family`)
@@ -50,13 +52,11 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: 'PH Family - Reaction Roles.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg' });
             await Interaction.reply({
-
             ephemeral: true,
             embeds: [addRole],
         });
-        
         let id = role.replace(/\D+/g, '');
-        addRoleDB = await sql.Execute(`INSERT INTO reactions (guild_id, message_id, emoji, role_id, server_name, added_by) VALUES ('${guildId}', '${message}', '${emoji}', '${id}', '${Interaction.member.guild.name}', '${Interaction.member.nickname}');`)
+        addRoleDB = await sql.Execute(`INSERT INTO reactions (guild_id, message_id, channel_name, emoji, role_id, server_name, added_by, date_added) VALUES ('${guildId}', '${message}', '${channel}', '${emoji}', '${id}', '${Interaction.member.guild.name}', '${Interaction.member.nickname}', '${setDate}');`)
         console.log(addRoleDB)
     },
 };

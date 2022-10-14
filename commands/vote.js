@@ -23,7 +23,7 @@ module.exports = {
         if(!voteDescription) {voteDescription = `See above!`}
         const voteEmbed = new MessageEmbed()
             .setColor('#0099ff')
-            .setTitle(`PH Family Vote!`)
+            .setTitle(`SE17 Elite - Vote!`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
             .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
@@ -32,9 +32,9 @@ module.exports = {
             .addFields(
                 { name: `Description`, value: `${voteDescription}` },
             )
-            //.setImage(`http://phfamily.co.uk/img/gifs/Vote.gif`)
+            .setImage(`http://phfamily.co.uk/img/gifs/Vote.gif`)
             .setTimestamp()
-            .setFooter({ text: 'PH Family Vote.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg' });
+            .setFooter({ text: 'SE17 Elite - Vote.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
         const replied = await Interaction.reply({
             ephemeral: false,
             embeds: [voteEmbed],

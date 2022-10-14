@@ -22,7 +22,7 @@ module.exports = {
 
         console.log('================ PH40 BOT Ready! ================');
         
-              const guildSettingsUpdate = nodeCron.schedule("0 21 * * *", () => {
+              const guildSettingsUpdate = nodeCron.schedule("0 22 * * *", () => {
                 console.log("Guild Settings Update")
 
                 client.guilds.cache.map(r => {
@@ -74,7 +74,7 @@ module.exports = {
 
                         )
                         .setTimestamp()
-                        .setFooter({ text: `${jurisdiction.title}.`, iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg' });
+                        .setFooter({ text: `${jurisdiction.title}.`, iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
 
 
                     for (let i = 0; i < jurisdictionsChannelIDs.length; i++) {

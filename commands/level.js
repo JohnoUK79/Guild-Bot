@@ -34,7 +34,7 @@ module.exports = {
 
 		const unknownLevel = new MessageEmbed()
 		.setColor('#0099ff')
-		.setTitle('PH Family Rank Card')
+		.setTitle('SE17 Elite - Rank Card')
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
@@ -46,11 +46,11 @@ module.exports = {
 			)
 		.setImage(playerImage)
 		.setTimestamp()
-		.setFooter({ text: `PH Family Rank - ${interaction.member.displayName}.`, iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+		.setFooter({ text: `SE17 Elite - Rank - ${interaction.member.displayName}.`, iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
 
 		const playerLevel = new MessageEmbed()
 		.setColor('#0099ff')
-		.setTitle('PH Family Rank Card')
+		.setTitle('SE17 Elite - Rank Card')
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
@@ -64,7 +64,7 @@ module.exports = {
 			)
 		.setImage(playerImage)
 		.setTimestamp()
-		.setFooter({ text: `PH Family Rank - ${interaction.member.displayName}.`, iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+		.setFooter({ text: `SE17 Elite - Rank - ${interaction.member.displayName}.`, iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
 
 
 
@@ -74,4 +74,3 @@ module.exports = {
 		
 	},
 };
-            //components: [player],

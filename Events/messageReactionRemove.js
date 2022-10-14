@@ -9,17 +9,17 @@ module.exports = {
         const member = message.guild.members.cache.get(user.id);
         let userAddRole = user.id         
         let messageId = messageReaction.message.id
-        let emojiName = messageReaction.emoji.id
+        let emojiName = messageReaction.emoji.name
         let guildId = messageReaction.message.guildId
-        let newuser = user
-
+        
         if (messageReaction.partial) {
             // If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled
             try {
                 await messageReaction.fetch();
                 let messageId = messageReaction.message.id
-                let emojiName = messageReaction.emoji.id
+                let emojiName = messageReaction.emoji.name
                 let guildId = messageReaction.message.guildId
+
                 const addRole = await sql.Execute(`SELECT * FROM reactions WHERE guild_id = '${guildId}' AND message_id = '${messageId}' AND emoji = '${emojiName}';`)
             if (addRole) {
                 for (let i = 0; i < addRole.length; i++) {
@@ -43,8 +43,6 @@ module.exports = {
                 let rrRole = message.guild.roles.cache.get(roleId)                                       
                 await member.roles.remove(rrRole)  
                 console.log(`Full Reaction Role ${rrRole.name} Removed by ${user}`)
-
-
             }
         } else return
         

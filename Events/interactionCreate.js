@@ -41,13 +41,13 @@ module.exports = {
 
         const Top10 = new MessageEmbed()
 		.setColor('#0099ff')
-		.setTitle('PH Family Levels Leaderboard')
+		.setTitle('SE17 Elite - Levels Leaderboard')
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `PH Family Levels Board`, value: `**Name - Level - Points**\n` },
+			{ name: `SE17 Elite - Levels Board`, value: `**Name - Level - Points**\n` },
 			{ name: `Rank 1 :first_place::`, value: `${board[0].discord_username} - ${board[0].level} - ${board[0].points}` },
 			{ name: `Rank 2 :second_place::`, value: `${board[1].discord_username} - ${board[1].level} - ${board[1].points}` },
 			{ name: 'Rank 3 :third_place::', value: `${board[2].discord_username} - ${board[2].level} - ${board[2].points}` },
@@ -56,7 +56,7 @@ module.exports = {
 			)
 		//.setImage(`${Data[0].player_image}`) // to be linked to player search gif 
 		.setTimestamp()
-		.setFooter({ text: 'PH Family Shit Talker Leaderboard.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+		.setFooter({ text: 'SE17 Elite - Shit Talker Leaderboard.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
 
         const Top20 = new MessageEmbed()
 		.setColor('#0099ff')
@@ -66,7 +66,7 @@ module.exports = {
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `PH Family Levels Board`, value: `**Name - Level - Points**\n` },
+			{ name: `SE17 Elite - Levels Board`, value: `**Name - Level - Points**\n` },
 			{ name: `Rank 11 :`, value: `${board[10].discord_username} - ${board[10].level} - ${board[10].points}` },
 			{ name: `Rank 12 :`, value: `${board[11].discord_username} - ${board[11].level} - ${board[11].points}` },
 			{ name: 'Rank 13 :', value: `${board[12].discord_username} - ${board[12].level} - ${board[12].points}` },
@@ -81,18 +81,18 @@ module.exports = {
 			)
 		//.setImage(`${Data[0].player_image}`) // to be linked to player search gif 
 		.setTimestamp()
-		.setFooter({ text: 'PH Family Shit Talker Leaderboard.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+		.setFooter({ text: 'SE17 Elite - Shit Talker Leaderboard.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
 
 
         const Top30 = new MessageEmbed()
 		.setColor('#0099ff')
-		.setTitle('PH Family Levels Leaderboard')
+		.setTitle('SE17 Elite - Levels Leaderboard')
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `PH Family Levels Board`, value: `**Name - Level - Points**\n` },
+			{ name: `SE17 Elite - Levels Board`, value: `**Name - Level - Points**\n` },
 			{ name: `Rank 21 :`, value: `${board[20].discord_username} - ${board[20].level} - ${board[20].points}` },
 			{ name: `Rank 22 :`, value: `${board[21].discord_username} - ${board[21].level} - ${board[21].points}` },
 			{ name: 'Rank 23 :', value: `${board[22].discord_username} - ${board[22].level} - ${board[22].points}` },
@@ -107,17 +107,17 @@ module.exports = {
 			)
 		//.setImage(`${Data[0].player_image}`) // to be linked to player search gif 
 		.setTimestamp()
-		.setFooter({ text: 'PH Family Shit Talker Leaderboard.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+		.setFooter({ text: 'SE17 Elite - Shit Talker Leaderboard.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
 
         const Top40 = new MessageEmbed()
 		.setColor('#0099ff')
-		.setTitle('PH Family Levels Leaderboard')
+		.setTitle('SE17 Elite - Levels Leaderboard')
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `PH Family Levels Board`, value: `**Name - Level - Points**\n` },
+			{ name: `SE17 Elite - Levels Board`, value: `**Name - Level - Points**\n` },
 			{ name: `Rank 31 :`, value: `${board[30].discord_username} - ${board[30].level} - ${board[30].points}` },
 			{ name: `Rank 32 :`, value: `${board[31].discord_username} - ${board[31].level} - ${board[31].points}` },
 			{ name: 'Rank 33 :', value: `${board[32].discord_username} - ${board[32].level} - ${board[32].points}` },
@@ -132,12 +132,12 @@ module.exports = {
 			)
 		//.setImage(`${Data[0].player_image}`) // to be linked to player search gif 
 		.setTimestamp()
-		.setFooter({ text: 'PH Family Shit Talker Leaderboard.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+		.setFooter({ text: 'SE17 Elite - Shit Talker Leaderboard.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo' });
 
 
 		const Top50 = new MessageEmbed()
 		.setColor('#0099ff')
-		.setTitle('PH Family Levels Leaderboard')
+		.setTitle('SE17 Elite - Levels Leaderboard')
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
@@ -158,7 +158,7 @@ module.exports = {
 			)
 		//.setImage(`${Data[0].player_image}`) // to be linked to player search gif 
 		.setTimestamp()
-		.setFooter({ text: 'PH Family Shit Talker Leaderboard.', iconURL: 'https://i.ibb.co/r5xScqV/78893-FB5-9973-430-D-ABA2-A81-B13-D5-DC3-B.jpg' });
+		.setFooter({ text: 'SE17 Elite - Shit Talker Leaderboard.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo' });
 
 
 

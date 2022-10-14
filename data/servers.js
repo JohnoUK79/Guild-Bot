@@ -55,4 +55,6 @@ const SERVER_15 = {
     '991717149276110928': { allianceName: 'CAC', wpServer: 17, citiesGold: SERVER_17 },
     '964496256057630720': { allianceName: 'TEST', wpServer: 17, citiesGold: SERVER_17 },
     '874016988400332841': { allianceName: 'PHWR', wpServer: 17, citiesGold: SERVER_17 },
+    '1029701280077205524': { allianceName: 'SE17', wpServer: 17, citiesGold: SERVER_17 },
+
   };

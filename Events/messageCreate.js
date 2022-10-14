@@ -5,8 +5,13 @@ time = require('../config/timestamp')
 setDate = time.UTCdefault()
 
 module.exports = {
+	class: 'extends',
 	name: 'messageCreate',
 	async execute(message) {
+		if (message.channel.type == 'DM') {
+			console.log('Dm recieved!')
+			return;
+		}		
 		if (message.author.bot === true) {
 			return;
 		}
@@ -33,12 +38,12 @@ module.exports = {
 		.addFields(
 			{ name: `Buy Now!:`, value: `https://www.buymeacoffee.com/johnouk79` },
 			)
-		.setFooter({ text: 'Buy Dekes A Beer!.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Dark.jpg' });
+		.setFooter({ text: 'Buy Dekes A Beer!.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
 
 
 		const newPlayer = new MessageEmbed()
 		.setColor('#0099ff')
-		.setTitle('Welcome to the PH Family')
+		.setTitle('Welcome to SE17 Elite')
 		.setURL('http://www.phfamily.co.uk')
 		.setThumbnail(message.member.displayAvatarURL())
 		.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
@@ -46,11 +51,11 @@ module.exports = {
 		.addFields(
 			{ name: `Name:`, value: `${message.member.displayName}` },
 			{ name: `Points:`, value: `${score}` },
-			{ name: 'Welcome to the PH Family.', value: `Stay active in our servers for regular rewards!`, inline: true },
+			{ name: 'Welcome to SE17 Elite.', value: `Stay active in our servers for regular rewards!`, inline: true },
 			)
-		.setImage(`http://phfamily.co.uk/img/gifs/PH-Family-Dark.jpg`)
+		.setImage(`http://phfamily.co.uk/img/gifs/SE17-Logo.jpg`)
 		.setTimestamp()
-		.setFooter({ text: 'Welcome to the PH Family.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Dark.jpg' });
+		.setFooter({ text: 'Welcome to SE17 Elite.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
 
 		if (Levels.length === 0) {
 			console.log("New Member")
@@ -59,7 +64,7 @@ module.exports = {
 			var score = Math.floor(Math.random() * 150) * 3;
 			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${GuildName}');`)
 			await message.reply({
-				content: `Welcome to the PH Family **${message.member.displayName}**.\nWe look forward to you becoming a valued member of our community!`,
+				content: `Welcome to SE17 Elite **${message.member.displayName}**.\nWe look forward to you becoming a valued member of our community!`,
 				components: [updatePlayer],
 				embeds: [newPlayer]
 			});
@@ -147,7 +152,7 @@ module.exports = {
                 )
             .setImage(playerImage)
             .setTimestamp()
-            .setFooter({ text: 'Level Up - PH Family.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Dark.jpg' });
+            .setFooter({ text: 'Level Up - SE17 - Elite.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
 
 
 		let initiallevel = Levels[0].level

@@ -34,7 +34,7 @@ module.exports = {
         
         const removeRole = new MessageEmbed()
             .setColor('#0099ff')
-            .setTitle(`PH Family`)
+            .setTitle(`SE17 - Elite`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
             .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
@@ -45,9 +45,9 @@ module.exports = {
                 { name: `Emoji`, value: `${emoji}` },
                 { name: `Role`, value: `${role}` },
             )
-            .setImage(`http://phfamily.co.uk/img/gifs/PH-Family-Dark.jpg`)
+            .setImage(`http://phfamily.co.uk/img/gifs/SE17-Logo.jpg`)
             .setTimestamp()
-            .setFooter({ text: 'PH Family - Reaction Roles.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg' });
+            .setFooter({ text: 'PH Family - Reaction Roles.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
             await Interaction.reply({
 
             ephemeral: true,

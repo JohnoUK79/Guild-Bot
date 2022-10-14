@@ -43,7 +43,7 @@ module.exports = {
 
         const pollEmbed = new MessageEmbed()
             .setColor('#0099ff')
-            .setTitle(`PH Family Poll!`)
+            .setTitle(`SE17 Elite - Poll!`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
             .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
@@ -56,9 +56,9 @@ module.exports = {
                 { name: `❎`, value: `${pollOption4}` },
 
             )
-            //.setImage(`http://phfamily.co.uk/img/gifs/Poll.gif`)
+            .setImage(`http://phfamily.co.uk/img/gifs/Poll.gif`)
             .setTimestamp()
-            .setFooter({ text: 'PH Family Vote.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg' });
+            .setFooter({ text: 'SE17 Elitue - Poll!.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
         const replied = await Interaction.reply({
 
             ephemeral: false,

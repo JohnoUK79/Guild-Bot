@@ -14,7 +14,7 @@ module.exports = {
             .setTitle("Player Left!")
             .setDescription(`<@${member.id}> has left the server! \nThey could not handle the TRUTH!.`)
             .setThumbnail(member.user.displayAvatarURL())
-            .setFooter({ text: `${GUILD}`, iconURL: 'https://i.imgur.com/IxBdjfl.jpg' })
+            .setFooter({ text: `${GUILD}`, iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' })
             .setTimestamp();
 
             await member.guild.channels.cache.get(Channel_ID).send(

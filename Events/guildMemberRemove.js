@@ -5,6 +5,18 @@ module.exports = {
     name: "guildMemberRemove",
     async execute(member) {
         console.log("Member Left")
+        if (member.partial) {
+            try {
+                await member.fetch();
+                console.log("Partial Member")
+                //let messageId = member.message.id
+                //let emojiName = member.emoji.name
+
+            } catch (error) {
+                console.error('Something went wrong when fetching the message:', error);
+                return;
+            }
+        }
         Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         GUILD = member.guild.name
         

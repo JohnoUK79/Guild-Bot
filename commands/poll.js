@@ -58,7 +58,7 @@ module.exports = {
             )
             .setImage(`http://phfamily.co.uk/img/gifs/Poll.gif`)
             .setTimestamp()
-            .setFooter({ text: 'SE17 Elitue - Poll!.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
+            .setFooter({ text: 'SE17 Elite - Poll!.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
         const replied = await Interaction.reply({
 
             ephemeral: false,

@@ -4,11 +4,19 @@ const sql = require(`../config/Database`)
 module.exports = {
     name: "guildMemberAdd",
     async execute(member) {
-        if (member.partial) {
-            console.log(member.id)
-            return;
-        } else
         console.log("Member Joined")
+        if (member.partial) {
+            try {
+                await member.fetch();
+                console.log("Partial Member")
+                //let messageId = member.message.id
+                //let emojiName = member.emoji.name
+
+            } catch (error) {
+                console.error('Something went wrong when fetching the message:', error);
+                return;
+            }
+        }
         Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         CHANNEL_ID = Data[0].welcome_channel_id
         ROLE_ID = Data[0].welcome_role_id

@@ -74,22 +74,23 @@ module.exports = {
             .setRequired(true)
         ),
     async execute(Interaction) {
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
         const id = parseInt(Interaction.options.getString("id"));
         if(isNaN(id)) return Interaction.reply( {content: "You have entered invalid details, please input a valid User ID! Any issues message **<@322100798651760640>**"});
         
-
         Data = await sql.Execute('select * from players where player_id = '+ id +';');
         console.log(timestamp.utc('YYYY/MM/DD HH:mm:ss'))
         console.log(id)
         if (Data.length === 0) return Interaction.reply({ content: `I could not find any player with the ID **${id}**, please check the ID and try again! Any issues messages Genesis or **<@322100798651760640>**.`, ephemeral: false });
         const playersearch = new MessageEmbed()
             .setColor('#0099ff')
-            .setTitle('SE17 - Player Database')
+            .setTitle(`${guildName} - Player Database`)
             .setURL('http://www.phfamily.co.uk/player.html')
             .setThumbnail(Interaction.user.displayAvatarURL())
             .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
             .setDescription(` Player ID: ${Data[0].player_id}`)
-            .setThumbnail('http://phfamily.co.uk/img/gifs/SE17-Logo.jpg')
+            .setThumbnail(`${guildIcon}`)
             .addFields(
                 { name: `Name: ${Data[0].last_known_name}`, value: `Affiliation: ${Data[0].affiliation}` },
                 { name: `Tag: ${Data[0].last_known_tag}`, value: `Server: ${Data[0].server}` },
@@ -100,7 +101,7 @@ module.exports = {
             )
             .setImage(`${Data[0].player_image}`)
             .setTimestamp()
-            .setFooter({ text: 'SE17 Elite - Search Tool.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
+            .setFooter({ text: `${guildName} - Search Tool.`, iconURL: `${guildIcon}` });
 
         Interaction.reply({
             content: `Hey **${Interaction.member.displayName}**, I have found the following details for **${id}**.`,

@@ -17,6 +17,7 @@ module.exports = {
                 return;
             }
         }
+        guildIcon = interaction.member.guild.iconURL();
         Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         GUILD = member.guild.name
         
@@ -26,7 +27,7 @@ module.exports = {
             .setTitle("Player Left!")
             .setDescription(`<@${member.id}> has left the server! \nThey could not handle the TRUTH!.`)
             .setThumbnail(member.user.displayAvatarURL())
-            .setFooter({ text: `${GUILD}`, iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' })
+            .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();
 
             await member.guild.channels.cache.get(Channel_ID).send(

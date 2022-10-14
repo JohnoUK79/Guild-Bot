@@ -17,13 +17,14 @@ module.exports = {
         .setRequired(false)
         ),
     async execute(Interaction) {
-        
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
         const voteTitle = Interaction.options.getString('title');
         var voteDescription = Interaction.options.getString('description');
         if(!voteDescription) {voteDescription = `See above!`}
         const voteEmbed = new MessageEmbed()
             .setColor('#0099ff')
-            .setTitle(`SE17 Elite - Vote!`)
+            .setTitle(`${guildName} - Vote!`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
             .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
@@ -34,7 +35,7 @@ module.exports = {
             )
             .setImage(`http://phfamily.co.uk/img/gifs/Vote.gif`)
             .setTimestamp()
-            .setFooter({ text: 'SE17 Elite - Vote.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
+            .setFooter({ text: `${guildName} - Vote.`, iconURL: `${guildIcon}` });
         const replied = await Interaction.reply({
             ephemeral: false,
             embeds: [voteEmbed],

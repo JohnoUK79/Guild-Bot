@@ -73,7 +73,8 @@ module.exports = {
         ),
 
     async execute(Interaction) {
-        
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
         var guildId = Interaction.guildId
         var level10 = Interaction.options.getString('rank10');
         var level20 = Interaction.options.getString('rank20');
@@ -88,7 +89,7 @@ module.exports = {
 
         const addRanks = new MessageEmbed()
             .setColor('#0099ff')
-            .setTitle(`PH Family`)
+            .setTitle(`${guildName} - Set Ranks`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
             .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
@@ -106,9 +107,9 @@ module.exports = {
                 { name: `Rank 90`, value: `${level90}` },
                 { name: `Rank 100`, value: `${level100}` },
             )
-            .setImage(`http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg`)
+            .setImage(`${guildName}`)
             .setTimestamp()
-            .setFooter({ text: 'PH Family - Rank Roles.', iconURL: 'http://phfamily.co.uk/img/gifs/PH-Family-Red.jpg' });
+            .setFooter({ text: `${guildName} - Rank Roles.`, iconURL: `${guildIcon}` });
             await Interaction.reply({
 
             ephemeral: true,

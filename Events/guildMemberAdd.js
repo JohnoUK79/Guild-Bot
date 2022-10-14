@@ -11,13 +11,14 @@ module.exports = {
                 console.log("Partial Member")
                 //let messageId = member.message.id
                 //let emojiName = member.emoji.name
-
+                let member = member
             } catch (error) {
                 console.error('Something went wrong when fetching the message:', error);
                 return;
             }
         }
         Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
+        guildIcon = member.guild.iconURL();
         CHANNEL_ID = Data[0].welcome_channel_id
         ROLE_ID = Data[0].welcome_role_id
         GUILD = member.guild.name
@@ -31,7 +32,7 @@ module.exports = {
             .setTitle("New Player!")
             .setDescription(`<@${member.id}> has joined the server! \nWe hope you enjoy your time here.`)
             .setThumbnail(member.user.displayAvatarURL())
-            .setFooter({ text: `${GUILD}`, iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' })
+            .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();
             
         const welcomeEmbed = new Discord.MessageEmbed()
@@ -39,7 +40,7 @@ module.exports = {
             .setTitle(`Welcome to ${GUILD}`)
             .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here.`)
             .setThumbnail(Data[0].welcome_logo)
-            .setFooter({ text: `${GUILD}`, iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' })
+            .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
 
             .setTimestamp();
             await member.roles.add(ROLE_ID).catch((e) => console.log(e));

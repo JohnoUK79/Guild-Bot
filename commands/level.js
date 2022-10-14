@@ -7,7 +7,8 @@ module.exports = {
 		.setName('level')
 		.setDescription('Check your current Levels Rank!'),
 	async execute(interaction) {
-		
+		guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
 		level = await sql.Execute(`select * from levels where discord_id = '${interaction.user.id}';`);
 		player = level[0].player_id
 		Players = await sql.Execute(`select * from players where player_id = ${player}`)
@@ -34,7 +35,7 @@ module.exports = {
 
 		const unknownLevel = new MessageEmbed()
 		.setColor('#0099ff')
-		.setTitle('SE17 Elite - Rank Card')
+		.setTitle(`${guildName} - Rank Card`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
@@ -46,11 +47,11 @@ module.exports = {
 			)
 		.setImage(playerImage)
 		.setTimestamp()
-		.setFooter({ text: `SE17 Elite - Rank - ${interaction.member.displayName}.`, iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
+		.setFooter({ text: `${guildName} - Rank - ${interaction.member.displayName}.`, iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
 
 		const playerLevel = new MessageEmbed()
 		.setColor('#0099ff')
-		.setTitle('SE17 Elite - Rank Card')
+		.setTitle(`${guildName} - Rank Card`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
@@ -64,7 +65,7 @@ module.exports = {
 			)
 		.setImage(playerImage)
 		.setTimestamp()
-		.setFooter({ text: `SE17 Elite - Rank - ${interaction.member.displayName}.`, iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
+		.setFooter({ text: `${guildName} - Rank - ${interaction.member.displayName}.`, iconURL: `${guildIcon}` });
 
 
 

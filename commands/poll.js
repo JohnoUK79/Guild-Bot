@@ -32,7 +32,8 @@ module.exports = {
         .setRequired(false)
         ),
     async execute(Interaction) {
-        
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
         const pollTitle = Interaction.options.getString('title');
         var pollOption1 = Interaction.options.getString('option1');
         var pollOption2 = Interaction.options.getString('option2');
@@ -43,7 +44,7 @@ module.exports = {
 
         const pollEmbed = new MessageEmbed()
             .setColor('#0099ff')
-            .setTitle(`SE17 Elite - Poll!`)
+            .setTitle(`${guildName} - Poll!`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
             .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
@@ -58,7 +59,7 @@ module.exports = {
             )
             .setImage(`http://phfamily.co.uk/img/gifs/Poll.gif`)
             .setTimestamp()
-            .setFooter({ text: 'SE17 Elite - Poll!.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
+            .setFooter({ text: `${guildName} - Poll!.`, iconURL: `${guildIcon}` });
         const replied = await Interaction.reply({
 
             ephemeral: false,

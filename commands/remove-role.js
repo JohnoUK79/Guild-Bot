@@ -26,7 +26,8 @@ module.exports = {
         ),
 
     async execute(Interaction) {
-        
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
         var guildId = Interaction.guildId
         var message = Interaction.options.getString('message');
         var emoji = Interaction.options.getString('emoji');
@@ -34,7 +35,7 @@ module.exports = {
         
         const removeRole = new MessageEmbed()
             .setColor('#0099ff')
-            .setTitle(`SE17 - Elite`)
+            .setTitle(`${guildName} - Reaction Roles`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
             .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
@@ -45,9 +46,9 @@ module.exports = {
                 { name: `Emoji`, value: `${emoji}` },
                 { name: `Role`, value: `${role}` },
             )
-            .setImage(`http://phfamily.co.uk/img/gifs/SE17-Logo.jpg`)
+            .setImage(`${guildName}`)
             .setTimestamp()
-            .setFooter({ text: 'PH Family - Reaction Roles.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
+            .setFooter({ text: `${guildName} - Reaction Roles.`, iconURL: `${guildIcon}` });
             await Interaction.reply({
 
             ephemeral: true,

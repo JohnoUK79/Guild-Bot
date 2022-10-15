@@ -74,8 +74,8 @@ module.exports = {
             .setRequired(true)
         ),
     async execute(Interaction) {
-        guildIcon = interaction.member.guild.iconURL();
-		guildName = interaction.member.guild.name
+        guildIcon = Interaction.member.guild.iconURL();
+		guildName = Interaction.member.guild.name
         const id = parseInt(Interaction.options.getString("id"));
         if(isNaN(id)) return Interaction.reply( {content: "You have entered invalid details, please input a valid User ID! Any issues message **<@322100798651760640>**"});
         

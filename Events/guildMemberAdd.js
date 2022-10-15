@@ -19,10 +19,10 @@ module.exports = {
         }
         Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         guildIcon = member.guild.iconURL();
+        console.log(guildIcon)
         CHANNEL_ID = Data[0].welcome_channel_id
         ROLE_ID = Data[0].welcome_role_id
         GUILD = member.guild.name
-        guildIcon = Data[0].guild_icon
         var playerDisplayName = member.displayName
 		if (!playerDisplayName){ var playerDisplayName = member.username}
         console.log(playerDisplayName)

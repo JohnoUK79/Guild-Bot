@@ -10,7 +10,7 @@ module.exports = {
                 await member.fetch();
                 console.log("Partial Member")
             } catch (error) {
-                console.error('Something went wrong when fetching the message:', error);
+                console.error('Something went wrong when fetching the member info:', error);
                 return;
             }
         }
@@ -22,7 +22,6 @@ module.exports = {
         GUILD = member.guild.name
         var playerDisplayName = member.displayName
 		if (!playerDisplayName){ var playerDisplayName = member.username}
-        console.log(playerDisplayName)
         
         const newMemberEmbed = new Discord.MessageEmbed()
             .setColor("#d81e5b")

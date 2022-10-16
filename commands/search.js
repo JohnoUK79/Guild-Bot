@@ -77,7 +77,7 @@ module.exports = {
         guildIcon = Interaction.member.guild.iconURL();
 		guildName = Interaction.member.guild.name
         const id = parseInt(Interaction.options.getString("id"));
-        if(isNaN(id)) return Interaction.reply( {content: "You have entered invalid details, please input a valid User ID! Any issues message **<@322100798651760640>**"});
+        if(isNaN(id)) return Interaction.reply( {content: `You have entered invalid details, please input a valid User ID!\n**${Interaction.options.getString("id")}** is not a Valid user ID!\nAny issues message **<@322100798651760640>**`});
         
         Data = await sql.Execute('select * from players where player_id = '+ id +';');
         console.log(timestamp.utc('YYYY/MM/DD HH:mm:ss'))
@@ -92,12 +92,16 @@ module.exports = {
             .setDescription(` Player ID: ${Data[0].player_id}`)
             .setThumbnail(`${guildIcon}`)
             .addFields(
-                { name: `Name: ${Data[0].last_known_name}`, value: `Affiliation: ${Data[0].affiliation}` },
-                { name: `Tag: ${Data[0].last_known_tag}`, value: `Server: ${Data[0].server}` },
-                { name: 'Known History of Player', value: `History: ${Data[0].history}`, inline: true },
-                { name: `Discord: <@${Data[0].discord}>`, value: `**Last Known City:** ${Data[0].last_city}`, inline: true },
-                { name: `Last Seen`, value: `${Data[0].date_last_known}`, inline: true }
-
+                //{ name: `Name: ${Data[0].last_known_name}`, value: `Affiliation: ${Data[0].affiliation}` },
+                { name: `Name:`, value: `${Data[0].last_known_name}`, inline: true },
+                { name: `Affiliation:`, value: `${Data[0].affiliation}`, inline: true },
+                { name: `Tag:`, value: `${Data[0].last_known_tag}`, inline: true },
+                { name: `Server:`, value: `${Data[0].server}`, inline: true },
+                { name: `Known History of Player:`, value: `${Data[0].history}`, inline: true },
+                { name: `Discord:`, value: `<@${Data[0].discord}>`, inline: true },
+                { name: `Last Known City:`, value: `${Data[0].last_city}`, inline: true },
+                { name: `Date Last Seen:`, value: `${Data[0].date_last_known}`, inline: true },
+                { name: `Last Seen By:`, value: `${Data[0].last_seen_by}`, inline: true },
             )
             .setImage(`${Data[0].player_image}`)
             .setTimestamp()

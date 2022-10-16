@@ -9,6 +9,7 @@ const { TextInputStyle } = require('discord-api-types/v10');
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
+		
 		guildIcon = interaction.member.guild.iconURL();
 		const setDate = time.default()
 		GuildName = interaction.guild.name
@@ -162,7 +163,13 @@ module.exports = {
 		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
         console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
-		
+		//Dashboard Reports
+		if (interaction.customId === 'Reports') {
+			return interaction.reply({
+				content: 'Coming Soon!',
+				empheral: true,
+			})
+		}
 		//Dashboard Player Update Modal
 		if (interaction.customId === 'Player') {
 			const dashboardPlayerUpdate = new Modal()
@@ -291,8 +298,8 @@ module.exports = {
 				let updatePlayers = await sql.Execute(`UPDATE players SET last_known_name = '${usernameInput}', last_known_tag = '${tagInput}', date_last_known = '${setDate}', discord ='${interaction.member.id}', discord_name = '${interaction.member.displayName}', discord_server = '${GuildName}', last_city = '${cityInput}' WHERE player_id = ${uidInput}`)
 				let changeLog = await sql.Execute(`INSERT INTO changelog (player_id, discord_id, discord_name, old_info, new_info) VALUES ('${uidInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${oldInfo}', '${newInfo}')`)
 				return interaction.reply({ 
-					content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been completed.\n\nUse the **/search** command to see your new details. Any issues message **<@322100798651760640>**`,
 					empheral: true,
+					content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been completed.\n\nUse the **/search** command to see your new details.\nAny issues message **<@322100798651760640>**`,
 				})
 			} else
 			if (discordLookup !== interaction.member.id) {
@@ -321,17 +328,22 @@ module.exports = {
         	if(isNaN(id)) return interaction.reply( {content: `**${interaction.member.displayName}**, You have entered invalid details.\n**${uidInput} - ${usernameInput} - ${tagInput} - ${cityInput} - ${affiliationInput}**.\nPlease input a valid User ID instead of **${uidInput}**! Any issues, message **<@322100798651760640>**`});
 			lookup = await sql.Execute(`select * from players where player_id = ${id};`);
 			if (lookup.length === 0) return interaction.reply ( {content: `**${interaction.member.displayName}**, You have entered an unrecognised User ID **${id}**, please contact **<@322100798651760640>**`});
-
 			//Information Already on Bot
 			let nameLookup = lookup[0].last_known_name
 			let tagLookup = lookup[0].last_known_tag
 			let cityLookup = lookup[0].last_city
-			let discordLookup = lookup[0].discord
-
-			let dashboardUpdatePlayer = await sql.Execute(`UPDATE players SET last_known_name = '${usernameInput}', last_known_tag = '${tagInput}', affiliation = '${affiliationInput}' WHERE player_id = '${uidInput}';`)
+			let discordIDLookup = lookup[0].discord
+			let discordNameLookup = lookup[0].discord_name
+			let affiliationLookup = lookup[0].affiliation
+			let oldInfo = (`${nameLookup} - ${tagLookup} - ${affiliationLookup} - ${discordIDLookup} - ${discordNameLookup} - ${cityLookup}`)
+			let newInfo = (`${usernameInput} - ${tagInput} - ${affiliationInput} - ${discordIDLookup} - ${discordNameLookup} - ${cityInput}`)
+			let dashboardUpdatePlayer = await sql.Execute(`UPDATE players SET last_known_name = '${usernameInput}', last_known_tag = '${tagInput}', affiliation = '${affiliationInput}', last_city = '${cityInput}', last_seen_by = '${interaction.member.displayName}', date_last_known = '${setDate}' WHERE player_id = '${uidInput}';`)
+			let changeLogUpdate = await sql.Execute(`INSERT INTO changelog (player_id, discord_id, discord_name, old_info, new_info, change_date) VALUES ('${uidInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${oldInfo}', '${newInfo}', '${setDate}')`)
+			console.log(dashboardUpdatePlayer, changeLogUpdate)
+			
 			return interaction.reply({ 
-				content: `**${interaction.member.displayName}**, Your **Submission** of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **<@322100798651760640>**`,
-				empheral: false,
+				content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been completed.\nAny issues message **<@322100798651760640>**`,
+				empheral: true,
 			});
 			
 		}

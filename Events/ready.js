@@ -22,7 +22,7 @@ module.exports = {
 
         console.log('================ PH40 BOT Ready! ================');  
         
-              const guildSettingsUpdate = nodeCron.schedule("0 22 * * *", () => {
+              const guildSettingsUpdate = nodeCron.schedule("0 10,22 * * *", () => {
                 console.log("Guild Settings Update")
 
                 client.guilds.cache.map(r => {

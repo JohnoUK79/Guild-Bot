@@ -9,9 +9,6 @@ module.exports = {
             try {
                 await member.fetch();
                 console.log("Partial Member")
-                //let messageId = member.message.id
-                //let emojiName = member.emoji.name
-                let member = member
             } catch (error) {
                 console.error('Something went wrong when fetching the message:', error);
                 return;
@@ -39,20 +36,19 @@ module.exports = {
             .setColor("#d81e5b")
             .setTitle(`Welcome to ${GUILD}`)
             .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here.`)
-            .setThumbnail(Data[0].welcome_logo)
+            .setThumbnail(guildIcon)
             .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
-
             .setTimestamp();
             await member.roles.add(ROLE_ID).catch((e) => console.log(e));
+            await member.guild.channels.cache.get(CHANNEL_ID).send(
+                {
+                    embeds: [newMemberEmbed]
+                }
+            );
             await member.user.send(
                 {
                     embeds: [welcomeEmbed]
                 }
             );
-             await member.guild.channels.cache.get(CHANNEL_ID).send(
-                {
-                    embeds: [newMemberEmbed]
-                }
-            )
      }
 }

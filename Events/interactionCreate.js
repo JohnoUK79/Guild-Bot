@@ -80,7 +80,7 @@ module.exports = {
 			{ name: 'Rank 20 :', value: `${board[19].discord_username} - ${board[19].level} - ${board[12].points}` },
 
 			)
-		.setImage(`${guildIcon}`) // to be linked to player search gif 
+		.setImage(`${guildIcon}`) 
 		.setTimestamp()
 		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
@@ -106,7 +106,7 @@ module.exports = {
 			{ name: 'Rank 30 :', value: `${board[29].discord_username} - ${board[29].level} - ${board[29].points}` },
 
 			)
-		.setImage(`${guildIcon}`) // to be linked to player search gif 
+		.setImage(`${guildIcon}`) 
 		.setTimestamp()
 		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
@@ -131,7 +131,7 @@ module.exports = {
 			{ name: 'Rank 40 :', value: `${board[39].discord_username} - ${board[39].level} - ${board[39].points}` },
 
 			)
-		.setImage(`${guildIcon}`) // to be linked to player search gif 
+		.setImage(`${guildIcon}`) 
 		.setTimestamp()
 		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
@@ -157,18 +157,60 @@ module.exports = {
 			{ name: 'Rank 50 :', value: `${board[49].discord_username} - ${board[49].level} - ${board[49].points}` },
 
 			)
-		.setImage(`${guildIcon}`) // to be linked to player search gif 
+		.setImage(`${guildIcon}`) 
 		.setTimestamp()
 		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
-
-
-
         console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
-		//Add Player ID to Bot Modal
+		
+		//Dashboard Player Update Modal
+		if (interaction.customId === 'Player') {
+			const dashboardPlayerUpdate = new Modal()
+			.setCustomId('UpdatePlayer')
+			.setTitle('Update A Players Bot Profile')
+			
+			const dashboarduidInput = new TextInputComponent()
+				.setCustomId('AddUID')
+				.setLabel('Please provide your Account User ID')
+				.setStyle(TextInputStyle.Short);
 
+			const dashboardusernameInput = new TextInputComponent()
+				.setCustomId('AddUsername')
+				.setLabel('Add your current in game name (Be Exact!).')
+				.setStyle(TextInputStyle.Short);
+
+			const dashboardallianceTagInput = new TextInputComponent()
+				.setCustomId('AddTag')
+				.setLabel('Add your current Alliance TAG (Be Exact!).')
+				.setStyle(TextInputStyle.Short);
+
+			const dashboardcityInput = new TextInputComponent()
+				.setCustomId('AddCity')
+				.setLabel('Add current in game City (Be Exact!).')
+				.setStyle(TextInputStyle.Short);
+
+			const dashboardaffiliationInput = new TextInputComponent()
+				.setCustomId('Affiliation')
+				.setLabel('Update the Players Affiliation.')
+				.setStyle(TextInputStyle.Short);
+
+
+
+			const ActionRow1 = new MessageActionRow().addComponents(dashboarduidInput);
+			const ActionRow2 = new MessageActionRow().addComponents(dashboardusernameInput);
+			const ActionRow3 = new MessageActionRow().addComponents(dashboardallianceTagInput);
+			const ActionRow4 = new MessageActionRow().addComponents(dashboardcityInput);
+			const ActionRow5 = new MessageActionRow().addComponents(dashboardaffiliationInput);
+
+			dashboardPlayerUpdate.addComponents(ActionRow1, ActionRow2, ActionRow3, ActionRow4, ActionRow5 );
+
+			await interaction.showModal(dashboardPlayerUpdate);
+		}
+
+		
+		//Player Self Update Modal
 		if (interaction.customId === 'UID') {
-			const modal = new Modal()
+			const playerUpdate = new Modal()
 			.setCustomId('UpdateUID')
 			.setTitle('Add your in Game User ID to Bot Profile')
 			
@@ -197,27 +239,29 @@ module.exports = {
 			const thirdActionRow = new MessageActionRow().addComponents(allianceTagInput);
 			const fourthActionRow = new MessageActionRow().addComponents(cityInput);
 
-			modal.addComponents(firstActionRow, secondActionRow, thirdActionRow, fourthActionRow );
+			playerUpdate.addComponents(firstActionRow, secondActionRow, thirdActionRow, fourthActionRow );
 
-			await interaction.showModal(modal);
+			await interaction.showModal(playerUpdate);
 		}
 
-		//Modal Responses
+		//Player Self Update Modal Responses
 		if (interaction.customId === 'UpdateUID') {
 			const uidInput = interaction.fields.getTextInputValue('AddUID');
 			const usernameInput = interaction.fields.getTextInputValue('AddUsername');
 			const tagInput = interaction.fields.getTextInputValue('AddTag');
 			const cityInput = interaction.fields.getTextInputValue('AddCity');
 			const id = parseInt(uidInput);
-        	if(isNaN(id)) return interaction.reply( {content: `**${interaction.member.displayName}**, You have entered invalid details, please input a valid User ID **${uidInput}**! Any issues, message **<@322100798651760640>**`});
+        	if(isNaN(id)) return interaction.reply( {content: `**${interaction.member.displayName}**, You have entered invalid details.\n**${uidInput} - ${usernameInput} - ${tagInput} - ${cityInput}**.\nPlease input a valid User ID instead of **${uidInput}**! Any issues, message **<@322100798651760640>**`});
 			lookup = await sql.Execute(`select * from players where player_id = ${id};`);
 			if (lookup.length === 0) return interaction.reply ( {content: `**${interaction.member.displayName}**, You have entered an unrecognised User ID **${id}**, please contact **<@322100798651760640>**`});
 			registerCheck = await sql.Execute(`select * from levels where discord_id = ${interaction.member.id}`)
 			if (registerCheck.length === 0) {
 				console.log('Not Registered for Levels')
-				return interaction.reply({ content: `**${interaction.member.displayName}**, You have not registered on the server yet, please say Hi! and try again!\nAny issues, message **<@322100798651760640>**`, empheral: true })
+				return interaction.reply({ 
+					content: `**${interaction.member.displayName}**, You have not registered on the server yet, please say Hi! and try again!\nAny issues, message **<@322100798651760640>**`, 
+					empheral: false,
+				})
 			}
-			
 			//Information Already on Bot
 			let idLookup = lookup[0].player_id
 			let nameLookup = lookup[0].last_known_name
@@ -246,18 +290,50 @@ module.exports = {
 				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}') ON DUPLICATE KEY UPDATE request_name = '${usernameInput}', request_discord_id = '${interaction.member.id}', request_discord_username = '${interaction.member.displayName}', request_tag = '${tagInput}', request_city = '${cityInput}';`)
 				let updatePlayers = await sql.Execute(`UPDATE players SET last_known_name = '${usernameInput}', last_known_tag = '${tagInput}', date_last_known = '${setDate}', discord ='${interaction.member.id}', discord_name = '${interaction.member.displayName}', discord_server = '${GuildName}', last_city = '${cityInput}' WHERE player_id = ${uidInput}`)
 				let changeLog = await sql.Execute(`INSERT INTO changelog (player_id, discord_id, discord_name, old_info, new_info) VALUES ('${uidInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${oldInfo}', '${newInfo}')`)
-				return interaction.reply({ content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been completed.\n\nUse the **/search** command to see your new details. Any issues message **<@322100798651760640>**` })
+				return interaction.reply({ 
+					content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been completed.\n\nUse the **/search** command to see your new details. Any issues message **<@322100798651760640>**`,
+					empheral: true,
+				})
 			} else
 			if (discordLookup !== interaction.member.id) {
 				console.log('Already Registered')
 				return interaction.reply ( {
-					empheral: true,
 					content: `**<@${interaction.member.id}>**, That User ID has already been registered to **<@${discordLookup}>**. Please contact **<@322100798651760640>**`})
 			} 
 			else {
 			let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}');`)
-			return interaction.reply({ content: `**${interaction.member.displayName}**, Your **Submission** of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **<@322100798651760640>**` });
+			return interaction.reply({ 
+				content: `**${interaction.member.displayName}**, Your **Submission** of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **<@322100798651760640>**`,
+				empheral: false,
+			});
 			}
+		}
+
+		//Dashboard Player Update Modal Responses
+		
+		if (interaction.customId === 'UpdatePlayer') {
+			const uidInput = interaction.fields.getTextInputValue('AddUID');
+			const usernameInput = interaction.fields.getTextInputValue('AddUsername');
+			const tagInput = interaction.fields.getTextInputValue('AddTag');
+			const cityInput = interaction.fields.getTextInputValue('AddCity');
+			const affiliationInput = interaction.fields.getTextInputValue('Affiliation');
+			const id = parseInt(uidInput);
+        	if(isNaN(id)) return interaction.reply( {content: `**${interaction.member.displayName}**, You have entered invalid details.\n**${uidInput} - ${usernameInput} - ${tagInput} - ${cityInput} - ${affiliationInput}**.\nPlease input a valid User ID instead of **${uidInput}**! Any issues, message **<@322100798651760640>**`});
+			lookup = await sql.Execute(`select * from players where player_id = ${id};`);
+			if (lookup.length === 0) return interaction.reply ( {content: `**${interaction.member.displayName}**, You have entered an unrecognised User ID **${id}**, please contact **<@322100798651760640>**`});
+
+			//Information Already on Bot
+			let nameLookup = lookup[0].last_known_name
+			let tagLookup = lookup[0].last_known_tag
+			let cityLookup = lookup[0].last_city
+			let discordLookup = lookup[0].discord
+
+			let dashboardUpdatePlayer = await sql.Execute(`UPDATE players SET last_known_name = '${usernameInput}', last_known_tag = '${tagInput}', affiliation = '${affiliationInput}' WHERE player_id = '${uidInput}';`)
+			return interaction.reply({ 
+				content: `**${interaction.member.displayName}**, Your **Submission** of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **<@322100798651760640>**`,
+				empheral: false,
+			});
+			
 		}
 
 		//Unregistered Levels Buttons

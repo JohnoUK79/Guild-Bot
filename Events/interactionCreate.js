@@ -339,9 +339,8 @@ module.exports = {
 			let newInfo = (`${usernameInput} - ${tagInput} - ${affiliationInput} - ${discordIDLookup} - ${discordNameLookup} - ${cityInput}`)
 			let dashboardUpdatePlayer = await sql.Execute(`UPDATE players SET last_known_name = '${usernameInput}', last_known_tag = '${tagInput}', affiliation = '${affiliationInput}', last_city = '${cityInput}', last_seen_by = '${interaction.member.displayName}', date_last_known = '${setDate}' WHERE player_id = '${uidInput}';`)
 			let changeLogUpdate = await sql.Execute(`INSERT INTO changelog (player_id, discord_id, discord_name, old_info, new_info, change_date) VALUES ('${uidInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${oldInfo}', '${newInfo}', '${setDate}')`)
-			console.log(dashboardUpdatePlayer, changeLogUpdate)
 			
-			return interaction.reply({ 
+			await interaction.reply({ 
 				content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been completed.\nAny issues message **<@322100798651760640>**`,
 				empheral: true,
 			});

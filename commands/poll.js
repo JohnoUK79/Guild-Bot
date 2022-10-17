@@ -32,8 +32,8 @@ module.exports = {
         .setRequired(false)
         ),
     async execute(Interaction) {
-        guildIcon = interaction.member.guild.iconURL();
-		guildName = interaction.member.guild.name
+        guildIcon = Interaction.member.guild.iconURL();
+		guildName = Interaction.member.guild.name
         const pollTitle = Interaction.options.getString('title');
         var pollOption1 = Interaction.options.getString('option1');
         var pollOption2 = Interaction.options.getString('option2');

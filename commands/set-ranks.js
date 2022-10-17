@@ -73,8 +73,8 @@ module.exports = {
         ),
 
     async execute(Interaction) {
-        guildIcon = interaction.member.guild.iconURL();
-		guildName = interaction.member.guild.name
+        guildIcon = Interaction.member.guild.iconURL();
+		guildName = Interaction.member.guild.name
         var guildId = Interaction.guildId
         var level10 = Interaction.options.getString('rank10');
         var level20 = Interaction.options.getString('rank20');

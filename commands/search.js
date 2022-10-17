@@ -37,7 +37,7 @@ const updatePlayer =  new MessageActionRow()
 				.addComponents(
 		new MessageButton()
 				.setCustomId('UID')
-				.setLabel('Add in Game User ID to profile!')
+				.setLabel('Add/Update profile on the Search Bot!')
 				.setStyle('PRIMARY'),
 		)
     
@@ -83,6 +83,9 @@ module.exports = {
         console.log(timestamp.utc('YYYY/MM/DD HH:mm:ss'))
         console.log(id)
         if (Data.length === 0) return Interaction.reply({ content: `I could not find any player with the ID **${id}**, please check the ID and try again! Any issues messages Genesis or **<@322100798651760640>**.`, ephemeral: false });
+        if (Data[0].last_city === null) {
+            let lastCity = 'Location Unknown'
+        } else lastCity = Data[0].last_city
         const playersearch = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Player Database`)
@@ -94,14 +97,14 @@ module.exports = {
             .addFields(
                 //{ name: `Name: ${Data[0].last_known_name}`, value: `Affiliation: ${Data[0].affiliation}` },
                 { name: `Name:`, value: `${Data[0].last_known_name}`, inline: true },
-                { name: `Affiliation:`, value: `${Data[0].affiliation}`, inline: true },
-                { name: `Tag:`, value: `${Data[0].last_known_tag}`, inline: true },
-                { name: `Server:`, value: `${Data[0].server}`, inline: true },
-                { name: `Known History of Player:`, value: `${Data[0].history}`, inline: true },
+                { name: `Affiliation:`, value: ` ${Data[0].affiliation}`, inline: true },
+                { name: `Tag:`, value: ` ${Data[0].last_known_tag}`, inline: true },
+                { name: `Server:`, value: ` ${Data[0].server}`, inline: true },
+                { name: `Known History of Player:`, value: ` ${Data[0].history}`, inline: true },
                 { name: `Discord:`, value: `<@${Data[0].discord}>`, inline: true },
-                { name: `Last Known City:`, value: `${Data[0].last_city}`, inline: true },
-                { name: `Date Last Seen:`, value: `${Data[0].date_last_known}`, inline: true },
-                { name: `Last Seen By:`, value: `${Data[0].last_seen_by}`, inline: true },
+                { name: `Last Known City:`, value: ` ${Data[0].last_city}`, inline: true },
+                { name: `Date Last Seen:`, value: ` ${Data[0].date_last_known}`, inline: true },
+                //{ name: `Last Seen By:`, value: `${Data[0].last_seen_by}`, inline: true },
             )
             .setImage(`${Data[0].player_image}`)
             .setTimestamp()

@@ -10,7 +10,7 @@ module.exports = {
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
 
-		const buttonsCP =   new MessageActionRow()
+		const LeaderboardButtons =   new MessageActionRow()
 			        .addComponents(
                 new MessageButton()
                     .setCustomId("Top10")
@@ -57,11 +57,11 @@ module.exports = {
 			{ name: 'Best of the Rest:', value: `**Rank - Name - Level - Points**\n\n**Rank 4:** ${board[3].discord_username} - ${board[3].level} - ${board[3].points}\n\n**Rank 5:** ${board[4].discord_username} - ${board[4].level} - ${board[4].points}\n\n**Rank 6:** ${board[5].discord_username} - ${board[5].level} - ${board[5].points}\n\n**Rank 7:** ${board[6].discord_username} - ${board[6].level} - ${board[6].points}\n\n**Rank 8:** ${board[7].discord_username} - ${board[7].level} - ${board[7].points}\n\n**Rank 9:** ${board[8].discord_username} - ${board[8].level} - ${board[8].points}\n\n**Rank 10:** ${board[9].discord_username} - ${board[9].level} - ${board[9].points}` },
 
 			)
-		.setImage(`${guildIcon}`) // to be linked to player search gif 
+		.setImage(`${guildIcon}`)
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
 
-		return interaction.reply({ embeds: [leaderBoard], components: [buttonsCP]})
+		return interaction.reply({ embeds: [leaderBoard], components: [LeaderboardButtons]})
 	},
 };

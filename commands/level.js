@@ -14,13 +14,13 @@ module.exports = {
 		Players = await sql.Execute(`select * from players where player_id = ${player}`)
 		discord = interaction.member.username
 		points = level[0].points
-		level = level[0].level
+		oldlevel = level[0].level
+		seen = level[0].last_seen
+		seenDiscord = level[0].last_seen_server
 
 		if (!player) {
 			var playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
 		} else var playerImage = Players[0].player_image
-		//seen = level[0].last_seen
-		//seenDiscord = level[0].last_seen_server
 
 		search = await sql.Execute(`select * from players where player_id = '${player}';`);
 		
@@ -28,7 +28,7 @@ module.exports = {
 				.addComponents(
 		new MessageButton()
 				.setCustomId('UID')
-				.setLabel('Add in Game User ID to profile!')
+				.setLabel('Add/Update Your in Game Bot profile!')
 				.setStyle('PRIMARY'),
 		)
 
@@ -43,11 +43,11 @@ module.exports = {
 		.addFields(
 			{ name: `Name:`, value: `${interaction.member.displayName}` },
 			{ name: `Points:`, value: `${points}` },
-			{ name: 'Level.', value: `${level}`, inline: true },
+			{ name: 'Level.', value: `${oldlevel}`, inline: true },
 			)
 		.setImage(playerImage)
 		.setTimestamp()
-		.setFooter({ text: `${guildName} - Rank - ${interaction.member.displayName}.`, iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
+		.setFooter({ text: `${guildName} - Rank - ${interaction.member.displayName}.`, iconURL: `${guildIcon}` });
 
 		const playerLevel = new MessageEmbed()
 		.setColor('#0099ff')
@@ -59,9 +59,9 @@ module.exports = {
 		.addFields(
 			{ name: `Name:`, value: `${interaction.member.displayName}` },
 			{ name: `Points:`, value: `${points}` },
-			{ name: 'Level.', value: `${level}`, inline: true },
-			//{ name: 'Last Seen.', value: `${seen}`, inline: true },
-			//{ name: 'Last Seen Discord Server.', value: `${seenDiscord}`, inline: true },
+			{ name: 'Level.', value: `${oldlevel}`, inline: true },
+			{ name: 'Last Seen.', value: `${seen}`, inline: true },
+			{ name: 'Last Seen Discord Server.', value: `${seenDiscord}`, inline: true },
 			)
 		.setImage(playerImage)
 		.setTimestamp()

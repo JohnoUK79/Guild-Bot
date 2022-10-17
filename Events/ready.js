@@ -74,7 +74,7 @@ module.exports = {
 
                         )
                         .setTimestamp()
-                        .setFooter({ text: `${jurisdiction.title}.`, iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
+                        .setFooter({ text: `${jurisdiction.title}.`, iconURL: `${icon}` });
 
 
                     for (let i = 0; i < jurisdictionsChannelIDs.length; i++) {

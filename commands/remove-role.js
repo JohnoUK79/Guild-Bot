@@ -26,8 +26,8 @@ module.exports = {
         ),
 
     async execute(Interaction) {
-        guildIcon = interaction.member.guild.iconURL();
-		guildName = interaction.member.guild.name
+        guildIcon = Interaction.member.guild.iconURL();
+		guildName = Interaction.member.guild.name
         var guildId = Interaction.guildId
         var message = Interaction.options.getString('message');
         var emoji = Interaction.options.getString('emoji');

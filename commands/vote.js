@@ -17,8 +17,8 @@ module.exports = {
         .setRequired(false)
         ),
     async execute(Interaction) {
-        guildIcon = interaction.member.guild.iconURL();
-		guildName = interaction.member.guild.name
+        guildIcon = Interaction.member.guild.iconURL();
+		guildName = Interaction.member.guild.name
         const voteTitle = Interaction.options.getString('title');
         var voteDescription = Interaction.options.getString('description');
         if(!voteDescription) {voteDescription = `See above!`}

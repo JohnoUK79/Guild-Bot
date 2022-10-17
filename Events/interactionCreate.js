@@ -178,12 +178,12 @@ module.exports = {
 			
 			const dashboarduidInput = new TextInputComponent()
 				.setCustomId('AddUID')
-				.setLabel('Please provide your Account User ID')
+				.setLabel('Please provide the User ID of the account to be updated!')
 				.setStyle(TextInputStyle.Short);
 
 			const dashboardusernameInput = new TextInputComponent()
 				.setCustomId('AddUsername')
-				.setLabel('Add your current in game name (Be Exact!).')
+				.setLabel('Add the Players current in game name (Be Exact!).')
 				.setStyle(TextInputStyle.Short);
 
 			const dashboardallianceTagInput = new TextInputComponent()
@@ -193,12 +193,12 @@ module.exports = {
 
 			const dashboardcityInput = new TextInputComponent()
 				.setCustomId('AddCity')
-				.setLabel('Add current in game City (Be Exact!).')
+				.setLabel('Add the Players current in game City (Be Exact!).')
 				.setStyle(TextInputStyle.Short);
 
 			const dashboardaffiliationInput = new TextInputComponent()
 				.setCustomId('Affiliation')
-				.setLabel('Update the Players Affiliation.')
+				.setLabel('Update the Players Affiliation notes.')
 				.setStyle(TextInputStyle.Short);
 
 
@@ -338,9 +338,9 @@ module.exports = {
 			let oldInfo = (`${nameLookup} - ${tagLookup} - ${affiliationLookup} - ${discordIDLookup} - ${discordNameLookup} - ${cityLookup}`)
 			let newInfo = (`${usernameInput} - ${tagInput} - ${affiliationInput} - ${discordIDLookup} - ${discordNameLookup} - ${cityInput}`)
 			let dashboardUpdatePlayer = await sql.Execute(`UPDATE players SET last_known_name = '${usernameInput}', last_known_tag = '${tagInput}', affiliation = '${affiliationInput}', last_city = '${cityInput}', last_seen_by = '${interaction.member.displayName}', date_last_known = '${setDate}' WHERE player_id = '${uidInput}';`)
-			let changeLogUpdate = await sql.Execute(`INSERT INTO changelog (player_id, discord_id, discord_name, old_info, new_info, change_date) VALUES ('${uidInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${oldInfo}', '${newInfo}', '${setDate}')`)
+			let changeLogUpdate = await sql.Execute(`INSERT INTO changelog (player_id, discord_id, discord_name, old_info, new_info, change_date) VALUES ('${uidInput}', '${interaction.user.id}', '${interaction.member.displayName}', '${oldInfo}', '${newInfo}', '${setDate}')`)
 			
-			await interaction.reply({ 
+			interaction.reply({ 
 				content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been completed.\nAny issues message **<@322100798651760640>**`,
 				empheral: true,
 			});

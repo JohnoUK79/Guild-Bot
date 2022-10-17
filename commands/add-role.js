@@ -59,6 +59,5 @@ module.exports = {
         });
         let id = role.replace(/\D+/g, '');
         addRoleDB = await sql.Execute(`INSERT INTO reactions (guild_id, message_id, channel_name, emoji, role_id, server_name, added_by, date_added) VALUES ('${guildId}', '${message}', '${channel}', '${emoji}', '${id}', '${Interaction.member.guild.name}', '${Interaction.member.nickname}', '${setDate}');`)
-        console.log(addRoleDB)
     },
 };

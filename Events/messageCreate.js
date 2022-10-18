@@ -8,13 +8,13 @@ module.exports = {
 	class: 'extends',
 	name: 'messageCreate',
 	async execute(message) {
-		guildIcon = message.member.guild.iconURL();
-		guildName = message.member.guild.name
 		if (message.author.bot === true) {
 			return;}
 		if (message.channel.type == 'DM') {
 			console.log('Dm recieved!')
 			return;}		
+		guildIcon = message.member.guild.iconURL();
+		guildName = message.member.guild.name
 
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 

@@ -44,7 +44,7 @@ module.exports = {
                 console.log(jurisdictionsChannelIDs)
                 const hourUTC = (new Date()).getUTCHours();
                 const dayOfWeeek = (new Date()).getDay();
-
+                console.log(icon)
             console.log(new Date().toLocaleString(), "Jurisdiction Event Starting");
             const { MessageEmbed, Client } = require('discord.js');
                     
@@ -74,7 +74,7 @@ module.exports = {
 
                         )
                         .setTimestamp()
-                        .setFooter({ text: `${jurisdiction.title}.`, iconURL: `${icon}` });
+                        .setFooter({ text: `${jurisdiction.title}.`, iconURL: `http://phfamily.co.uk/img/gifs/Warpath.jpg` });
 
 
                     for (let i = 0; i < jurisdictionsChannelIDs.length; i++) {

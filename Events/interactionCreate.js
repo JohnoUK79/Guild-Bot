@@ -178,27 +178,27 @@ module.exports = {
 			
 			const dashboarduidInput = new TextInputComponent()
 				.setCustomId('AddUID')
-				.setLabel('Please provide the User ID of the account to be updated!')
+				.setLabel('Please provide the players User ID!')
 				.setStyle(TextInputStyle.Short);
 
 			const dashboardusernameInput = new TextInputComponent()
 				.setCustomId('AddUsername')
-				.setLabel('Add the Players current in game name (Be Exact!).')
+				.setLabel('Add current in game name (Be Exact!).')
 				.setStyle(TextInputStyle.Short);
 
 			const dashboardallianceTagInput = new TextInputComponent()
 				.setCustomId('AddTag')
-				.setLabel('Add your current Alliance TAG (Be Exact!).')
+				.setLabel('Add current Alliance TAG (Be Exact!).')
 				.setStyle(TextInputStyle.Short);
 
 			const dashboardcityInput = new TextInputComponent()
 				.setCustomId('AddCity')
-				.setLabel('Add the Players current in game City (Be Exact!).')
+				.setLabel('Add current in game City (Be Exact!).')
 				.setStyle(TextInputStyle.Short);
 
 			const dashboardaffiliationInput = new TextInputComponent()
 				.setCustomId('Affiliation')
-				.setLabel('Update the Players Affiliation notes.')
+				.setLabel('Update/Add Affiliation notes.')
 				.setStyle(TextInputStyle.Short);
 
 

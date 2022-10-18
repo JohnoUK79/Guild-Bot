@@ -82,6 +82,19 @@ module.exports = {
         Data = await sql.Execute('select * from players where player_id = '+ id +';');
 
         if (Data.length === 0) return Interaction.reply({ content: `I could not find any player with the ID **${id}**, please check the ID and try again! Any issues messages Genesis or **<@322100798651760640>**.`, ephemeral: false });
+
+        var lastName = Data[0].last_known_name
+        if (!lastName) {
+            var lastName = 'Player Name Removed!'
+        } 
+        var lastTag = Data[0].last_known_tag
+        if (!lastTag) {
+            var lastTag = 'No Alliance Information!'
+        } 
+        var playerAffiliation = Data[0].last_known_tag
+        if (!playerAffiliation) {
+            var playerAffiliation = 'No Affiliation Details Known!'
+        } 
         var lastCity = Data[0].last_city
         if (!lastCity) {
             var lastCity = 'Location Unknown'
@@ -98,6 +111,15 @@ module.exports = {
         if (!playerLastSeen) {
             var playerLastSeen = 'Last Location Unknown!'
         } 
+        var lastSeenBy = Data[0].last_seen_by
+        if (!lastSeenBy) {
+            var lastSeenBy = 'No Player Reports!'
+        } 
+        var playerImage = Data[0].player_image
+        if (!playerImage) {
+            var playerImage = 'http://phfamily.co.uk/img/gifs/NotFound.jpg'
+        } 
+
         console.log(`City: ${lastCity} History: ${playerHistory} Discord: ${playerDiscord} Last Seen: ${playerLastSeen}`)
         const playersearch = new MessageEmbed()
             .setColor('#0099ff')
@@ -109,16 +131,16 @@ module.exports = {
             .setThumbnail(`${guildIcon}`)
             .addFields(
                 //{ name: `Name: ${Data[0].last_known_name}`, value: `Affiliation: ${Data[0].affiliation}` },
-                { name: `Name:`, value: `${Data[0].last_known_name}`, inline: true },
-                { name: `Tag:`, value: `${Data[0].last_known_tag}`, inline: true },
-                { name: `Affiliation:`, value: ` ${Data[0].affiliation}`, inline: true },
-                { name: `Known History of Player:`, value: `${playerHistory}`, inline: true }, //needs error handling for null
-                { name: `Discord:`, value: `<@${playerDiscord}>`, inline: true }, //needs error handling for null
-                { name: `Last Known City:`, value: ` ${lastCity}`, inline: true }, //needs error handling for null
-                { name: `Date Last Seen:`, value: ` ${playerLastSeen}`, inline: true }, //needs error handling for null
-                //{ name: `Last Seen By:`, value: `${Data[0].last_seen_by}`, inline: true }, //needs error handling for null
+                { name: `Name:`, value: `${lastName}`, inline: true },
+                { name: `Tag:`, value: `${lastTag}`, inline: true },
+                { name: `Affiliation:`, value: ` ${playerAffiliation}`, inline: true },
+                //{ name: `Known History of Player:`, value: `${playerHistory}`, inline: true }, 
+                { name: `Discord:`, value: `<@${playerDiscord}>`, inline: true }, 
+                { name: `Last Known City:`, value: ` ${lastCity}`, inline: true }, 
+                { name: `Date Last Seen:`, value: ` ${playerLastSeen}`, inline: true }, 
+                { name: `Last Seen By:`, value: `${lastSeenBy}`, inline: true }, //needs error handling for null
             )
-            .setImage(`${Data[0].player_image}`)
+            .setImage(playerImage)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Search Tool.`, iconURL: `${guildIcon}` });
 

@@ -38,13 +38,13 @@ module.exports = {
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
             .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
-            .setDescription(`**Player Database Dashbaord!**`)
-            .setThumbnail('http://phfamily.co.uk/img/gifs/Poll.gif')
+            .setDescription(`**Bot Admin Dashboard!**`)
+            .setThumbnail(guildIcon)
             .addFields(
                 { name: `Update Players`, value: `Pick this option to update Individual Players details on the bot!`, inline: true },
                 { name: `Reports - Alliance`, value: `Get Player Specific Reports by Alliance!`, inline: true },
             )
-            .setImage(`${guildIcon}`)
+            .setImage(`http://phfamily.co.uk/img/gifs/Bot.gif`)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Database Dashboard.`, iconURL: `${guildIcon}` });
             

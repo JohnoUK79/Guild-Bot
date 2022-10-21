@@ -45,7 +45,7 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: `${guildName} - Bot Help!.`, iconURL: `${guildIcon}` });
             await Interaction.reply({
-            ephemeral: true,
+            ephemeral: false,
             embeds: [helpEmbed],
         });
     },

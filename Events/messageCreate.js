@@ -11,7 +11,30 @@ module.exports = {
 		if (message.author.bot === true) {
 			return;}
 		if (message.channel.type == 'DM') {
-			console.log('Dm recieved!')
+
+			const dmReceived = new MessageEmbed()
+			.setColor('#0099ff')
+			.setTitle('Direct Message Received!')
+			.setURL('http://phfamily.co.uk/')
+			.setThumbnail(message.author.displayAvatarURL())
+			.setAuthor({ name: `${message.author.username}#${message.author.discriminator}`, iconURL: message.author.displayAvatarURL({ dynamic: true }), url: '' })
+			.setDescription(`Message Received By the Bot!`)
+			.addFields(
+				{ name: `Content:`, value: `${message.content}` },
+				{ name: `Sent By:`, value: `<@${message.author.id}>` },
+				{ name: `Time:`, value: `${setDate}` },
+
+				)
+			.setFooter({ text: 'Message Received!.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
+/* 			await Client.guild.channels.cache.get(970409125227950110).send({
+				embeds: [dmReceived],
+				//components: [updatePlayer],
+			})  */
+			await message.reply({
+				embeds: [dmReceived],
+			})
+
+			console.log(`DM Recieved!\nContent: ${message.content}\nSent By: ${message.author.username}#${message.author.discriminator}\nTime: ${setDate}`)
 			return;}		
 		guildIcon = message.member.guild.iconURL();
 		guildName = message.member.guild.name

@@ -38,7 +38,7 @@ module.exports = {
 			dmSent.send({
 				embeds: [dmReceived],
 			})
-			dmReceived.setDescription('Any Images /Attachements will not be sent with your message!')
+			dmReceived.setDescription('Any Images / Attachements will not be sent with your message!')
 			dmReceived.setFooter({ text: 'Message Sent!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' })
 			dmReceived.setTitle('Message Has Been Sent!')
 

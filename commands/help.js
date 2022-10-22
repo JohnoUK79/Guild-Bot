@@ -24,7 +24,8 @@ module.exports = {
             .setDescription(`**${guildName} - Bot Help!**`)
             .setThumbnail(`${guildIcon}`)
             .addFields(
-                { name: `**Welcome Role & Message**`, value: `The bot has the option to assign a Welcome Role & Messages to users upon entry of your server.\nAdministrators can set this up using the **/welcome** command.` },
+                { name: `Welcome Role & Message`, value: `The bot has the option to assign a Welcome Role & Messages to users upon entry of your server.\nAdministrators can set this up using the **/welcome** command.` },
+                { name: `SLAPS!`, value: `There are often times when someone just needs a slap to be able to get a grip of themselves.\nBack by popular demand you can use the **/slap** command.` },
                 { name: `Levels`, value: `Active members score points based on how active they are in your servers.\nThis is a fun way to keep members engaged.\nUse the **/level** command to see your progress.` },
                 { name: `Jurisdictions`, value: `Ensure you maximise rewards daily!\n**Jursidictions Event** start times are posted for **Every Event**.` },
                 { name: `Gold Coupons`, value: `Maximise the use of your **Gold Coupons!** to ensure you get the troops you need.\nUse **/gold** & **/gold-camp** commands for more information.` },

@@ -173,7 +173,7 @@ module.exports = {
 			console.log(`No Role Found`)
 			let roleCorporal = await interaction.guild.roles.create({ 
 				name: 'Corporal',
-				color: '#00ff00', //green
+				color: 'DARK_GREEN', //dark green
 				mentionable: true,
 				hoist: true,
 		})
@@ -181,7 +181,7 @@ module.exports = {
 		} else {
 		console.log(`Existing Role`)
 		roleCorporal.edit({
-			color: '#00ff00', //green
+			color: 'DARK_GREEN', //dark green
 			mentionable: true,
 			hoist: true,
 		})

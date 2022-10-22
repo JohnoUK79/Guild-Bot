@@ -91,7 +91,7 @@ module.exports = {
         if (!lastTag) {
             var lastTag = 'No Alliance Information!'
         } 
-        var playerAffiliation = Data[0].last_known_tag
+        var playerAffiliation = Data[0].affiliation
         if (!playerAffiliation) {
             var playerAffiliation = 'No Affiliation Details Known!'
         } 
@@ -133,7 +133,7 @@ module.exports = {
                 //{ name: `Name: ${Data[0].last_known_name}`, value: `Affiliation: ${Data[0].affiliation}` },
                 { name: `Name:`, value: `${lastName}`, inline: true },
                 { name: `Tag:`, value: `${lastTag}`, inline: true },
-                { name: `Affiliation:`, value: ` ${playerAffiliation}`, inline: true },
+                //{ name: `Affiliation:`, value: ` ${playerAffiliation}`, inline: true },
                 //{ name: `Known History of Player:`, value: `${playerHistory}`, inline: true }, 
                 { name: `Discord:`, value: `<@${playerDiscord}>`, inline: true }, 
                 { name: `Last Known City:`, value: ` ${lastCity}`, inline: true }, 
@@ -143,6 +143,16 @@ module.exports = {
             .setImage(playerImage)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Search Tool.`, iconURL: `${guildIcon}` });
+            let enemyDB = Data[0].enemy
+            if (enemyDB === 'Yes') {
+                playersearch.setColor('DARK_RED')
+            }
+            if (enemyDB === 'No') {
+                playersearch.setColor('GREEN')
+            }
+            if (enemyDB === 'NAP') {
+                playersearch.setColor('BLUE')
+            }
 
         Interaction.reply({
             content: `Hey **${Interaction.member.displayName}**, I have found the following details for **${id}**.`,

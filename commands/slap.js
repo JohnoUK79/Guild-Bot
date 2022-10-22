@@ -26,7 +26,7 @@ module.exports = {
 
 
 	const slapEmbed = new MessageEmbed()
-		.setColor('#0099ff')
+		.setColor('GREEN')
 		.setTitle(`**SLAP!!**`)
 		.setURL('http://www.phfamily.co.uk/')
 		.setThumbnail(Interaction.user.displayAvatarURL())

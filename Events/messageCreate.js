@@ -1,4 +1,4 @@
-const { MessageEmbed, Client, MessageAttachment, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Guild } = require('discord.js');
+const { MessageEmbed, Client, MessageAttachment, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Guild, Interaction } = require('discord.js');
 const sql = require("../config/Database");
 const interactionCreate = require('./interactionCreate');
 time = require('../config/timestamp')
@@ -15,7 +15,7 @@ module.exports = {
 				var embedContent = 'No Message Content'				
 			} else var embedContent = message.content
 			const file = new MessageAttachment(message.attachments.map(a => a.url))
-			console.log(file.attachment.length)
+			//console.log(file.attachment.length)
 
 			const dmReceived = new MessageEmbed()
 			.setColor('#0099ff')
@@ -32,19 +32,17 @@ module.exports = {
 				)
 			.setFooter({ text: 'Message Received!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
 
-/* 			let dmPost = Guild.channels.cache.get(970409125227950110)
-			dmPost.send({
-				embeds: [dmReceived],
-			}) */
+			//970409125227950110 PH Family Bot Messages
+			//1033492139964895302 SE17 Bot Messages
 
-			
-			//Client.channel.cache(970409125227950110)
-			await message.reply({
+			message.client.channels.cache.get("1033492139964895302").send({
 				embeds: [dmReceived],
 			})
 
-			console.log(`DM Recieved!\nContent: ${embedContent}\nSent By: ${message.author.username}#${message.author.discriminator}\nTime: ${setDate}`)
-			return;}		
+			await message.reply ({
+				embeds: [dmReceived]
+			})
+		return;}		
 		guildIcon = message.member.guild.iconURL();
 		guildName = message.member.guild.name
 
@@ -138,55 +136,67 @@ module.exports = {
 		let r90name = message.guild.roles.cache.find( r => r.id === roleRank90 )
 		let r100name = message.guild.roles.cache.find( r => r.id === roleRank100 )
 
-		if (scoreLevel > 20) {
-			var score = Math.floor(Math.random() * 150) * 2;
-		}
-		if (scoreLevel > 30) {
-			var score = Math.floor(Math.random() * 125) * 2;
-		}
-		if (scoreLevel > 40) {
-			var score = Math.floor(Math.random() * 100) * 2;
-		}	
-		if (scoreLevel > 50) {
-			var score = Math.floor(Math.random() * 75) * 2;
-		}	
-		if (scoreLevel > 60) {
-			var score = Math.floor(Math.random() * 50) * 2;
-		}	
-		if (scoreLevel > 70) {
-			var score = Math.floor(Math.random() * 25) + 1;
-		} 
-		if (scoreLevel > 80) {
-			var score = Math.floor(Math.random() * 15) +1;
-		} 
-		if (scoreLevel > 90) {
-			var score = Math.floor(Math.random() * 10) +1;
-		} 
-		if (scoreLevel > 100) {
-			var score = Math.floor(Math.random() * 5) +1;
-		} 
-			
 		points = Levels[0].points
 		newPoints = (points + score)
 		newLevel = (Levels[0].level + 1)
 		let LevelUpChannel = Settings[0].level_up_channel_id
 
 		const levelup = new MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle('Level Up')
-            .setURL('http://www.phfamily.co.uk')
-            .setThumbnail(message.member.displayAvatarURL())
-            .setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
-            .setDescription(`Congratulations **<@${message.member.id}>** you have levelled up!`)
-            .addFields(
-                { name: `Name:`, value: `<@${message.member.id}>` },
-                { name: `Points:`, value: `${newPoints}` },
-                { name: 'Level', value: `${newLevel}`, inline: true },
-                )
-            .setImage(playerImage)
-            .setTimestamp()
-            .setFooter({ text: `Level Up - ${guildName}.`, iconURL: `${guildIcon}` });
+		.setColor('#0099ff')
+		.setTitle('Level Up')
+		.setURL('http://www.phfamily.co.uk')
+		.setThumbnail(message.member.displayAvatarURL())
+		.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setDescription(`Congratulations **<@${message.member.id}>** you have levelled up!`)
+		.addFields(
+			{ name: `Name:`, value: `<@${message.member.id}>` },
+			{ name: `Points:`, value: `${newPoints}` },
+			{ name: 'Level', value: `${newLevel}`, inline: true },
+			)
+		.setImage(playerImage)
+		.setTimestamp()
+		.setFooter({ text: `Level Up - ${guildName}.`, iconURL: `${guildIcon}` });
 
+		if (scoreLevel > 10) {
+			var score = Math.floor(Math.random() * 200) * 2;
+			levelup.setColor('#2e8f37') //forest green
+		}
+		if (scoreLevel > 20) {
+			var score = Math.floor(Math.random() * 150) * 2;
+			levelup.setColor('DARK_GREEN') //dark green
+		}
+		if (scoreLevel > 30) {
+			var score = Math.floor(Math.random() * 125) * 2;
+			levelup.setColor('#00ff80') //spring green
+		}
+		if (scoreLevel > 40) {
+			var score = Math.floor(Math.random() * 100) * 2;
+			levelup.setColor('#00ffff') //cyan
+		}	
+		if (scoreLevel > 50) {
+			var score = Math.floor(Math.random() * 75) * 2;
+			levelup.setColor('#0080ff') //dodger blue
+		}	
+		if (scoreLevel > 60) {
+			var score = Math.floor(Math.random() * 50) * 2;
+			levelup.setColor('#0000ff') //blue
+		}	
+		if (scoreLevel > 70) {
+			var score = Math.floor(Math.random() * 25) + 1;
+			levelup.setColor('#8000ff') //purple
+		} 
+		if (scoreLevel > 80) {
+			var score = Math.floor(Math.random() * 15) +1;
+			levelup.setColor('#ff0080') //magenta
+		} 
+		if (scoreLevel > 90) {
+			var score = Math.floor(Math.random() * 10) +1;
+			levelup.setColor('#ff0000') //red
+		} 
+		if (scoreLevel > 100) {
+			var score = Math.floor(Math.random() * 5) +1;
+			levelup.setColor('#ffff00') //yellow
+		} 
 
 		let initiallevel = Levels[0].level
 		level = Math.floor((score + points) / 3666 )

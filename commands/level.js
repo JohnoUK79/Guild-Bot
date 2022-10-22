@@ -34,7 +34,7 @@ module.exports = {
 
 
 		const unknownLevel = new MessageEmbed()
-		.setColor('#0099ff')
+		.setColor('GREEN')
 		.setTitle(`${guildName} - Rank Card`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
@@ -50,7 +50,7 @@ module.exports = {
 		.setFooter({ text: `${guildName} - Rank - ${interaction.member.displayName}.`, iconURL: `${guildIcon}` });
 
 		const playerLevel = new MessageEmbed()
-		.setColor('#0099ff')
+		.setColor('GREEN')
 		.setTitle(`${guildName} - Rank Card`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())

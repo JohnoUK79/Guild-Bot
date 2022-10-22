@@ -34,10 +34,15 @@ module.exports = {
 
 			//970409125227950110 PH Family Bot Messages
 			//1033492139964895302 SE17 Bot Messages
-
-			message.client.channels.cache.get("1033492139964895302").send({
+			let dmSent = message.client.channels.cache.get("1033492139964895302")
+			dmSent.send({
 				embeds: [dmReceived],
 			})
+			dmReceived.setDescription('Any Images /Attachements will not be sent with your message!')
+			dmReceived.setFooter({ text: 'Message Sent!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' })
+			dmReceived.setTitle('Message Has Been Sent!')
+
+
 
 			await message.reply ({
 				embeds: [dmReceived]

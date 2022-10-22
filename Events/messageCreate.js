@@ -1,4 +1,4 @@
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Guild } = require('discord.js');
+const { MessageEmbed, Client, MessageAttachment, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Guild } = require('discord.js');
 const sql = require("../config/Database");
 const interactionCreate = require('./interactionCreate');
 time = require('../config/timestamp')
@@ -11,6 +11,11 @@ module.exports = {
 		if (message.author.bot === true) {
 			return;}
 		if (message.channel.type == 'DM') {
+			if (message.content === '') {
+				var embedContent = 'No Message Content'				
+			} else var embedContent = message.content
+			const file = new MessageAttachment(message.attachments.map(a => a.url))
+			console.log(file.attachment.length)
 
 			const dmReceived = new MessageEmbed()
 			.setColor('#0099ff')
@@ -20,21 +25,25 @@ module.exports = {
 			.setAuthor({ name: `${message.author.username}#${message.author.discriminator}`, iconURL: message.author.displayAvatarURL({ dynamic: true }), url: '' })
 			.setDescription(`Message Received By the Bot!`)
 			.addFields(
-				{ name: `Content:`, value: `${message.content}` },
+				{ name: `Content:`, value: `${embedContent}` },
 				{ name: `Sent By:`, value: `<@${message.author.id}>` },
 				{ name: `Time:`, value: `${setDate}` },
 
 				)
-			.setFooter({ text: 'Message Received!.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
-/* 			await Client.guild.channels.cache.get(970409125227950110).send({
+			.setFooter({ text: 'Message Received!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
+
+/* 			let dmPost = Guild.channels.cache.get(970409125227950110)
+			dmPost.send({
 				embeds: [dmReceived],
-				//components: [updatePlayer],
-			})  */
+			}) */
+
+			
+			//Client.channel.cache(970409125227950110)
 			await message.reply({
 				embeds: [dmReceived],
 			})
 
-			console.log(`DM Recieved!\nContent: ${message.content}\nSent By: ${message.author.username}#${message.author.discriminator}\nTime: ${setDate}`)
+			console.log(`DM Recieved!\nContent: ${embedContent}\nSent By: ${message.author.username}#${message.author.discriminator}\nTime: ${setDate}`)
 			return;}		
 		guildIcon = message.member.guild.iconURL();
 		guildName = message.member.guild.name

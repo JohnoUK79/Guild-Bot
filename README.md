@@ -1,4 +1,4 @@
-# PH-Family-Bot
+# Warpath-Bot
 #
 # This bot is a Guild Bot designed specifically for Players of the Mobile War Game Warpath by Lilith Games!
 #

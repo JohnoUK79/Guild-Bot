@@ -15,6 +15,9 @@ module.exports = {
 		GuildName = interaction.guild.name
 		console.log(GuildName)
         board = await sql.Execute(`select * from levels where 1 ORDER BY points DESC;`);
+		Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+		var playerLevel = Level[0].level
+		if (!playerLevel) {var playerLevel = 0}
 
         const Levels =   new MessageActionRow()
 			        .addComponents(
@@ -354,18 +357,168 @@ module.exports = {
 		}
 		//Leaderboard Buttons
         if (interaction.customId === 'Top10') {
+			if (playerLevel > 10) {
+				Top10.setColor('#2e8f37') //forest green
+			}
+			if (playerLevel > 20) {
+				Top10.setColor('DARK_GREEN') //dark green
+			}
+			if (playerLevel > 30) {
+				Top10.setColor('#00ff80') //spring green
+			}
+			if (playerLevel > 40) {
+				Top10.setColor('#00ffff') //cyan
+			}	
+			if (playerLevel > 50) {
+				Top10.setColor('#0080ff') //dodger blue
+			}	
+			if (playerLevel > 60) {
+				Top10.setColor('#0000ff') //blue
+			}	
+			if (playerLevel > 70) {
+				Top10.setColor('#8000ff') //purple
+			} 
+			if (playerLevel > 80) {
+				Top10.setColor('#ff0080') //magenta
+			} 
+			if (playerLevel > 90) {
+				Top10.setColor('#ff0000') //red
+			} 
+			if (playerLevel > 100) {
+				Top10.setColor('#ffff00') //yellow
+			} 
             await interaction.update( { embeds: [Top10], components: [Levels], ephemeral: false })
         }
         if (interaction.customId === 'Top20') {
+			if (playerLevel > 10) {
+				Top20.setColor('#2e8f37') //forest green
+			}
+			if (playerLevel > 20) {
+				Top20.setColor('DARK_GREEN') //dark green
+			}
+			if (playerLevel > 30) {
+				Top20.setColor('#00ff80') //spring green
+			}
+			if (playerLevel > 40) {
+				Top20.setColor('#00ffff') //cyan
+			}	
+			if (playerLevel > 50) {
+				Top20.setColor('#0080ff') //dodger blue
+			}	
+			if (playerLevel > 60) {
+				Top20.setColor('#0000ff') //blue
+			}	
+			if (playerLevel > 70) {
+				Top20.setColor('#8000ff') //purple
+			} 
+			if (playerLevel > 80) {
+				Top20.setColor('#ff0080') //magenta
+			} 
+			if (playerLevel > 90) {
+				Top20.setColor('#ff0000') //red
+			} 
+			if (playerLevel > 100) {
+				Top20.setColor('#ffff00') //yellow
+			} 
             await interaction.update({ embeds: [Top20], components: [Levels], ephemeral: false })
         }
         if (interaction.customId === 'Top30') {
+			if (playerLevel > 10) {
+				Top30.setColor('#2e8f37') //forest green
+			}
+			if (playerLevel > 20) {
+				Top30.setColor('DARK_GREEN') //dark green
+			}
+			if (playerLevel > 30) {
+				Top30.setColor('#00ff80') //spring green
+			}
+			if (playerLevel > 40) {
+				Top30.setColor('#00ffff') //cyan
+			}	
+			if (playerLevel > 50) {
+				Top30.setColor('#0080ff') //dodger blue
+			}	
+			if (playerLevel > 60) {
+				Top30.setColor('#0000ff') //blue
+			}	
+			if (playerLevel > 70) {
+				Top30.setColor('#8000ff') //purple
+			} 
+			if (playerLevel > 80) {
+				Top30.setColor('#ff0080') //magenta
+			} 
+			if (playerLevel > 90) {
+				Top30.setColor('#ff0000') //red
+			} 
+			if (playerLevel > 100) {
+				Top30.setColor('#ffff00') //yellow
+			} 
             await interaction.update({ embeds: [Top30], components: [Levels], ephemeral: false })
         }
 		if (interaction.customId === 'Top40') {
+			if (playerLevel > 10) {
+				Top40.setColor('#2e8f37') //forest green
+			}
+			if (playerLevel > 20) {
+				Top40.setColor('DARK_GREEN') //dark green
+			}
+			if (playerLevel > 30) {
+				Top40.setColor('#00ff80') //spring green
+			}
+			if (playerLevel > 40) {
+				Top40.setColor('#00ffff') //cyan
+			}	
+			if (playerLevel > 50) {
+				Top40.setColor('#0080ff') //dodger blue
+			}	
+			if (playerLevel > 60) {
+				Top40.setColor('#0000ff') //blue
+			}	
+			if (playerLevel > 70) {
+				Top40.setColor('#8000ff') //purple
+			} 
+			if (playerLevel > 80) {
+				Top40.setColor('#ff0080') //magenta
+			} 
+			if (playerLevel > 90) {
+				Top40.setColor('#ff0000') //red
+			} 
+			if (playerLevel > 100) {
+				Top40.setColor('#ffff00') //yellow
+			} 
             await interaction.update({ embeds: [Top40], components: [Levels], ephemeral: false })
         }
         if (interaction.customId === 'Top50') {
+			if (playerLevel > 10) {
+				Top50.setColor('#2e8f37') //forest green
+			}
+			if (playerLevel > 20) {
+				Top50.setColor('DARK_GREEN') //dark green
+			}
+			if (playerLevel > 30) {
+				Top50.setColor('#00ff80') //spring green
+			}
+			if (playerLevel > 40) {
+				Top50.setColor('#00ffff') //cyan
+			}	
+			if (playerLevel > 50) {
+				Top50.setColor('#0080ff') //dodger blue
+			}	
+			if (playerLevel > 60) {
+				Top50.setColor('#0000ff') //blue
+			}	
+			if (playerLevel > 70) {
+				Top50.setColor('#8000ff') //purple
+			} 
+			if (playerLevel > 80) {
+				Top50.setColor('#ff0080') //magenta
+			} 
+			if (playerLevel > 90) {
+				Top50.setColor('#ff0000') //red
+			} 
+			if (playerLevel > 100) {
+				Top50.setColor('#ffff00') //yellow
+			} 
             await interaction.update({ embeds: [Top50], components: [Levels], ephemeral: false })
         }
 

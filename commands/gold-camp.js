@@ -10,18 +10,16 @@ module.exports = {
 				.setDescription('The city!')
 				.setRequired(true)
 				.addChoices(
-                    { name: 'Liberty', value: 'L' },
+          { name: 'Liberty', value: 'L' },
 					{ name: 'Martyr', value: 'M' },
 					{ name: 'Vanguard', value: 'V' },
-
-                    ))
-                    .addStringOption(option => 
-                        option.setName('date')
-                            .setDescription('date must be MM/DD/YYYY or MM/DD/YY')
-                            .setRequired(true)
-                        ),
-                async execute(Interaction) {
-                    const ban = require('../data/ban');
+          ))
+            .addStringOption(option => 
+            option.setName('date')
+            .setDescription('date must be MM/DD/YYYY or MM/DD/YY')
+            .setRequired(true)),
+          async execute(Interaction) {
+          const ban = require('../data/ban');
 					const servers = require('../data/servers');
 					const server = Interaction.guild.id //need guild ID
 					const userID = Interaction.user.id //need user ID

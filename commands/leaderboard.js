@@ -9,6 +9,9 @@ module.exports = {
 	async execute(interaction) {
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
+		Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+		var playerLevel = Level[0].level
+		if (!playerLevel) {var playerLevel = 0}
 
 		const LeaderboardButtons =   new MessageActionRow()
 			        .addComponents(
@@ -60,6 +63,40 @@ module.exports = {
 		.setImage(`${guildIcon}`)
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
+
+		if (playerLevel > 10) {
+			leaderBoard.setColor('#2e8f37') //forest green
+		}
+		if (playerLevel > 20) {
+			leaderBoard.setColor('DARK_GREEN') //dark green
+		}
+		if (playerLevel > 30) {
+			leaderBoard.setColor('#00ff80') //spring green
+		}
+		if (playerLevel > 40) {
+			leaderBoard.setColor('#00ffff') //cyan
+		}	
+		if (playerLevel > 50) {
+			leaderBoard.setColor('#0080ff') //dodger blue
+		}	
+		if (playerLevel > 60) {
+			leaderBoard.setColor('#0000ff') //blue
+		}	
+		if (playerLevel > 70) {
+			leaderBoard.setColor('#8000ff') //purple
+		} 
+		if (playerLevel > 80) {
+			leaderBoard.setColor('#ff0080') //magenta
+		} 
+		if (playerLevel > 90) {
+			leaderBoard.setColor('#ff0000') //red
+		} 
+		if (playerLevel > 100) {
+			leaderBoard.setColor('#ffff00') //yellow
+		} 
+
+
+
 
 
 		return interaction.reply({ embeds: [leaderBoard], components: [LeaderboardButtons]})

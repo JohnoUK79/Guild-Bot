@@ -1,12 +1,29 @@
 const fs = require('node:fs');
-const { Client, Intents, Collection } = require("discord.js");
+const { Client, Intents, Collection, Options } = require("discord.js");
 const rpc = require("discord-rpc");
 const { token, CLIENT_ID } = require('./config.json');
 
 //Discord client
 const client = new Client({
 
-      intents: [
+    makeCache: Options.cacheWithLimits({
+		MessageManager: 200, // This is default
+		PresenceManager: 200,
+        UserManager: 200,
+        ReactionUserManager: 200,
+        GuildInviteManager: 200,
+        GuildBanManager: 200,
+        GuildEmojiManager: 200,
+        GuildMemberManager: 200,
+        GuildScheduledEventManager: 200,
+        ApplicationCommandManager: 200,
+        BaseGuildEmojiManager: 200,
+        GuildStickerManager: 200,
+        StageInstanceManager: 200,
+		// Add more class names here
+	}),
+    
+    intents: [
         Intents.FLAGS.GUILDS,
         Intents.FLAGS.GUILD_MEMBERS,
         Intents.FLAGS.GUILD_BANS,
@@ -24,7 +41,8 @@ const client = new Client({
         Intents.FLAGS.DIRECT_MESSAGE_TYPING,
         Intents.FLAGS.GUILD_SCHEDULED_EVENTS,
     ],
-    partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER']
+    partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER'],
+    
 })
 
 //RPC client

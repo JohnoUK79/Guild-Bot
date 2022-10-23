@@ -12,13 +12,13 @@ module.exports = {
         let oldVoiceChannel = await oldState.guild.channels.cache.get(oldState.channelId)
         let newVoiceChannel = await oldState.guild.channels.cache.get(newState.channelId)
         let member = await oldState.guild.members.cache.get(oldState.id)
-
+        let author = member.nickname
         const voiceJoinEmbed = new MessageEmbed()
-        .setColor('DARK_ORANGE')
+        .setColor('GREEN')
         .setTitle(`Joined Voice Chat.`)
         .setURL('http://www.phfamily.co.uk/')
         .setThumbnail(guildLogo)
-        .setAuthor(member.nickname)
+        .setAuthor(author)
         .setDescription(`Member Joined!`)
         .addFields(
             { name: `Member:`, value: `${member}`, inline: true },
@@ -29,11 +29,11 @@ module.exports = {
         .setFooter({ text: `Voice Chat Joined.`, iconURL: `${guildLogo}` });
 		
 		const voiceLeaveEmbed = new MessageEmbed()
-        .setColor('DARK_ORANGE')
+        .setColor('RED')
         .setTitle(`Left Voice Chat.`)
         .setURL('http://www.phfamily.co.uk/')
         .setThumbnail(guildLogo)
-        .setAuthor(member.nickname)
+        .setAuthor(author)
         .setDescription(`Member Left!`)
         .addFields(
             { name: `Member:`, value: `${member}`, inline: true },
@@ -44,11 +44,11 @@ module.exports = {
         .setFooter({ text: `Voice Chat Left.`, iconURL: `${guildLogo}` });
 
         const voiceStateEmbed = new MessageEmbed()
-        .setColor('DARK_ORANGE')
+        .setColor('BLUE')
         .setTitle(`Voice Chat Status.`)
         .setURL('http://www.phfamily.co.uk/')
         .setThumbnail(guildLogo)
-        .setAuthor(member.nickname)
+        .setAuthor(author)
         .setDescription(`Status Changed!`)
         .addFields(
             { name: `Member:`, value: `${member}`, inline: true },

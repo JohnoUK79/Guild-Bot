@@ -15,7 +15,7 @@ module.exports = {
         if (!sendChannel) var sendChannel = settings[0].system_channel
         console.log(guildName, channel, code, sendChannel)
         const inviteEmbed = new MessageEmbed()
-        .setColor('DARK_GREEN')
+        .setColor('GREEN')
         .setTitle(`New Invite.`)
         .setURL('http://www.phfamily.co.uk/')
         .setThumbnail(guildLogo)

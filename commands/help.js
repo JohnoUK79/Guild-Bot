@@ -37,6 +37,8 @@ module.exports = {
                 { name: `Poll`, value: `Need to engage the opinions of your members?\nPoll it using the **/poll** command.` },
                 { name: `Player Database`, value: `Our **Botlytics Team** have compiled details of almost 30k player profiles and affiliations.\nUse the **/search** command to find your player ID.\n**Registered members** can add **Images** or **Gifs** to their profile as well as update their own **Bot Profiles**.` },
                 { name: `Bespoke Branding`, value: `The Bot is designed to fully integrate with your own **Server Branding**.\nAll posts will be fully bespoke and linked to your servers image & name.` },
+                { name: `Invite Logging`, value: `Everytime a member creates an Invite a post will be created in your updates channel.\n**Coming Soon** - Full Invite Tracking (Monitor who your server influences are and rewards).` },
+                { name: `Voice Chat Logging`, value: `Whenever a member joins / leave a voice chat channel a log will be posted in the VC text channel.` },
                 { name: `Coming Soon!`, value: `**Jukebox** - Play your favourite songs whilst burning & building!` },
                 { name: `Coming Soon!`, value: `**Guild Dashboard** - Officers & Leaders will be able to evaluate & score members based on activity & contribution to the alliance.` },
                 { name: `Coming Soon!`, value: `**Server Website!**` },

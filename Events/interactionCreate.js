@@ -17,7 +17,7 @@ module.exports = {
         board = await sql.Execute(`select * from levels where 1 ORDER BY points DESC;`);
 		Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
 		var playerLevel = Level[0].level
-		if (!playerLevel) {var playerLevel = 0}
+		if (playerLevel === null) {var playerLevel = 0}
 
         const Levels =   new MessageActionRow()
 			        .addComponents(

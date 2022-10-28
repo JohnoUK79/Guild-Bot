@@ -12,8 +12,12 @@ module.exports = {
         let inviterID = invite.inviter.id
 
         var sendChannel = settings[0].updates_channel
-        if (!sendChannel) var sendChannel = settings[0].system_channel
+        if (sendChannel !== null) {
+            sendChannel = invite.channel.id
+        } 
+        
         console.log(guildName, channel, code, sendChannel)
+
         const inviteEmbed = new MessageEmbed()
         .setColor('GREEN')
         .setTitle(`New Invite.`)

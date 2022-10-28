@@ -166,6 +166,30 @@ module.exports = {
 		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
         console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
+
+		const playerUpdateEmbed = new MessageEmbed()
+		.setColor('#0099ff')
+		.setTitle(`${GuildName} - Player Updated`)
+		.setURL('http://www.phfamily.co.uk/leaderboard.php')
+		.setThumbnail(interaction.member.displayAvatarURL())
+		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setDescription(`Hey **${interaction.member.displayName}**! Player Updated.`)
+		.addFields(
+			{ name: `User ID:`, value: `Updated` },
+			//{ name: `Player Name:`, value: `${usernameInput}` },
+			//{ name: 'TAG:', value: `${tagInput}` },
+			//{ name: 'City:', value: `${cityInput}` },
+			//{ name: 'Affiliation:', value: `${affiliationInput}` },
+
+			)
+		.setImage(`${guildIcon}`) 
+		.setTimestamp()
+		.setFooter({ text: `${GuildName} - Player Updated.`, iconURL: `${guildIcon}` });
+
+        console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
+
+
+
 		//Dashboard Reports
 		if (interaction.customId === 'Reports') {
 			return interaction.reply({
@@ -269,7 +293,7 @@ module.exports = {
 				console.log('Not Registered for Levels')
 				return interaction.reply({ 
 					content: `**${interaction.member.displayName}**, You have not registered on the server yet, please say Hi! and try again!\nAny issues, message **<@322100798651760640>**`, 
-					empheral: false,
+					ephemeral: false,
 				})
 			}
 			//Information Already on Bot
@@ -301,7 +325,7 @@ module.exports = {
 				let updatePlayers = await sql.Execute(`UPDATE players SET last_known_name = '${usernameInput}', last_known_tag = '${tagInput}', last_city = '${cityInput}', date_last_known = '${setDate}', discord ='${interaction.member.id}', discord_name = '${interaction.member.displayName}', discord_server = '${GuildName}', last_city = '${cityInput}' WHERE player_id = ${uidInput}`)
 				let changeLog = await sql.Execute(`INSERT INTO changelog (player_id, discord_id, discord_name, old_info, new_info) VALUES ('${uidInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${oldInfo}', '${newInfo}')`)
 				return interaction.reply({ 
-					empheral: true,
+					ephemeral: true,
 					content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been completed.\n\nUse the **/search** command to see your new details.\nAny issues message **<@322100798651760640>**`,
 				})
 			} else
@@ -314,7 +338,7 @@ module.exports = {
 			let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}');`)
 			return interaction.reply({ 
 				content: `**${interaction.member.displayName}**, Your **Submission** of User ID: **${uidInput}** has been received.\n\nThis Will be reviewed and updated shortly. Any issues message **<@322100798651760640>**`,
-				empheral: false,
+				ephemeral: false,
 			});
 			}
 		}
@@ -343,9 +367,10 @@ module.exports = {
 			let dashboardUpdatePlayer = await sql.Execute(`UPDATE players SET last_known_name = '${usernameInput}', last_known_tag = '${tagInput}', affiliation = '${affiliationInput}', last_city = '${cityInput}', last_seen_by = '${interaction.member.displayName}', date_last_known = '${setDate}' WHERE player_id = '${uidInput}';`)
 			let changeLogUpdate = await sql.Execute(`INSERT INTO changelog (player_id, discord_id, discord_name, old_info, new_info, change_date) VALUES ('${uidInput}', '${interaction.user.id}', '${interaction.member.displayName}', '${oldInfo}', '${newInfo}', '${setDate}')`)
 			
-			interaction.reply({ 
+			interaction.update({ 
+				ephemeral: true,
+				embeds: [playerUpdateEmbed],
 				content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been completed.\nAny issues message **<@322100798651760640>**`,
-				empheral: true,
 			});
 			
 		}
@@ -357,166 +382,166 @@ module.exports = {
 		}
 		//Leaderboard Buttons
         if (interaction.customId === 'Top10') {
-			if (playerLevel > 10) {
+			if (playerLevel > 9) {
 				Top10.setColor('#2e8f37') //forest green
 			}
-			if (playerLevel > 20) {
+			if (playerLevel > 19) {
 				Top10.setColor('DARK_GREEN') //dark green
 			}
-			if (playerLevel > 30) {
+			if (playerLevel > 29) {
 				Top10.setColor('#00ff80') //spring green
 			}
-			if (playerLevel > 40) {
+			if (playerLevel > 39) {
 				Top10.setColor('#00ffff') //cyan
 			}	
-			if (playerLevel > 50) {
+			if (playerLevel > 49) {
 				Top10.setColor('#0080ff') //dodger blue
 			}	
-			if (playerLevel > 60) {
+			if (playerLevel > 59) {
 				Top10.setColor('#0000ff') //blue
 			}	
-			if (playerLevel > 70) {
+			if (playerLevel > 69) {
 				Top10.setColor('#8000ff') //purple
 			} 
-			if (playerLevel > 80) {
+			if (playerLevel > 79) {
 				Top10.setColor('#ff0080') //magenta
 			} 
-			if (playerLevel > 90) {
+			if (playerLevel > 89) {
 				Top10.setColor('#ff0000') //red
 			} 
-			if (playerLevel > 100) {
+			if (playerLevel > 99) {
 				Top10.setColor('#ffff00') //yellow
 			} 
             await interaction.update( { embeds: [Top10], components: [Levels], ephemeral: false })
         }
         if (interaction.customId === 'Top20') {
-			if (playerLevel > 10) {
+			if (playerLevel > 9) {
 				Top20.setColor('#2e8f37') //forest green
 			}
-			if (playerLevel > 20) {
+			if (playerLevel > 19) {
 				Top20.setColor('DARK_GREEN') //dark green
 			}
-			if (playerLevel > 30) {
+			if (playerLevel > 29) {
 				Top20.setColor('#00ff80') //spring green
 			}
-			if (playerLevel > 40) {
+			if (playerLevel > 39) {
 				Top20.setColor('#00ffff') //cyan
 			}	
-			if (playerLevel > 50) {
+			if (playerLevel > 49) {
 				Top20.setColor('#0080ff') //dodger blue
 			}	
-			if (playerLevel > 60) {
+			if (playerLevel > 59) {
 				Top20.setColor('#0000ff') //blue
 			}	
-			if (playerLevel > 70) {
+			if (playerLevel > 69) {
 				Top20.setColor('#8000ff') //purple
 			} 
-			if (playerLevel > 80) {
+			if (playerLevel > 79) {
 				Top20.setColor('#ff0080') //magenta
 			} 
-			if (playerLevel > 90) {
+			if (playerLevel > 89) {
 				Top20.setColor('#ff0000') //red
 			} 
-			if (playerLevel > 100) {
+			if (playerLevel > 99) {
 				Top20.setColor('#ffff00') //yellow
 			} 
             await interaction.update({ embeds: [Top20], components: [Levels], ephemeral: false })
         }
         if (interaction.customId === 'Top30') {
-			if (playerLevel > 10) {
+			if (playerLevel > 9) {
 				Top30.setColor('#2e8f37') //forest green
 			}
-			if (playerLevel > 20) {
+			if (playerLevel > 19) {
 				Top30.setColor('DARK_GREEN') //dark green
 			}
-			if (playerLevel > 30) {
+			if (playerLevel > 29) {
 				Top30.setColor('#00ff80') //spring green
 			}
-			if (playerLevel > 40) {
+			if (playerLevel > 39) {
 				Top30.setColor('#00ffff') //cyan
 			}	
-			if (playerLevel > 50) {
+			if (playerLevel > 49) {
 				Top30.setColor('#0080ff') //dodger blue
 			}	
-			if (playerLevel > 60) {
+			if (playerLevel > 59) {
 				Top30.setColor('#0000ff') //blue
 			}	
-			if (playerLevel > 70) {
+			if (playerLevel > 69) {
 				Top30.setColor('#8000ff') //purple
 			} 
-			if (playerLevel > 80) {
+			if (playerLevel > 79) {
 				Top30.setColor('#ff0080') //magenta
 			} 
-			if (playerLevel > 90) {
+			if (playerLevel > 89) {
 				Top30.setColor('#ff0000') //red
 			} 
-			if (playerLevel > 100) {
+			if (playerLevel > 99) {
 				Top30.setColor('#ffff00') //yellow
 			} 
             await interaction.update({ embeds: [Top30], components: [Levels], ephemeral: false })
         }
 		if (interaction.customId === 'Top40') {
-			if (playerLevel > 10) {
+			if (playerLevel > 9) {
 				Top40.setColor('#2e8f37') //forest green
 			}
-			if (playerLevel > 20) {
+			if (playerLevel > 19) {
 				Top40.setColor('DARK_GREEN') //dark green
 			}
-			if (playerLevel > 30) {
+			if (playerLevel > 29) {
 				Top40.setColor('#00ff80') //spring green
 			}
-			if (playerLevel > 40) {
+			if (playerLevel > 39) {
 				Top40.setColor('#00ffff') //cyan
 			}	
-			if (playerLevel > 50) {
+			if (playerLevel > 49) {
 				Top40.setColor('#0080ff') //dodger blue
 			}	
-			if (playerLevel > 60) {
+			if (playerLevel > 59) {
 				Top40.setColor('#0000ff') //blue
 			}	
-			if (playerLevel > 70) {
+			if (playerLevel > 69) {
 				Top40.setColor('#8000ff') //purple
 			} 
-			if (playerLevel > 80) {
+			if (playerLevel > 79) {
 				Top40.setColor('#ff0080') //magenta
 			} 
-			if (playerLevel > 90) {
+			if (playerLevel > 89) {
 				Top40.setColor('#ff0000') //red
 			} 
-			if (playerLevel > 100) {
+			if (playerLevel > 99) {
 				Top40.setColor('#ffff00') //yellow
 			} 
             await interaction.update({ embeds: [Top40], components: [Levels], ephemeral: false })
         }
         if (interaction.customId === 'Top50') {
-			if (playerLevel > 10) {
+			if (playerLevel > 9) {
 				Top50.setColor('#2e8f37') //forest green
 			}
-			if (playerLevel > 20) {
+			if (playerLevel > 19) {
 				Top50.setColor('DARK_GREEN') //dark green
 			}
-			if (playerLevel > 30) {
+			if (playerLevel > 29) {
 				Top50.setColor('#00ff80') //spring green
 			}
-			if (playerLevel > 40) {
+			if (playerLevel > 39) {
 				Top50.setColor('#00ffff') //cyan
 			}	
-			if (playerLevel > 50) {
+			if (playerLevel > 49) {
 				Top50.setColor('#0080ff') //dodger blue
 			}	
-			if (playerLevel > 60) {
+			if (playerLevel > 59) {
 				Top50.setColor('#0000ff') //blue
 			}	
-			if (playerLevel > 70) {
+			if (playerLevel > 69) {
 				Top50.setColor('#8000ff') //purple
 			} 
-			if (playerLevel > 80) {
+			if (playerLevel > 79) {
 				Top50.setColor('#ff0080') //magenta
 			} 
-			if (playerLevel > 90) {
+			if (playerLevel > 89) {
 				Top50.setColor('#ff0000') //red
 			} 
-			if (playerLevel > 100) {
+			if (playerLevel > 99) {
 				Top50.setColor('#ffff00') //yellow
 			} 
             await interaction.update({ embeds: [Top50], components: [Levels], ephemeral: false })

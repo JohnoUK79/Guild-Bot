@@ -67,34 +67,34 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - Rank - ${interaction.member.displayName}.`, iconURL: `${guildIcon}` });
 		if(!oldlevel) {oldlevel = 0}
-		if (oldlevel > 10) {
+		if (oldlevel > 9) {
 			playerLevel.setColor('#2e8f37') //forest green
 		}
-		if (oldlevel > 20) {
+		if (oldlevel > 19) {
 			playerLevel.setColor('DARK_GREEN') //dark green
 		}
-		if (oldlevel > 30) {
+		if (oldlevel > 29) {
 			playerLevel.setColor('#00ff80') //spring green
 		}
-		if (oldlevel > 40) {
+		if (oldlevel > 39) {
 			playerLevel.setColor('#00ffff') //cyan
 		}	
-		if (oldlevel > 50) {
+		if (oldlevel > 49) {
 			playerLevel.setColor('#0080ff') //dodger blue
 		}	
-		if (oldlevel > 60) {
+		if (oldlevel > 59) {
 			playerLevel.setColor('#0000ff') //blue
 		}	
-		if (oldlevel > 70) {
+		if (oldlevel > 69) {
 			playerLevel.setColor('#8000ff') //purple
 		} 
-		if (oldlevel > 80) {
+		if (oldlevel > 79) {
 			playerLevel.setColor('#ff0080') //magenta
 		} 
-		if (oldlevel > 90) {
+		if (oldlevel > 89) {
 			playerLevel.setColor('#ff0000') //red
 		} 
-		if (oldlevel > 100) {
+		if (oldlevel > 99) {
 			playerLevel.setColor('#ffff00') //yellow
 		} 
 

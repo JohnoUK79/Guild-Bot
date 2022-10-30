@@ -67,6 +67,7 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - Rank - ${interaction.member.displayName}.`, iconURL: `${guildIcon}` });
 		if(!oldlevel) {oldlevel = 0}
+		
 		if (oldlevel > 9) {
 			playerLevel.setColor('#2e8f37') //forest green
 		}

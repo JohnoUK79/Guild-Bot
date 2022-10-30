@@ -64,34 +64,34 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
-		if (playerLevel > 10) {
+		if (playerLevel > 9) {
 			leaderBoard.setColor('#2e8f37') //forest green
 		}
-		if (playerLevel > 20) {
+		if (playerLevel > 19) {
 			leaderBoard.setColor('DARK_GREEN') //dark green
 		}
-		if (playerLevel > 30) {
+		if (playerLevel > 29) {
 			leaderBoard.setColor('#00ff80') //spring green
 		}
-		if (playerLevel > 40) {
+		if (playerLevel > 39) {
 			leaderBoard.setColor('#00ffff') //cyan
 		}	
-		if (playerLevel > 50) {
+		if (playerLevel > 49) {
 			leaderBoard.setColor('#0080ff') //dodger blue
 		}	
-		if (playerLevel > 60) {
+		if (playerLevel > 59) {
 			leaderBoard.setColor('#0000ff') //blue
 		}	
-		if (playerLevel > 70) {
+		if (playerLevel > 69) {
 			leaderBoard.setColor('#8000ff') //purple
 		} 
-		if (playerLevel > 80) {
+		if (playerLevel > 79) {
 			leaderBoard.setColor('#ff0080') //magenta
 		} 
-		if (playerLevel > 90) {
+		if (playerLevel > 89) {
 			leaderBoard.setColor('#ff0000') //red
 		} 
-		if (playerLevel > 100) {
+		if (playerLevel > 99) {
 			leaderBoard.setColor('#ffff00') //yellow
 		} 
 

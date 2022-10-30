@@ -145,7 +145,7 @@ module.exports = {
             .setFooter({ text: `${guildName} - Search Tool.`, iconURL: `${guildIcon}` });
             let enemyDB = Data[0].enemy
             if (enemyDB === 'Yes') {
-                playersearch.setColor('DARK_RED')
+                playersearch.setColor('RED')
             }
             if (enemyDB === 'No') {
                 playersearch.setColor('GREEN')

@@ -162,43 +162,43 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: `Level Up - ${guildName}.`, iconURL: `${guildIcon}` });
 
-		if (scoreLevel > 10) {
+		if (scoreLevel > 9) {
 			var score = Math.floor(Math.random() * 200) * 2;
 			levelup.setColor('#2e8f37') //forest green
 		}
-		if (scoreLevel > 20) {
+		if (scoreLevel > 19) {
 			var score = Math.floor(Math.random() * 150) * 2;
 			levelup.setColor('DARK_GREEN') //dark green
 		}
-		if (scoreLevel > 30) {
+		if (scoreLevel > 29) {
 			var score = Math.floor(Math.random() * 125) * 2;
 			levelup.setColor('#00ff80') //spring green
 		}
-		if (scoreLevel > 40) {
+		if (scoreLevel > 39) {
 			var score = Math.floor(Math.random() * 100) * 2;
 			levelup.setColor('#00ffff') //cyan
 		}	
-		if (scoreLevel > 50) {
+		if (scoreLevel > 49) {
 			var score = Math.floor(Math.random() * 75) * 2;
 			levelup.setColor('#0080ff') //dodger blue
 		}	
-		if (scoreLevel > 60) {
+		if (scoreLevel > 59) {
 			var score = Math.floor(Math.random() * 50) * 2;
 			levelup.setColor('#0000ff') //blue
 		}	
-		if (scoreLevel > 70) {
+		if (scoreLevel > 69) {
 			var score = Math.floor(Math.random() * 25) + 1;
 			levelup.setColor('#8000ff') //purple
 		} 
-		if (scoreLevel > 80) {
+		if (scoreLevel > 79) {
 			var score = Math.floor(Math.random() * 15) +1;
 			levelup.setColor('#ff0080') //magenta
 		} 
-		if (scoreLevel > 90) {
+		if (scoreLevel > 89) {
 			var score = Math.floor(Math.random() * 10) +1;
 			levelup.setColor('#ff0000') //red
 		} 
-		if (scoreLevel > 100) {
+		if (scoreLevel > 99) {
 			var score = Math.floor(Math.random() * 5) +1;
 			levelup.setColor('#ffff00') //yellow
 		} 

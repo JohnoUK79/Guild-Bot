@@ -31,7 +31,7 @@ module.exports = {
     async execute(Interaction) {
         guildIcon = Interaction.member.guild.iconURL();
 		guildName = Interaction.member.guild.name
-        var playerStatus = Interaction.options.getString('player-status');
+        let playerStatus = Interaction.options.getString('player-status');
 		const id = parseInt(Interaction.options.getString("player-id"));
         if(isNaN(id)) return Interaction.reply( {content: `You have entered invalid details, please input a valid User ID!\n**${Interaction.options.getString("player-id")}** is not a Valid user ID!\nAny issues message **<@322100798651760640>**`});
         Players = await sql.Execute('select * from players where player_id = '+ id +';');
@@ -55,6 +55,10 @@ module.exports = {
             .setImage(`${guildIcon}`)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Player Status Updated!`, iconURL: `${guildIcon}` });
+
+            if (playerStatus === 'Yes') {updateEnemyEmbed.setColor('RED')}
+            if (playerStatus === 'NAP') {updateEnemyEmbed.setColor('BLUE')}
+
             await Interaction.reply({
             ephemeral: true,
             embeds: [updateEnemyEmbed],

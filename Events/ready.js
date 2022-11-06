@@ -11,9 +11,9 @@ module.exports = {
     name: 'ready',
     once: true,
     async execute(client, commands) {     
-/*         await client.application.commands.set([]);
-        const guild = await client.guilds.fetch(GUILD_ID);
-        guild.commands.set([]); */ //to be used to reset guild commands when transferring to global
+        //await client.application.commands.set([]); // Reset Global Commands
+        //const guild = await client.guilds.fetch(GUILD_ID);
+        //guild.commands.set([]);  //to be used to reset guild commands when transferring to global
 
         console.log(`${setDate} - Logged in as - ${client.user.tag}`);
         const rest = new REST({ version: '10' }).setToken(token);

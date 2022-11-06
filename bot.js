@@ -41,7 +41,12 @@ const client = new Client({
         Intents.FLAGS.DIRECT_MESSAGE_TYPING,
         Intents.FLAGS.GUILD_SCHEDULED_EVENTS,
     ],
-    partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER'],
+    partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER', 'GUILD_MEMBER', 'GUILD_SCHEDULED_EVENT'],
+    
+    allowedMentions: {
+        parse: ["roles", "users", "everyone"],
+        repliedUser: true
+    },
     
 })
 

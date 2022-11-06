@@ -14,9 +14,10 @@ module.exports = {
         
         console.log(`${setDate} - Logged in as - ${client.user.tag}`);
         const rest = new REST({ version: '10' }).setToken(token);
-        await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), { body: commands })
+        await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands }) //Global Commands
+        //await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), { body: commands }) //Guild Only Commands
             .then(() => {
-                console.log(`Successfully registered guild application commands for Guild: ${GUILD_ID}`);
+                console.log(`Successfully registered Global Application Commands!`);
             })
             .catch(console.error);
 

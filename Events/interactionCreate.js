@@ -9,7 +9,7 @@ const { TextInputStyle } = require('discord-api-types/v10');
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
-		
+
 		guildIcon = interaction.member.guild.iconURL();
 		const setDate = time.default()
 		GuildName = interaction.guild.name
@@ -367,7 +367,7 @@ module.exports = {
 			let dashboardUpdatePlayer = await sql.Execute(`UPDATE players SET last_known_name = '${usernameInput}', last_known_tag = '${tagInput}', affiliation = '${affiliationInput}', last_city = '${cityInput}', last_seen_by = '${interaction.member.displayName}', date_last_known = '${setDate}' WHERE player_id = '${uidInput}';`)
 			let changeLogUpdate = await sql.Execute(`INSERT INTO changelog (player_id, discord_id, discord_name, old_info, new_info, change_date) VALUES ('${uidInput}', '${interaction.user.id}', '${interaction.member.displayName}', '${oldInfo}', '${newInfo}', '${setDate}')`)
 			
-			interaction.update({ 
+			interaction.reply({ 
 				ephemeral: true,
 				embeds: [playerUpdateEmbed],
 				content: `**${interaction.member.displayName}**, Your **Update** of User ID: **${uidInput}** has been completed.\nAny issues message **<@322100798651760640>**`,

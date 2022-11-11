@@ -73,6 +73,6 @@ module.exports = {
             return
         }
  
-        await oldState.guild.channels.cache.get(sendChannel).send({ embeds: [voiceStateEmbed]})
+        //await oldState.guild.channels.cache.get(sendChannel).send({ embeds: [voiceStateEmbed]})
     }
 };

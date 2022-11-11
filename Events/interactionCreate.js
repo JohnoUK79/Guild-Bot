@@ -165,8 +165,6 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
-        console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
-
 		const playerUpdateEmbed = new MessageEmbed()
 		.setColor('#0099ff')
 		.setTitle(`${GuildName} - Player Updated`)
@@ -180,15 +178,12 @@ module.exports = {
 			//{ name: 'TAG:', value: `${tagInput}` },
 			//{ name: 'City:', value: `${cityInput}` },
 			//{ name: 'Affiliation:', value: `${affiliationInput}` },
-
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
 		.setFooter({ text: `${GuildName} - Player Updated.`, iconURL: `${guildIcon}` });
 
         console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
-
-
 
 		//Dashboard Reports
 		if (interaction.customId === 'Reports') {

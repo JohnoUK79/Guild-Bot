@@ -5,6 +5,7 @@ module.exports = {
     once: true,
 
     async execute(client) {
+        console.log("BOT Joined Server")
         client.guilds.cache.map(r => {
             const id = r.id
             const name = r.name

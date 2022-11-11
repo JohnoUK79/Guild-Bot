@@ -16,7 +16,7 @@ module.exports = {
             sendChannel = invite.channel.id
         } 
         
-        console.log(guildName, channel, code, sendChannel)
+        console.log(`Invite Created\n${guildName}, ${channel}, ${code}, ${sendChannel}`)
 
         const inviteEmbed = new MessageEmbed()
         .setColor('GREEN')
@@ -39,7 +39,5 @@ module.exports = {
 
 
         await invite.guild.channels.cache.get(sendChannel).send({ embeds: [inviteEmbed] })
-        //console.log(invite)
-
     }
 };

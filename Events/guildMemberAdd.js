@@ -22,7 +22,7 @@ module.exports = {
         var playerDisplayName = member.displayName
 		if (!playerDisplayName){ var playerDisplayName = member.username}
         
-        const newMemberEmbed = new Discord.MessageEmbed()
+        const newMemberEmbed = new Discord.EmbedBuilder()
             .setColor("#d81e5b")
             .setTitle("New Player!")
             .setDescription(`<@${member.id}> has joined the server! \nWe hope you enjoy your time here.`)
@@ -30,7 +30,7 @@ module.exports = {
             .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();
             
-        const welcomeEmbed = new Discord.MessageEmbed()
+        const welcomeEmbed = new Discord.EmbedBuilder()
             .setColor("#d81e5b")
             .setTitle(`Welcome to ${GUILD}`)
             .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here.`)

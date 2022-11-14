@@ -19,7 +19,7 @@ module.exports = {
         console.log(`Invite Created\n${guildName}, ${channel}, ${code}, ${sendChannel}`)
 
         const inviteEmbed = new EmbedBuilder()
-        .setColor('GREEN')
+        .setColor('#008000')
         .setTitle(`New Invite.`)
         .setURL('http://www.phfamily.co.uk/')
         .setThumbnail(guildLogo)

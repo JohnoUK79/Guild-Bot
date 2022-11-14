@@ -14,7 +14,7 @@ module.exports = {
         let member = await oldState.guild.members.cache.get(oldState.id)
         let author = member.nickname
         const voiceJoinEmbed = new EmbedBuilder()
-        .setColor('GREEN')
+        .setColor('#008000')
         .setTitle(`Joined Voice Chat.`)
         .setURL('http://www.phfamily.co.uk/')
         .setThumbnail(guildLogo)
@@ -29,7 +29,7 @@ module.exports = {
         .setFooter({ text: `Voice Chat Joined.`, iconURL: `${guildLogo}` });
 		
 		const voiceLeaveEmbed = new EmbedBuilder()
-        .setColor('RED')
+        .setColor('#FF0000')
         .setTitle(`Left Voice Chat.`)
         .setURL('http://www.phfamily.co.uk/')
         .setThumbnail(guildLogo)
@@ -44,7 +44,7 @@ module.exports = {
         .setFooter({ text: `Voice Chat Left.`, iconURL: `${guildLogo}` });
 
         const voiceStateEmbed = new EmbedBuilder()
-        .setColor('BLUE')
+        .setColor('#0000FF')
         .setTitle(`Voice Chat Status.`)
         .setURL('http://www.phfamily.co.uk/')
         .setThumbnail(guildLogo)

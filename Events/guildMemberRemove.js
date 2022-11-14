@@ -19,7 +19,7 @@ module.exports = {
         GUILD = member.guild.name
         
         Channel_ID = Data[0].welcome_channel_id
-            const goodByeEmbed = new Discord.MessageEmbed()
+            const goodByeEmbed = new Discord.EmbedBuilder()
             .setColor("#d81e5b")
             .setTitle("Player Left!")
             .setDescription(`<@${member.id}> has left the server! \nThey could not handle the TRUTH!.`)

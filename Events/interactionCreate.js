@@ -15,7 +15,7 @@ module.exports = {
 		var playerLevel = Level[0].level
 		if (playerLevel === null) {var playerLevel = 0}
 
-        const Levels =   new ActionRowBuilder()
+        const Levels = new ActionRowBuilder()
 			        .addComponents(
                 new ButtonBuilder()
                     .setCustomId("Top10")

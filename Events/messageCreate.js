@@ -1,4 +1,4 @@
-const { EmbedBuilder, Client, MessageAttachment, ModalSubmitFieldsResolver, ActionRowBuilder, ButtonBuilder, Guild, Interaction } = require('discord.js');
+const { EmbedBuilder, Client, MessageAttachment, ModalSubmitFieldsResolver, ActionRowBuilder, ButtonBuilder, Guild, Interaction, ButtonStyle } = require('discord.js');
 const sql = require("../config/Database");
 const interactionCreate = require('./interactionCreate');
 time = require('../config/timestamp')
@@ -61,7 +61,7 @@ module.exports = {
 		new ButtonBuilder()
 				.setCustomId('UID')
 				.setLabel('Add / Update your Search Profile!')
-				.setStyle('PRIMARY'),
+				.setStyle(ButtonStyle.Primary),
 		)
 
 		const devSupport = new EmbedBuilder()
@@ -69,7 +69,7 @@ module.exports = {
 		.setTitle('Buy the Dev A Beer!')
 		.setURL('https://www.buymeacoffee.com/johnouk79')
 		.setThumbnail(message.member.displayAvatarURL())
-		.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true })})
 		.setDescription(`**Enjoying the Bot? Buy the Dev a Beer**!`)
 		.addFields(
 			{ name: `Buy Now!:`, value: `https://www.buymeacoffee.com/johnouk79` },
@@ -82,7 +82,7 @@ module.exports = {
 		.setTitle(`Welcome to ${guildName}`)
 		.setURL('http://www.phfamily.co.uk')
 		.setThumbnail(message.member.displayAvatarURL())
-		.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true })})
 		.setDescription(`Welcome **<@${message.member.id}>**!`)
 		.addFields(
 			{ name: `Name:`, value: `${message.member.displayName}` },
@@ -151,7 +151,7 @@ module.exports = {
 		.setTitle('Level Up')
 		.setURL('http://www.phfamily.co.uk')
 		.setThumbnail(message.member.displayAvatarURL())
-		.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true })})
 		.setDescription(`Congratulations **<@${message.member.id}>** you have levelled up!`)
 		.addFields(
 			{ name: `Name:`, value: `<@${message.member.id}>` },

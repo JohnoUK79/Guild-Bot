@@ -1,4 +1,4 @@
-const { MessageEmbed, Client, MessageAttachment, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Guild, Interaction } = require('discord.js');
+const { EmbedBuilder, Client, MessageAttachment, ModalSubmitFieldsResolver, ActionRowBuilder, ButtonBuilder, Guild, Interaction } = require('discord.js');
 const sql = require("../config/Database");
 const interactionCreate = require('./interactionCreate');
 time = require('../config/timestamp')
@@ -17,7 +17,7 @@ module.exports = {
 			const file = new MessageAttachment(message.attachments.map(a => a.url))
 			//console.log(file.attachment.length)
 
-			const dmReceived = new MessageEmbed()
+			const dmReceived = new EmbedBuilder()
 			.setColor('#0099ff')
 			.setTitle('Direct Message Received!')
 			.setURL('http://phfamily.co.uk/')
@@ -56,15 +56,15 @@ module.exports = {
 		var score = Math.floor(Math.random() * 150) * 3;
 		GuildName = message.guild.name
 
-		const updatePlayer =  new MessageActionRow()
+		const updatePlayer =  new ActionRowBuilder()
 				.addComponents(
-		new MessageButton()
+		new ButtonBuilder()
 				.setCustomId('UID')
 				.setLabel('Add / Update your Search Profile!')
 				.setStyle('PRIMARY'),
 		)
 
-		const devSupport = new MessageEmbed()
+		const devSupport = new EmbedBuilder()
 		.setColor('#0099ff')
 		.setTitle('Buy the Dev A Beer!')
 		.setURL('https://www.buymeacoffee.com/johnouk79')
@@ -77,7 +77,7 @@ module.exports = {
 		.setFooter({ text: 'Buy Dekes A Beer!.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
 
 
-		const newPlayer = new MessageEmbed()
+		const newPlayer = new EmbedBuilder()
 		.setColor('#0099ff')
 		.setTitle(`Welcome to ${guildName}`)
 		.setURL('http://www.phfamily.co.uk')
@@ -146,7 +146,7 @@ module.exports = {
 		newLevel = (Levels[0].level + 1)
 		let LevelUpChannel = Settings[0].level_up_channel_id
 
-		const levelup = new MessageEmbed()
+		const levelup = new EmbedBuilder()
 		.setColor('DARK_GOLD')
 		.setTitle('Level Up')
 		.setURL('http://www.phfamily.co.uk')

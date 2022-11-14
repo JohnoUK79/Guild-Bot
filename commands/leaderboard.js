@@ -1,6 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
 const sql = require("../config/Database");
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -13,29 +12,28 @@ module.exports = {
 		var playerLevel = Level[0].level
 		if (!playerLevel) {var playerLevel = 0}
 
-		const LeaderboardButtons =   new MessageActionRow()
+		const LeaderboardButtons =   new ActionRowBuilder()
 			        .addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                     .setCustomId("Top10")
 					.setLabel('Show Top 10')
-                    .setStyle('PRIMARY'),
-				new MessageButton()
+					.setStyle(ButtonStyle.Primary),
+					new ButtonBuilder()
 					.setCustomId("Top20")
 					.setLabel('Show 11 - 20')
-					.setStyle('SUCCESS'),
-				new MessageButton()
+					.setStyle(ButtonStyle.Success),
+				new ButtonBuilder()
 					.setCustomId("Top30")
 					.setLabel('Show 21 - 30')
-					.setStyle('SUCCESS'),
-				new MessageButton()
+					.setStyle(ButtonStyle.Success),
+				new ButtonBuilder()
 					.setCustomId("Top40")
 					.setLabel('Show 31 - 40')
-					.setStyle('DANGER'),
-				new MessageButton()
+					.setStyle(ButtonStyle.Danger),
+				new ButtonBuilder()
 					.setCustomId("Top50")
 					.setLabel('Show 41 - 50')
-					.setStyle('DANGER'),
-
+					.setStyle(ButtonStyle.Danger),
 				)
 		board = await sql.Execute(`select * from levels where 1 ORDER BY points DESC;`);
 		user = board[0].discord_username
@@ -45,12 +43,12 @@ module.exports = {
 		result = (`${user} - ${level} - ${points}`)
 		console.log(user)
 
-		const leaderBoard = new MessageEmbed()
+		const leaderBoard = new EmbedBuilder()
 		.setColor('#0099ff')
 		.setTitle(`${guildName} - Levels Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
-		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
 			{ name: `${guildName} - Levels Board`, value: `**Name - Level - Points**\n` },

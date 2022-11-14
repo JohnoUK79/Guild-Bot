@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
 
@@ -22,12 +21,12 @@ module.exports = {
         const voteTitle = Interaction.options.getString('title');
         var voteDescription = Interaction.options.getString('description');
         if(!voteDescription) {voteDescription = `See above!`}
-        const voteEmbed = new MessageEmbed()
+        const voteEmbed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Vote!`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
+            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**${voteTitle}**`)
             .setThumbnail('http://phfamily.co.uk/img/gifs/Vote.gif')
             .addFields(

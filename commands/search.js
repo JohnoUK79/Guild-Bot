@@ -1,65 +1,64 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const sql = require("../config/Database");
 const interactionCreate = require("../Events/interactionCreate");
 const { execute } = require("../events/ready");
 const timestamp = require('time-stamp');
 
-const admin =   new MessageActionRow()
+const admin =   new ActionRowBuilder()
 			        .addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                     .setCustomId('city')
                     .setLabel('Update City')
-                    .setStyle('PRIMARY'),
-				new MessageButton()
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
 					.setCustomId('player')
 					.setLabel('Update Player')
-					.setStyle('SUCCESS'),
-				new MessageButton()
+                    .setStyle(ButtonStyle.Success),
+				new ButtonBuilder()
 					.setCustomId('enemy')
 					.setLabel('Update Enemy')
-					.setStyle('DANGER'),
+                    .setStyle(ButtonStyle.Danger),
 				)
 
-const player =  new MessageActionRow()
+const player =  new ActionRowBuilder()
                         .addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                         .setCustomId('city')
                         .setLabel('Update City')
-                        .setStyle('PRIMARY'),
-                new MessageButton()
+                        .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
                         .setCustomId('request')
                         .setLabel('Request Player Update')
-                        .setStyle('SECONDARY'),
-                )
+                        .setStyle(ButtonStyle.Secondary),
+                        )
 
-const updatePlayer =  new MessageActionRow()
+const updatePlayer =  new ActionRowBuilder()
 				.addComponents(
-		new MessageButton()
+		new ButtonBuilder()
 				.setCustomId('UID')
 				.setLabel('Add/Update profile on the Search Bot!')
-				.setStyle('PRIMARY'),
+				.setStyle(ButtonStyle.Primary),
 		)
     
 
-const full = new MessageActionRow()
+const full = new ActionRowBuilder()
 			.addComponents(
-				new MessageButton()
+				new ButtonBuilder()
 					.setCustomId('player')
 					.setLabel('Update Player')
-					.setStyle('SUCCESS'),
-				new MessageButton()
+                    .setStyle(ButtonStyle.Success),
+				new ButtonBuilder()
 					.setCustomId('enemy')
 					.setLabel('Update Enemy')
-					.setStyle('DANGER'),
-				new MessageButton()
+                    .setStyle(ButtonStyle.Danger),
+				new ButtonBuilder()
 					.setCustomId('city')
 					.setLabel('Update City')
-					.setStyle('PRIMARY'),
-                new MessageButton()
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
 					.setCustomId('request')
 					.setLabel('Request Player Update')
-					.setStyle('SECONDARY'),
+                    .setStyle(ButtonStyle.Secondary),
 			)
 
 
@@ -121,12 +120,12 @@ module.exports = {
         } 
 
         console.log(`City: ${lastCity} History: ${playerHistory} Discord: ${playerDiscord} Last Seen: ${playerLastSeen}`)
-        const playersearch = new MessageEmbed()
+        const playersearch = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Player Database`)
             .setURL('http://www.phfamily.co.uk/player.html')
             .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
+            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(` Player ID: ${Data[0].player_id}`)
             .setThumbnail(`${guildIcon}`)
             .addFields(
@@ -145,13 +144,13 @@ module.exports = {
             .setFooter({ text: `${guildName} - Search Tool.`, iconURL: `${guildIcon}` });
             let enemyDB = Data[0].enemy
             if (enemyDB === 'Yes') {
-                playersearch.setColor('RED')
+                playersearch.setColor('#FF0000')
             }
             if (enemyDB === 'No') {
-                playersearch.setColor('GREEN')
+                playersearch.setColor('#008000')
             }
             if (enemyDB === 'NAP') {
-                playersearch.setColor('BLUE')
+                playersearch.setColor('#0000FF')
             }
 
         Interaction.reply({

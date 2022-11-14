@@ -1,6 +1,5 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
 const { PermissionFlagsBits } = require('discord-api-types/v10');
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const sql = require("../config/Database");
 const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
@@ -30,12 +29,12 @@ module.exports = {
         var channel = Interaction.options.getString('channel');
         var role = Interaction.options.getString('role');
 
-        const welcomeEmbed = new MessageEmbed()
+        const welcomeEmbed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Welcome Channel & Roles.`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
+            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`Welcome Channel & Roles`)
             .setThumbnail('http://phfamily.co.uk/img/gifs/Poll.gif')
             .addFields(

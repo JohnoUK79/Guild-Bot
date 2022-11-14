@@ -1,6 +1,5 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
 const { PermissionFlagsBits } = require('discord-api-types/v10');
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const sql = require("../config/Database");
 const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
@@ -39,12 +38,12 @@ module.exports = {
         if (Players.length === 0) return Interaction.reply({ content: `I could not find any player with the ID **${id}**, please check the ID and try again! Any issues messages Genesis or **<@322100798651760640>**.`, ephemeral: false });
 
 
-        const updateEnemyEmbed = new MessageEmbed()
-            .setColor('GREEN')
+        const updateEnemyEmbed = new EmbedBuilder()
+            .setColor('#008000')
             .setTitle(`${guildName} - Status Updated`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
+            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**Player Status Updated!**`)
             .setThumbnail('http://phfamily.co.uk/img/gifs/Updates.gif')
             .addFields(
@@ -56,8 +55,8 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: `${guildName} - Player Status Updated!`, iconURL: `${guildIcon}` });
 
-            if (playerStatus === 'Yes') {updateEnemyEmbed.setColor('RED')}
-            if (playerStatus === 'NAP') {updateEnemyEmbed.setColor('BLUE')}
+            if (playerStatus === 'Yes') {updateEnemyEmbed.setColor('#FF0000')}
+            if (playerStatus === 'NAP') {updateEnemyEmbed.setColor('#0000FF')}
 
             await Interaction.reply({
             ephemeral: true,

@@ -1,6 +1,4 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { PermissionFlagsBits } = require('discord-api-types/v10');
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
+const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const sql = require("../config/Database");
 const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
@@ -37,12 +35,12 @@ module.exports = {
         var emoji = Interaction.options.getString('emoji');
         var role = Interaction.options.getString('role');
         console.log(emoji)
-        const addRole = new MessageEmbed()
+        const addRole = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Reaction Roles`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
+            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**Reaction Role Added!**`)
             .setThumbnail('http://phfamily.co.uk/img/gifs/Poll.gif')
             .addFields(

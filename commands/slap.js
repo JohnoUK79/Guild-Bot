@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const gifs = require('../data/slaps').gifs
 
 module.exports = {
@@ -25,12 +24,12 @@ module.exports = {
 
 
 
-	const slapEmbed = new MessageEmbed()
+	const slapEmbed = new EmbedBuilder()
 		.setColor('GREEN')
 		.setTitle(`**SLAP!!**`)
 		.setURL('http://www.phfamily.co.uk/')
 		.setThumbnail(Interaction.user.displayAvatarURL())
-		.setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
+		.setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
 		.setDescription(`<@${Interaction.member.id}> has **Slapped** ${target}`)
 		.setThumbnail(randomGif)
 		.setImage(randomGif)

@@ -1,6 +1,4 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { PermissionFlagsBits } = require('discord-api-types/v10');
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
+const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
 
@@ -33,12 +31,12 @@ module.exports = {
         var emoji = Interaction.options.getString('emoji');
         var role = Interaction.options.getString('role');
         
-        const removeRole = new MessageEmbed()
+        const removeRole = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Reaction Roles`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
+            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**Reaction Role Removed!**`)
             .setThumbnail('http://phfamily.co.uk/img/gifs/Poll.gif')
             .addFields(
@@ -46,7 +44,7 @@ module.exports = {
                 { name: `Emoji`, value: `${emoji}` },
                 { name: `Role`, value: `${role}` },
             )
-            .setImage(`${guildName}`)
+            .setImage(guildIcon)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Reaction Roles.`, iconURL: `${guildIcon}` });
             await Interaction.reply({

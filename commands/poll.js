@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
 
@@ -42,12 +41,12 @@ module.exports = {
 
         if(!pollOption4) {pollOption4 = `Option Not Selected!`}
 
-        const pollEmbed = new MessageEmbed()
+        const pollEmbed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Poll!`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
+            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**${pollTitle}**`)
             .setThumbnail('http://phfamily.co.uk/img/gifs/Poll.gif')
             .addFields(

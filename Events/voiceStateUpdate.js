@@ -1,4 +1,4 @@
-const { MessageEmbed, Client, MessageAttachment, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Guild, Interaction } = require('discord.js');
+const { EmbedBuilder, Client, MessageAttachment, ModalSubmitFieldsResolver, ActionRowBuilder, ButtonBuilder, Guild, Interaction } = require('discord.js');
 const sql = require(`../config/Database`)
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
         let newVoiceChannel = await oldState.guild.channels.cache.get(newState.channelId)
         let member = await oldState.guild.members.cache.get(oldState.id)
         let author = member.nickname
-        const voiceJoinEmbed = new MessageEmbed()
+        const voiceJoinEmbed = new EmbedBuilder()
         .setColor('GREEN')
         .setTitle(`Joined Voice Chat.`)
         .setURL('http://www.phfamily.co.uk/')
@@ -28,7 +28,7 @@ module.exports = {
         .setTimestamp()
         .setFooter({ text: `Voice Chat Joined.`, iconURL: `${guildLogo}` });
 		
-		const voiceLeaveEmbed = new MessageEmbed()
+		const voiceLeaveEmbed = new EmbedBuilder()
         .setColor('RED')
         .setTitle(`Left Voice Chat.`)
         .setURL('http://www.phfamily.co.uk/')
@@ -43,7 +43,7 @@ module.exports = {
         .setTimestamp()
         .setFooter({ text: `Voice Chat Left.`, iconURL: `${guildLogo}` });
 
-        const voiceStateEmbed = new MessageEmbed()
+        const voiceStateEmbed = new EmbedBuilder()
         .setColor('BLUE')
         .setTitle(`Voice Chat Status.`)
         .setURL('http://www.phfamily.co.uk/')

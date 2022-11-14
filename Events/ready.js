@@ -50,7 +50,7 @@ module.exports = {
                 const dayOfWeeek = (new Date()).getDay();
 
             console.log(new Date().toLocaleString(), "Jurisdiction Event Starting");
-            const { MessageEmbed, Client } = require('discord.js');
+            const { EmbedBuilder, Client } = require('discord.js');
                     
                     if( (hourUTC % 4) !== 0) return console.log('Jurisdiction Already Running!');
 
@@ -65,7 +65,7 @@ module.exports = {
                     return;
                     }
 
-                    const jurisdictionEmbed = new MessageEmbed()
+                    const jurisdictionEmbed = new EmbedBuilder()
                         .setColor('#0099ff')
                         .setTitle(jurisdiction.title)
                         .setURL('http://www.phfamily.co.uk')

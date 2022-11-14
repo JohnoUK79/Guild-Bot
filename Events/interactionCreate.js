@@ -1,10 +1,6 @@
-const timestamp = require('time-stamp');
 const time = require('../config/timestamp')
 const sql = require("../config/Database");
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Modal, TextInputComponent, Guild } = require('discord.js');
-const { ModalBuilder } = require('@discordjs/builders');
-const { TextInputStyle } = require('discord-api-types/v10');
-
+const { TextInputStyle, ModalBuilder, EmbedBuilder, Client, TextInputBuilder, ActionRowBuilder, ButtonBuilder, TextInputComponent, Guild, ButtonStyle } = require('discord.js');
 
 module.exports = {
     name: 'interactionCreate',
@@ -19,37 +15,36 @@ module.exports = {
 		var playerLevel = Level[0].level
 		if (playerLevel === null) {var playerLevel = 0}
 
-        const Levels =   new MessageActionRow()
+        const Levels =   new ActionRowBuilder()
 			        .addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                     .setCustomId("Top10")
                     .setLabel('Show Top 10')
-                    .setStyle('PRIMARY'),
-				new MessageButton()
+                    .setStyle(ButtonStyle.Primary),
+				new ButtonBuilder()
 					.setCustomId("Top20")
 					.setLabel('Show 11 -20')
-					.setStyle('SUCCESS'),
-				new MessageButton()
+					.setStyle(ButtonStyle.Success),
+				new ButtonBuilder()
 					.setCustomId("Top30")
 					.setLabel('Show 21 - 30')
-					.setStyle('SUCCESS'),
-				new MessageButton()
+					.setStyle(ButtonStyle.Success),
+				new ButtonBuilder()
 					.setCustomId("Top40")
 					.setLabel('Show 31 - 40')
-					.setStyle('DANGER'),
-				new MessageButton()
+					.setStyle(ButtonStyle.Danger),
+				new ButtonBuilder()
 					.setCustomId("Top50")
 					.setLabel('Show 41 - 50')
-					.setStyle('DANGER'),
-
+					.setStyle(ButtonStyle.Danger),
 				)
 
-        const Top10 = new MessageEmbed()
+        const Top10 = new EmbedBuilder()
 		.setColor('#0099ff')
 		.setTitle(`${GuildName} - Levels Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
-		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
 			{ name: `${GuildName} - Levels Board`, value: `**Name - Level - Points**\n` },
@@ -63,12 +58,12 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
-        const Top20 = new MessageEmbed()
+        const Top20 = new EmbedBuilder()
 		.setColor('#0099ff')
 		.setTitle(`${GuildName} - Levels Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
-		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
 			{ name: `${GuildName} - Levels Board`, value: `**Name - Level - Points**\n` },
@@ -89,12 +84,12 @@ module.exports = {
 		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
 
-        const Top30 = new MessageEmbed()
+        const Top30 = new EmbedBuilder()
 		.setColor('#0099ff')
 		.setTitle(`${GuildName} - Levels Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
-		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
 			{ name: `${GuildName} - Levels Board`, value: `**Name - Level - Points**\n` },
@@ -114,12 +109,12 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
-        const Top40 = new MessageEmbed()
+        const Top40 = new EmbedBuilder()
 		.setColor('#0099ff')
 		.setTitle(`${GuildName} - Levels Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
-		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
 			{ name: `${GuildName} - Levels Board`, value: `**Name - Level - Points**\n` },
@@ -140,12 +135,12 @@ module.exports = {
 		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
 
-		const Top50 = new MessageEmbed()
+		const Top50 = new EmbedBuilder()
 		.setColor('#0099ff')
 		.setTitle(`${GuildName} - Levels Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
-		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
 			{ name: `${GuildName} - Levels Board`, value: `**Name - Level - Points**\n` },
@@ -165,12 +160,12 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
-		const playerUpdateEmbed = new MessageEmbed()
+		const playerUpdateEmbed = new EmbedBuilder()
 		.setColor('#0099ff')
 		.setTitle(`${GuildName} - Player Updated`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
-		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Player Updated.`)
 		.addFields(
 			{ name: `User ID:`, value: `Updated` },
@@ -194,42 +189,42 @@ module.exports = {
 		}
 		//Dashboard Player Update Modal
 		if (interaction.customId === 'Player') {
-			const dashboardPlayerUpdate = new Modal()
+			const dashboardPlayerUpdate = new ModalBuilder()
 			.setCustomId('UpdatePlayer')
 			.setTitle('Update A Players Bot Profile')
 			
-			const dashboarduidInput = new TextInputComponent()
+			const dashboarduidInput = new TextInputBuilder()
 				.setCustomId('AddUID')
 				.setLabel('Please provide the players User ID!')
 				.setStyle(TextInputStyle.Short);
 
-			const dashboardusernameInput = new TextInputComponent()
+			const dashboardusernameInput = new TextInputBuilder()
 				.setCustomId('AddUsername')
 				.setLabel('Add current in game name (Be Exact!).')
 				.setStyle(TextInputStyle.Short);
 
-			const dashboardallianceTagInput = new TextInputComponent()
+			const dashboardallianceTagInput = new TextInputBuilder()
 				.setCustomId('AddTag')
 				.setLabel('Add current Alliance TAG (Be Exact!).')
 				.setStyle(TextInputStyle.Short);
 
-			const dashboardcityInput = new TextInputComponent()
+			const dashboardcityInput = new TextInputBuilder()
 				.setCustomId('AddCity')
 				.setLabel('Add current in game City (Be Exact!).')
 				.setStyle(TextInputStyle.Short);
 
-			const dashboardaffiliationInput = new TextInputComponent()
+			const dashboardaffiliationInput = new TextInputBuilder()
 				.setCustomId('Affiliation')
 				.setLabel('Update/Add Affiliation notes.')
 				.setStyle(TextInputStyle.Short);
 
 
 
-			const ActionRow1 = new MessageActionRow().addComponents(dashboarduidInput);
-			const ActionRow2 = new MessageActionRow().addComponents(dashboardusernameInput);
-			const ActionRow3 = new MessageActionRow().addComponents(dashboardallianceTagInput);
-			const ActionRow4 = new MessageActionRow().addComponents(dashboardcityInput);
-			const ActionRow5 = new MessageActionRow().addComponents(dashboardaffiliationInput);
+			const ActionRow1 = new ActionRowBuilder().addComponents(dashboarduidInput);
+			const ActionRow2 = new ActionRowBuilder().addComponents(dashboardusernameInput);
+			const ActionRow3 = new ActionRowBuilder().addComponents(dashboardallianceTagInput);
+			const ActionRow4 = new ActionRowBuilder().addComponents(dashboardcityInput);
+			const ActionRow5 = new ActionRowBuilder().addComponents(dashboardaffiliationInput);
 
 			dashboardPlayerUpdate.addComponents(ActionRow1, ActionRow2, ActionRow3, ActionRow4, ActionRow5 );
 
@@ -239,34 +234,34 @@ module.exports = {
 		
 		//Player Self Update Modal
 		if (interaction.customId === 'UID') {
-			const playerUpdate = new Modal()
-			.setCustomId('UpdateUID')
-			.setTitle('Add your in Game User ID to Bot Profile')
+			const playerUpdate = new ModalBuilder()
+				.setCustomId('UpdateUID')
+				.setTitle('Add your in Game User ID to Bot Profile')
 			
-			const uidInput = new TextInputComponent()
+			const uidInput = new TextInputBuilder()
 				.setCustomId('AddUID')
 				.setLabel('Please provide your Account User ID')
 				.setStyle(TextInputStyle.Short);
 
-			const usernameInput = new TextInputComponent()
+			const usernameInput = new TextInputBuilder()
 				.setCustomId('AddUsername')
 				.setLabel('Add your current in game name (Be Exact!).')
 				.setStyle(TextInputStyle.Short);
 
-			const allianceTagInput = new TextInputComponent()
+			const allianceTagInput = new TextInputBuilder()
 				.setCustomId('AddTag')
 				.setLabel('Add your current Alliance TAG (Be Exact!).')
 				.setStyle(TextInputStyle.Short);
 
-			const cityInput = new TextInputComponent()
+			const cityInput = new TextInputBuilder()
 				.setCustomId('AddCity')
 				.setLabel('Add current in game City (Be Exact!).')
 				.setStyle(TextInputStyle.Short);
 
-			const firstActionRow = new MessageActionRow().addComponents(uidInput);
-			const secondActionRow = new MessageActionRow().addComponents(usernameInput);
-			const thirdActionRow = new MessageActionRow().addComponents(allianceTagInput);
-			const fourthActionRow = new MessageActionRow().addComponents(cityInput);
+			const firstActionRow = new ActionRowBuilder().addComponents(uidInput);
+			const secondActionRow = new ActionRowBuilder().addComponents(usernameInput);
+			const thirdActionRow = new ActionRowBuilder().addComponents(allianceTagInput);
+			const fourthActionRow = new ActionRowBuilder().addComponents(cityInput);
 
 			playerUpdate.addComponents(firstActionRow, secondActionRow, thirdActionRow, fourthActionRow );
 
@@ -543,7 +538,7 @@ module.exports = {
         }
 
 
-        if (!interaction.isCommand()) return;
+        if (!interaction.isChatInputCommand()) return;
     try {
         const command = interaction.client.commands.get(interaction.commandName)
         await command.execute(interaction);

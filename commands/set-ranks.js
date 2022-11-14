@@ -1,6 +1,4 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { PermissionFlagsBits } = require('discord-api-types/v10');
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
+const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const sql = require("../config/Database");
 const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
@@ -87,12 +85,12 @@ module.exports = {
         var level90 = Interaction.options.getString('rank90');
         var level100 = Interaction.options.getString('rank100');
 
-        const addRanks = new MessageEmbed()
+        const addRanks = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Set Ranks`)
             .setURL('http://www.phfamily.co.uk/')
             .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: '' })
+            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**Levels Rank Roles Added!**`)
             .setThumbnail('http://phfamily.co.uk/img/gifs/Poll.gif')
             .addFields(

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const interaction = require('discord-interactions-zero');
 
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
 					{ name: 'Martyr', value: 'M' },
 					{ name: 'Vanguard', value: 'V' },
           ))
-            .addStringOption(option => 
+        .addStringOption(option => 
             option.setName('date')
             .setDescription('date must be MM/DD/YYYY or MM/DD/YY')
             .setRequired(true)),

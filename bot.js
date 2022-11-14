@@ -1,5 +1,5 @@
 const fs = require('node:fs');
-const { Client, Intents, Collection, Options } = require("discord.js");
+const { Client, GatewayIntentBits, Partials, Collection, Options } = require("discord.js");
 const rpc = require("discord-rpc");
 const { token, CLIENT_ID } = require('./config.json');
 
@@ -23,33 +23,37 @@ const client = new Client({
 		// Add more class names here
 	}),
     
-    intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MEMBERS,
-        Intents.FLAGS.GUILD_BANS,
-        Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-        Intents.FLAGS.GUILD_INTEGRATIONS,
-        Intents.FLAGS.GUILD_WEBHOOKS,
-        Intents.FLAGS.GUILD_INVITES,
-        Intents.FLAGS.GUILD_VOICE_STATES,
-        Intents.FLAGS.GUILD_PRESENCES,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-        Intents.FLAGS.GUILD_MESSAGE_TYPING,
-        Intents.FLAGS.DIRECT_MESSAGES,
-        Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-        Intents.FLAGS.DIRECT_MESSAGE_TYPING,
-        Intents.FLAGS.GUILD_SCHEDULED_EVENTS,
-    ],
-    partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER', 'GUILD_MEMBER', 'GUILD_SCHEDULED_EVENT'],
-    
     allowedMentions: {
-        parse: ["roles", "users", "everyone"],
-        repliedUser: true
-    },
+        parse: ['roles', 'users', 'everyone'],
+        repliedUser: false
+      },
+      intents: [
+        GatewayIntentBits.Guilds, // for guild related things
+        GatewayIntentBits.GuildMembers, // for guild members related things
+        GatewayIntentBits.GuildBans, // for manage guild bans
+        GatewayIntentBits.GuildEmojisAndStickers, // for manage emojis and stickers
+        GatewayIntentBits.GuildIntegrations, // for discord Integrations
+        GatewayIntentBits.GuildWebhooks, // for discord webhooks
+        GatewayIntentBits.GuildInvites, // for guild invite managing
+        GatewayIntentBits.GuildVoiceStates, // for voice related things
+        GatewayIntentBits.GuildPresences, // for user presence things
+        GatewayIntentBits.GuildMessages, // for guild messages things
+        GatewayIntentBits.GuildMessageReactions, // for message reactions things
+        GatewayIntentBits.GuildMessageTyping, // for message typing things
+        GatewayIntentBits.DirectMessages, // for dm messages
+        GatewayIntentBits.DirectMessageReactions, // for dm message reaction
+        GatewayIntentBits.DirectMessageTyping, // for dm message typinh
+        GatewayIntentBits.MessageContent // enable if you need message content things
+      ],
+      partials: [
+        Partials.Channel,
+        Partials.Message,
+        Partials.User,
+        Partials.GuildMember,
+        Partials.Reaction
+      ]
+    });
     
-})
-
 //RPC client
 const rpc_client = new rpc.Client({ transport: 'ipc' });
 

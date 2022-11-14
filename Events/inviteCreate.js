@@ -1,4 +1,4 @@
-const { MessageEmbed, Client, MessageAttachment, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Guild, Interaction } = require('discord.js');
+const { EmbedBuilder, Client, MessageAttachment, ModalSubmitFieldsResolver, ActionRowBuilder, ButtonBuilder, Guild, Interaction } = require('discord.js');
 const sql = require(`../config/Database`)
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
         
         console.log(`Invite Created\n${guildName}, ${channel}, ${code}, ${sendChannel}`)
 
-        const inviteEmbed = new MessageEmbed()
+        const inviteEmbed = new EmbedBuilder()
         .setColor('GREEN')
         .setTitle(`New Invite.`)
         .setURL('http://www.phfamily.co.uk/')

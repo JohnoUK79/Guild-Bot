@@ -1,6 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
 const sql = require("../config/Database");
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -24,21 +23,21 @@ module.exports = {
 
 		search = await sql.Execute(`select * from players where player_id = '${player}';`);
 		
-		const updatePlayer =  new MessageActionRow()
+		const updatePlayer =  new ActionRowBuilder()
 				.addComponents(
-		new MessageButton()
+		new ButtonBuilder()
 				.setCustomId('UID')
 				.setLabel('Add/Update Your in Game Bot profile!')
-				.setStyle('PRIMARY'),
+				.setStyle(ButtonStyle.Primary),
 		)
 
 
-		const unknownLevel = new MessageEmbed()
-		.setColor('GREEN')
+		const unknownLevel = new EmbedBuilder()
+		.setColor('#2e8f37')
 		.setTitle(`${guildName} - Rank Card`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
-		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 		.setDescription(`Your Rank **${interaction.member.displayName}**!`)
 		.addFields(
 			{ name: `Name:`, value: `${interaction.member.displayName}` },
@@ -49,12 +48,12 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - Rank - ${interaction.member.displayName}.`, iconURL: `${guildIcon}` });
 
-		const playerLevel = new MessageEmbed()
-		.setColor('GREEN')
+		const playerLevel = new EmbedBuilder()
+		.setColor('#2e8f37')
 		.setTitle(`${guildName} - Rank Card`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
-		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }), url: '' })
+		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 		.setDescription(`Your Rank **${interaction.member.displayName}**!`)
 		.addFields(
 			{ name: `Name:`, value: `${interaction.member.displayName}` },

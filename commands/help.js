@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageEmbed, Client, ModalSubmitFieldsResolver, MessageActionRow, MessageButton, Message } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const sql = require("../config/Database");
 const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
@@ -15,7 +14,7 @@ module.exports = {
 		guildName = Interaction.member.guild.name
         guildId = Interaction.guildId
 
-        const helpEmbed = new MessageEmbed()
+        const helpEmbed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Help Menu`)
             .setURL('http://www.phfamily.co.uk/')

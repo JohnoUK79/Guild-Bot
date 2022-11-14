@@ -18,7 +18,6 @@ module.exports = {
         .setTitle(`Joined Voice Chat.`)
         .setURL('http://www.phfamily.co.uk/')
         .setThumbnail(guildLogo)
-        .setAuthor(author)
         .setDescription(`Member Joined!`)
         .addFields(
             { name: `Member:`, value: `${member}`, inline: true },
@@ -33,7 +32,6 @@ module.exports = {
         .setTitle(`Left Voice Chat.`)
         .setURL('http://www.phfamily.co.uk/')
         .setThumbnail(guildLogo)
-        .setAuthor(author)
         .setDescription(`Member Left!`)
         .addFields(
             { name: `Member:`, value: `${member}`, inline: true },
@@ -48,7 +46,6 @@ module.exports = {
         .setTitle(`Voice Chat Status.`)
         .setURL('http://www.phfamily.co.uk/')
         .setThumbnail(guildLogo)
-        .setAuthor(author)
         .setDescription(`Status Changed!`)
         .addFields(
             { name: `Member:`, value: `${member}`, inline: true },

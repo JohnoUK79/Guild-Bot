@@ -6,7 +6,6 @@ const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
 const sql = require("../config/Database");
 
-
 module.exports = {
     name: 'ready',
     once: true,
@@ -20,11 +19,11 @@ module.exports = {
         await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands }) //Global Commands
         //await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), { body: commands }) //Guild Only Commands
             .then(() => {
-                console.log(`Successfully registered Global Application Commands!`);
+                console.log(`Successfully registered Global Commands!`);
             })
             .catch(console.error);
-
-        console.log('================ PH40 BOT Ready! ================');  
+    
+        console.log('================ PH40 BOT Ready! ================');
         
               const guildSettingsUpdate = nodeCron.schedule("0 22 * * *", () => {
                 console.log("Guild Settings Update")
@@ -96,7 +95,7 @@ module.exports = {
                     }
 }
                   });
-
     },
-    
-};
+
+}
+

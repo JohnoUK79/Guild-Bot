@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const { Client, GatewayIntentBits, Partials, Collection, Options } = require("discord.js");
 const rpc = require("discord-rpc");
 const { token, CLIENT_ID } = require('./config.json');
+const { Player } = require('discord-player');
 
 //Discord client
 const client = new Client({
@@ -53,7 +54,15 @@ const client = new Client({
         Partials.Reaction
       ]
     });
-    
+
+//Discord Player Setup
+const botJukebox = new Player(client, {
+    ytdlOptions: {
+    quality: 'highestaudio',
+    highWaterMark: 1 << 25
+    }
+    })
+console.log('=================Jukebox Online!=================')
 //RPC client
 const rpc_client = new rpc.Client({ transport: 'ipc' });
 
@@ -101,3 +110,6 @@ client.login(token);
 
 //RPC login
 rpc_client.login({ clientId: CLIENT_ID }).catch(console.error);
+module.exports = {
+    botJukebox: botJukebox   
+}

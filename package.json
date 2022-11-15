@@ -9,12 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/voice": "^0.13.0",
     "discord-api-types": "^0.33.5",
     "discord-interactions-zero": "^2.0.2-b",
     "discord-player": "^5.3.2",
     "discord-rpc": "^4.0.1",
     "discord.js": "^14.6.0",
     "dotenv": "^16.0.1",
+    "ffmpeg-static": "^5.1.0",
     "fs": "^0.0.1-security",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
@@ -23,7 +25,6 @@
     "time-stamp": "^2.2.0"
   },
   "description": "",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JohnoUK79/PH-Family-2.git"
@@ -31,5 +32,6 @@
   "bugs": {
     "url": "https://github.com/JohnoUK79/PH-Family-2/issues"
   },
-  "homepage": "https://github.com/JohnoUK79/PH-Family-2#readme"
+  "homepage": "https://github.com/JohnoUK79/PH-Family-2#readme",
+  "devDependencies": {}
 }

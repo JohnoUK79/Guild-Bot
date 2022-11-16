@@ -71,7 +71,7 @@ module.exports = {
 			playerLevel.setColor('#2e8f37') //forest green
 		}
 		if (oldlevel > 19) {
-			playerLevel.setColor('DARK_GREEN') //dark green
+			playerLevel.setColor('#013220') //dark green
 		}
 		if (oldlevel > 29) {
 			playerLevel.setColor('#00ff80') //spring green

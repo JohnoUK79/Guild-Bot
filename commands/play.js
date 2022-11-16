@@ -238,12 +238,6 @@ module.exports = {
 					embeds: [embed],
 				}) 
 			} 
-			// if (queue.length === 0) {
-			// 	return interaction.reply({
-			// 		content: `There is No More **Songs** playing!`,
-			// 		ephemeral: true,
-			// 	})
-			// }
 			const queueString = queue.tracks.slice(0, 10).map((song, i) => {
 				return `\n**(${i + 1}) ${song.duration}** - [${song.title}](${song.url}) - ${song.requestedBy}`;
 			}).join('\n');
@@ -263,7 +257,6 @@ module.exports = {
 		}
 		else if (interaction.options.getSubcommand() === 'exit')
 		{
-			const oldQueue = queue
 			if (!queue.playing) {
 				embed
 				.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
@@ -276,11 +269,10 @@ module.exports = {
 					embeds: [embed],
 				}) 
 			} 
-			const currentSong = queue.current;
 			queue.destroy();
 
 			embed
-				.setDescription(`The Current ${oldQueue}  has been **Cleared**!`)
+				.setDescription(`The Current queue has been **Cleared**!`)
 				.setColor('#ffff00')
 				.setThumbnail(guildIcon)
 				.setTimestamp()

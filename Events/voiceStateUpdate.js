@@ -22,7 +22,7 @@ module.exports = {
         .addFields(
             { name: `Member:`, value: `${member}`, inline: true },
             { name: `Voice Channel:`, value: `${newVoiceChannel}`, inline: true },
-            { name: `Session ID:`, value: `${newState.sessionId}`, inline: true },
+            //{ name: `Session ID:`, value: `${newState.sessionId}`, inline: true },
         )
         .setTimestamp()
         .setFooter({ text: `Voice Chat Joined.`, iconURL: `${guildLogo}` });
@@ -36,7 +36,7 @@ module.exports = {
         .addFields(
             { name: `Member:`, value: `${member}`, inline: true },
             { name: `Voice Channel:`, value: `${oldVoiceChannel}`, inline: true },
-            { name: `Session ID:`, value: `${oldState.sessionId}`, inline: true },
+            //{ name: `Session ID:`, value: `${oldState.sessionId}`, inline: true },
         )
         .setTimestamp()
         .setFooter({ text: `Voice Chat Left.`, iconURL: `${guildLogo}` });

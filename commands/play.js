@@ -52,6 +52,7 @@ module.exports = {
 		} 
 		const queue = await player.createQueue(interaction.guild)
 		if(!queue.connection) await queue.connect(interaction.member.voice.channel)
+		await interaction.reply('Joining Queue!')
 		let embed = new EmbedBuilder();
 		if (interaction.options.getSubcommand() === 'song')
 		{
@@ -64,7 +65,7 @@ module.exports = {
 
 			if (result.tracks.length === 0)
 			{
-				return interaction.reply({
+				return interaction.editReply({
 					content: `No Results Found for URL:${url}`,
 					ephemeral: true,
 				})
@@ -88,7 +89,7 @@ module.exports = {
 
 			if (result.tracks.length === 0)
 			{
-				return interaction.reply({
+				return interaction.editReply({
 					content: `No Results Found for Playlist:${url}`,
 					ephemeral: true,
 				})
@@ -111,7 +112,7 @@ module.exports = {
 
 			if (result.tracks.length === 0)
 			{
-				return interaction.reply({
+				return interaction.editReply({
 					content: `No Results Found for Playlist:${url}`,
 					ephemeral: true,
 				})
@@ -124,8 +125,8 @@ module.exports = {
 				.setThumbnail(song.thumbnail)
 				.setFooter({ text: `Duration: ${song.duration}`});
 		}
-
+		await interaction.editReply(`${queue}`)
 		if (!queue.playing) await queue.play();
-		await interaction.reply({ embeds: [embed]})
+		return;
 	},
 };

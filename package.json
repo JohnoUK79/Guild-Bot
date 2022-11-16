@@ -21,6 +21,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
     "node-cron": "^3.0.1",
+    "opusscript": "^0.0.8",
     "pm2": "^5.2.0",
     "time-stamp": "^2.2.0"
   },
@@ -32,6 +33,5 @@
   "bugs": {
     "url": "https://github.com/JohnoUK79/PH-Family-2/issues"
   },
-  "homepage": "https://github.com/JohnoUK79/PH-Family-2#readme",
-  "devDependencies": {}
+  "homepage": "https://github.com/JohnoUK79/PH-Family-2#readme"
 }

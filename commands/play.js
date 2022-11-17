@@ -16,17 +16,17 @@ module.exports = {
 						.setRequired(true)
 					)
 			)
-		.addSubcommand(subcommand => 
-			subcommand
-				.setName('playlist')
-				.setDescription('Plays a Playlist from YouTube!')
-				.addStringOption(option =>
-					option
-						.setName('url')
-						.setDescription('Playlist URL!')
-						.setRequired(true)
-					)
-			)
+		// .addSubcommand(subcommand => 
+		// 	subcommand
+		// 		.setName('playlist')
+		// 		.setDescription('Plays a Playlist from YouTube!')
+		// 		.addStringOption(option =>
+		// 			option
+		// 				.setName('url')
+		// 				.setDescription('Playlist URL!')
+		// 				.setRequired(true)
+		// 			)
+		// 	)
 			.addSubcommand(subcommand =>
 				subcommand
 					.setName('pause')
@@ -102,34 +102,34 @@ module.exports = {
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 				.setFooter({ text: `${guildName} - ${song.title} - Duration: ${song.duration}`, iconURL: `${guildIcon}`});
 		}
-		else if (interaction.options.getSubcommand() === 'playlist')
-		{
-			let url = interaction.options.getString('url');
+		// else if (interaction.options.getSubcommand() === 'playlist')
+		// {
+		// 	let url = interaction.options.getString('url');
 
-			const result = await player.search(url , {
-				requestedBy: interaction.user,
-				searchEngine: QueryType.YOUTUBE_PLAYLIST
-			});
+		// 	const result = await player.search(url , {
+		// 		requestedBy: interaction.user,
+		// 		searchEngine: QueryType.YOUTUBE_PLAYLIST
+		// 	});
 
-			if (result.tracks.length === 0)
-			{
-				return interaction.editReply({
-					content: `No Results Found for Playlist:${url}`,
-					ephemeral: true,
-				})
-			}
-			const playlist = result.playlist;
-			await queue.addTracks(playlist);
+		// 	if (result.tracks.length === 0)
+		// 	{
+		// 		return interaction.editReply({
+		// 			content: `No Results Found for Playlist:${url}`,
+		// 			ephemeral: true,
+		// 		})
+		// 	}
+		// 	const playlist = result.playlist;
+		// 	await queue.addTracks(playlist);
 
-			embed
-				.setDescription(`Added [${playlist.title}](${playlist.url}) to the queue!`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setImage(playlist.thumbnail)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - ${playlist.title} - Duration: ${playlist.duration}`, iconURL: `${guildIcon}`});
-			} 
+		// 	embed
+		// 		.setDescription(`Added [${playlist.title}](${playlist.url}) to the queue!`)
+		// 		.setColor('#ffff00')
+		// 		.setThumbnail(guildIcon)
+		// 		.setImage(playlist.thumbnail)
+		// 		.setTimestamp()
+		// 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+		// 		.setFooter({ text: `${guildName} - ${playlist.title} - Duration: ${playlist.duration}`, iconURL: `${guildIcon}`});
+		// 	} 
 		else if (interaction.options.getSubcommand() === 'pause')
 		{
 			if (!queue.playing) {
@@ -279,7 +279,7 @@ module.exports = {
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 		}
-		await interaction.editReply({content: `${queue}`, embeds: [embed], ephemeral: false })
+		await interaction.editReply({embeds: [embed], ephemeral: false })
 		if (!queue.playing) await queue.play();
 		return;
 	},

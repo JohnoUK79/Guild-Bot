@@ -100,7 +100,7 @@ module.exports = {
 				.setImage(song.thumbnail)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - ${song.title} - Duration: ${song.duration}`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `Views [${song.views}] ${song.title} - Duration: ${song.duration}`, iconURL: `${guildIcon}`});
 		}
 		// else if (interaction.options.getSubcommand() === 'playlist')
 		// {
@@ -154,7 +154,7 @@ module.exports = {
 				.setImage(currentSong.thumbnail)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `Views [${currentSong.views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
 			}
 		else if (interaction.options.getSubcommand() === 'resume')
 		{
@@ -180,7 +180,7 @@ module.exports = {
 				.setImage(currentSong.thumbnail)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `Views [${currentSong.views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
 		}
 		else if (interaction.options.getSubcommand() === 'skip')
 		{
@@ -206,7 +206,7 @@ module.exports = {
 				.setImage(currentSong.thumbnail)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `Views [${currentSong.views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
 		}
 		else if (interaction.options.getSubcommand() === 'queue')
 		{
@@ -224,7 +224,6 @@ module.exports = {
 			} 
 			const currentSong = queue.current;
 
-			console.log(queue.tracks)
 			if (queue.tracks.length === 0) {
 				embed
 				.setDescription(`**The Current Song**: [${currentSong.title}](${currentSong.url}) is the only **Song** in the queue!`)
@@ -233,13 +232,13 @@ module.exports = {
 				.setImage(currentSong.thumbnail)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `Views [${currentSong,views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
 				return interaction.editReply({
 					embeds: [embed],
 				}) 
 			} 
 			const queueString = queue.tracks.slice(0, 10).map((song, i) => {
-				return `\n**(${i + 1}) ${song.duration}** - [${song.title}](${song.url}) - ${song.requestedBy}`;
+				return `\n**(${i + 1})** [${song.duration}] - [${song.title}](${song.url}) - ${song.requestedBy}`;
 			}).join('\n');
 	
 			embed
@@ -253,7 +252,7 @@ module.exports = {
 			.setImage(currentSong.thumbnail)
 			.setTimestamp()
 			.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-			.setFooter({ text: `${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
+			.setFooter({ text: `Views [${currentSong.views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
 		}
 		else if (interaction.options.getSubcommand() === 'exit')
 		{

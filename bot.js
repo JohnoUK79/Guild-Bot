@@ -60,8 +60,40 @@ const botJukebox = new Player(client, {
     ytdlOptions: {
     quality: 'highestaudio',
     highWaterMark: 1 << 25
-    }
+    },
+    leaveOnEnd: false,
+    leaveOnStop: true,
+    leaveInEmpty: true,
+    leaveOnEndCooldown: 3000,
+    leaveOnEmptyCooldown: 3000,
+    autoSelfDeaf: true,
+    initialVolume: 50,
+    bufferingTimeout: 3000,
+    spotifyBride: true,
+    disableVolume: true,
+    smoothVolume: true
     })
+botJukebox.on('error', (queue, error) => {
+    console.log(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
+});
+botJukebox.on('connectionError', (queue, error) => {
+    console.log(`[${queue.guild.name}] Error emitted from the connection: ${error.message}`);
+});
+botJukebox.on('trackStart', (queue, track) => {
+    console.log(`🎶 | Started Playing: ${track.title} in ${queue.connection.channel.name}!`)
+});
+botJukebox.on('trackAdd', (queue, track) => {
+    console.log(`🎶 | Track: ${track.title} queued!`)
+});
+botJukebox.on('botDisconnect', (queue) => {
+    console.log(`❌ | I was manually disconnected from the Voice Channel, clearing queue!`)
+});
+botJukebox.on('channelEmpty', (queue) => {
+    console.log(`❌ | Nobody is in the Voice Channel, leaving...`)
+});
+botJukebox.on('queueEnd', (queue) => {
+    console.log(`✅ | Queue finished!`)
+});
 console.log('=================Jukebox Online!=================')
 //RPC client
 const rpc_client = new rpc.Client({ transport: 'ipc' });

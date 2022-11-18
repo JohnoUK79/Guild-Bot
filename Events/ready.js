@@ -1,5 +1,4 @@
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v10');
+const { REST, Routes } = require('discord.js');
 const { token, CLIENT_ID, GUILD_ID } = require('../config.json');
 const nodeCron = require("node-cron");
 const timestamp = require('../config/timestamp');

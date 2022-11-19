@@ -62,7 +62,6 @@ module.exports = {
 					attachmentReceived.setDescription(`Your attachment: **${attachmentName}** will be reviewed by our BOT Team and we will come back to you if we need further information!`)
 					attachmentReceived.setTitle(`Your Attachment Has Been Received!`)
 					attachmentReceived.setImage(attachmentURL)
-
 				})
 
 				await message.reply({
@@ -73,7 +72,6 @@ module.exports = {
 				attachmentReceived.setTitle('Attachment Received!')
 				dmSent.send({
 					embeds: [attachmentReceived],
-					//files: [file]
 				})
 			} 
 			return

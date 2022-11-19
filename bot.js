@@ -64,35 +64,43 @@ const botJukebox = new Player(client, {
     leaveOnEnd: false,
     leaveOnStop: true,
     leaveInEmpty: true,
-    leaveOnEndCooldown: 3000,
-    leaveOnEmptyCooldown: 3000,
+    leaveOnEndCooldown: 30000,
+    leaveOnEmptyCooldown: 30000,
     autoSelfDeaf: true,
-    initialVolume: 50,
-    bufferingTimeout: 3000,
+    initialVolume: 30,
+    bufferingTimeout: 10000,
     spotifyBride: true,
     disableVolume: true,
     smoothVolume: true
     })
 botJukebox.on('error', (queue, error) => {
     console.log(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
+    queue.connection.channel.send(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
 });
 botJukebox.on('connectionError', (queue, error) => {
     console.log(`[${queue.guild.name}] Error emitted from the connection: ${error.message}`);
+    queue.connection.channel.send(`[${queue.guild.name}] Error emitted from the connection: ${error.message}`);
 });
 botJukebox.on('trackStart', (queue, track) => {
-    console.log(`🎶 | Started Playing: ${track.title} in ${queue.connection.channel.name}!`)
+    console.log(`🎶 | Started Playing: ${track.title} in ${queue.connection.channel.name}!`);
+    queue.connection.channel.send(`🎶 | Started Playing: ${track.title}!`);
 });
 botJukebox.on('trackAdd', (queue, track) => {
-    console.log(`🎶 | Track: ${track.title} queued!`)
+    console.log(`🎶 | Track: ${track.title} queued!`);
+    queue.connection.channel.send(`🎶 | Track: ${track.title} queued!`);
+
 });
 botJukebox.on('botDisconnect', (queue) => {
-    console.log(`❌ | I was manually disconnected from the Voice Channel, clearing queue!`)
+    console.log(`❌ | I was manually disconnected from the Voice Channel, clearing queue!`);
+    queue.connection.channel.send(`❌ | I was manually disconnected from the Voice Channel, clearing queue!`);
 });
 botJukebox.on('channelEmpty', (queue) => {
-    console.log(`❌ | Nobody is in the Voice Channel, leaving...`)
+    console.log(`❌ | Nobody is in the Voice Channel, leaving...`);
+    queue.connection.channel.send(`❌ | Nobody is in the Voice Channel, leaving...`);
 });
 botJukebox.on('queueEnd', (queue) => {
-    console.log(`✅ | Queue finished!`)
+    console.log(`✅ | Queue finished!`);
+    queue.connection.channel.send(`✅ | Queue finished!`);
 });
 console.log('=================Jukebox Online!=================')
 //RPC client

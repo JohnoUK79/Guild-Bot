@@ -61,14 +61,14 @@ module.exports = {
         .setTimestamp()
         .setFooter({ text: `Voice Status Update.`, iconURL: `${guildLogo}` });
 
-        if (!oldVoiceChannel) {
-            await oldState.guild.channels.cache.get(sendChannel).send({ embeds: [voiceJoinEmbed]})
-            return
-        }
-        if (!newVoiceChannel) {
-            await oldState.guild.channels.cache.get(sendChannel).send({ embeds: [voiceLeaveEmbed]})
-            return
-        }
+        // if (!oldVoiceChannel) {
+        //     await oldState.guild.channels.cache.get(sendChannel).send({ embeds: [voiceJoinEmbed]})
+        //     return
+        // }
+        // if (!newVoiceChannel) {
+        //     await oldState.guild.channels.cache.get(sendChannel).send({ embeds: [voiceLeaveEmbed]})
+        //     return
+        // }
  
         //await oldState.guild.channels.cache.get(sendChannel).send({ embeds: [voiceStateEmbed]})
     }

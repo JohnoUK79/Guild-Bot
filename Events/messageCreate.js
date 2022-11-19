@@ -1,4 +1,4 @@
-const { EmbedBuilder, Client, MessageAttachment, ModalSubmitFieldsResolver, ActionRowBuilder, ButtonBuilder, Guild, Interaction, ButtonStyle } = require('discord.js');
+const { EmbedBuilder, Client, MessageAttachment, ModalSubmitFieldsResolver, ActionRowBuilder, ButtonBuilder, Guild, Interaction, ButtonStyle, ChannelType, AttachmentBuilder, Attachment, Collection, CommandInteractionOptionResolver } = require('discord.js');
 const sql = require("../config/Database");
 const interactionCreate = require('./interactionCreate');
 time = require('../config/timestamp')
@@ -10,26 +10,23 @@ module.exports = {
 	async execute(message) {
 		if (message.author.bot === true) {
 			return;}
-		if (message.channel.type == 'DM') {
+		if (message.channel.type == ChannelType.DM) {
 			if (message.content === '') {
 				var embedContent = 'No Message Content'				
-			} else var embedContent = message.content
-			const file = new MessageAttachment(message.attachments.map(a => a.url))
-			//console.log(file.attachment.length)
+			} else var embedContent = message.content		
 
 			const dmReceived = new EmbedBuilder()
 			.setColor('#0099ff')
 			.setTitle('Direct Message Received!')
 			.setURL('http://phfamily.co.uk/')
 			.setThumbnail(message.author.displayAvatarURL())
-			.setAuthor({ name: `${message.author.username}#${message.author.discriminator}`, iconURL: message.author.displayAvatarURL({ dynamic: true }), url: '' })
+			.setAuthor({ name: `${message.author.username}#${message.author.discriminator}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
 			.setDescription(`Message Received By the Bot!`)
 			.addFields(
 				{ name: `Content:`, value: `${embedContent}` },
 				{ name: `Sent By:`, value: `<@${message.author.id}>` },
-				{ name: `Time:`, value: `${setDate}` },
-
 				)
+			.setTimestamp()
 			.setFooter({ text: 'Message Received!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
 
 			//970409125227950110 PH Family Bot Messages
@@ -38,23 +35,55 @@ module.exports = {
 			dmSent.send({
 				embeds: [dmReceived],
 			})
-			dmReceived.setDescription('Any Images / Attachments will not be sent with your message!')
+			dmReceived.setDescription('Your messaged will be reviewed by our BOT Team and we will come back to you if we need further information!')
 			dmReceived.setFooter({ text: 'Message Sent!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' })
-			dmReceived.setTitle('Message Has Been Sent!')
-
-
+			dmReceived.setTitle('Your Message Has Been Sent!')
 
 			await message.reply ({
 				embeds: [dmReceived]
 			})
-		return;}		
+			//If Attachments Sent
+			const attachmentReceived = new EmbedBuilder()
+				.setColor('#0099ff')
+				.setTitle('Direct Message Received!')
+				.setURL('http://phfamily.co.uk/')
+				.setThumbnail(message.author.displayAvatarURL())
+				.setAuthor({ name: `${message.author.username}#${message.author.discriminator}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
+				.setDescription(`Attachment Received By the Bot!`)
+				.setTimestamp()
+				.setFooter({ text: 'Attachment Received!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
+
+			let attachments = message.attachments
+			for (const attachment of attachments) {
+				attachment.map(a => {
+					const attachmentURL = a.url
+					const attachmentName = a.name
+					file = new AttachmentBuilder(attachmentURL, { name: `${attachmentName}`})
+					attachmentReceived.setDescription(`Your attachment: **${attachmentName}** will be reviewed by our BOT Team and we will come back to you if we need further information!`)
+					attachmentReceived.setTitle(`Your Attachment Has Been Received!`)
+					attachmentReceived.setImage(attachmentURL)
+
+				})
+
+				await message.reply({
+					embeds: [attachmentReceived],
+				})
+
+				attachmentReceived.setDescription(`Attachment: ${file.name} **Received**!`)
+				attachmentReceived.setTitle('Attachment Received!')
+				dmSent.send({
+					embeds: [attachmentReceived],
+					//files: [file]
+				})
+			} 
+			return
+		}		
 		guildIcon = message.member.guild.iconURL();
 		guildName = message.member.guild.name
 
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
 		var score = Math.floor(Math.random() * 150) * 3;
-		GuildName = message.guild.name
 
 		const updatePlayer =  new ActionRowBuilder()
 				.addComponents(
@@ -89,7 +118,7 @@ module.exports = {
 			{ name: `Points:`, value: `${score}` },
 			{ name: `Welcome to ${guildName}.`, value: `Stay active in our servers for regular rewards!`, inline: true },
 			)
-		.setImage(`${guildIcon}`)
+		.setImage(guildIcon)
 		.setTimestamp()
 		.setFooter({ text: `Welcome to ${guildName}.`, iconURL: `${guildIcon}` });
 
@@ -98,7 +127,7 @@ module.exports = {
 			playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
 			level = 0
 			var score = Math.floor(Math.random() * 150) * 3;
-			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${GuildName}');`)
+			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${guildName}');`)
 			await message.reply({
 				content: `Welcome to ${guildName} **${message.member.displayName}**.\nWe look forward to you becoming a valued member of our community!`,
 				components: [updatePlayer],
@@ -116,7 +145,7 @@ module.exports = {
 			let playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
 		} else {var playerImage = Players[0].player_image
 			playerId = Levels[0].player_id
-			updatePlayers = await sql.Execute(`UPDATE players SET date_last_known = '${setDate}', discord ='${message.author.id}', discord_server = '${GuildName}' WHERE player_id = ${playerId}`)}
+			updatePlayers = await sql.Execute(`UPDATE players SET date_last_known = '${setDate}', discord ='${message.author.id}', discord_server = '${guildName}' WHERE player_id = ${playerId}`)}
 
 		let roleRank10 = Settings[0].Rank_10
 		let roleRank20 = Settings[0].Rank_20
@@ -373,5 +402,5 @@ module.exports = {
 													})} 
 													} 
 		}
-		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${GuildName}' WHERE discord_id = '${message.author.id}'`)}
+		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${guildName}' WHERE discord_id = '${message.author.id}'`)}
 	}; 

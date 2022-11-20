@@ -82,12 +82,12 @@ botJukebox.on('connectionError', (queue, error) => {
     queue.connection.channel.send(`[${queue.guild.name}] Error emitted from the connection: ${error.message}`);
 });
 botJukebox.on('trackStart', (queue, track) => {
-    console.log(`🎶 | Started Playing: ${track.title} in ${queue.connection.channel.name}!`);
-    queue.connection.channel.send(`🎶 | Started Playing: ${track.title}!`);
+    console.log(`🎼| Now Playing: ${track.title} in ${queue.connection.channel.name}!`);
+    queue.connection.channel.send(`🎼| **Now Playing**: [${track.title}]!`);
 });
 botJukebox.on('trackAdd', (queue, track) => {
-    console.log(`🎶 | Track: ${track.title} queued!`);
-    queue.connection.channel.send(`🎶 | Track: ${track.title} queued!`);
+    console.log(`🎼| ${track.title} queued!`);
+    queue.connection.channel.send(`🎼| [${track.title}] **Queued**!`);
 
 });
 botJukebox.on('botDisconnect', (queue) => {
@@ -100,7 +100,7 @@ botJukebox.on('channelEmpty', (queue) => {
 });
 botJukebox.on('queueEnd', (queue) => {
     console.log(`✅ | Queue finished!`);
-    queue.connection.channel.send(`✅ | Queue finished!`);
+    queue.connection.channel.send(`✅ | **Queue finished**!`);
 });
 console.log('=================Jukebox Online!=================')
 //RPC client

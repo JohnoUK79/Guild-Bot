@@ -232,7 +232,7 @@ module.exports = {
 				.setImage(currentSong.thumbnail)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `Views [${currentSong,views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `Views [${currentSong.views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
 				return interaction.editReply({
 					embeds: [embed],
 				}) 

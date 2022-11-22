@@ -10,8 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/voice": "^0.13.0",
-    "discord-api-types": "^0.33.5",
-    "discord-interactions-zero": "^2.0.2-b",
     "discord-player": "^5.3.2",
     "discord-rpc": "^4.0.1",
     "discord.js": "^14.6.0",
@@ -22,9 +20,8 @@
     "mysql2": "^2.3.3",
     "node-cron": "^3.0.1",
     "opusscript": "^0.0.8",
-    "pm2": "^5.2.0",
-    "time-stamp": "^2.2.0"
-  },
+    "pm2": "^5.2.0"
+    },
   "description": "",
   "repository": {
     "type": "git",

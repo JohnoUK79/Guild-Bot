@@ -1,5 +1,5 @@
 const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { QueryType } = require('discord-player');
+const { QueryType, QueueRepeatMode } = require('discord-player');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -39,6 +39,11 @@ module.exports = {
 			)
 			.addSubcommand(subcommand =>
 				subcommand
+					.setName('back')
+					.setDescription('Resumes the Current Song!')
+			)
+			.addSubcommand(subcommand =>
+				subcommand
 					.setName('skip')
 					.setDescription('Skips the Current Song!')
 			)
@@ -46,6 +51,56 @@ module.exports = {
 				subcommand
 					.setName('queue')
 					.setDescription('Shows the Current Queue!')
+			)
+			.addSubcommand(subcommand =>
+				subcommand
+					.setName('volume')
+					.setDescription('Sets the Player Volume!')
+					.addIntegerOption(option =>
+						option
+							.setName('amount')
+							.setDescription('Set the Volume Level (0-100)!')
+							.setRequired(false)
+						)
+			)
+			.addSubcommand(subcommand =>
+				subcommand
+					.setName('bassboost')
+					.setDescription('Toggles the BassBoost filter!')
+			)
+			.addSubcommand(subcommand =>
+				subcommand
+					.setName('loop')
+					.setDescription('Sets the LOOP Mode!')
+					.addIntegerOption(option =>
+						option
+							.setName('mode')
+							.setDescription('Set the LOOP Type!')
+							.setRequired(true)
+							.addChoices(
+								{
+									name:'Off',
+									value: QueueRepeatMode.OFF
+								},
+								{
+									name: 'Track',
+									value: QueueRepeatMode.TRACK
+								},
+								{
+									name: 'Queue',
+									value: QueueRepeatMode.QUEUE
+								},
+								{
+									name: 'Autoplay',
+									value: QueueRepeatMode.AUTOPLAY
+								}
+							)
+						)
+			)
+			.addSubcommand(subcommand =>
+				subcommand
+					.setName('history')
+					.setDescription('Display the Queue History!')
 			)
 			.addSubcommand(subcommand =>
 				subcommand
@@ -66,7 +121,29 @@ module.exports = {
 				ephemeral: true,
 			})
 		} 
-		const queue = await player.createQueue(interaction.guild)
+		const queue = await player.createQueue(interaction.guild, {
+			ytdlOptions: {
+				quality: 'highestaudio',
+				highWaterMark: 1 << 30
+				},
+			leaveOnEnd: false,
+			leaveOnStop: true,
+			leaveInEmpty: true,
+			leaveOnEndCooldown: 15000,
+			leaveOnEmptyCooldown: 15000,
+			autoSelfDeaf: true,
+			initialVolume: 30,
+			bufferingTimeout: 4500,
+			spotifyBride: true,
+			disableVolume: false,
+			smoothVolume: true,
+			metadata: {
+				interaction: interaction,
+				channel: interaction.channel,
+				guild: interaction.guild,
+				user: interaction.user
+			}
+		})
 
 		if(!queue.connection) await queue.connect(interaction.member.voice.channel)
 		await interaction.deferReply({
@@ -130,6 +207,33 @@ module.exports = {
 		// 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 		// 		.setFooter({ text: `${guildName} - ${playlist.title} - Duration: ${playlist.duration}`, iconURL: `${guildIcon}`});
 		// 	} 
+		else if (interaction.options.getSubcommand() === 'back')
+		{
+			if (!queue.playing) {
+				embed
+				.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+				.setColor('#ffff00')
+				.setThumbnail(guildIcon)
+				.setTimestamp()
+				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+				return interaction.editReply({
+					embeds: [embed],
+				}) 
+			} 
+			queue.back();
+			const currentSong = queue.current;
+
+
+			embed
+				.setDescription(`✅ | Playing the previous track`)
+				.setColor('#ffff00')
+				.setThumbnail(guildIcon)
+				.setImage(currentSong.thumbnail)
+				.setTimestamp()
+				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+				.setFooter({ text: `Views [${currentSong.views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
+		}
 		else if (interaction.options.getSubcommand() === 'pause')
 		{
 			if (!queue.playing) {
@@ -254,7 +358,7 @@ module.exports = {
 			.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 			.setFooter({ text: `Views [${currentSong.views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
 		}
-		else if (interaction.options.getSubcommand() === 'exit')
+		else if (interaction.options.getSubcommand() === 'volume')
 		{
 			if (!queue.playing) {
 				embed
@@ -264,6 +368,87 @@ module.exports = {
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+				return interaction.editReply({
+					embeds: [embed],
+				}) 
+			} 
+			const amount = interaction.options.getInteger('amount')
+			const vol = parseInt(amount)
+			if (!vol) return interaction.editReply({ content: `🎧 | Current volume is **${queue.volume}**%!` });
+			if (vol < 0 || vol > 100) return interaction.editReply({ content: '❌ | Volume range must be 0-100' });
+			const success = queue.setVolume(vol);
+			return interaction.editReply({
+				content: success ? `✅ | Volume set to **${vol}%**!` : '❌ | Something went wrong!'
+			});
+		}
+		else if (interaction.options.getSubcommand() === 'bassboost')
+		{
+			if (!queue.playing) {
+				embed
+				.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+				.setColor('#ffff00')
+				.setThumbnail(guildIcon)
+				.setTimestamp()
+				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+				return interaction.editReply({
+					embeds: [embed],
+				}) 
+			} 
+			embed
+					.setDescription(`🎵 | Bassboost ${queue.getFiltersEnabled().includes('bassboost') ? 'Enabled' : 'Disabled'}!`)
+					.setColor('#ffff00')
+					.setThumbnail(guildIcon)
+					.setTimestamp()
+					.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+					.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+
+			await queue.setFilters({
+				bassboost: !queue.getFiltersEnabled().includes('bassboost'),
+				normalizer2: !queue.getFiltersEnabled().includes('bassboost') // because we need to toggle it with bass
+			});
+
+			setTimeout(() => {
+			return interaction.editReply({ content: `🎵 | Bassboost ${queue.getFiltersEnabled().includes('bassboost') ? 'Enabled' : 'Disabled'}!` });
+			}, queue.options.bufferingTimeout);
+		}
+		else if (interaction.options.getSubcommand() === 'loop')
+		{
+			if (!queue.playing) {
+				embed
+					.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+					.setColor('#ffff00')
+					.setThumbnail(guildIcon)
+					.setTimestamp()
+					.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+					.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+				return interaction.editReply({
+					embeds: [embed],
+				}) 
+			} 
+			const loopMode = interaction.options.getInteger('mode');
+			const success = queue.setRepeatMode(loopMode);
+			const mode = loopMode === QueueRepeatMode.TRACK ? '🔂' : loopMode === QueueRepeatMode.QUEUE ? '🔁' : '▶';
+			console.log(mode)
+			//return interaction.editReply({ content: success ? `${mode} | Updated loop mode!` : '❌ | Could not update loop mode!' });
+			embed
+				.setDescription(success ? `${mode} | Updated loop mode!` : '❌ | Could not update loop mode!')
+				.setColor('#ffff00')
+				.setThumbnail(guildIcon)
+				.setTimestamp()
+				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+		}
+		else if (interaction.options.getSubcommand() === 'exit')
+		{
+			if (!queue.playing) {
+				embed
+					.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+					.setColor('#ffff00')
+					.setThumbnail(guildIcon)
+					.setTimestamp()
+					.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+					.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 				return interaction.editReply({
 					embeds: [embed],
 				}) 

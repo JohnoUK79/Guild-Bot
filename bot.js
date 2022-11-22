@@ -1,8 +1,9 @@
 const fs = require('node:fs');
-const { Client, GatewayIntentBits, Partials, Collection, Options } = require("discord.js");
+const { Client, GatewayIntentBits, Partials, Collection, EmbedBuilder, Options } = require("discord.js");
 const rpc = require("discord-rpc");
 const { token, CLIENT_ID } = require('./config.json');
 const { Player } = require('discord-player');
+let embed = new EmbedBuilder();
 
 //Discord client
 const client = new Client({
@@ -82,25 +83,74 @@ botJukebox.on('connectionError', (queue, error) => {
     queue.connection.channel.send(`[${queue.guild.name}] Error emitted from the connection: ${error.message}`);
 });
 botJukebox.on('trackStart', (queue, track) => {
+    const progress = queue.createProgressBar();
+    const perc = queue.getPlayerTimestamp();
+    embed
+        .setTitle('🎼| Now Playing:')
+        .setDescription(`🎶 | [${track.title}](${track.url})!`)
+		.setColor('#ffff00')
+        .setTimestamp()
+        .setFooter({ text: `Jukebox`, iconURL: `http://phfamily.co.uk/img/gifs/Warpath.jpg`});
+
+
     console.log(`🎼| Now Playing: ${track.title} in ${queue.connection.channel.name}!`);
-    queue.connection.channel.send(`🎼| **Now Playing**: [${track.title}]!`);
+    queue.connection.channel.send({
+        //content: `🎼| **Now Playing**: [${track.title}]!`,
+        embeds: [embed]
+    });
 });
 botJukebox.on('trackAdd', (queue, track) => {
+    embed
+        .setTitle('🎼| Track Queued:')
+        .setDescription(`🎶| [${track.title}](${track.url}) **Queued**!`)
+        .setColor('#ffff00')
+        .setTimestamp()
+        .setFooter({ text: `Jukebox`, iconURL: `http://phfamily.co.uk/img/gifs/Warpath.jpg`});
+
     console.log(`🎼| ${track.title} queued!`);
-    queue.connection.channel.send(`🎼| [${track.title}] **Queued**!`);
+    queue.connection.channel.send({
+        embeds: [embed]
+    });
 
 });
 botJukebox.on('botDisconnect', (queue) => {
+    embed
+        .setTitle(`❌ | I was manually disconnected from the Voice Channel, clearing queue!`)
+        .setDescription(`❌ | **${queue.channel}**!`)
+        .setColor('#ffff00')
+        .setTimestamp()
+        .setFooter({ text: `Jukebox`, iconURL: `http://phfamily.co.uk/img/gifs/Warpath.jpg`});
+
     console.log(`❌ | I was manually disconnected from the Voice Channel, clearing queue!`);
-    queue.connection.channel.send(`❌ | I was manually disconnected from the Voice Channel, clearing queue!`);
+    queue.connection.channel.send({
+        embeds: [embed]
+    });
 });
 botJukebox.on('channelEmpty', (queue) => {
+    embed
+        .setTitle(`❌ | Nobody is in the Voice Channel...`)
+        .setDescription(`❌ | **Leaving**!`)
+        .setColor('#ffff00')
+        .setTimestamp()
+        .setFooter({ text: `Jukebox`, iconURL: `http://phfamily.co.uk/img/gifs/Warpath.jpg`});
+
     console.log(`❌ | Nobody is in the Voice Channel, leaving...`);
-    queue.connection.channel.send(`❌ | Nobody is in the Voice Channel, leaving...`);
+    queue.connection.channel.send({
+        embeds: [embed]
+    });
 });
 botJukebox.on('queueEnd', (queue) => {
+    embed
+        .setTitle(`✅ | **Queue**`)
+        .setDescription(`✅ | **Finished**!`)
+        .setColor('#ffff00')
+        .setTimestamp()
+        .setFooter({ text: `Jukebox`, iconURL: `http://phfamily.co.uk/img/gifs/Warpath.jpg`});
+
     console.log(`✅ | Queue finished!`);
-    queue.connection.channel.send(`✅ | **Queue finished**!`);
+    queue.connection.channel.send({
+        embeds: [embed]
+    });
 });
 console.log('=================Jukebox Online!=================')
 //RPC client

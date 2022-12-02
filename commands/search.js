@@ -1,8 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const sql = require("../config/Database");
-const interactionCreate = require("../Events/interactionCreate");
 const { execute } = require("../events/ready");
-const timestamp = require('time-stamp');
 
 const admin =   new ActionRowBuilder()
 			        .addComponents(

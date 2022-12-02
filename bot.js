@@ -13,20 +13,31 @@ embed
 const client = new Client({
 
     makeCache: Options.cacheWithLimits({
-		MessageManager: 200, // This is default
+		MessageManager: 200,
 		PresenceManager: 200,
         UserManager: 200,
         ReactionUserManager: 200,
         GuildInviteManager: 200,
         GuildBanManager: 200,
         GuildEmojiManager: 200,
-        GuildMemberManager: 200,
+        GuildMemberManager: {
+            maxSize: 200,
+            keepOverLimit: member => member.id === client.user.id,
+        },
         GuildScheduledEventManager: 200,
         ApplicationCommandManager: 200,
         BaseGuildEmojiManager: 200,
         GuildStickerManager: 200,
         StageInstanceManager: 200,
 		// Add more class names here
+
+        sweepers: {
+            ...Options.DefaultSweeperSettings,
+            messages: {
+                interval: 3600, // Every hour...
+                lifetime: 1800,	// Remove messages older than 30 minutes.
+            },
+        },
 	}),
     
     allowedMentions: {

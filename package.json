@@ -12,7 +12,7 @@
     "@discordjs/voice": "^0.13.0",
     "discord-player": "^5.3.2",
     "discord-rpc": "^4.0.1",
-    "discord.js": "^14.6.0",
+    "discord.js": "14.7",
     "dotenv": "^16.0.1",
     "ffmpeg-static": "^5.1.0",
     "fs": "^0.0.1-security",
@@ -21,7 +21,7 @@
     "node-cron": "^3.0.1",
     "opusscript": "^0.0.8",
     "pm2": "^5.2.0"
-    },
+  },
   "description": "",
   "repository": {
     "type": "git",

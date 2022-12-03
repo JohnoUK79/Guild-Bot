@@ -1,9 +1,17 @@
-const Discord = require(`discord.js`);
+const {EmbedBuilder, Client} = require(`discord.js`);
 const sql = require(`../config/Database`)
 
 module.exports = {
     name: "guildMemberAdd",
     async execute(member) {
+        console.log(Client.guilds)
+        Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
+        guildIcon = member.guild.iconURL();
+        CHANNEL_ID = Data[0].welcome_channel_id
+        ROLE_ID = Data[0].welcome_role_id
+        GUILD = member.guild.name
+        var playerDisplayName = member.displayName
+		if (!playerDisplayName){ var playerDisplayName = member.username}
         console.log("Member Joined")
         if (member.partial) {
             try {
@@ -14,15 +22,10 @@ module.exports = {
                 return;
             }
         }
-        Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
-        guildIcon = member.guild.iconURL();
-        CHANNEL_ID = Data[0].welcome_channel_id
-        ROLE_ID = Data[0].welcome_role_id
-        GUILD = member.guild.name
-        var playerDisplayName = member.displayName
-		if (!playerDisplayName){ var playerDisplayName = member.username}
+
+
         
-        const newMemberEmbed = new Discord.EmbedBuilder()
+        const newMemberEmbed = new EmbedBuilder()
             .setColor("#d81e5b")
             .setTitle("New Player!")
             .setDescription(`<@${member.id}> has joined the server! \nWe hope you enjoy your time here.`)
@@ -30,7 +33,7 @@ module.exports = {
             .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();
             
-        const welcomeEmbed = new Discord.EmbedBuilder()
+        const welcomeEmbed = new EmbedBuilder()
             .setColor("#d81e5b")
             .setTitle(`Welcome to ${GUILD}`)
             .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here.`)

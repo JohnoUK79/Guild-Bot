@@ -53,9 +53,8 @@ module.exports = {
                 .catch(err => {
                     console.log("Invite Cache Error:", err)
                 })
-        })
-        console.log(guildInvites)
-              const guildSettingsUpdate = nodeCron.schedule("0 22 * * *", () => {
+        })        
+            const guildSettingsUpdate = nodeCron.schedule("0 22 * * *", () => {
                 console.log("Guild Settings Update")
 
                 client.guilds.cache.map(r => {

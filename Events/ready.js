@@ -1,4 +1,4 @@
-const { REST, Routes } = require('discord.js');
+const { REST, Routes, Collection } = require('discord.js');
 const { token, CLIENT_ID, GUILD_ID } = require('../config.json');
 const nodeCron = require("node-cron");
 const timestamp = require('../config/timestamp');
@@ -11,8 +11,8 @@ module.exports = {
     async execute(client, commands) {     
         //await client.application.commands.set([]); // Reset Global Commands
         //const guild = await client.guilds.fetch(GUILD_ID);
-        //guild.commands.set([]);  //to be used to reset guild commands when transferring to global
-
+        //guild.commands.set([]);  //to be used to reset guild commands when transferring to global  
+        
         console.log(`${setDate} - Logged in as - ${client.user.tag}`);
         const rest = new REST({ version: '10' }).setToken(token);
         await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands }) //Global Commands
@@ -21,9 +21,40 @@ module.exports = {
                 console.log(`Successfully registered Global Commands!`);
             })
             .catch(console.error);
-    
+
         console.log('================ PH40 BOT Ready! ================');
-        
+
+        const InvitesDB = new Map();
+        client.guilds.cache.forEach(guild => {
+            guild.invites.fetch()
+                .then(invites => {
+                    console.log(`Invites Cached: ${guild.name}`);
+                    const codeUses = new Map();
+                    invites.each(inv => {
+                        const code = inv.code
+                        const temporary = inv.temporary
+                        const maxAge = inv.maxAge
+                        const uses = inv.uses
+                        const maxUses = inv.maxUses
+                        const inviter = inv.inviter
+                        const inviterId = inv.inviterId
+                        const channel = inv.channel 
+                        const channelId = inv.channelId 
+                        const id = guild.id
+                        const name = guild.name
+                        invitesUpdate = sql.Execute(`INSERT INTO invites (code, guildId, guildName, invitedBy, uses, maxUses, maxAge, temporary, channel, lastupdated) VALUES ('${code}', '${id}', '${name}', '${inviter}', '${uses}', '${maxUses}', '${maxAge}', '${temporary}', '${channel}', '${setDate}') ON DUPLICATE KEY UPDATE uses = '${uses}', maxUses = '${maxUses}', maxAge = '${maxAge}', temporary = '${temporary}', channel = '${channel}', lastupdated = '${setDate}'`)
+                        //console.log(code, temporary, maxAge, uses, maxUses, inviter, channel)
+                        codeUses.set(inv.code, inv.uses)
+                    });
+                    InvitesDB.set(guild.id, codeUses)
+                    //console.log(InvitesDB)
+
+                })
+                .catch(err => {
+                    console.log("Invite Cache Error:", err)
+                })
+        })
+        console.log(guildInvites)
               const guildSettingsUpdate = nodeCron.schedule("0 22 * * *", () => {
                 console.log("Guild Settings Update")
 

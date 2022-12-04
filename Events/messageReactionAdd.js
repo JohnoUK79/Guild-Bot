@@ -1,6 +1,4 @@
-const { Interaction, MessageReaction, ReactionUserManager, ReactionCollector, ReactionEmoji, ReactionManager, Message, Collector, Client, ClientUser, RoleManager, User } = require("discord.js");
 const sql = require("../config/Database");
-
 
 module.exports = {
     class:'extends',

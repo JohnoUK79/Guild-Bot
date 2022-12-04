@@ -9,20 +9,12 @@ module.exports = {
 			.setName('target')
 			.setRequired(true)
 			.setDescription('The member to slap!')),
-
 	
-
-
-
-			
 	async execute(Interaction) {
 	var randomGif = gifs[Math.floor(Math.random() * gifs.length)];
     guildIcon = Interaction.member.guild.iconURL();
 	guildName = Interaction.member.guild.name;
 	var target = Interaction.options.getUser('target');
-
-
-
 
 	const slapEmbed = new EmbedBuilder()
 		.setColor('#2e8f37')

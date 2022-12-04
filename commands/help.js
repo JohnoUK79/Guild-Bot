@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const sql = require("../config/Database");
 const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
 

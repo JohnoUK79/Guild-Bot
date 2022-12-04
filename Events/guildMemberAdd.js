@@ -1,10 +1,10 @@
-const {EmbedBuilder, Client} = require(`discord.js`);
+const {EmbedBuilder} = require(`discord.js`);
 const sql = require(`../config/Database`)
 
 module.exports = {
     name: "guildMemberAdd",
     async execute(member) {
-        console.log(Client.guilds)
+
         Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         guildIcon = member.guild.iconURL();
         CHANNEL_ID = Data[0].welcome_channel_id
@@ -13,17 +13,6 @@ module.exports = {
         var playerDisplayName = member.displayName
 		if (!playerDisplayName){ var playerDisplayName = member.username}
         console.log("Member Joined")
-        if (member.partial) {
-            try {
-                await member.fetch();
-                console.log("Partial Member")
-            } catch (error) {
-                console.error('Something went wrong when fetching the member info:', error);
-                return;
-            }
-        }
-
-
         
         const newMemberEmbed = new EmbedBuilder()
             .setColor("#d81e5b")

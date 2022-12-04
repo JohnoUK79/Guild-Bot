@@ -1,4 +1,5 @@
 const timestamp = require('../config/timestamp');
+
 module.exports = {
 	name: 'messageDelete',
 	async execute(message) {

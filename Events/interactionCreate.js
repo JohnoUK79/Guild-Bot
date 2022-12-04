@@ -1,6 +1,6 @@
 const time = require('../config/timestamp')
 const sql = require("../config/Database");
-const { TextInputStyle, ModalBuilder, EmbedBuilder, Client, TextInputBuilder, ActionRowBuilder, ButtonBuilder, TextInputComponent, Guild, ButtonStyle } = require('discord.js');
+const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
     name: 'interactionCreate',

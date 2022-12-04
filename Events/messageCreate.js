@@ -1,6 +1,5 @@
-const { EmbedBuilder, Client, MessageAttachment, ModalSubmitFieldsResolver, ActionRowBuilder, ButtonBuilder, Guild, Interaction, ButtonStyle, ChannelType, AttachmentBuilder, Attachment, Collection, CommandInteractionOptionResolver } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, AttachmentBuilder } = require('discord.js');
 const sql = require("../config/Database");
-const interactionCreate = require('./interactionCreate');
 time = require('../config/timestamp')
 setDate = time.UTCdefault()
 

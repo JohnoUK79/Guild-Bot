@@ -13,6 +13,15 @@ module.exports = {
         var playerDisplayName = member.displayName
 		if (!playerDisplayName){ var playerDisplayName = member.username}
         console.log("Member Joined")
+        if (member.partial) {
+            try {
+                await member.fetch();
+                console.log("Partial Member")
+            } catch (error) {
+                console.error('Something went wrong when fetching the member info:', error);
+                return;
+            }
+        }
         
         const newMemberEmbed = new EmbedBuilder()
             .setColor("#d81e5b")

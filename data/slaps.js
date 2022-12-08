@@ -29,6 +29,8 @@ const gifs = [
     'http://phfamily.co.uk/img/slaps/slap28.gif',
     'http://phfamily.co.uk/img/slaps/slap29.gif',
     'http://phfamily.co.uk/img/slaps/slap30.gif',
+    'http://phfamily.co.uk/img/slaps/slap31.gif',
+    'http://phfamily.co.uk/img/slaps/slap32.gif',
     'https://media.giphy.com/media/3XlEk2RxPS1m8/giphy.gif',
     'https://media.giphy.com/media/gSIz6gGLhguOY/giphy.gif',
     'https://media.giphy.com/media/uG3lKkAuh53wc/giphy.gif',

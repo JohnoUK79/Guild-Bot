@@ -6,7 +6,6 @@ const { Player } = require('discord-player');
 let embed = new EmbedBuilder();
 embed
     .setColor('#ffff00')
-    .setTimestamp()
     .setFooter({ text: `Jukebox`, iconURL: `http://phfamily.co.uk/img/gifs/Warpath.jpg`});
 
 //Discord client
@@ -101,6 +100,7 @@ botJukebox.on('trackStart', (queue, track) => {
 
     embed
         .setTitle('🎼| Now Playing:')
+        .setTimestamp()
         .setDescription(`🎶 | [${track.title}](${track.url})!`);
 
     console.log(`🎼| Now Playing: ${track.title} in ${queue.connection.channel.name}!`);
@@ -112,6 +112,7 @@ botJukebox.on('trackAdd', (queue, track) => {
 
     embed
         .setTitle('🎼| Track Queued:')
+        .setTimestamp()
         .setDescription(`🎶| [${track.title}](${track.url})`);
 
     console.log(`🎼| ${track.title} queued!`);
@@ -124,6 +125,7 @@ botJukebox.on('botDisconnect', (queue) => {
 
     embed
         .setTitle(`❌ | I was manually disconnected from the Voice Channel, clearing queue!`)
+        .setTimestamp()
         .setDescription(`❌ | **${queue.channel}**!`);
 
     console.log(`❌ | I was manually disconnected from the Voice Channel, clearing queue!`);
@@ -134,8 +136,9 @@ botJukebox.on('botDisconnect', (queue) => {
 botJukebox.on('channelEmpty', (queue) => {
 
     embed
-        .setTitle(`🎼 | I'm Singing to Myself in ${queue.metadata.channel} Voice Channel...`)
-        .setDescription(`🎶 | I'm leaving ${queue.metadata.channel} for now!\nUse **/Jukebox song** to add more songs.`);
+        .setTitle(`🎼 | I'm Singing to Myself in ${queue.connection.channel} Voice Channel...`)
+        .setTimestamp()
+        .setDescription(`🎶 | I'm leaving ${queue.connection.channel} for now!\nUse **/Jukebox song** to add more songs.`);
 
     console.log(`❌ | Nobody is in the Voice Channel, leaving...`);
     queue.connection.channel.send({
@@ -145,8 +148,8 @@ botJukebox.on('channelEmpty', (queue) => {
 botJukebox.on('queueEnd', (queue) => {
 
     embed
-        .setTitle(`🎶 | End of Queue in ${queue.metadata.channel}`)
-        .setDescription(`🎼 | I have no more songs to play for ${queue.metadata.channel}!\nMaybe use **/Jukebox loop** to keep the music playing!`);
+        .setTitle(`🎶 | End of Queue in ${queue.connection.channel}`)
+        .setDescription(`🎼 | I have no more songs to play for ${queue.connection.channel}!\nMaybe use **/Jukebox loop** to keep the music playing!`);
 
     console.log(`🎼 | Queue finished!`);
     queue.connection.channel.send({

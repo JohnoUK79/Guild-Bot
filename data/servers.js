@@ -57,6 +57,5 @@ const SERVER_15 = {
     '874016988400332841': { allianceName: 'PHWR', wpServer: 17, citiesGold: SERVER_17 },
     '1029701280077205524': { allianceName: 'SE17', wpServer: 17, citiesGold: SERVER_17 },
     '843131973131304990': { allianceName: 'PH-U', wpServer: 17, citiesGold: SERVER_17 },
-
-
+    '1050700042983444500': { allianceName: 'New PHEA', wpServer: 17, citiesGold: SERVER_17 },
   };

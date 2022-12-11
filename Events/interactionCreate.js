@@ -9,7 +9,8 @@ module.exports = {
 		guildIcon = interaction.member.guild.iconURL();
 		const setDate = time.default()
 		GuildName = interaction.guild.name
-		console.log(GuildName)
+		console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} in ${GuildName} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
+
         board = await sql.Execute(`select * from levels where 1 ORDER BY points DESC;`);
 		Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
 		var playerLevel = Level[0].level
@@ -177,8 +178,6 @@ module.exports = {
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
 		.setFooter({ text: `${GuildName} - Player Updated.`, iconURL: `${guildIcon}` });
-
-        console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
 
 		//Dashboard Reports
 		if (interaction.customId === 'Reports') {

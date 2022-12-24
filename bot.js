@@ -30,13 +30,13 @@ const client = new Client({
         StageInstanceManager: 200,
 		// Add more class names here
 
-        sweepers: {
-            ...Options.DefaultSweeperSettings,
-            messages: {
-                interval: 3600, // Every hour...
-                lifetime: 1800,	// Remove messages older than 30 minutes.
-            },
-        },
+        // sweepers: {
+        //     ...Options.DefaultSweeperSettings,
+        //     messages: {
+        //         interval: 3600, // Every hour...
+        //         lifetime: 1800,	// Remove messages older than 30 minutes.
+        //     },
+        // },
 	}),
     
     allowedMentions: {

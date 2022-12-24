@@ -140,9 +140,12 @@ module.exports = {
 		if (!Players) {
 			var score = Math.floor(Math.random() * 150) * 3;
 			let playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
-		} else {var playerImage = Players[0].player_image
+		} else {
+			var playerImage = Players[0].player_image
 			playerId = Levels[0].player_id
-			updatePlayers = await sql.Execute(`UPDATE players SET date_last_known = '${setDate}', discord ='${message.author.id}', discord_server = '${guildName}' WHERE player_id = ${playerId}`)}
+			updatePlayers = await sql.Execute(`UPDATE players SET date_last_known = '${setDate}', discord ='${message.author.id}', discord_name = '${message.author.username}', discord_server = '${guildName}' WHERE player_id = '${playerId}'`)
+			console.log(message.author.username, updatePlayers.info)
+		}
 
 		let roleRank10 = Settings[0].Rank_10
 		let roleRank20 = Settings[0].Rank_20

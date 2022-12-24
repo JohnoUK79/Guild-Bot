@@ -9,7 +9,6 @@ module.exports = {
     name: 'ready',
     once: true,
     async execute(client, commands) {     
-        
         console.log(`${setDate} - Logged in as - ${client.user.tag}`);
         const rest = new REST({ version: '10' }).setToken(token);
         await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands }) //Global Commands
@@ -18,7 +17,7 @@ module.exports = {
             })
             .catch(console.error);
 
-        console.log('================ PH40 BOT Ready! ================');
+        console.log(`================ Warpath BOT Ready! ================`);
 
         const InvitesDB = new Map();
         client.guilds.cache.forEach(guild => {
@@ -33,16 +32,15 @@ module.exports = {
                         const uses = inv.uses
                         const maxUses = inv.maxUses
                         const inviter = inv.inviter
-                        const inviterId = inv.inviterId
                         const channel = inv.channel 
-                        const channelId = inv.channelId 
                         const id = guild.id
                         const name = guild.name
                         invitesUpdate = sql.Execute(`INSERT INTO invites (code, guildId, guildName, invitedBy, uses, maxUses, maxAge, temporary, channel, lastupdated) VALUES ('${code}', '${id}', '${name}', '${inviter}', '${uses}', '${maxUses}', '${maxAge}', '${temporary}', '${channel}', '${setDate}') ON DUPLICATE KEY UPDATE uses = '${uses}', maxUses = '${maxUses}', maxAge = '${maxAge}', temporary = '${temporary}', channel = '${channel}', lastupdated = '${setDate}'`)
                         //console.log(code, temporary, maxAge, uses, maxUses, inviter, channel)
                         codeUses.set(inv.code, inv.uses)
                     });
-                    InvitesDB.set(guild.id, codeUses)
+        InvitesDB.set(guild.id, codeUses)
+        module.exports = InvitesDB
                     //console.log(InvitesDB)
 
                 })

@@ -10,36 +10,28 @@ module.exports = {
         .setName("translate")
         .setDescription("Translator!")
         .addStringOption((option) => option
-        .setName("text")
-            .setDescription("Text to be Translated!")
+        .setName("message")
+            .setDescription("Message to be Translated!")
+            .setRequired(true)
+        )
+        .addStringOption((option) => option
+        .setName("code")
+            .setDescription("Country Code for the Translation!")
             .setRequired(true)
         ),
             
 
     async execute(Interaction) {
+        var text = Interaction.options.getString('message');
+        var target = Interaction.options.getString('code');
+
         guildIcon = Interaction.member.guild.iconURL();
 		guildName = Interaction.member.guild.name
-        var text = Interaction.options.getString('text');
 
-        
-        /**
-         * TODO(developer): Uncomment the following line before running the sample.
-         */
         const projectId = 'upbeat-glow-372800';
-
-        // Imports the Google Cloud client library
         const {Translate} = require('@google-cloud/translate').v2;
-
-        // Instantiates a client
         const translate = new Translate({projectId});
 
-        // The text to translate
-        //const text = 'Hello, world!';
-
-        // The target language
-        const target = 'es';
-
-        // Translates some text into Russian
         const [translation] = await translate.translate(text, target);
         console.log(`Text: ${text}`);
         console.log(`Translation: ${translation}`);

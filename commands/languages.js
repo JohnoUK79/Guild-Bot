@@ -28,7 +28,6 @@ module.exports = {
             console.log("Languages:");
             languages.forEach((language) => {
                 console.log(language)
-                updateLanguages = sql.Execute(`INSERT INTO languages (code, name) VALUES ('${language.code}', '${language.name}') ON DUPLICATE KEY UPDATE name = '${language.name}'`)
             });
                 
         const languagesEmbed = new EmbedBuilder()

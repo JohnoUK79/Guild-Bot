@@ -20,7 +20,7 @@ const client = new Client({
         GuildBanManager: 200,
         GuildEmojiManager: 200,
         GuildMemberManager: {
-            maxSize: 200,
+            maxSize: 1000,
             keepOverLimit: member => member.id === client.user.id,
         },
         GuildScheduledEventManager: 200,

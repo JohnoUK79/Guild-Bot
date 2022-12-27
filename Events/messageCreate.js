@@ -85,7 +85,6 @@ module.exports = {
 			const args = message.content.split(' ')
 			target = args[1]
 			const messages = await message.channel.messages.fetch(message.reference.messageId);
-			console.log(messages.url)
 			text = messages.content
 			const projectId = 'upbeat-glow-372800';
 			const {Translate} = require('@google-cloud/translate').v2;

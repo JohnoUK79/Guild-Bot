@@ -7,6 +7,7 @@ module.exports = {
 	class: 'extends',
 	name: 'messageCreate',
 	async execute(message) {
+		//DM Replies
 		if (message.author.bot === true) {
 			return;}
 		if (message.channel.type == ChannelType.DM) {
@@ -75,9 +76,40 @@ module.exports = {
 			} 
 			return
 		}		
+		//Set Guild Branding
 		guildIcon = message.member.guild.iconURL();
 		guildName = message.member.guild.name
+		//Translate Prefix
+		if (message.content.startsWith(`!t`)) {
+			console.log(`Translate:`)
+			const args = message.content.split(' ')
+			target = args[1]
+			const messages = await message.channel.messages.fetch(message.reference.messageId);
+			console.log(messages.url)
+			text = messages.content
+			const projectId = 'upbeat-glow-372800';
+			const {Translate} = require('@google-cloud/translate').v2;
+			const translate = new Translate({projectId});
+	
+			const [translation] = await translate.translate(text, target);
+			const translationEmbed = new EmbedBuilder()
+			.setColor('#0099ff')
+			.setTitle(`${guildName} - Translator`)
+			.setURL('http://www.phfamily.co.uk')
+			.setThumbnail(message.member.displayAvatarURL())
+			.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true })})
 
+			.setDescription(`[**Jump to Message!**](${messages.url})`)
+			.addFields(
+				{ name: `Language Code: ${target}`, value: `${translation}` },
+				)
+			.setTimestamp()
+			.setFooter({ text: `${guildName} - Translator.`, iconURL: `${guildIcon}` });
+			await message.reply({ embeds: [translationEmbed] })
+			message.delete({ timeout: 500 })
+		} 
+
+		//Database Lookup
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
 		var score = Math.floor(Math.random() * 150) * 3;

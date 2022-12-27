@@ -95,7 +95,7 @@ module.exports = {
 			.setColor('#0099ff')
 			.setTitle(`${guildName} - Translator`)
 			.setURL('http://www.phfamily.co.uk')
-			.setThumbnail(message.member.displayAvatarURL())
+			.setThumbnail(guildIcon)
 			.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true })})
 
 			.setDescription(`[**Jump to Message!**](${messages.url})`)

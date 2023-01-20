@@ -19,36 +19,36 @@ module.exports = {
 
         console.log(`================ Warpath BOT Ready! ================`);
 
-        const InvitesDB = new Map();
-        client.guilds.cache.forEach(guild => {
-            guild.invites.fetch()
-                .then(invites => {
-                    console.log(`Invites Cached: ${guild.name}`);
-                    const codeUses = new Map();
-                    invites.each(inv => {
-                        const code = inv.code
-                        const temporary = inv.temporary
-                        const maxAge = inv.maxAge
-                        const uses = inv.uses
-                        const maxUses = inv.maxUses
-                        const inviter = inv.inviter
-                        const channel = inv.channel 
-                        const id = guild.id
-                        const name = guild.name
-                        invitesUpdate = sql.Execute(`INSERT INTO invites (code, guildId, guildName, invitedBy, uses, maxUses, maxAge, temporary, channel, lastupdated) VALUES ('${code}', '${id}', '${name}', '${inviter}', '${uses}', '${maxUses}', '${maxAge}', '${temporary}', '${channel}', '${setDate}') ON DUPLICATE KEY UPDATE uses = '${uses}', maxUses = '${maxUses}', maxAge = '${maxAge}', temporary = '${temporary}', channel = '${channel}', lastupdated = '${setDate}'`)
-                        //console.log(code, temporary, maxAge, uses, maxUses, inviter, channel)
-                        codeUses.set(inv.code, inv.uses)
-                    });
-        InvitesDB.set(guild.id, codeUses)
-        module.exports = InvitesDB
-                    //console.log(InvitesDB)
+        // const InvitesDB = new Map();
+        // client.guilds.cache.forEach(guild => {
+        //     guild.invites.fetch()
+        //         .then(invites => {
+        //             console.log(`Invites Cached: ${guild.name}`);
+        //             const codeUses = new Map();
+        //             invites.each(inv => {
+        //                 const code = inv.code
+        //                 const temporary = inv.temporary
+        //                 const maxAge = inv.maxAge
+        //                 const uses = inv.uses
+        //                 const maxUses = inv.maxUses
+        //                 const inviter = inv.inviter
+        //                 const channel = inv.channel 
+        //                 const id = guild.id
+        //                 const name = guild.name
+        //                 invitesUpdate = sql.Execute(`INSERT INTO invites (code, guildId, guildName, invitedBy, uses, maxUses, maxAge, temporary, channel, lastupdated) VALUES ('${code}', '${id}', '${name}', '${inviter}', '${uses}', '${maxUses}', '${maxAge}', '${temporary}', '${channel}', '${setDate}') ON DUPLICATE KEY UPDATE uses = '${uses}', maxUses = '${maxUses}', maxAge = '${maxAge}', temporary = '${temporary}', channel = '${channel}', lastupdated = '${setDate}'`)
+        //                 //console.log(code, temporary, maxAge, uses, maxUses, inviter, channel)
+        //                 codeUses.set(inv.code, inv.uses)
+        //             });
+        // InvitesDB.set(guild.id, codeUses)
+        // module.exports = InvitesDB
+        //             //console.log(InvitesDB)
 
-                })
-                .catch(err => {
-                    console.log("Invite Cache Error:", err)
-                })
-        })        
-            const guildSettingsUpdate = nodeCron.schedule("0 22 * * *", () => {
+        //         })
+        //         .catch(err => {
+        //             console.log("Invite Cache Error:", err)
+        //         })
+        // })        
+            const guildSettingsUpdate = nodeCron.schedule("* * * * *", () => {
                 console.log("Guild Settings Update")
 
                 client.guilds.cache.map(r => {

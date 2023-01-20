@@ -92,18 +92,18 @@ module.exports = {
 	
 			const [translation] = await translate.translate(text, target);
 			const translationEmbed = new EmbedBuilder()
-			.setColor('	#C32148')
-			.setTitle(`${guildName} - Translator`)
-			.setURL('http://www.phfamily.co.uk')
-			.setThumbnail(guildIcon)
-			.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true })})
+				.setColor('	#C32148')
+				.setTitle(`${guildName} - Translator`)
+				.setURL('http://www.phfamily.co.uk')
+				.setThumbnail(guildIcon)
+				.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true })})
 
-			.setDescription(`[**Jump to Message!**](${messages.url})`)
-			.addFields(
-				{ name: `Language Code: ${target}`, value: `${translation}` },
-				)
-			.setTimestamp()
-			.setFooter({ text: `${guildName} - Translator.`, iconURL: `${guildIcon}` });
+				.setDescription(`[**Jump to Message!**](${messages.url})`)
+				.addFields(
+					{ name: `Language Code: ${target}`, value: `${translation}` },
+					)
+				.setTimestamp()
+				.setFooter({ text: `${guildName} - Translator.`, iconURL: `${guildIcon}` });
 			await message.reply({ embeds: [translationEmbed] })
 			message.delete({ timeout: 500 })
 		} 

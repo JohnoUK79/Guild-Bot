@@ -28,24 +28,11 @@ module.exports = {
             
         console.log(`${guildName} Member Cache: ${Interaction.guild.members.cache.size}`)
         inviteBoard = await sql.Execute(`SELECT * FROM invites WHERE guildId = '${Interaction.member.guild.id}' ORDER BY uses DESC`)
-        console.log(inviteBoard.length)        
+
         for (let i = 0; i < 25 && inviteBoard[i]; i++) invitesEmbed.addFields(
             { name: `${inviteBoard[i].invitedBy}`, value: `**Code:** ${inviteBoard[i].code} **Uses:** ${inviteBoard[i].uses}` })
 
-
-
-        //     .addFields(
-        //         { name: `:first_place:${first}`, value: `**Code:** ${inviteBoard[0].code} **Uses:** ${inviteBoard[0].uses}` },
-        //         { name: `:second_place:${second}`, value: `**Code:** ${inviteBoard[1].code} **Uses:** ${inviteBoard[1].uses}` },
-        //         { name: `:third_place:${third}`, value: `**Code:** ${inviteBoard[2].code} **Uses:** ${inviteBoard[2].uses}` },
-        //         { name: `${fourth}`, value: `**Code:** ${inviteBoard[3].code} **Uses:** ${inviteBoard[3].uses}` },
-        //         { name: `${fifth}`, value: `**Code:** ${inviteBoard[4].code} **Uses:** ${inviteBoard[4].uses}` }, 
-        //         )
-
-            
-        //return interaction.reply(`Registered Jursidiction Channels!\n**${jurisdictionsChannelIDs.jurisdictionsChannelIDs.join('\n')}**`);
-
-            await Interaction.reply({
+        await Interaction.reply({
             ephemeral: false,
             embeds: [invitesEmbed],
         });

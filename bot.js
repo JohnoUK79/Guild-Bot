@@ -28,6 +28,7 @@ const client = new Client({
         BaseGuildEmojiManager: 200,
         GuildStickerManager: 200,
         StageInstanceManager: 200,
+        InviteManager: 200
 		// Add more class names here
 
         // sweepers: {
@@ -158,7 +159,6 @@ botJukebox.on('queueEnd', (queue) => {
 });
 console.log('=================Jukebox Online!=================')
 
-
 //RPC client
 const rpc_client = new rpc.Client({ transport: 'ipc' });
 
@@ -207,5 +207,5 @@ client.login(token);
 //RPC login
 rpc_client.login({ clientId: CLIENT_ID }).catch(console.error);
 module.exports = {
-    botJukebox: botJukebox   
+    botJukebox: botJukebox
 }

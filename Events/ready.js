@@ -55,7 +55,39 @@ module.exports = {
                 .catch(err => {
                     console.log("Invite Cache Error:", err)
                 })
-        })       
+        })  
+
+    
+
+        const invitesRefresh = nodeCron.schedule("* 0 * * *", () => {
+            console.log("Invite Leaderboard Update")
+        // Add Invites to Database
+        const InvitesDB = new Map();
+        client.guilds.cache.forEach(guild => {
+            guild.invites.fetch()
+                .then(invites => {
+                    console.log(`Invites Saved: ${guild.name}`);
+                    const codeUses = new Map();
+                    invites.each(inv => {
+                        const code = inv.code
+                        const temporary = inv.temporary
+                        const maxAge = inv.maxAge
+                        const uses = inv.uses
+                        const maxUses = inv.maxUses
+                        const inviter = inv.inviter
+                        const channel = inv.channel 
+                        const id = guild.id
+                        const name = guild.name
+                        invitesUpdate = sql.Execute(`INSERT INTO invites (code, guildId, guildName, invitedBy, uses, maxUses, maxAge, temporary, channel, lastupdated) VALUES ('${code}', '${id}', '${name}', '${inviter}', '${uses}', '${maxUses}', '${maxAge}', '${temporary}', '${channel}', '${setDate}') ON DUPLICATE KEY UPDATE uses = '${uses}', maxUses = '${maxUses}', maxAge = '${maxAge}', temporary = '${temporary}', channel = '${channel}', lastupdated = '${setDate}'`)
+                        codeUses.set(inv.code, inv.uses)
+                    });
+    })
+                .catch(err => {
+                    console.log("Invite Cache Error:", err)
+                })
+        })   
+               
+        })
 
         const guildSettingsUpdate = nodeCron.schedule("0 22 * * *", () => {
                 console.log("Guild Settings Update")

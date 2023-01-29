@@ -4,7 +4,7 @@ const sql = require(`../config/Database`)
 module.exports = {
     name: "guildMemberAdd",
     async execute(member) {
-
+        await member.guild.members.fetch()
         Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         guildIcon = member.guild.iconURL();
         CHANNEL_ID = Data[0].welcome_channel_id

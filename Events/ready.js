@@ -19,12 +19,25 @@ module.exports = {
             .catch(console.error);
 
         console.log(`================ Warpath BOT Ready! ================`);
-
+        
+        //Create Invite Cache
+        const invites = new Collection();
+        // Loop over all the guilds
+        client.guilds.cache.forEach(async (guild) => {
+            // Fetch all Guild Invites
+            const firstInvites = await guild.invites.fetch();
+            // Set the key as Guild ID, and create a map which has the invite code, and the number of uses
+            invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, invite.uses])));
+            module.exports.invites = invites
+            
+        });
+        
+        // Add Invites to Database
         const InvitesDB = new Map();
         client.guilds.cache.forEach(guild => {
             guild.invites.fetch()
                 .then(invites => {
-                    console.log(`Invites Cached: ${guild.name}`);
+                    console.log(`Invites Saved: ${guild.name}`);
                     const codeUses = new Map();
                     invites.each(inv => {
                         const code = inv.code
@@ -39,14 +52,11 @@ module.exports = {
                         invitesUpdate = sql.Execute(`INSERT INTO invites (code, guildId, guildName, invitedBy, uses, maxUses, maxAge, temporary, channel, lastupdated) VALUES ('${code}', '${id}', '${name}', '${inviter}', '${uses}', '${maxUses}', '${maxAge}', '${temporary}', '${channel}', '${setDate}') ON DUPLICATE KEY UPDATE uses = '${uses}', maxUses = '${maxUses}', maxAge = '${maxAge}', temporary = '${temporary}', channel = '${channel}', lastupdated = '${setDate}'`)
                         codeUses.set(inv.code, inv.uses)
                     });
-        InvitesDB.set(guild.id, codeUses)
-        console.log(InvitesDB)
-                })
+    })
                 .catch(err => {
                     console.log("Invite Cache Error:", err)
                 })
         })       
-        module.exports.InvitesDB = InvitesDB
 
         const guildSettingsUpdate = nodeCron.schedule("0 22 * * *", () => {
                 console.log("Guild Settings Update")

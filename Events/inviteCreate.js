@@ -4,6 +4,9 @@ const sql = require(`../config/Database`)
 module.exports = {
     name: 'inviteCreate',
     async execute(invite) {
+        const { invites } = require('./ready')
+        invites.get(invite.guild.id).set(invite.code, invite.uses);
+
         settings = await sql.Execute(`SELECT * FROM settings WHERE guild_id = '${invite.guild.id}'`)
         let guildName = invite.guild.name
         let guildLogo = settings[0].guild_icon

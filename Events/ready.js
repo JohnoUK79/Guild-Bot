@@ -29,7 +29,6 @@ module.exports = {
             // Set the key as Guild ID, and create a map which has the invite code, and the number of uses
             invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, invite.uses])));
             module.exports.invites = invites
-            
         });
         
         // Add Invites to Database

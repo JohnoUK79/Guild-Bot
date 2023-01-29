@@ -3,9 +3,16 @@ module.exports = {
     name: 'guildCreate',
     once: true,
 
-    async execute(client) {
+    async execute(guild) {
         console.log("BOT Joined Server")
-        client.guilds.cache.map(r => {
+        const { invites } = require('./ready')
+        // We've been added to a new Guild. Let's fetch all the invites, and save it to our cache
+        guild.invites.fetch().then(guildInvites => {
+            // This is the same as the ready event
+            invites.set(guild.id, new Map(guildInvites.map((invite) => [invite.code, invite.uses])));
+        })
+        //Add Guild Settings to Database
+        guild.guilds.cache.map(r => {
             const id = r.id
             const name = r.name
             const icon = r.iconURL()

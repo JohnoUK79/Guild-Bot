@@ -1,7 +1,9 @@
 
 module.exports = {
-    name: 'guildBanDelete',
+    name: 'guildDelete',
     async execute(guild) {
-        console.log(`Guild Ban Add:\n${guild}`)
+        const { invites } = require('./ready')
+        invites.delete(guild.id);
+        console.log(`Guild Deleted:\n${guild}`)
     }
 };

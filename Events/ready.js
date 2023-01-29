@@ -59,14 +59,12 @@ module.exports = {
 
     
 
-        const invitesRefresh = nodeCron.schedule("* 0 * * *", () => {
-            console.log("Invite Leaderboard Update")
-        // Add Invites to Database
+        const invitesRefresh = nodeCron.schedule("0,15,30,45 * * * *", () => {
+        console.log("Invite Leaderboard Update")
         const InvitesDB = new Map();
         client.guilds.cache.forEach(guild => {
             guild.invites.fetch()
                 .then(invites => {
-                    console.log(`Invites Saved: ${guild.name}`);
                     const codeUses = new Map();
                     invites.each(inv => {
                         const code = inv.code

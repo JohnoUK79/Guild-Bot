@@ -22,7 +22,7 @@ module.exports = {
             .setURL('http://www.phfamily.co.uk/invites.php')
             .setThumbnail(Interaction.user.displayAvatarURL())
             .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
-            .setDescription(`**Invites Leaderboard!**`)
+            .setDescription(`**Updates Every 15 Minutes!**`)
             .setThumbnail(guildIcon)
             .setImage(`http://phfamily.co.uk/img/gifs/Influencer.gif`)
             .setTimestamp()

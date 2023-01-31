@@ -15,6 +15,7 @@ const jurisdictionsChannelIDs = [
     '958408697703432274', //PHAK / EA / AA Server
     '1026959441708470302', //PHU - UNIVERSITY
     '1029857915458297956', //SE17 Elite Fighters
+    '1069297333608657086', //WodinsWarriors
     ];
 module.exports = {
     'jurisdictionsChannelIDs':     jurisdictionsChannelIDs,

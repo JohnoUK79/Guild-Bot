@@ -140,25 +140,26 @@ module.exports = {
 		.setURL('http://www.phfamily.co.uk')
 		.setThumbnail(message.member.displayAvatarURL())
 		.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true })})
-		.setDescription(`Welcome **<@${message.member.id}>**!`)
+		.setDescription(`Glad you made it, **${message.member}**!`)
 		.addFields(
 			{ name: `Name:`, value: `${message.member.displayName}` },
-			{ name: `Points:`, value: `${score}` },
-			{ name: `Welcome to ${guildName}.`, value: `Stay active in our servers for regular rewards!`, inline: true },
+			{ name: `XP:`, value: `${score}` },
+			{ name: `You will gain XP the more active you are in ${guildName}.`, value: `Stay active in our servers for regular rewards!`, inline: true },
 			)
 		.setImage(guildIcon)
 		.setTimestamp()
-		.setFooter({ text: `Welcome to ${guildName}.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${guildName}.`, iconURL: `${guildIcon}` });
 
 		if (Levels.length === 0) {
 			console.log("New Member")
 			playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
+			warcoins = 1000
+			warchest = 0
 			level = 0
 			var score = Math.floor(Math.random() * 150) * 3;
-			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${message.member.displayName}', '${guildName}');`)
+			let result = await sql.Execute(`INSERT INTO levels (discord_id, points, level, war_coins, war_chest, discord_username, last_seen_server) VALUES ('${message.author.id}', '${score}', '${level}', '${warcoins}', '${warchest}', '${message.member.displayName}', '${guildName}');`)
 			await message.reply({
 				content: `Welcome to ${guildName} **${message.member.displayName}**.\nWe look forward to you becoming a valued member of our community!`,
-				components: [updatePlayer],
 				embeds: [newPlayer]
 			});
 			return;			
@@ -215,7 +216,7 @@ module.exports = {
 		.setDescription(`Congratulations **<@${message.member.id}>** you have levelled up!`)
 		.addFields(
 			{ name: `Name:`, value: `<@${message.member.id}>` },
-			{ name: `Points:`, value: `${newPoints}` },
+			{ name: `XP:`, value: `${newPoints}` },
 			{ name: 'Level', value: `${newLevel}`, inline: true },
 			)
 		.setImage(playerImage)
@@ -225,42 +226,52 @@ module.exports = {
 		if (scoreLevel > 9) {
 			var score = Math.floor(Math.random() * 200) * 2;
 			levelup.setColor('#2e8f37') //forest green
+			if (roleRank10) await message.member.roles.add(roleRank10).catch((e) => console.log(e))
 		}
 		if (scoreLevel > 19) {
 			var score = Math.floor(Math.random() * 150) * 2;
 			levelup.setColor('DARK_GREEN') //dark green
+			if (roleRank20) await message.member.roles.add(roleRank20).catch((e) => console.log(e))
 		}
 		if (scoreLevel > 29) {
 			var score = Math.floor(Math.random() * 125) * 2;
 			levelup.setColor('#00ff80') //spring green
+			if (roleRank30) await message.member.roles.add(roleRank30).catch((e) => console.log(e))
 		}
 		if (scoreLevel > 39) {
 			var score = Math.floor(Math.random() * 100) * 2;
 			levelup.setColor('#00ffff') //cyan
+			if (roleRank40) await message.member.roles.add(roleRank40).catch((e) => console.log(e))
 		}	
 		if (scoreLevel > 49) {
 			var score = Math.floor(Math.random() * 75) * 2;
 			levelup.setColor('#0080ff') //dodger blue
+			if (roleRank50) await message.member.roles.add(roleRank50).catch((e) => console.log(e))
 		}	
 		if (scoreLevel > 59) {
 			var score = Math.floor(Math.random() * 50) * 2;
 			levelup.setColor('#0000ff') //blue
+			if (roleRank60) await message.member.roles.add(roleRank60).catch((e) => console.log(e))
 		}	
 		if (scoreLevel > 69) {
 			var score = Math.floor(Math.random() * 25) + 1;
 			levelup.setColor('#8000ff') //purple
+			if (roleRank70) await message.member.roles.add(roleRank70).catch((e) => console.log(e))
 		} 
 		if (scoreLevel > 79) {
 			var score = Math.floor(Math.random() * 15) +1;
 			levelup.setColor('#ff0080') //magenta
+			if (roleRank80) await message.member.roles.add(roleRank80).catch((e) => console.log(e))
 		} 
 		if (scoreLevel > 89) {
 			var score = Math.floor(Math.random() * 10) +1;
 			levelup.setColor('#ff0000') //red
+			if (roleRank90) await message.member.roles.add(roleRank90).catch((e) => console.log(e))
 		} 
 		if (scoreLevel > 99) {
 			var score = Math.floor(Math.random() * 5) +1;
 			levelup.setColor('#ffff00') //yellow
+			if (roleRank100) await message.member.roles.add(roleRank100).catch((e) => console.log(e))
 		} 
 
 		let initiallevel = Levels[0].level

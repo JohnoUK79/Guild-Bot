@@ -34,23 +34,23 @@ module.exports = {
 
 		const unknownLevel = new EmbedBuilder()
 		.setColor('#2e8f37')
-		.setTitle(`${guildName} - Rank Card`)
+		.setTitle(`${guildName} - XP Rank Card`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 		.setDescription(`Your Rank **${interaction.member.displayName}**!`)
 		.addFields(
 			{ name: `Name:`, value: `${interaction.member.displayName}` },
-			{ name: `Points:`, value: `${points}` },
+			{ name: `XP:`, value: `${points}` },
 			{ name: 'Level.', value: `${oldlevel}`, inline: true },
 			)
 		.setImage(playerImage)
 		.setTimestamp()
-		.setFooter({ text: `${guildName} - Rank - ${interaction.member.displayName}.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${guildName} - XP Rank - ${interaction.member.displayName}.`, iconURL: `${guildIcon}` });
 
 		const playerLevel = new EmbedBuilder()
 		.setColor('#2e8f37')
-		.setTitle(`${guildName} - Rank Card`)
+		.setTitle(`${guildName} - XP Rank Card`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
@@ -58,13 +58,13 @@ module.exports = {
 		.addFields(
 			{ name: `Name:`, value: `${interaction.member.displayName}` },
 			{ name: `Points:`, value: `${points}` },
-			{ name: 'Level.', value: `${oldlevel}`, inline: true },
+			{ name: 'XP.', value: `${oldlevel}`, inline: true },
 			{ name: 'Last Seen.', value: `${seen}`, inline: true },
 			{ name: 'Last Seen Discord Server.', value: `${seenDiscord}`, inline: true },
 			)
 		.setImage(playerImage)
 		.setTimestamp()
-		.setFooter({ text: `${guildName} - Rank - ${interaction.member.displayName}.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${guildName} - XP Rank - ${interaction.member.displayName}.`, iconURL: `${guildIcon}` });
 		if(!oldlevel) {oldlevel = 0}
 		
 		if (oldlevel > 9) {

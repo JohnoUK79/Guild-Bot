@@ -19,7 +19,7 @@ module.exports = {
         .addStringOption((option) => option
         .setName("role")
         .setDescription("Role to be Provided with Reaction Selected!")
-        .setRequired(true)
+        .setRequired(false)
         ),
 
     async execute(Interaction) {
@@ -28,6 +28,7 @@ module.exports = {
         var guildId = Interaction.guildId
         var channel = Interaction.options.getString('channel');
         var role = Interaction.options.getString('role');
+        if (!role) {role = null}
 
         const welcomeEmbed = new EmbedBuilder()
             .setColor('#0099ff')
@@ -52,8 +53,7 @@ module.exports = {
         let channelDB = channel.replace(/\D+/g, '');
         console.log(roleDB, channelDB)
         welcomeDB = await sql.Execute(`UPDATE settings SET guild_name = '${guildName}', welcome_channel_id = '${channelDB}', welcome_role_id = '${roleDB}', guild_icon = '${guildIcon}' WHERE guild_id = '${guildId}'`)
-        //updatePlayers = await sql.Execute(`UPDATE players SET date_last_known = '${setDate}', discord ='${message.author.id}', discord_server = '${GuildName}' WHERE player_id = ${playerId}`)
-
+        console.log(`Welcome Updated`)
         console.log(welcomeDB)
     },
 };

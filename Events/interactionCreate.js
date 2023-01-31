@@ -42,32 +42,32 @@ module.exports = {
 
         const Top10 = new EmbedBuilder()
 		.setColor('#0099ff')
-		.setTitle(`${GuildName} - Levels Leaderboard`)
+		.setTitle(`${GuildName} - XP Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${GuildName} - Levels Board`, value: `**Name - Level - Points**\n` },
+			{ name: `${GuildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
 			{ name: `Rank 1 :first_place::`, value: `${board[0].discord_username} - ${board[0].level} - ${board[0].points}` },
 			{ name: `Rank 2 :second_place::`, value: `${board[1].discord_username} - ${board[1].level} - ${board[1].points}` },
 			{ name: 'Rank 3 :third_place::', value: `${board[2].discord_username} - ${board[2].level} - ${board[2].points}` },
-			{ name: 'Best of the Rest:', value: `**Rank - Name - Level - Points**\n\n**Rank 4:** ${board[3].discord_username} - ${board[3].level} - ${board[3].points}\n\n**Rank 5:** ${board[4].discord_username} - ${board[4].level} - ${board[4].points}\n\n**Rank 6:** ${board[5].discord_username} - ${board[5].level} - ${board[5].points}\n\n**Rank 7:** ${board[6].discord_username} - ${board[6].level} - ${board[6].points}\n\n**Rank 8:** ${board[7].discord_username} - ${board[7].level} - ${board[7].points}\n\n**Rank 9:** ${board[8].discord_username} - ${board[8].level} - ${board[8].points}\n\n**Rank 10:** ${board[9].discord_username} - ${board[9].level} - ${board[9].points}` },
+			{ name: 'Best of the Rest:', value: `**Rank - Name - Level - XP**\n\n**Rank 4:** ${board[3].discord_username} - ${board[3].level} - ${board[3].points}\n\n**Rank 5:** ${board[4].discord_username} - ${board[4].level} - ${board[4].points}\n\n**Rank 6:** ${board[5].discord_username} - ${board[5].level} - ${board[5].points}\n\n**Rank 7:** ${board[6].discord_username} - ${board[6].level} - ${board[6].points}\n\n**Rank 8:** ${board[7].discord_username} - ${board[7].level} - ${board[7].points}\n\n**Rank 9:** ${board[8].discord_username} - ${board[8].level} - ${board[8].points}\n\n**Rank 10:** ${board[9].discord_username} - ${board[9].level} - ${board[9].points}` },
 
 			)
 		.setImage(`${guildIcon}`) // to be linked to player search gif 
 		.setTimestamp()
-		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${GuildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
 
         const Top20 = new EmbedBuilder()
 		.setColor('#0099ff')
-		.setTitle(`${GuildName} - Levels Leaderboard`)
+		.setTitle(`${GuildName} - XP Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${GuildName} - Levels Board`, value: `**Name - Level - Points**\n` },
+			{ name: `${GuildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
 			{ name: `Rank 11 :`, value: `${board[10].discord_username} - ${board[10].level} - ${board[10].points}` },
 			{ name: `Rank 12 :`, value: `${board[11].discord_username} - ${board[11].level} - ${board[11].points}` },
 			{ name: 'Rank 13 :', value: `${board[12].discord_username} - ${board[12].level} - ${board[12].points}` },
@@ -82,7 +82,7 @@ module.exports = {
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
-		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${GuildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
 
 
         const Top30 = new EmbedBuilder()
@@ -93,7 +93,7 @@ module.exports = {
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${GuildName} - Levels Board`, value: `**Name - Level - Points**\n` },
+			{ name: `${GuildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
 			{ name: `Rank 21 :`, value: `${board[20].discord_username} - ${board[20].level} - ${board[20].points}` },
 			{ name: `Rank 22 :`, value: `${board[21].discord_username} - ${board[21].level} - ${board[21].points}` },
 			{ name: 'Rank 23 :', value: `${board[22].discord_username} - ${board[22].level} - ${board[22].points}` },
@@ -108,17 +108,17 @@ module.exports = {
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
-		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${GuildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
 
         const Top40 = new EmbedBuilder()
 		.setColor('#0099ff')
-		.setTitle(`${GuildName} - Levels Leaderboard`)
+		.setTitle(`${GuildName} - XP Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${GuildName} - Levels Board`, value: `**Name - Level - Points**\n` },
+			{ name: `${GuildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
 			{ name: `Rank 31 :`, value: `${board[30].discord_username} - ${board[30].level} - ${board[30].points}` },
 			{ name: `Rank 32 :`, value: `${board[31].discord_username} - ${board[31].level} - ${board[31].points}` },
 			{ name: 'Rank 33 :', value: `${board[32].discord_username} - ${board[32].level} - ${board[32].points}` },
@@ -133,18 +133,18 @@ module.exports = {
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
-		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${GuildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
 
 
 		const Top50 = new EmbedBuilder()
 		.setColor('#0099ff')
-		.setTitle(`${GuildName} - Levels Leaderboard`)
+		.setTitle(`${GuildName} - XP Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${GuildName} - Levels Board`, value: `**Name - Level - Points**\n` },
+			{ name: `${GuildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
 			{ name: `Rank 41 :`, value: `${board[40].discord_username} - ${board[40].level} - ${board[40].points}` },
 			{ name: `Rank 42 :`, value: `${board[41].discord_username} - ${board[41].level} - ${board[41].points}` },
 			{ name: 'Rank 43 :', value: `${board[42].discord_username} - ${board[42].level} - ${board[42].points}` },
@@ -159,7 +159,7 @@ module.exports = {
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
-		.setFooter({ text: `${GuildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${GuildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
 
 		const playerUpdateEmbed = new EmbedBuilder()
 		.setColor('#0099ff')

@@ -151,7 +151,7 @@ module.exports = {
 		.setFooter({ text: `${guildName}.`, iconURL: `${guildIcon}` });
 
 		if (Levels.length === 0) {
-			console.log("New Member")
+			console.log("First Post")
 			playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
 			warcoins = 1000
 			warchest = 0
@@ -444,5 +444,5 @@ module.exports = {
 													})} 
 													} 
 		}
-		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', last_seen_server = '${guildName}' WHERE discord_id = '${message.author.id}'`)}
+		let result = await sql.Execute (`UPDATE levels SET points = '${newPoints}', level = '${level}', discord_username = '${message.member.displayName}', discord_avatar = '${message.author.displayAvatarURL()}', last_seen_server = '${guildName}' WHERE discord_id = '${message.author.id}'`)}
 	}; 

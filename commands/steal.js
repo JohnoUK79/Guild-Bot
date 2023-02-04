@@ -45,7 +45,7 @@ module.exports = {
 				const victimWallet = victimDB[0].war_coins 
 				if (victimWallet < 1000) {
 				embed
-					.setDescription(`**${interaction.member}**, rob from the Rich & Not The Poor!\n**${victim}** does not have enough **War-Coins**!\nPlease pick a new **Victim**!`)
+					.setDescription(`**${interaction.member}**, Rob from the Rich & Not The Poor!\n**${victim}** does not have enough **War-Coins**!\nPlease pick a new **Victim**!`)
 	
 				return interaction.editReply({ embeds: [embed] })
 				} 

@@ -58,7 +58,7 @@ module.exports = {
 				.setThumbnail(guildIcon)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Mini Warpath`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `${guildName} - War-Economy`, iconURL: `${guildIcon}`});
 
 		if (interaction.options.getSubcommand() === 'balance')
 		{
@@ -69,6 +69,7 @@ module.exports = {
 				.setDescription(`${interaction.member} You have **$${balance} War-Coins** in your **Wallet**!\nYou have **$${bank} War-Coins** in the **War-Chest**!`)
 
 		}
+		
 		else if (interaction.options.getSubcommand() === 'deposit')
 		{
 			const amount = interaction.options.getInteger('dep_amount');
@@ -114,6 +115,7 @@ module.exports = {
 			embed
 				.setDescription(`**Deposit Sucessful**!`)
 			}
+
 		else if (interaction.options.getSubcommand() === 'withdraw')
 		{
 			const amount = interaction.options.getInteger('wdw_amount');
@@ -135,11 +137,19 @@ module.exports = {
 				console.log(err);
 			}
 		}
+
 		else if (interaction.options.getSubcommand() === 'shop')
 		{
 			embed
 				.setDescription(`**Coming Soon**!`)
 		}
+
+		else if (interaction.options.getSubcommand() === 'upgrade')
+		{
+			embed
+				.setDescription(`**Coming Soon**!`)
+		}
+
 		await interaction.editReply({embeds: [embed], ephemeral: false })
 		return;
 	},

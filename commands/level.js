@@ -2,6 +2,7 @@ const sql = require("../config/Database");
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
+	cooldown: 0,
 	data: new SlashCommandBuilder()
 		.setName('level')
 		.setDescription('Check your current Levels Rank!'),

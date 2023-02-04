@@ -70,6 +70,7 @@ const client = new Client({
         Partials.Reaction
       ]
     });
+const commandCooldowns = new Collection();
 
 //Discord Player Setup
 const botJukebox = new Player(client, {
@@ -207,5 +208,6 @@ client.login(token);
 //RPC login
 rpc_client.login({ clientId: CLIENT_ID }).catch(console.error);
 module.exports = {
-    botJukebox: botJukebox
+    botJukebox: botJukebox,
+    commandCooldowns: commandCooldowns
 }

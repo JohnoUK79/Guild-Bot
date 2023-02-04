@@ -1,7 +1,7 @@
 const time = require('../config/timestamp')
 const sql = require("../config/Database");
 const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-
+const ms = require('ms-prettify').default
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
@@ -540,6 +540,21 @@ module.exports = {
         if (!interaction.isChatInputCommand()) return;
     try {
         const command = interaction.client.commands.get(interaction.commandName)
+		const { commandCooldowns } = require('../bot');
+		const t = commandCooldowns.get(`${interaction.user.id}_${interaction.commandName}`) || 0
+		if (Date.now() - t < 0) {
+        const cooldownEmbed = new EmbedBuilder()
+		cooldownEmbed
+			.setColor('#ff5b05')
+			.setThumbnail(guildIcon)
+			.setTimestamp()
+			.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+			.setFooter({ text: `${guildName} - ${interaction.commandName}`, iconURL: `${guildIcon}`})
+			.setDescription(`${interaction.user} you have already used the **${interaction.commandName}** command, you can use the **${interaction.commandName}** command again in **${ms(t - Date.now())}**`);
+		return interaction.reply({ embeds: [cooldownEmbed] })
+		}
+		commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, Date.now() + command.cooldown || 0)
+
         await command.execute(interaction);
         
     } catch (error) {

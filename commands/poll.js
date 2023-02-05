@@ -30,14 +30,14 @@ module.exports = {
         .setDescription("Fourth Option!")
         .setRequired(false)
         ),
-    async execute(Interaction) {
-        guildIcon = Interaction.member.guild.iconURL();
-		guildName = Interaction.member.guild.name
-        const pollTitle = Interaction.options.getString('title');
-        var pollOption1 = Interaction.options.getString('option1');
-        var pollOption2 = Interaction.options.getString('option2');
-        var pollOption3 = Interaction.options.getString('option3');
-        var pollOption4 = Interaction.options.getString('option4');
+    async execute(interaction) {
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
+        const pollTitle = interaction.options.getString('title');
+        var pollOption1 = interaction.options.getString('option1');
+        var pollOption2 = interaction.options.getString('option2');
+        var pollOption3 = interaction.options.getString('option3');
+        var pollOption4 = interaction.options.getString('option4');
 
         if(!pollOption4) {pollOption4 = `Option Not Selected!`}
 
@@ -45,8 +45,8 @@ module.exports = {
             .setColor('#0099ff')
             .setTitle(`${guildName} - Poll!`)
             .setURL('http://www.phfamily.co.uk/')
-            .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
+            .setThumbnail(interaction.user.displayAvatarURL())
+            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**${pollTitle}**`)
             .setThumbnail('http://phfamily.co.uk/img/gifs/Poll.gif')
             .addFields(
@@ -59,7 +59,7 @@ module.exports = {
             .setImage(`http://phfamily.co.uk/img/gifs/Poll.gif`)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Poll!.`, iconURL: `${guildIcon}` });
-        const replied = await Interaction.reply({
+        const replied = await interaction.reply({
 
             ephemeral: false,
             embeds: [pollEmbed],

@@ -176,7 +176,7 @@ module.exports = {
 			var playerImage = Players[0].player_image
 			playerId = Levels[0].player_id
 			updatePlayers = await sql.Execute(`UPDATE players SET date_last_known = '${setDate}', discord ='${message.author.id}', discord_name = '${message.author.username}', discord_server = '${guildName}' WHERE player_id = '${playerId}'`)
-			console.log(message.author.username, updatePlayers.info)
+			console.log(message.author.username, updatePlayers)
 		}
 
 		let roleRank10 = Settings[0].Rank_10

@@ -22,20 +22,20 @@ module.exports = {
         .setRequired(false)
         ),
 
-    async execute(Interaction) {
-        guildIcon = Interaction.member.guild.iconURL();
-		guildName = Interaction.member.guild.name
-        var guildId = Interaction.guildId
-        var channel = Interaction.options.getString('channel');
-        var role = Interaction.options.getString('role');
+    async execute(interaction) {
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
+        var guildId = interaction.guildId
+        var channel = interaction.options.getString('channel');
+        var role = interaction.options.getString('role');
         if (!role) {role = null}
 
         const welcomeEmbed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Welcome Channel & Roles.`)
             .setURL('http://www.phfamily.co.uk/')
-            .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
+            .setThumbnail(interaction.user.displayAvatarURL())
+            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`Welcome Channel & Roles`)
             .setThumbnail('http://phfamily.co.uk/img/gifs/Poll.gif')
             .addFields(
@@ -45,7 +45,7 @@ module.exports = {
             .setImage(`${guildIcon}`)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Welcome Channel & Roles.`, iconURL: `${guildIcon}` });
-            await Interaction.reply({
+            await interaction.reply({
             ephemeral: true,
             embeds: [welcomeEmbed],
         });

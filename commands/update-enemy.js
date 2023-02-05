@@ -27,23 +27,23 @@ module.exports = {
         )),
         
 
-    async execute(Interaction) {
-        guildIcon = Interaction.member.guild.iconURL();
-		guildName = Interaction.member.guild.name
-        let playerStatus = Interaction.options.getString('player-status');
-		const id = parseInt(Interaction.options.getString("player-id"));
-        if(isNaN(id)) return Interaction.reply( {content: `You have entered invalid details, please input a valid User ID!\n**${Interaction.options.getString("player-id")}** is not a Valid user ID!\nAny issues message **<@322100798651760640>**`});
+    async execute(interaction) {
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
+        let playerStatus = interaction.options.getString('player-status');
+		const id = parseInt(interaction.options.getString("player-id"));
+        if(isNaN(id)) return interaction.reply( {content: `You have entered invalid details, please input a valid User ID!\n**${interaction.options.getString("player-id")}** is not a Valid user ID!\nAny issues message **<@322100798651760640>**`});
         Players = await sql.Execute('select * from players where player_id = '+ id +';');
 
-        if (Players.length === 0) return Interaction.reply({ content: `I could not find any player with the ID **${id}**, please check the ID and try again! Any issues messages Genesis or **<@322100798651760640>**.`, ephemeral: false });
+        if (Players.length === 0) return interaction.reply({ content: `I could not find any player with the ID **${id}**, please check the ID and try again! Any issues messages Genesis or **<@322100798651760640>**.`, ephemeral: false });
 
 
         const updateEnemyEmbed = new EmbedBuilder()
             .setColor('#008000')
             .setTitle(`${guildName} - Status Updated`)
             .setURL('http://www.phfamily.co.uk/')
-            .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
+            .setThumbnail(interaction.user.displayAvatarURL())
+            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**Player Status Updated!**`)
             .setThumbnail('http://phfamily.co.uk/img/gifs/Updates.gif')
             .addFields(
@@ -58,10 +58,10 @@ module.exports = {
             if (playerStatus === 'Yes') {updateEnemyEmbed.setColor('#FF0000')}
             if (playerStatus === 'NAP') {updateEnemyEmbed.setColor('#0000FF')}
 
-            await Interaction.reply({
+            await interaction.reply({
             ephemeral: true,
             embeds: [updateEnemyEmbed],
         });
-		let playerStatusDB = await sql.Execute (`UPDATE players SET enemy = '${playerStatus}', date_last_known = '${setDate}', last_seen_by = '${Interaction.member.displayName}' WHERE player_id = '${id}'`)
+		let playerStatusDB = await sql.Execute (`UPDATE players SET enemy = '${playerStatus}', date_last_known = '${setDate}', last_seen_by = '${interaction.member.displayName}' WHERE player_id = '${id}'`)
     },
 };

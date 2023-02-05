@@ -70,15 +70,15 @@ module.exports = {
             .setDescription("Player ID of the player to be looked up!")
             .setRequired(true)
         ),
-    async execute(Interaction) {
-        guildIcon = Interaction.member.guild.iconURL();
-		guildName = Interaction.member.guild.name
-        const id = parseInt(Interaction.options.getString("id"));
-        if(isNaN(id)) return Interaction.reply( {content: `You have entered invalid details, please input a valid User ID!\n**${Interaction.options.getString("id")}** is not a Valid user ID!\nAny issues message **<@322100798651760640>**`});
+    async execute(interaction) {
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
+        const id = parseInt(interaction.options.getString("id"));
+        if(isNaN(id)) return interaction.reply( {content: `You have entered invalid details, please input a valid User ID!\n**${interaction.options.getString("id")}** is not a Valid user ID!\nAny issues message **<@322100798651760640>**`});
         
         Data = await sql.Execute('select * from players where player_id = '+ id +';');
 
-        if (Data.length === 0) return Interaction.reply({ content: `I could not find any player with the ID **${id}**, please check the ID and try again! Any issues messages Genesis or **<@322100798651760640>**.`, ephemeral: false });
+        if (Data.length === 0) return interaction.reply({ content: `I could not find any player with the ID **${id}**, please check the ID and try again! Any issues messages Genesis or **<@322100798651760640>**.`, ephemeral: false });
 
         var lastName = Data[0].last_known_name
         if (!lastName) {
@@ -122,8 +122,8 @@ module.exports = {
             .setColor('#0099ff')
             .setTitle(`${guildName} - Player Database`)
             .setURL('http://www.phfamily.co.uk/player.html')
-            .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
+            .setThumbnail(interaction.user.displayAvatarURL())
+            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(` Player ID: ${Data[0].player_id}`)
             .setThumbnail(`${guildIcon}`)
             .addFields(
@@ -151,8 +151,8 @@ module.exports = {
                 playersearch.setColor('#0000FF')
             }
 
-        Interaction.reply({
-            content: `Hey **${Interaction.member.displayName}**, I have found the following details for **${id}**.`,
+        interaction.reply({
+            content: `Hey **${interaction.member.displayName}**, I have found the following details for **${id}**.`,
             components: [updatePlayer],
             ephemeral: false,
             embeds: [playersearch]

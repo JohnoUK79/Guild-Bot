@@ -21,12 +21,12 @@ module.exports = {
         ),
             
 
-    async execute(Interaction) {
-        var text = Interaction.options.getString('message');
-        var target = Interaction.options.getString('code');
+    async execute(interaction) {
+        var text = interaction.options.getString('message');
+        var target = interaction.options.getString('code');
 
-        guildIcon = Interaction.member.guild.iconURL();
-		guildName = Interaction.member.guild.name
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
 
         const projectId = 'upbeat-glow-372800';
         const {Translate} = require('@google-cloud/translate').v2;
@@ -40,8 +40,8 @@ module.exports = {
             .setColor('#0099ff')
             .setTitle(`${guildName} - Translator`)
             .setURL('http://www.phfamily.co.uk/')
-            .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
+            .setThumbnail(interaction.user.displayAvatarURL())
+            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
             //.setDescription(`**Reaction Role Added!**`)
             .setThumbnail('http://phfamily.co.uk/img/gifs/Poll.gif')
             .addFields(
@@ -51,7 +51,7 @@ module.exports = {
             .setImage(`${guildIcon}`)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Translator.`, iconURL: `${guildIcon}` });
-            await Interaction.reply({
+            await interaction.reply({
             ephemeral: true,
             embeds: [addRole],
         });

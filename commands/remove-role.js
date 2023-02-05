@@ -23,20 +23,20 @@ module.exports = {
         .setRequired(true)
         ),
 
-    async execute(Interaction) {
-        guildIcon = Interaction.member.guild.iconURL();
-		guildName = Interaction.member.guild.name
-        var guildId = Interaction.guildId
-        var message = Interaction.options.getString('message');
-        var emoji = Interaction.options.getString('emoji');
-        var role = Interaction.options.getString('role');
+    async execute(interaction) {
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
+        var guildId = interaction.guildId
+        var message = interaction.options.getString('message');
+        var emoji = interaction.options.getString('emoji');
+        var role = interaction.options.getString('role');
         
         const removeRole = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Reaction Roles`)
             .setURL('http://www.phfamily.co.uk/')
-            .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
+            .setThumbnail(interaction.user.displayAvatarURL())
+            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**Reaction Role Removed!**`)
             .setThumbnail('http://phfamily.co.uk/img/gifs/Poll.gif')
             .addFields(
@@ -47,7 +47,7 @@ module.exports = {
             .setImage(guildIcon)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Reaction Roles.`, iconURL: `${guildIcon}` });
-            await Interaction.reply({
+            await interaction.reply({
 
             ephemeral: true,
             embeds: [removeRole],

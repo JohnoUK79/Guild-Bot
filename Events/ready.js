@@ -57,8 +57,6 @@ module.exports = {
                 })
         })  
 
-    
-
         const invitesRefresh = nodeCron.schedule("0,15,30,45 * * * *", () => {
         console.log("Invite Leaderboard Update")
         const InvitesDB = new Map();

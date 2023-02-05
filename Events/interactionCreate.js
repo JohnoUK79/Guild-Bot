@@ -40,6 +40,31 @@ module.exports = {
 					.setStyle(ButtonStyle.Danger),
 				)
 
+				const upgradeButtons = new ActionRowBuilder()
+				.addComponents(
+					new ButtonBuilder()
+						.setCustomId("bank")
+						.setLabel('War-Chest Upgrade')
+						.setStyle(ButtonStyle.Primary),
+					new ButtonBuilder()
+						.setCustomId("base")
+						.setLabel('Base Upgrade')
+						.setStyle(ButtonStyle.Primary),
+					new ButtonBuilder()
+						.setCustomId("officer")
+						.setLabel('Officer Promotion')
+						.setStyle(ButtonStyle.Success),
+					new ButtonBuilder()
+						.setCustomId("troop")
+						.setLabel('Unit Upgrade')
+						.setStyle(ButtonStyle.Success),
+					new ButtonBuilder()
+						.setCustomId("reset")
+						.setLabel('Reset Mini Warpath Profile!')
+						.setStyle(ButtonStyle.Danger),
+					)
+	
+
         const Top10 = new EmbedBuilder()
 		.setColor('#0099ff')
 		.setTitle(`${GuildName} - XP Leaderboard`)
@@ -179,6 +204,61 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: `${GuildName} - Player Updated.`, iconURL: `${guildIcon}` });
 
+		let upgradeEmbed = new EmbedBuilder();
+		upgradeEmbed
+			.setColor('#ff5b05')
+			.setThumbnail(guildIcon)
+			.setTimestamp()
+			.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+
+		//Mini Warpath Upgrade Buttons
+		if (interaction.customId === 'bank') {
+			guildIcon = interaction.member.guild.iconURL();
+			guildName = interaction.member.guild.name	
+			const wallet = Level[0].war_coins
+			const bank = Level[0].war_chest
+			const bankLevel = Level[0].chest_level
+			const cost = (bankLevel + 1) * 10000
+			const upgradeBank = new ActionRowBuilder()
+				.addComponents(
+					new ButtonBuilder()
+						.setCustomId("buybank")
+						.setLabel('Upgrade')
+						.setStyle(ButtonStyle.Success),
+					new ButtonBuilder()
+						.setCustomId("cancel")
+						.setLabel('Cancel')
+						.setStyle(ButtonStyle.Danger),
+				)
+			upgradeEmbed
+				.setDescription(`**Confirm the upgrade your War-Chest**?`)
+				.addFields(
+					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+					{ name: `Current Level:`, value: `${bankLevel}`, inline: true }, 
+					{ name: `Upgrade Cost:`, value: `$${cost}`, inline: true },
+				)
+				.setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
+			return interaction.update({embeds: [upgradeEmbed], components: [upgradeBank]})
+		}
+
+
+
+
+
+		//Cancel Upgrades
+		if (interaction.customId === 'cancel') {
+			const wallet = Level[0].war_coins
+			const bank = Level[0].war_chest
+			upgradeEmbed
+				.setDescription(`**What would you like to upgrade**?`)
+				.addFields(
+					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+				)
+			.setFooter({ text: `${GuildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
+			return interaction.update({embeds: [upgradeEmbed], components: [upgradeButtons]})
+		}		
 		//Dashboard Reports
 		if (interaction.customId === 'Reports') {
 			return interaction.reply({
@@ -543,6 +623,7 @@ module.exports = {
 		const { commandCooldowns } = require('../bot');
 		const t = commandCooldowns.get(`${interaction.user.id}_${interaction.commandName}`) || 0
 		if (Date.now() - t < 0) {
+		GuildName = interaction.guild.name
         const cooldownEmbed = new EmbedBuilder()
 		cooldownEmbed
 			.setColor('#ff5b05')

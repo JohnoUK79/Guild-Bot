@@ -8,17 +8,17 @@ module.exports = {
         .setDescription("Get help with using the server Guild Bot"),
 
 
-    async execute(Interaction) {
-        guildIcon = Interaction.member.guild.iconURL();
-		guildName = Interaction.member.guild.name
-        guildId = Interaction.guildId
+    async execute(interaction) {
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
+        guildId = interaction.guildId
 
         const helpEmbed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Help Menu`)
             .setURL('http://www.phfamily.co.uk/')
-            .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true }), url: 'https://www.buymeacoffee.com/johnouk79' })
+            .setThumbnail(interaction.user.displayAvatarURL())
+            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true }), url: 'https://www.buymeacoffee.com/johnouk79' })
             .setDescription(`**${guildName} - Bot Help!**`)
             .setThumbnail(`${guildIcon}`)
             .addFields(
@@ -45,7 +45,7 @@ module.exports = {
             .setImage(`${guildIcon}`)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Bot Help!.`, iconURL: `${guildIcon}` });
-            await Interaction.reply({
+            await interaction.reply({
             ephemeral: false,
             embeds: [helpEmbed],
         });

@@ -70,27 +70,27 @@ module.exports = {
             .setRequired(false)
         ),
 
-    async execute(Interaction) {
-        guildIcon = Interaction.member.guild.iconURL();
-		guildName = Interaction.member.guild.name
-        var guildId = Interaction.guildId
-        var level10 = Interaction.options.getString('rank10');
-        var level20 = Interaction.options.getString('rank20');
-        var level30 = Interaction.options.getString('rank30');
-        var level40 = Interaction.options.getString('rank40');
-        var level50 = Interaction.options.getString('rank50');
-        var level60 = Interaction.options.getString('rank60');
-        var level70 = Interaction.options.getString('rank70');
-        var level80 = Interaction.options.getString('rank80');
-        var level90 = Interaction.options.getString('rank90');
-        var level100 = Interaction.options.getString('rank100');
+    async execute(interaction) {
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
+        var guildId = interaction.guildId
+        var level10 = interaction.options.getString('rank10');
+        var level20 = interaction.options.getString('rank20');
+        var level30 = interaction.options.getString('rank30');
+        var level40 = interaction.options.getString('rank40');
+        var level50 = interaction.options.getString('rank50');
+        var level60 = interaction.options.getString('rank60');
+        var level70 = interaction.options.getString('rank70');
+        var level80 = interaction.options.getString('rank80');
+        var level90 = interaction.options.getString('rank90');
+        var level100 = interaction.options.getString('rank100');
 
         const addRanks = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Set Ranks`)
             .setURL('http://www.phfamily.co.uk/')
-            .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
+            .setThumbnail(interaction.user.displayAvatarURL())
+            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**Levels Rank Roles Added!**`)
             .setThumbnail('http://phfamily.co.uk/img/gifs/Poll.gif')
             .addFields(
@@ -108,7 +108,7 @@ module.exports = {
             .setImage(`${guildName}`)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Rank Roles.`, iconURL: `${guildIcon}` });
-            await Interaction.reply({
+            await interaction.reply({
 
             ephemeral: true,
             embeds: [addRanks],

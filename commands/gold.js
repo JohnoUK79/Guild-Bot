@@ -35,16 +35,16 @@ module.exports = {
 				.setDescription('date must be MM/DD/YYYY or MM/DD/YY')
 				.setRequired(true)
 			),
-	async execute(Interaction) {
+	async execute(interaction) {
 			const ban = require('../data/ban');
 			const servers = require('../data/servers');
-			const server = Interaction.guild.id //need guild ID
-			const userID = Interaction.user.id //need user ID
-			const channelID = Interaction.channelId //Need channel ID
+			const server = interaction.guild.id //need guild ID
+			const userID = interaction.user.id //need user ID
+			const channelID = interaction.channelId //Need channel ID
 			if( await ban.banned(userID, channelID) ) return;
 			
-			const cityName = Interaction.options.getString('city');
-			const when = Interaction.options.getString('date');
+			const cityName = interaction.options.getString('city');
+			const when = interaction.options.getString('date');
 			const whenDate = new Date(when);
 
 			const isValidDate = date => date instanceof Date && !isNaN(date);
@@ -61,13 +61,13 @@ module.exports = {
 			};
 
 			if(!isValidDate(whenDate)) {
-				Interaction.reply( {content: 'Date must be in the format MM/DD/YYYY', emphemeral: true});
+				interaction.reply( {content: 'Date must be in the format MM/DD/YYYY', emphemeral: true});
 			}
 			else {
 			const doY = dayOfYear(whenDate);
 			const col = doY % 3;
 			const camp = campName[CITIESGOLD[cityName][col]];
-				Interaction.reply ( { content: `Hey <@!${userID}>!\nGold coupon in ${cityName} for the ${when} is **${camp}**`});
+				interaction.reply ( { content: `Hey <@!${userID}>!\nGold coupon in ${cityName} for the ${when} is **${camp}**`});
 			}
 				}}
 

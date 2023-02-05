@@ -17,16 +17,16 @@ module.exports = {
             option.setName('date')
             .setDescription('date must be MM/DD/YYYY or MM/DD/YY')
             .setRequired(true)),
-          async execute(Interaction) {
+          async execute(interaction) {
           const ban = require('../data/ban');
 					const servers = require('../data/servers');
-					const server = Interaction.guild.id //need guild ID
-					const userID = Interaction.user.id //need user ID
-					const channelID = Interaction.channelId //Need channel ID
+					const server = interaction.guild.id //need guild ID
+					const userID = interaction.user.id //need user ID
+					const channelID = interaction.channelId //Need channel ID
 					if( await ban.banned(userID, channelID) ) return;
 					
-                    const campName = Interaction.options.getString('camp');
-                    const when = Interaction.options.getString('date');
+                    const campName = interaction.options.getString('camp');
+                    const when = interaction.options.getString('date');
                     const whenDate = new Date(when);
                     
                     const isValidDate = date => date instanceof Date && !isNaN(date);
@@ -41,7 +41,7 @@ module.exports = {
                     };
                     
                     if(!isValidDate(whenDate)) {
-                      await Interaction.reply ({content: `date must be MM/DD/YYYY`, empheral: false } );
+                      await interaction.reply ({content: `date must be MM/DD/YYYY`, empheral: false } );
                     }
                     else {
                       const doY = dayOfYear(whenDate);
@@ -57,7 +57,7 @@ module.exports = {
                                                   .map( cO => cO.city )
                                                   .join(', ');
                       
-                      await Interaction.reply ({content: [
+                      await interaction.reply ({content: [
                           `Hey <@!${userID}>!`, 
                           `Cities to open ${campAbv2Name[campName]}'s golden coupon the ${when} are: ${citiesForCampAtDate}`
                         ].join('\n')

@@ -1,4 +1,4 @@
-const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const sql = require("../config/Database");
 
 module.exports = {
@@ -58,15 +58,19 @@ module.exports = {
 				.setThumbnail(guildIcon)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - War-Economy`, iconURL: `${guildIcon}`});
 
 		if (interaction.options.getSubcommand() === 'balance')
 		{
 			const balance = Economy[0].war_coins
 			const bank = Economy[0].war_chest
-			console.log(balance, bank)
 			embed
+			
 				.setDescription(`${interaction.member} You have **$${balance} War-Coins** in your **Wallet**!\nYou have **$${bank} War-Coins** in the **War-Chest**!`)
+				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`})
+				.addFields(
+					{ name: `War-Coins:`, value: `$${balance}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+				);
 
 		}
 		
@@ -81,12 +85,14 @@ module.exports = {
 			if (amount <= 0) {
 			embed
 				.setDescription(`${interaction.member} are you **Broke**? Try adding some **War-Coins** to the **War-Chest**!`)
+				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
 			return interaction.editReply({ embeds: [embed] })
 			}
 			
 			if (amount + bank > bankMax) {
 			embed
 				.setDescription(`${interaction.member} your **War-Chest** can't hold that many **War-Coins**, try upgrading your **War-Chest** to hold more!\nYou have space for **$${bankMax - bank}** **War-Coins** in your **War-Chest**!`)
+				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
 			return interaction.editReply({ embeds: [embed] })
 			}
 
@@ -94,6 +100,7 @@ module.exports = {
 				if (amount > wallet) {
 				embed
 					.setDescription(`${interaction.member} You do not have enough **War-Coins** for that Deposit!\nYou have **$${wallet} War-Coins** available!`)
+					.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
 				return interaction.editReply({ embeds: [embed] });
 				} 
 
@@ -102,9 +109,11 @@ module.exports = {
 
 				embed
 					.addFields(
-						{ name: `War-Coins:`, value: ` ${newWallet}`, inline: true }, 
-						{ name: `War-Chest:`, value: `${newBank}`, inline: true },
+						{ name: `War-Coins:`, value: `$${newWallet}`, inline: true }, 
+						{ name: `War-Chest:`, value: `$${newBank}`, inline: true },
 					)
+					.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
+
 				depositUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}', war_chest = '${newBank}' WHERE discord_id = ${interaction.member.id}`)
 
 			} catch (err) {
@@ -128,9 +137,11 @@ module.exports = {
 				embed
 					.setDescription(`**Withdrawal Sucessful**!`)
 					.addFields(
-						{ name: `War-Coins:`, value: ` ${newWallet}`, inline: true }, 
-						{ name: `War-Chest:`, value: `${newBank}`, inline: true },
+						{ name: `War-Coins:`, value: `$${newWallet}`, inline: true }, 
+						{ name: `War-Chest:`, value: `$${newBank}`, inline: true },
 					)
+					.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
+
 				withdrawUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}', war_chest = '${newBank}' WHERE discord_id = ${interaction.member.id}`)
 
 			} catch (err) {
@@ -142,12 +153,45 @@ module.exports = {
 		{
 			embed
 				.setDescription(`**Coming Soon**!`)
+				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
 		}
 
 		else if (interaction.options.getSubcommand() === 'upgrade')
 		{
+		const upgradeButtons = new ActionRowBuilder()
+			.addComponents(
+                new ButtonBuilder()
+                    .setCustomId("bank")
+					.setLabel('War-Chest Upgrade')
+					.setStyle(ButtonStyle.Primary),
+				new ButtonBuilder()
+					.setCustomId("base")
+					.setLabel('Base Upgrade')
+					.setStyle(ButtonStyle.Primary),
+				new ButtonBuilder()
+					.setCustomId("officer")
+					.setLabel('Officer Promotion')
+					.setStyle(ButtonStyle.Success),
+				new ButtonBuilder()
+					.setCustomId("troop")
+					.setLabel('Unit Upgrade')
+					.setStyle(ButtonStyle.Success),
+				new ButtonBuilder()
+					.setCustomId("reset")
+					.setLabel('Reset Mini Warpath Profile!')
+					.setStyle(ButtonStyle.Danger),
+				)
+		const wallet = Economy[0].war_coins
+		const bank = Economy[0].war_chest
 			embed
-				.setDescription(`**Coming Soon**!`)
+				.setDescription(`**What would you like to upgrade**?`)
+				.addFields(
+					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+				)
+				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
+				
+		return interaction.editReply({embeds: [embed], components: [upgradeButtons]})
 		}
 
 		await interaction.editReply({embeds: [embed], ephemeral: false })

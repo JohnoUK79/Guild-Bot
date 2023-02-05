@@ -9,12 +9,12 @@ module.exports = {
         .setName("dashboard")
         .setDescription("Update the Player Database!"),
 
-    async execute(Interaction) {
-        //Interaction.deferReply({ empheral: true, fetchReply: true, content: 'waiting...'})
-        guildIcon = Interaction.member.guild.iconURL();
-		guildName = Interaction.member.guild.name
-        var channel = Interaction.channel.name
-        var guildId = Interaction.guildId
+    async execute(interaction) {
+        //interaction.deferReply({ empheral: true, fetchReply: true, content: 'waiting...'})
+        guildIcon = interaction.member.guild.iconURL();
+		guildName = interaction.member.guild.name
+        var channel = interaction.channel.name
+        var guildId = interaction.guildId
 
 		const mainDashboardButtons =  new ActionRowBuilder()
 				.addComponents(
@@ -33,8 +33,8 @@ module.exports = {
             .setColor('#0099ff')
             .setTitle(`${guildName} - Database Dashboard`)
             .setURL('http://www.phfamily.co.uk/')
-            .setThumbnail(Interaction.user.displayAvatarURL())
-            .setAuthor({ name: Interaction.member.displayName, iconURL: Interaction.user.displayAvatarURL({ dynamic: true })})
+            .setThumbnail(interaction.user.displayAvatarURL())
+            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**Bot Admin Dashboard!**`)
             .setThumbnail(guildIcon)
             .addFields(
@@ -45,7 +45,7 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: `${guildName} - Database Dashboard.`, iconURL: `${guildIcon}` });
             
-            await Interaction.reply({
+            await interaction.reply({
             ephemeral: true,
             embeds: [mainDashboard],
             components: [mainDashboardButtons]

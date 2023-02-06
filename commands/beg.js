@@ -4,7 +4,7 @@ const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
 
 module.exports = {
-    cooldown: 3600000,
+    cooldown: 900000,
     data: new SlashCommandBuilder()
         //.setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
         .setName("beg")
@@ -30,7 +30,11 @@ module.exports = {
 			begUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
 
 			embed
-				.setDescription(`${interaction.member} You sucessfully **Begged $${randomNumber} War-Coins**!\nYou now have **$${newWallet} War-Coins!**`)
+				.setDescription(`${interaction.member} You sucessfully **Begged $${randomNumber} War-Coins**!`)
+				.addFields(
+					{ name: `War-Coins:`, value: `$${newWallet}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+				)
 		return interaction.reply({ embeds: [embed] });
 			} 
 		}

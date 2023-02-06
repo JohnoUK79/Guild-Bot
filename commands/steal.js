@@ -4,7 +4,7 @@ const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
 
 module.exports = {
-    cooldown: 3600000,
+    cooldown: 1800000,
     data: new SlashCommandBuilder()
         //.setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
         .setName("steal")

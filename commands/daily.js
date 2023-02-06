@@ -4,7 +4,7 @@ const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
 
 module.exports = {
-    cooldown: 43200000,
+    cooldown: 28800000,
     data: new SlashCommandBuilder()
         //.setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
         .setName("daily")
@@ -26,11 +26,14 @@ module.exports = {
 			const bank = Economy[0].war_chest
 			const randomNumber = Math.floor(Math.random() * 5000) + 1;
 			const newWallet = wallet + randomNumber;
-			console.log(wallet, bank, randomNumber, newWallet)
 			dailyUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
 
 			embed
-				.setDescription(`${interaction.member} You sucessfully claimed **$${randomNumber} War-Coins** as a Daily Bonus for being Active!\nYou now have **$${newWallet} War-Coins!**`)
+				.setDescription(`${interaction.member} You sucessfully claimed **$${randomNumber} War-Coins** as a **Daily Bonus** for being **Active**!`)
+				.addFields(
+					{ name: `War-Coins:`, value: `$${newWallet}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+				)
 		return interaction.reply({ embeds: [embed] });
 			} 
 		}

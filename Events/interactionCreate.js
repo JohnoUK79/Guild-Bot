@@ -15,7 +15,28 @@ module.exports = {
 		Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
 		var playerLevel = Level[0].level
 		if (playerLevel === null) {var playerLevel = 0}
-
+		const upgradeBank = new ActionRowBuilder()
+		.addComponents(
+			new ButtonBuilder()
+				.setCustomId("buybank")
+				.setLabel('Upgrade')
+				.setStyle(ButtonStyle.Success),
+			new ButtonBuilder()
+				.setCustomId("cancel")
+				.setLabel('Cancel')
+				.setStyle(ButtonStyle.Danger),
+		)
+		const upgradeBase = new ActionRowBuilder()
+		.addComponents(
+			new ButtonBuilder()
+				.setCustomId("buybase")
+				.setLabel('Upgrade')
+				.setStyle(ButtonStyle.Success),
+			new ButtonBuilder()
+				.setCustomId("cancel")
+				.setLabel('Cancel')
+				.setStyle(ButtonStyle.Danger),
+		)
         const Levels = new ActionRowBuilder()
 			        .addComponents(
                 new ButtonBuilder()
@@ -204,7 +225,7 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: `${GuildName} - Player Updated.`, iconURL: `${guildIcon}` });
 
-		let upgradeEmbed = new EmbedBuilder();
+		const upgradeEmbed = new EmbedBuilder();
 		upgradeEmbed
 			.setColor('#ff5b05')
 			.setThumbnail(guildIcon)
@@ -219,19 +240,9 @@ module.exports = {
 			const bank = Level[0].war_chest
 			const bankLevel = Level[0].chest_level
 			const cost = (bankLevel + 1) * 10000
-			const upgradeBank = new ActionRowBuilder()
-				.addComponents(
-					new ButtonBuilder()
-						.setCustomId("buybank")
-						.setLabel('Upgrade')
-						.setStyle(ButtonStyle.Success),
-					new ButtonBuilder()
-						.setCustomId("cancel")
-						.setLabel('Cancel')
-						.setStyle(ButtonStyle.Danger),
-				)
+
 			upgradeEmbed
-				.setDescription(`**Confirm the upgrade your War-Chest**?`)
+				.setDescription(`**${interaction.member}, Confirm the upgrade your War-Chest**?`)
 				.addFields(
 					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
 					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
@@ -242,6 +253,93 @@ module.exports = {
 			return interaction.update({embeds: [upgradeEmbed], components: [upgradeBank]})
 		}
 
+		if (interaction.customId === 'base') {
+			guildIcon = interaction.member.guild.iconURL();
+			guildName = interaction.member.guild.name	
+			const wallet = Level[0].war_coins
+			const bank = Level[0].war_chest
+			const baseLevel = Level[0].base_level
+			const cost = (baseLevel + 1) * 25000
+
+			upgradeEmbed
+				.setDescription(`**${interaction.member}, Confirm the upgrade your Base**?`)
+				.addFields(
+					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+					{ name: `Current Level:`, value: `${baseLevel}`, inline: true }, 
+					{ name: `Upgrade Cost:`, value: `$${cost}`, inline: true },
+				)
+				.setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
+			return interaction.update({embeds: [upgradeEmbed], components: [upgradeBase]})
+		}
+
+		if (interaction.customId === 'buybank') {
+			guildIcon = interaction.member.guild.iconURL();
+			guildName = interaction.member.guild.name	
+			const wallet = Level[0].war_coins
+			const bank = Level[0].war_chest
+			const bankLevel = Level[0].chest_level
+			const cost = (bankLevel + 1) * 10000
+			if (cost > wallet) {
+				console.log(`No Money`),
+				upgradeEmbed
+				.setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${cost - wallet} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
+				.addFields(
+					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+					{ name: `Current Level:`, value: `${bankLevel}`, inline: true }, 
+					{ name: `Upgrade Cost:`, value: `$${cost}`, inline: true },
+				)
+			return interaction.update({embeds: [upgradeEmbed], components: [upgradeBank]})	
+			}
+			const newWallet = wallet - cost
+			const newBank = bankLevel + 1
+			upgradeEmbed
+				.setDescription(`**${interaction.member}, War-Chest Upgrade Successful**`)
+				.addFields(
+					{ name: `War-Coins:`, value: `$${newWallet}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+					{ name: `New Level:`, value: `${newBank}`, inline: true }, 
+				)
+				.setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
+		const bankUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, chest_level = '${newBank}' WHERE discord_id = '${interaction.member.id}'`)
+		console.log(bankUpgrade)
+		return interaction.update({embeds: [upgradeEmbed], components: [upgradeButtons]})	
+		}
+
+		if (interaction.customId === 'buybase') {
+			guildIcon = interaction.member.guild.iconURL();
+			guildName = interaction.member.guild.name	
+			const wallet = Level[0].war_coins
+			const bank = Level[0].war_chest
+			const baseLevel = Level[0].base_level
+			const cost = (baseLevel + 1) * 25000
+			if (cost > wallet) {
+				console.log(`No Money`),
+				upgradeEmbed
+				.setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${cost - wallet} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
+				.addFields(
+					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+					{ name: `Current Level:`, value: `${baseLevel}`, inline: true }, 
+					{ name: `Upgrade Cost:`, value: `$${cost}`, inline: true },
+				)
+			return interaction.update({embeds: [upgradeEmbed], components: [upgradeBase]})	
+			}
+			const newWallet = wallet - cost
+			const newBase = baseLevel + 1
+			upgradeEmbed
+				.setDescription(`**${interaction.member}, Base Upgrade Successful**`)
+				.addFields(
+					{ name: `War-Coins:`, value: `$${newWallet}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+					{ name: `New Level:`, value: `${newBase}`, inline: true }, 
+				)
+				.setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
+		const baseUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, base_level = '${newBase}' WHERE discord_id = '${interaction.member.id}'`)
+		console.log(baseUpgrade)
+		return interaction.update({embeds: [upgradeEmbed], components: [upgradeButtons]})	
+		}
 
 
 
@@ -251,7 +349,7 @@ module.exports = {
 			const wallet = Level[0].war_coins
 			const bank = Level[0].war_chest
 			upgradeEmbed
-				.setDescription(`**What would you like to upgrade**?`)
+				.setDescription(`**${interaction.member}, What would you like to upgrade**?`)
 				.addFields(
 					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
 					{ name: `War-Chest:`, value: `$${bank}`, inline: true },

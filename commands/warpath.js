@@ -3,8 +3,8 @@ const sql = require("../config/Database");
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('war-economy')
-		.setDescription('Fund your Warpath Empire!')
+		.setName('warpath')
+		.setDescription('Build your Mini Warpath Empire!')
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('balance')
@@ -63,9 +63,7 @@ module.exports = {
 		{
 			const balance = Economy[0].war_coins
 			const bank = Economy[0].war_chest
-			embed
-			
-				.setDescription(`${interaction.member} You have **$${balance} War-Coins** in your **Wallet**!\nYou have **$${bank} War-Coins** in the **War-Chest**!`)
+			embed			
 				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`})
 				.addFields(
 					{ name: `War-Coins:`, value: `$${balance}`, inline: true }, 
@@ -194,7 +192,7 @@ module.exports = {
 		return interaction.editReply({embeds: [embed], components: [upgradeButtons]})
 		}
 
-		await interaction.editReply({embeds: [embed], ephemeral: false })
+		await interaction.editReply({embeds: [embed] })
 		return;
 	},
 };

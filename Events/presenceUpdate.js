@@ -5,6 +5,7 @@ const sql = require(`../config/Database`)
 module.exports = {
     name: 'presenceUpdate',
     async execute(oldPresence, newPresence) {
+        console.log('Prescence Update', oldPresence, newPresence)
         // if (oldPresence)
         //     //console.log('Presence Change:', (setDate), 'Server:', newPresence.guild.name, 'User:', newPresence.member.displayName, 'From:', oldPresence.status ?? 'No Prior', 'To:', newPresence.status),
         //     oldPresenceUpdate = sql.Execute(`INSERT INTO presence (date, guild_name, member_name, old_presence, new_presence) VALUES ('${setDate}', "${newPresence.guild.name}","${newPresence.member.displayName}","${oldPresence.status}","${newPresence.status}")`)

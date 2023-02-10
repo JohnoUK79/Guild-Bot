@@ -4,6 +4,6 @@ module.exports = {
     async execute(guild) {
         const { invites } = require('./ready')
         invites.delete(guild.id);
-        console.log(`Guild Deleted:\n${guild}`)
+        console.log('Guild Deleted', guild)
     }
 };

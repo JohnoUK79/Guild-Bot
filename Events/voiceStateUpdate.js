@@ -4,6 +4,7 @@ const sql = require(`../config/Database`)
 module.exports = {
     name: 'voiceStateUpdate',
     async execute(oldState, newState) {
+        console.log('Voice State Update', newState, oldState)
         settings = await sql.Execute(`SELECT * FROM settings where guild_id = '${oldState.guild.id}'`)
         let guildLogo = settings[0].guild_icon
         var sendChannel = newState.channelId

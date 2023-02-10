@@ -5,7 +5,7 @@ const ms = require('ms-prettify').default
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
-
+		console.log('InteractionCreate', interaction)
 		guildIcon = interaction.member.guild.iconURL();
 		const setDate = time.default()
 		GuildName = interaction.guild.name

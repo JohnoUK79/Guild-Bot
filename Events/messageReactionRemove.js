@@ -4,6 +4,7 @@ module.exports = {
     class:'extends',
     name: 'messageReactionRemove',
     async execute(messageReaction, user) { 
+        console.log('Message Reaction Remove', messageReaction, user)
         const { message, emoji } = messageReaction;
         const member = message.guild.members.cache.get(user.id);
         let userAddRole = user.id         

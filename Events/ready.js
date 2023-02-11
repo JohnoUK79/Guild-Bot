@@ -10,7 +10,7 @@ module.exports = {
     name: 'ready',
     once: true,
     async execute(client, commands) {    
-        console.log('Ready', client, commands) 
+        //console.log('Ready', client, commands) 
         console.log(`${setDate} - Logged in as - ${client.user.tag}`);
         const rest = new REST({ version: '10' }).setToken(token);
         await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands }) //Global Commands

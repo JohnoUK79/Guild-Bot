@@ -4,7 +4,7 @@ module.exports = {
     once: true,
 
     async execute(guild) {
-        console.log('Guild Create', guild)
+        //console.log('Guild Create', guild)
         console.log("BOT Joined Server")
         const { invites } = require('./ready')
         // We've been added to a new Guild. Let's fetch all the invites, and save it to our cache

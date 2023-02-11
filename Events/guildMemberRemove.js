@@ -4,7 +4,7 @@ const sql = require(`../config/Database`)
 module.exports = {
     name: "guildMemberRemove",
     async execute(member) {
-        console.log('Guild Member Remove', member)
+        //console.log('Guild Member Remove', member)
         console.log("Member Left")
         await member.fetch();
         if (member.partial) {

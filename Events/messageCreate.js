@@ -7,7 +7,7 @@ module.exports = {
 	class: 'extends',
 	name: 'messageCreate',
 	async execute(message) {
-		console.log('Message Create', message)
+		//console.log('Message Create', message)
 		//DM Replies
 		if (message.author.bot === true) {
 			return;}

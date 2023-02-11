@@ -4,7 +4,7 @@ const sql = require(`../config/Database`)
 module.exports = {
     name: 'inviteCreate',
     async execute(invite) {
-        console.log('Invite Create', invite)
+        //console.log('Invite Create', invite)
         const { invites } = require('./ready')
         invites.get(invite.guild.id).set(invite.code, invite.uses);
 

@@ -160,11 +160,11 @@ module.exports = {
 			.addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-					.setLabel('War-Chest Upgrade')
+					.setLabel('War-Chest')
 					.setStyle(ButtonStyle.Primary),
 				new ButtonBuilder()
 					.setCustomId("base")
-					.setLabel('Base Upgrade')
+					.setLabel('War-Base')
 					.setStyle(ButtonStyle.Primary),
 				new ButtonBuilder()
 					.setCustomId("officer")
@@ -176,8 +176,8 @@ module.exports = {
 					.setStyle(ButtonStyle.Success),
 				new ButtonBuilder()
 					.setCustomId("reset")
-					.setLabel('Reset Mini Warpath Profile!')
-					.setStyle(ButtonStyle.Danger),
+					.setLabel('Profile')
+					.setStyle(ButtonStyle.Secondary),
 				)
 		const wallet = Economy[0].war_coins
 		const bank = Economy[0].war_chest

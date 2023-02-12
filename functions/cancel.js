@@ -9,24 +9,24 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('War-Chest Upgrade')
+                    .setLabel('War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('Base Upgrade')
+                    .setLabel('War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Officer Promotion')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Unit Upgrade')
+                    .setLabel('Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("reset")
-                    .setLabel('Reset Mini Warpath Profile!')
-                    .setStyle(ButtonStyle.Danger),
+                    .setLabel('Profile')
+                    .setStyle(ButtonStyle.Secondary),
                 )
 		const upgradeEmbed = new EmbedBuilder();
 		upgradeEmbed

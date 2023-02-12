@@ -20,7 +20,28 @@ module.exports = {
         const wallet = Level[0].war_coins
         const bank = Level[0].war_chest
         const baseLevel = Level[0].base_level
+        const bankLevel = Level[0].chest_level
         const cost = (baseLevel + 1) * 25000
+        if (baseLevel > bankLevel ) {
+            console.log(`Chest Upgrade Needed`),
+            upgradeBaseEmbed
+                .setColor('#ff5b05')
+                .setThumbnail(guildIcon)
+                .setTimestamp()
+                .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                .setDescription(`${interaction.member}, You need to upgrade your **War-Chest** for this upgrade.`)
+                .addFields(
+                        { name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
+                        { name: `War-Chest:`, value: `$${bank}`, inline: true },
+                        { name: `Base Level:`, value: `${baseLevel}`, inline: true },
+                        { name: `Bank Level:`, value: `${bankLevel}`, inline: true }, 
+                    )
+                .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
+
+        return interaction.update({embeds: [upgradeBaseEmbed], components: [upgradeBaseButtons]})
+        }
+
+
         if (cost > wallet) {
             console.log(`No Money`),
             upgradeBaseEmbed
@@ -41,6 +62,9 @@ module.exports = {
         const newWallet = wallet - cost
         const newBase = baseLevel + 1
         upgradeBaseEmbed
+            .setColor('#ff5b05')
+            .setThumbnail(guildIcon)
+            .setTimestamp()
             .setDescription(`**${interaction.member}, Base Upgrade Successful**`)
             .addFields(
                 { name: `War-Coins:`, value: `$${newWallet}`, inline: true }, 

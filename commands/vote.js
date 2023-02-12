@@ -32,7 +32,6 @@ module.exports = {
             .addFields(
                 { name: `Description`, value: `${voteDescription}` },
             )
-            .setImage(`http://phfamily.co.uk/img/gifs/Vote.gif`)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Vote.`, iconURL: `${guildIcon}` });
         const replied = await interaction.reply({

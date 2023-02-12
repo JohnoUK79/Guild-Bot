@@ -56,7 +56,6 @@ module.exports = {
                 { name: `❎`, value: `${pollOption4}` },
 
             )
-            .setImage(`http://phfamily.co.uk/img/gifs/Poll.gif`)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Poll!.`, iconURL: `${guildIcon}` });
         const replied = await interaction.reply({

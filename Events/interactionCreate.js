@@ -2,14 +2,7 @@ const time = require('../config/timestamp')
 const sql = require("../config/Database");
 const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const ms = require('ms-prettify').default
-const { buyBank } = require('../functions/buyBank')
-const { buyBase } = require('../functions/buyBase')
-const { chestUpgrade } = require('../functions/chestUpgrade')
-const { baseUpgrade } = require('../functions/baseUpgrade');
-const { cancel } = require('../functions/cancel');
-const { buyOfficer } = require('../functions/buyOfficer');
-const { officerUpgrade } = require('../functions/officerUpgrade');
-const { officerSelect } = require('../functions/officerSelect');
+const { buyBank, buyBase, chestUpgrade, baseUpgrade, cancel, buyOfficer, officerUpgrade, officerSelect} = require('../functions/warpathFunctions')
 
 module.exports = {
     name: 'interactionCreate',

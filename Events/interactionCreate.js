@@ -7,6 +7,8 @@ const { buyBase } = require('../functions/buyBase')
 const { chestUpgrade } = require('../functions/chestUpgrade')
 const { baseUpgrade } = require('../functions/baseUpgrade');
 const { cancel } = require('../functions/cancel');
+const { buyOfficer } = require('../functions/buyOfficer');
+const { officerUpgrade } = require('../functions/officerUpgrade');
 
 module.exports = {
     name: 'interactionCreate',
@@ -191,19 +193,29 @@ module.exports = {
 		chestUpgrade(interaction)
 		} catch (err) {console.log(err)}
 		}
-		if (interaction.customId === 'base') {
-		try {
-		baseUpgrade(interaction)
-		} catch (err) {console.log(err)}
-		}
 		if (interaction.customId === 'buybank') {
 		try {
 		buyBank(interaction)
 		} catch (err) {console.log(err)}
 		}
+		if (interaction.customId === 'base') {
+		try {
+		baseUpgrade(interaction)
+		} catch (err) {console.log(err)}
+		}
 		if (interaction.customId === 'buybase') {
 		try {
 		buyBase(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'officer') {
+		try {
+		officerUpgrade(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'buyofficer') {
+		try {
+		buyOfficer(interaction)
 		} catch (err) {console.log(err)}
 		}
 		if (interaction.customId === 'cancel') {

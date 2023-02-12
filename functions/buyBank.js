@@ -75,7 +75,7 @@ module.exports = {
 		.setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
 
     const bankUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, chest_level = '${newBank}' WHERE discord_id = '${interaction.member.id}'`)
-    console.log(bankUpgrade)
+
     return interaction.update({embeds: [upgradeBankEmbed], components: [upgradeBankButtons]})	
     }
 

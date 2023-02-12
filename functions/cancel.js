@@ -36,8 +36,8 @@ module.exports = {
 			.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
             .setDescription(`**${interaction.member}, What would you like to upgrade**?`)
             .addFields(
-                { name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
-                { name: `War-Chest:`, value: `$${bank}`, inline: true },
+                { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
+                { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
         return interaction.update({embeds: [upgradeEmbed], components: [upgradeButtons]})

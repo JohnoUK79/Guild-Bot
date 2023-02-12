@@ -14,7 +14,7 @@ module.exports = {
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
 		Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
-		let embed = new EmbedBuilder();
+		const embed = new EmbedBuilder();
 			embed
 				.setColor('#ff5b05')
 				.setThumbnail(guildIcon)
@@ -24,16 +24,17 @@ module.exports = {
 
 			const wallet = Economy[0].war_coins
 			const bank = Economy[0].war_chest
-			const randomNumber = Math.floor(Math.random() * 500) + 1;
+			const officerLevel = Economy[0].Officer_Level
+			const randomNumber = Math.floor(Math.random() * 5000) + 1;
 			const newWallet = wallet + randomNumber;
 			console.log(wallet, bank, randomNumber, newWallet)
 			begUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
 
 			embed
-				.setDescription(`${interaction.member} You sucessfully **Begged $${randomNumber} War-Coins**!`)
+				.setDescription(`${interaction.member} You sucessfully **Begged $${randomNumber.toLocaleString()} War-Coins**!`)
 				.addFields(
-					{ name: `War-Coins:`, value: `$${newWallet}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+					{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
 				)
 		return interaction.reply({ embeds: [embed] });
 			} 

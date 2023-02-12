@@ -9,6 +9,7 @@ const { baseUpgrade } = require('../functions/baseUpgrade');
 const { cancel } = require('../functions/cancel');
 const { buyOfficer } = require('../functions/buyOfficer');
 const { officerUpgrade } = require('../functions/officerUpgrade');
+const { officerSelect } = require('../functions/officerSelect');
 
 module.exports = {
     name: 'interactionCreate',
@@ -211,6 +212,11 @@ module.exports = {
 		if (interaction.customId === 'officer') {
 		try {
 		officerUpgrade(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'officerselect') {
+		try {
+		officerSelect(interaction)
 		} catch (err) {console.log(err)}
 		}
 		if (interaction.customId === 'buyofficer') {

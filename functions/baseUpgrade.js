@@ -28,10 +28,10 @@ module.exports = {
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 				.addFields(
-					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+					{ name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
 					{ name: `Current Level:`, value: `${baseLevel}`, inline: true }, 
-					{ name: `Upgrade Cost:`, value: `$${cost}`, inline: true },
+					{ name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
 				)
 				.setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
 	return interaction.update({embeds: [upgradeEmbed], components: [upgradeBase]})

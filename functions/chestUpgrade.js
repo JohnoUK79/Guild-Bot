@@ -34,10 +34,10 @@ module.exports = {
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
                 .setDescription(`**${interaction.member}, Confirm the upgrade your War-Chest**?`)
                 .addFields(
-                    { name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
-                    { name: `War-Chest:`, value: `$${bank}`, inline: true },
+                    { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
+                    { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
                     { name: `Current Level:`, value: `${bankLevel}`, inline: true }, 
-                    { name: `Upgrade Cost:`, value: `$${cost}`, inline: true },
+                    { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
 

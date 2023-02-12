@@ -40,7 +40,7 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('upgrade')
-				.setDescription('Shop Coming Soon!')
+				.setDescription('Upgrade your Empire!')
 			),
 
 				
@@ -52,7 +52,7 @@ module.exports = {
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
 		Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
-		let embed = new EmbedBuilder();
+		const embed = new EmbedBuilder();
 			embed
 				.setColor('#ff5b05')
 				.setThumbnail(guildIcon)
@@ -66,8 +66,8 @@ module.exports = {
 			embed			
 				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`})
 				.addFields(
-					{ name: `War-Coins:`, value: `$${balance}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+					{ name: `War-Coins:`, value: `$${balance.toLocaleString()}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
 				);
 
 		}
@@ -88,8 +88,9 @@ module.exports = {
 			}
 			
 			if (amount + bank > bankMax) {
+			difference = bankMax - bank
 			embed
-				.setDescription(`${interaction.member} your **War-Chest** can't hold that many **War-Coins**, try upgrading your **War-Chest** to hold more!\nYou have space for **$${bankMax - bank}** **War-Coins** in your **War-Chest**!`)
+				.setDescription(`${interaction.member} your **War-Chest** can't hold that many **War-Coins**, try upgrading your **War-Chest** to hold more!\nYou have space for **$${difference.toLocaleString()}** **War-Coins** in your **War-Chest**!`)
 				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
 			return interaction.editReply({ embeds: [embed] })
 			}
@@ -97,7 +98,7 @@ module.exports = {
 			try {
 				if (amount > wallet) {
 				embed
-					.setDescription(`${interaction.member} You do not have enough **War-Coins** for that Deposit!\nYou have **$${wallet} War-Coins** available!`)
+					.setDescription(`${interaction.member} You do not have enough **War-Coins** for that Deposit!\nYou have **$${wallet.toLocaleString()} War-Coins** available!`)
 					.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
 				return interaction.editReply({ embeds: [embed] });
 				} 
@@ -107,8 +108,8 @@ module.exports = {
 
 				embed
 					.addFields(
-						{ name: `War-Coins:`, value: `$${newWallet}`, inline: true }, 
-						{ name: `War-Chest:`, value: `$${newBank}`, inline: true },
+						{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
+						{ name: `War-Chest:`, value: `$${newBank.toLocaleString()}`, inline: true },
 					)
 					.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
 
@@ -117,8 +118,6 @@ module.exports = {
 			} catch (err) {
 				console.log(err);
 			}
-
-			console.log(amount)
 			embed
 				.setDescription(`**Deposit Sucessful**!`)
 			}
@@ -129,14 +128,14 @@ module.exports = {
 			const wallet = Economy[0].war_coins
 			const bank = Economy[0].war_chest
 			try {
-				if (amount > bank) return interaction.editReply(`You do not have enough **War-Coins** in the **War-Chest** for that withdrawal!\nYou have **$${bank}** **War-Coins** in the **War-Chest**!`);
+				if (amount > bank) return interaction.editReply(`You do not have enough **War-Coins** in the **War-Chest** for that withdrawal!\nYou have **$${bank.toLocaleString()}** **War-Coins** in the **War-Chest**!`);
 				const newWallet = wallet + amount
 				const newBank = bank - amount
 				embed
 					.setDescription(`**Withdrawal Sucessful**!`)
 					.addFields(
-						{ name: `War-Coins:`, value: `$${newWallet}`, inline: true }, 
-						{ name: `War-Chest:`, value: `$${newBank}`, inline: true },
+						{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
+						{ name: `War-Chest:`, value: `$${newBank.toLocaleString()}`, inline: true },
 					)
 					.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
 
@@ -184,8 +183,8 @@ module.exports = {
 			embed
 				.setDescription(`**What would you like to upgrade**?`)
 				.addFields(
-					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
+					{ name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
 				)
 				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
 				

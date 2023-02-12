@@ -21,10 +21,10 @@ module.exports = {
 			fetchReply: true,
 			ephemeral: false,
 		})
-		guildIcon = interaction.member.guild.iconURL();
-		guildName = interaction.member.guild.name
-		Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
-		let embed = new EmbedBuilder();
+		const guildIcon = interaction.member.guild.iconURL();
+		const guildName = interaction.member.guild.name
+		const Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
+		const embed = new EmbedBuilder();
 			embed
 				.setColor('#ff5b05')
 				.setThumbnail(guildIcon)
@@ -50,13 +50,13 @@ module.exports = {
 				return interaction.editReply({ embeds: [embed] })
 				} 
 				const bounty = Math.floor(Math.random() * victimWallet) + 1;
-				playerDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`);
-				playerWallet = playerDB[0].war_coins
-				newWallet = playerWallet + bounty
-				newVictim = victimWallet - bounty
+				const playerDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`);
+				const playerWallet = playerDB[0].war_coins
+				const newWallet = playerWallet + bounty
+				const newVictim = victimWallet - bounty
 	
 				embed
-					.setDescription(`**${interaction.member}** you sucessfully stole **$${bounty}** from ${victim}!\nYou now have **$${newWallet} War-Coins** in your Wallet!`)
+					.setDescription(`**${interaction.member}** you sucessfully stole **$${bounty.toLocaleString()}** from ${victim}!\nYou now have **$${newWallet.toLocaleString()} War-Coins** in your Wallet!`)
 				
 				updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`);
 				updateVictim = await sql.Execute(`UPDATE levels SET war_coins = '${newVictim}' WHERE discord_id = ${victim.id}`)

@@ -3,6 +3,7 @@ const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('
 
 module.exports = {
     buyOfficer: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const upgradeOfficerEmbed = new EmbedBuilder();
         const upgradeOfficerButtons = new ActionRowBuilder()
             .addComponents(
@@ -33,8 +34,8 @@ module.exports = {
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
                 .setDescription(`${interaction.member}, You need to upgrade your **War-Base** for this upgrade.`)
                 .addFields(
-                        { name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
-                        { name: `War-Chest:`, value: `$${bank}`, inline: true },
+                        { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
+                        { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
                         { name: `Base Level:`, value: `${baseLevel}`, inline: true },
                         { name: `Officer Level:`, value: `${officerLevel}`, inline: true }, 
                     )
@@ -46,17 +47,18 @@ module.exports = {
 
         if (cost > wallet) {
             console.log(`No Money`),
+            difference = cost - wallet
             upgradeOfficerEmbed
                 .setColor('#ff5b05')
                 .setThumbnail(guildIcon)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-                .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${cost - wallet} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
+                .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
                 .addFields(
-                    { name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
-                    { name: `War-Chest:`, value: `$${bank}`, inline: true },
+                    { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
+                    { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
                     { name: `Officer Level:`, value: `${officerLevel}`, inline: true }, 
-                    { name: `Upgrade Cost:`, value: `$${cost}`, inline: true },
+                    { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
         return interaction.update({embeds: [upgradeOfficerEmbed], components: [upgradeOfficerButtons]})	
@@ -69,8 +71,8 @@ module.exports = {
             .setTimestamp()
             .setDescription(`**${interaction.member}, Officer Upgrade Successful**`)
             .addFields(
-                { name: `War-Coins:`, value: `$${newWallet}`, inline: true }, 
-                { name: `War-Chest:`, value: `$${bank}`, inline: true },
+                { name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
+                { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
                 { name: `New Level:`, value: `${newOfficer}`, inline: true }, 
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});

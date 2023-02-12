@@ -2,41 +2,26 @@ const time = require('../config/timestamp')
 const sql = require("../config/Database");
 const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const ms = require('ms-prettify').default
+const { buyBank } = require('../functions/buyBank')
+const { buyBase } = require('../functions/buyBase')
+const { chestUpgrade } = require('../functions/chestUpgrade')
+const { baseUpgrade } = require('../functions/baseUpgrade');
+const { cancel } = require('../functions/cancel');
+
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
 		//console.log('InteractionCreate', interaction)
 		guildIcon = interaction.member.guild.iconURL();
 		const setDate = time.default()
-		GuildName = interaction.guild.name
-		console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} in ${GuildName} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
+		guildName = interaction.guild.name
+		console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} in ${guildName} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
 
         board = await sql.Execute(`select * from levels where 1 ORDER BY points DESC;`);
 		Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
 		var playerLevel = Level[0].level
 		if (playerLevel === null) {var playerLevel = 0}
-		const upgradeBank = new ActionRowBuilder()
-		.addComponents(
-			new ButtonBuilder()
-				.setCustomId("buybank")
-				.setLabel('Upgrade')
-				.setStyle(ButtonStyle.Success),
-			new ButtonBuilder()
-				.setCustomId("cancel")
-				.setLabel('Cancel')
-				.setStyle(ButtonStyle.Danger),
-		)
-		const upgradeBase = new ActionRowBuilder()
-		.addComponents(
-			new ButtonBuilder()
-				.setCustomId("buybase")
-				.setLabel('Upgrade')
-				.setStyle(ButtonStyle.Success),
-			new ButtonBuilder()
-				.setCustomId("cancel")
-				.setLabel('Cancel')
-				.setStyle(ButtonStyle.Danger),
-		)
+
         const Levels = new ActionRowBuilder()
 			        .addComponents(
                 new ButtonBuilder()
@@ -60,41 +45,17 @@ module.exports = {
 					.setLabel('Show 41 - 50')
 					.setStyle(ButtonStyle.Danger),
 				)
-
-				const upgradeButtons = new ActionRowBuilder()
-				.addComponents(
-					new ButtonBuilder()
-						.setCustomId("bank")
-						.setLabel('War-Chest Upgrade')
-						.setStyle(ButtonStyle.Primary),
-					new ButtonBuilder()
-						.setCustomId("base")
-						.setLabel('Base Upgrade')
-						.setStyle(ButtonStyle.Primary),
-					new ButtonBuilder()
-						.setCustomId("officer")
-						.setLabel('Officer Promotion')
-						.setStyle(ButtonStyle.Success),
-					new ButtonBuilder()
-						.setCustomId("troop")
-						.setLabel('Unit Upgrade')
-						.setStyle(ButtonStyle.Success),
-					new ButtonBuilder()
-						.setCustomId("reset")
-						.setLabel('Reset Mini Warpath Profile!')
-						.setStyle(ButtonStyle.Danger),
-					)
 	
 
         const Top10 = new EmbedBuilder()
 		.setColor('#0099ff')
-		.setTitle(`${GuildName} - XP Leaderboard`)
+		.setTitle(`${guildName} - XP Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${GuildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
+			{ name: `${guildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
 			{ name: `Rank 1 :first_place::`, value: `${board[0].discord_username} - ${board[0].level} - ${board[0].points}` },
 			{ name: `Rank 2 :second_place::`, value: `${board[1].discord_username} - ${board[1].level} - ${board[1].points}` },
 			{ name: 'Rank 3 :third_place::', value: `${board[2].discord_username} - ${board[2].level} - ${board[2].points}` },
@@ -103,17 +64,17 @@ module.exports = {
 			)
 		.setImage(`${guildIcon}`) // to be linked to player search gif 
 		.setTimestamp()
-		.setFooter({ text: `${GuildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${guildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
 
         const Top20 = new EmbedBuilder()
 		.setColor('#0099ff')
-		.setTitle(`${GuildName} - XP Leaderboard`)
+		.setTitle(`${guildName} - XP Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${GuildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
+			{ name: `${guildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
 			{ name: `Rank 11 :`, value: `${board[10].discord_username} - ${board[10].level} - ${board[10].points}` },
 			{ name: `Rank 12 :`, value: `${board[11].discord_username} - ${board[11].level} - ${board[11].points}` },
 			{ name: 'Rank 13 :', value: `${board[12].discord_username} - ${board[12].level} - ${board[12].points}` },
@@ -128,18 +89,18 @@ module.exports = {
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
-		.setFooter({ text: `${GuildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${guildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
 
 
         const Top30 = new EmbedBuilder()
 		.setColor('#0099ff')
-		.setTitle(`${GuildName} - Levels Leaderboard`)
+		.setTitle(`${guildName} - Levels Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${GuildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
+			{ name: `${guildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
 			{ name: `Rank 21 :`, value: `${board[20].discord_username} - ${board[20].level} - ${board[20].points}` },
 			{ name: `Rank 22 :`, value: `${board[21].discord_username} - ${board[21].level} - ${board[21].points}` },
 			{ name: 'Rank 23 :', value: `${board[22].discord_username} - ${board[22].level} - ${board[22].points}` },
@@ -154,17 +115,17 @@ module.exports = {
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
-		.setFooter({ text: `${GuildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${guildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
 
         const Top40 = new EmbedBuilder()
 		.setColor('#0099ff')
-		.setTitle(`${GuildName} - XP Leaderboard`)
+		.setTitle(`${guildName} - XP Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${GuildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
+			{ name: `${guildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
 			{ name: `Rank 31 :`, value: `${board[30].discord_username} - ${board[30].level} - ${board[30].points}` },
 			{ name: `Rank 32 :`, value: `${board[31].discord_username} - ${board[31].level} - ${board[31].points}` },
 			{ name: 'Rank 33 :', value: `${board[32].discord_username} - ${board[32].level} - ${board[32].points}` },
@@ -179,18 +140,18 @@ module.exports = {
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
-		.setFooter({ text: `${GuildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${guildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
 
 
 		const Top50 = new EmbedBuilder()
 		.setColor('#0099ff')
-		.setTitle(`${GuildName} - XP Leaderboard`)
+		.setTitle(`${guildName} - XP Leaderboard`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${GuildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
+			{ name: `${guildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
 			{ name: `Rank 41 :`, value: `${board[40].discord_username} - ${board[40].level} - ${board[40].points}` },
 			{ name: `Rank 42 :`, value: `${board[41].discord_username} - ${board[41].level} - ${board[41].points}` },
 			{ name: 'Rank 43 :', value: `${board[42].discord_username} - ${board[42].level} - ${board[42].points}` },
@@ -205,11 +166,11 @@ module.exports = {
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
-		.setFooter({ text: `${GuildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${guildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
 
 		const playerUpdateEmbed = new EmbedBuilder()
 		.setColor('#0099ff')
-		.setTitle(`${GuildName} - Player Updated`)
+		.setTitle(`${guildName} - Player Updated`)
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
@@ -223,139 +184,32 @@ module.exports = {
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
-		.setFooter({ text: `${GuildName} - Player Updated.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${guildName} - Player Updated.`, iconURL: `${guildIcon}` });
 
-		const upgradeEmbed = new EmbedBuilder();
-		upgradeEmbed
-			.setColor('#ff5b05')
-			.setThumbnail(guildIcon)
-			.setTimestamp()
-			.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-
-		//Mini Warpath Upgrade Buttons
 		if (interaction.customId === 'bank') {
-			guildIcon = interaction.member.guild.iconURL();
-			guildName = interaction.member.guild.name	
-			const wallet = Level[0].war_coins
-			const bank = Level[0].war_chest
-			const bankLevel = Level[0].chest_level
-			const cost = (bankLevel + 1) * 10000
-
-			upgradeEmbed
-				.setDescription(`**${interaction.member}, Confirm the upgrade your War-Chest**?`)
-				.addFields(
-					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
-					{ name: `Current Level:`, value: `${bankLevel}`, inline: true }, 
-					{ name: `Upgrade Cost:`, value: `$${cost}`, inline: true },
-				)
-				.setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
-			return interaction.update({embeds: [upgradeEmbed], components: [upgradeBank]})
+		try {
+		chestUpgrade(interaction)
+		} catch (err) {console.log(err)}
 		}
-
 		if (interaction.customId === 'base') {
-			guildIcon = interaction.member.guild.iconURL();
-			guildName = interaction.member.guild.name	
-			const wallet = Level[0].war_coins
-			const bank = Level[0].war_chest
-			const baseLevel = Level[0].base_level
-			const cost = (baseLevel + 1) * 25000
-
-			upgradeEmbed
-				.setDescription(`**${interaction.member}, Confirm the upgrade your Base**?`)
-				.addFields(
-					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
-					{ name: `Current Level:`, value: `${baseLevel}`, inline: true }, 
-					{ name: `Upgrade Cost:`, value: `$${cost}`, inline: true },
-				)
-				.setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
-			return interaction.update({embeds: [upgradeEmbed], components: [upgradeBase]})
+		try {
+		baseUpgrade(interaction)
+		} catch (err) {console.log(err)}
 		}
-
 		if (interaction.customId === 'buybank') {
-			guildIcon = interaction.member.guild.iconURL();
-			guildName = interaction.member.guild.name	
-			const wallet = Level[0].war_coins
-			const bank = Level[0].war_chest
-			const bankLevel = Level[0].chest_level
-			const cost = (bankLevel + 1) * 10000
-			if (cost > wallet) {
-				console.log(`No Money`),
-				upgradeEmbed
-				.setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${cost - wallet} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
-				.addFields(
-					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
-					{ name: `Current Level:`, value: `${bankLevel}`, inline: true }, 
-					{ name: `Upgrade Cost:`, value: `$${cost}`, inline: true },
-				)
-			return interaction.update({embeds: [upgradeEmbed], components: [upgradeBank]})	
-			}
-			const newWallet = wallet - cost
-			const newBank = bankLevel + 1
-			upgradeEmbed
-				.setDescription(`**${interaction.member}, War-Chest Upgrade Successful**`)
-				.addFields(
-					{ name: `War-Coins:`, value: `$${newWallet}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
-					{ name: `New Level:`, value: `${newBank}`, inline: true }, 
-				)
-				.setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
-		const bankUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, chest_level = '${newBank}' WHERE discord_id = '${interaction.member.id}'`)
-		console.log(bankUpgrade)
-		return interaction.update({embeds: [upgradeEmbed], components: [upgradeButtons]})	
+		try {
+		buyBank(interaction)
+		} catch (err) {console.log(err)}
 		}
-
 		if (interaction.customId === 'buybase') {
-			guildIcon = interaction.member.guild.iconURL();
-			guildName = interaction.member.guild.name	
-			const wallet = Level[0].war_coins
-			const bank = Level[0].war_chest
-			const baseLevel = Level[0].base_level
-			const cost = (baseLevel + 1) * 25000
-			if (cost > wallet) {
-				console.log(`No Money`),
-				upgradeEmbed
-				.setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${cost - wallet} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
-				.addFields(
-					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
-					{ name: `Current Level:`, value: `${baseLevel}`, inline: true }, 
-					{ name: `Upgrade Cost:`, value: `$${cost}`, inline: true },
-				)
-			return interaction.update({embeds: [upgradeEmbed], components: [upgradeBase]})	
-			}
-			const newWallet = wallet - cost
-			const newBase = baseLevel + 1
-			upgradeEmbed
-				.setDescription(`**${interaction.member}, Base Upgrade Successful**`)
-				.addFields(
-					{ name: `War-Coins:`, value: `$${newWallet}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
-					{ name: `New Level:`, value: `${newBase}`, inline: true }, 
-				)
-				.setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
-		const baseUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, base_level = '${newBase}' WHERE discord_id = '${interaction.member.id}'`)
-		console.log(baseUpgrade)
-		return interaction.update({embeds: [upgradeEmbed], components: [upgradeButtons]})	
+		try {
+		buyBase(interaction)
+		} catch (err) {console.log(err)}
 		}
-
-
-
-
-		//Cancel Upgrades
 		if (interaction.customId === 'cancel') {
-			const wallet = Level[0].war_coins
-			const bank = Level[0].war_chest
-			upgradeEmbed
-				.setDescription(`**${interaction.member}, What would you like to upgrade**?`)
-				.addFields(
-					{ name: `War-Coins:`, value: `$${wallet}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank}`, inline: true },
-				)
-			.setFooter({ text: `${GuildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
-			return interaction.update({embeds: [upgradeEmbed], components: [upgradeButtons]})
+		try {
+		cancel(interaction)
+		} catch (err) {console.log(err)}
 		}		
 		//Dashboard Reports
 		if (interaction.customId === 'Reports') {
@@ -489,7 +343,7 @@ module.exports = {
 				var oldInfo = (`${nameLookup} - ${tagLookup} - ${cityLookup}`)
 				var newInfo = (`${usernameInput} - ${tagInput} - ${cityInput}`)
 				let result = await sql.Execute(`INSERT INTO playerupdates (request_uid, request_name, request_discord_id, request_discord_username, request_tag, request_city) VALUES ('${uidInput}', '${usernameInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${tagInput}', '${cityInput}') ON DUPLICATE KEY UPDATE request_name = '${usernameInput}', request_discord_id = '${interaction.member.id}', request_discord_username = '${interaction.member.displayName}', request_tag = '${tagInput}', request_city = '${cityInput}';`)
-				let updatePlayers = await sql.Execute(`UPDATE players SET last_known_name = '${usernameInput}', last_known_tag = '${tagInput}', last_city = '${cityInput}', date_last_known = '${setDate}', discord ='${interaction.member.id}', discord_name = '${interaction.member.displayName}', discord_server = '${GuildName}', last_city = '${cityInput}' WHERE player_id = ${uidInput}`)
+				let updatePlayers = await sql.Execute(`UPDATE players SET last_known_name = '${usernameInput}', last_known_tag = '${tagInput}', last_city = '${cityInput}', date_last_known = '${setDate}', discord ='${interaction.member.id}', discord_name = '${interaction.member.displayName}', discord_server = '${guildName}', last_city = '${cityInput}' WHERE player_id = ${uidInput}`)
 				let changeLog = await sql.Execute(`INSERT INTO changelog (player_id, discord_id, discord_name, old_info, new_info) VALUES ('${uidInput}', '${interaction.member.id}', '${interaction.member.displayName}', '${oldInfo}', '${newInfo}')`)
 				return interaction.reply({ 
 					ephemeral: true,
@@ -721,7 +575,7 @@ module.exports = {
 		const { commandCooldowns } = require('../bot');
 		const t = commandCooldowns.get(`${interaction.user.id}_${interaction.commandName}`) || 0
 		if (Date.now() - t < 0) {
-		GuildName = interaction.guild.name
+		guildName = interaction.guild.name
         const cooldownEmbed = new EmbedBuilder()
 		cooldownEmbed
 			.setColor('#ff5b05')

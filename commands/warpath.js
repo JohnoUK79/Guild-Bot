@@ -167,14 +167,14 @@ module.exports = {
 					.setStyle(ButtonStyle.Primary),
 				new ButtonBuilder()
 					.setCustomId("officer")
-					.setLabel('Officer Promotion')
+					.setLabel('Officer')
 					.setStyle(ButtonStyle.Success),
 				new ButtonBuilder()
 					.setCustomId("troop")
-					.setLabel('Unit Upgrade')
+					.setLabel('Unit')
 					.setStyle(ButtonStyle.Success),
 				new ButtonBuilder()
-					.setCustomId("reset")
+					.setCustomId("profile")
 					.setLabel('Profile')
 					.setStyle(ButtonStyle.Secondary),
 				)

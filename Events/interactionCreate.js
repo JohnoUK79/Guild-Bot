@@ -2,7 +2,7 @@ const time = require('../config/timestamp')
 const sql = require("../config/Database");
 const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const ms = require('ms-prettify').default
-const { buyBank, buyBase, chestUpgrade, baseUpgrade, cancel, buyOfficer, officerUpgrade, officerSelect} = require('../functions/warpathFunctions')
+const { buyBank, buyBase, chestUpgrade, baseUpgrade, cancel, buyOfficer, officerUpgrade, officerSelect, unitUpgrade, unitSelect, buyUnit} = require('../functions/warpathFunctions');
 
 module.exports = {
     name: 'interactionCreate',
@@ -217,6 +217,21 @@ module.exports = {
 		buyOfficer(interaction)
 		} catch (err) {console.log(err)}
 		}
+		if (interaction.customId === 'troop') {
+		try {
+		unitUpgrade(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'buyunit') {
+		try {
+		buyUnit(interaction)
+		} catch (err) {console.log(err)}
+		}	
+		if (interaction.customId === 'unitselect') {
+		try {
+		unitSelect(interaction)
+		} catch (err) {console.log(err)}
+		}			
 		if (interaction.customId === 'cancel') {
 		try {
 		cancel(interaction)

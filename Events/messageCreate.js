@@ -1,5 +1,6 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, AttachmentBuilder } = require('discord.js');
 const sql = require("../config/Database");
+const { dmReceived, translate } = require('../functions/messageFunctions');
 time = require('../config/timestamp')
 setDate = time.UTCdefault()
 
@@ -8,107 +9,23 @@ module.exports = {
 	name: 'messageCreate',
 	async execute(message) {
 		//console.log('Message Create', message)
-		//DM Replies
 		if (message.author.bot === true) {
 			return;}
+		//DM Replies
 		if (message.channel.type == ChannelType.DM) {
-			if (message.content === '') {
-				var embedContent = 'No Message Content'				
-			} else var embedContent = message.content		
-
-			const dmReceived = new EmbedBuilder()
-			.setColor('#0099ff')
-			.setTitle('Direct Message Received!')
-			.setURL('http://phfamily.co.uk/')
-			.setThumbnail(message.author.displayAvatarURL())
-			.setAuthor({ name: `${message.author.username}#${message.author.discriminator}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
-			.setDescription(`Message Received By the Bot!`)
-			.addFields(
-				{ name: `Content:`, value: `${embedContent}` },
-				{ name: `Sent By:`, value: `<@${message.author.id}>` },
-				)
-			.setTimestamp()
-			.setFooter({ text: 'Message Received!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
-
-			//970409125227950110 PH Family Bot Messages
-			//1033492139964895302 SE17 Bot Messages
-			let dmSent = message.client.channels.cache.get("1033492139964895302")
-			dmSent.send({
-				embeds: [dmReceived],
-			})
-			dmReceived.setDescription('Your messaged will be reviewed by our BOT Team and we will come back to you if we need further information!')
-			dmReceived.setFooter({ text: 'Message Sent!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' })
-			dmReceived.setTitle('Your Message Has Been Sent!')
-
-			await message.reply ({
-				embeds: [dmReceived]
-			})
-			//If Attachments Sent
-			const attachmentReceived = new EmbedBuilder()
-				.setColor('#0099ff')
-				.setTitle('Direct Message Received!')
-				.setURL('http://phfamily.co.uk/')
-				.setThumbnail(message.author.displayAvatarURL())
-				.setAuthor({ name: `${message.author.username}#${message.author.discriminator}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
-				.setDescription(`Attachment Received By the Bot!`)
-				.setTimestamp()
-				.setFooter({ text: 'Attachment Received!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
-
-			let attachments = message.attachments
-			for (const attachment of attachments) {
-				attachment.map(a => {
-					const attachmentURL = a.url
-					const attachmentName = a.name
-					file = new AttachmentBuilder(attachmentURL, { name: `${attachmentName}`})
-					attachmentReceived.setDescription(`Your attachment: **${attachmentName}** will be reviewed by our BOT Team and we will come back to you if we need further information!`)
-					attachmentReceived.setTitle(`Your Attachment Has Been Received!`)
-					attachmentReceived.setImage(attachmentURL)
-				})
-
-				await message.reply({
-					embeds: [attachmentReceived],
-				})
-
-				attachmentReceived.setDescription(`Attachment: ${file.name} **Received**!`)
-				attachmentReceived.setTitle('Attachment Received!')
-				dmSent.send({
-					embeds: [attachmentReceived],
-				})
-			} 
-			return
+		try {
+		dmReceived(message)
+		} catch (err) {console.log(err)}
 		}		
+		//Translate Prefix
+		if (message.content.startsWith(`!t`)) {
+		try {
+		translate(message)
+		} catch (err) {console.log(err)}
+		} 
 		//Set Guild Branding
 		guildIcon = message.member.guild.iconURL();
 		guildName = message.member.guild.name
-		//Translate Prefix
-		if (message.content.startsWith(`!t`)) {
-			console.log(`Translate:`)
-			const args = message.content.split(' ')
-			target = args[1]
-			const messages = await message.channel.messages.fetch(message.reference.messageId);
-			text = messages.content
-			const projectId = 'upbeat-glow-372800';
-			const {Translate} = require('@google-cloud/translate').v2;
-			const translate = new Translate({projectId});
-	
-			const [translation] = await translate.translate(text, target);
-			const translationEmbed = new EmbedBuilder()
-				.setColor('	#C32148')
-				.setTitle(`${guildName} - Translator`)
-				.setURL('http://www.phfamily.co.uk')
-				.setThumbnail(guildIcon)
-				.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true })})
-
-				.setDescription(`[**Jump to Message!**](${messages.url})`)
-				.addFields(
-					{ name: `Language Code: ${target}`, value: `${translation}` },
-					)
-				.setTimestamp()
-				.setFooter({ text: `${guildName} - Translator.`, iconURL: `${guildIcon}` });
-			await message.reply({ embeds: [translationEmbed] })
-			message.delete({ timeout: 500 })
-		} 
-
 		//Database Lookup
 		Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
 		Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 

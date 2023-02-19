@@ -61,6 +61,7 @@ module.exports = {
 
     },
     buyBank: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
 		const upgradeBankEmbed = new EmbedBuilder();
         const upgradeButtons = new ActionRowBuilder()
         .addComponents(
@@ -161,6 +162,7 @@ module.exports = {
     return interaction.update({embeds: [upgradeBankEmbed], components: [upgradeButtons]})	
     },
     buyBase: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const upgradeBaseEmbed = new EmbedBuilder();
         const upgradeButtons = new ActionRowBuilder()
         .addComponents(
@@ -362,6 +364,8 @@ return interaction.update({embeds: [upgradeOfficerEmbed], components: [upgradeBu
 
 },
 cancel: async function (interaction) {
+    const guildIcon = interaction.member.guild.iconURL();
+    const guildName = interaction.member.guild.name	
     const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
     const wallet = Level[0].war_coins
     const bank = Level[0].war_chest

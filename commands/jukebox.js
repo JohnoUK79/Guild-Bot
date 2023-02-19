@@ -455,7 +455,6 @@ module.exports = {
 			});
 
 			setTimeout(() => {
-			return interaction.editReply({ content: `🎵 | Bassboost ${queue.getFiltersEnabled().includes('bassboost') ? 'Enabled' : 'Disabled'}!` });
 			}, queue.options.bufferingTimeout);
 		}
 		else if (interaction.options.getSubcommand() === 'loop')
@@ -478,7 +477,7 @@ module.exports = {
 			console.log(mode)
 			//return interaction.editReply({ content: success ? `${mode} | Updated loop mode!` : '❌ | Could not update loop mode!' });
 			embed
-				.setDescription(success ? `${mode} | Updated loop mode!` : '❌ | Could not update loop mode!')
+				.setDescription(success ? `${mode} | Updated Loop Mode | ${mode}` : '❌ | Could not update loop mode!')
 				.setColor('#ffff00')
 				.setThumbnail(guildIcon)
 				.setTimestamp()

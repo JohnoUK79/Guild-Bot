@@ -6,6 +6,8 @@ module.exports = {
     async execute(member) {
         //console.log('Guild Member Add', member)
         await member.guild.members.fetch()
+        await member.guild.cache();
+        await member.fetch();
         //Load Guild Settings
         Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         guildIcon = member.guild.iconURL();

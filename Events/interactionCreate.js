@@ -9,7 +9,7 @@ module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
 		//console.log('InteractionCreate', interaction)
-		//guildIcon = interaction.member.guild.iconURL();
+		guildIcon = interaction.member.guild.iconURL();
 		//const setDate = time.default()
 		guildName = interaction.guild.name
 		console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} in ${guildName} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);

@@ -30,7 +30,7 @@ module.exports = {
 				.setThumbnail(guildIcon)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Stealing War-Coins`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `${guildName} - Steal `, iconURL: `${guildIcon}`});
 
 
 				const victim = interaction.options.getUser('victim');

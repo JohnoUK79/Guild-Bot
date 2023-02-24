@@ -40,14 +40,29 @@ module.exports = {
                     Name: AttackerUnit[0].Unit_Name,
                     Firepower: AttackerUnit[0].Firepower,
                     HP: AttackerUnit[0].HP,
-                    Speed: AttackerUnit[0].Speed
+                    Speed: AttackerUnit[0].Speed,
+                    BaseLevel: AttackerDB[0].base_level,
+                    OfficerLevel: AttackerDB[0].officer_level
                 }
                 const DefenderStats = {
                     Name: DefenderUnit[0].Unit_Name,
                     Firepower: DefenderUnit[0].Firepower,
                     HP: DefenderUnit[0].HP,
-                    Speed: DefenderUnit[0].Speed
+                    Speed: DefenderUnit[0].Speed,
+                    BaseLevel: DefenderDB[0].base_level,
+                    OfficerLevel: DefenderDB[0].officer_level
                 }
+                const Attacker = {
+                    Power: AttackerStats.Firepower * AttackerStats.OfficerLevel,
+                    Health: AttackerStats.HP * AttackerStats.BaseLevel * 10,
+                    Speed: AttackerStats.Speed
+                }
+                const Defender = {
+                    Power: DefenderStats.Firepower * AttackerStats.OfficerLevel,
+                    Health: DefenderStats.HP * AttackerStats.BaseLevel * 10,
+                    Speed: DefenderStats.Speed
+                }
+                console.log(Attacker, Defender)
 
                 embed
 					.setDescription(`${interaction.member} your **${AttackerStats.Name}** sucessfully Battled ${defender}'s **${DefenderStats.Name}**!`)

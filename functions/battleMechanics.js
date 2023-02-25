@@ -48,18 +48,25 @@ module.exports = {
                     Name: DefenderUnit[0].Unit_Name,
                     Firepower: DefenderUnit[0].Firepower,
                     HP: DefenderUnit[0].HP,
-                    Speed: DefenderUnit[0].Speed
+                    Speed: DefenderUnit[0].Speed,
+                    BaseLevel: DefenderDB[0].base_level,
+                    OfficerLevel: DefenderDB[0].officer_level
                 }
-                console.log(Attacker, Defender)
+                const Attacker = {
+                    Name: AttackerStats.Name,
+                    Power: AttackerStats.Firepower * AttackerStats.OfficerLevel,
+                    Health: AttackerStats.HP * AttackerStats.BaseLevel * 10,
+                    Speed: AttackerStats.Speed
+                }
+                const Defender = {
+                    Name: DefenderStats.Name,
+                    Power: DefenderStats.Firepower * AttackerStats.OfficerLevel,
+                    Health: DefenderStats.HP * AttackerStats.BaseLevel * 10,
+                    Speed: DefenderStats.Speed
+                }
 
                 embed
 					.setDescription(`${interaction.member} your **${AttackerStats.Name}** sucessfully Battled ${defender}'s **${DefenderStats.Name}**!`)
-
-// console.log(Defender.Health)
-// for (let i = Defender.Health; i >= 1; i=i-Attacker.Power) {
-//     console.log(i)
-//     return interaction.editReply({ embeds: [embed] });
-// }
 
 function sleep(ms) {
     return new Promise(
@@ -99,5 +106,6 @@ if (DH < 0) {
 
 				//updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`);
 				//updateVictim = await sql.Execute(`UPDATE levels SET war_coins = '${newVictim}' WHERE discord_id = ${victim.id}`)
+		// return interaction.editReply({ embeds: [embed] });
     }
 }

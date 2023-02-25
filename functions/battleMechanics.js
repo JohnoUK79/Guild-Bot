@@ -53,22 +53,64 @@ module.exports = {
                     OfficerLevel: DefenderDB[0].officer_level
                 }
                 const Attacker = {
+                    Name: AttackerStats.Name,
                     Power: AttackerStats.Firepower * AttackerStats.OfficerLevel,
                     Health: AttackerStats.HP * AttackerStats.BaseLevel * 10,
                     Speed: AttackerStats.Speed
                 }
                 const Defender = {
+                    Name: DefenderStats.Name,
                     Power: DefenderStats.Firepower * AttackerStats.OfficerLevel,
                     Health: DefenderStats.HP * AttackerStats.BaseLevel * 10,
                     Speed: DefenderStats.Speed
                 }
-                console.log(Attacker, Defender)
 
                 embed
 					.setDescription(`${interaction.member} your **${AttackerStats.Name}** sucessfully Battled ${defender}'s **${DefenderStats.Name}**!`)
-				
+
+// console.log(Defender.Health)
+// for (let i = Defender.Health; i >= 1; i=i-Attacker.Power) {
+//     console.log(i)
+//     return interaction.editReply({ embeds: [embed] });
+// }
+
+function sleep(ms) {
+    return new Promise(
+      resolve => setTimeout(resolve, ms)
+    );
+  }
+
+let AH = Attacker.Health, DH = Defender.Health
+while (DH >= 0 && AH >= 0) {
+    DH = DH - Attacker.Power
+    embed
+        .setDescription(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}** with a crushing blow. Dealing **${Attacker.Power.toLocaleString()}** damage!`)
+    interaction.editReply({ embeds: [embed] });
+    console.log(`Attacker hit for ${Attacker.Power.toLocaleString()}`)
+
+    AH = AH - Defender.Power
+    embed
+        .setDescription(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}** with a crushing blow. Dealing **${Defender.Power.toLocaleString()}** damage!`)
+    interaction.editReply({ embeds: [embed] });
+    console.log(`Defender hit for ${Defender.Power.toLocaleString()}`)
+}
+
+
+if (AH < 0) {
+    embed 
+        .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by ${defender}'s **${Defender.Name}**.`)
+    interaction.editReply({ embeds: [embed] });   
+}
+if (DH < 0) {
+    embed 
+    
+        .setDescription(`${defender}'s **${Defender.Name}** has been killed by ${interaction.member}'s **${Attacker.Name}**.`)
+    interaction.editReply({ embeds: [embed] });   
+}
+
+
+
 				//updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`);
 				//updateVictim = await sql.Execute(`UPDATE levels SET war_coins = '${newVictim}' WHERE discord_id = ${victim.id}`)
-		return interaction.editReply({ embeds: [embed] });
     }
 }

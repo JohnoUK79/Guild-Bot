@@ -16,7 +16,7 @@ module.exports = {
 
 
 				const defender = interaction.options.getUser('target');
-				if (defender.bot === true) return interaction.editReply(`${interaction.member} Stop trying to **BULLY PIXELS**, You can only **FIGHT** real members\nMan Up and pick a better foe!`)
+				if (defender.bot === true) return interaction.editReply(`${interaction.member} Stop trying to **Bully the Bots**, You can only **Battle** real members\nMan Up and pick a better foe!`)
 				const DefenderDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${defender.id}`)
 				if (defender.id === interaction.member.id) {
 				embed
@@ -68,7 +68,7 @@ module.exports = {
                 embed
 					.setDescription(`${interaction.member} your **${AttackerStats.Name}** sucessfully Battled ${defender}'s **${DefenderStats.Name}**!`)
 
-function sleep(ms) {
+async function sleep(ms) {
     return new Promise(
       resolve => setTimeout(resolve, ms)
     );
@@ -76,17 +76,20 @@ function sleep(ms) {
 
 let AH = Attacker.Health, DH = Defender.Health
 while (DH >= 0 && AH >= 0) {
-    DH = DH - Attacker.Power
+    // Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
+let attackerPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
+    DH = DH - attackerPower
     embed
-        .setDescription(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}** with a crushing blow. Dealing **${Attacker.Power.toLocaleString()}** damage!`)
+        .setDescription(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}** with a crushing blow. Dealing **${attackerPower.toLocaleString()}** damage!`)
     interaction.editReply({ embeds: [embed] });
-    console.log(`Attacker hit for ${Attacker.Power.toLocaleString()}`)
+    console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)
 
-    AH = AH - Defender.Power
+let defenderPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
+    AH = AH - defenderPower
     embed
         .setDescription(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}** with a crushing blow. Dealing **${Defender.Power.toLocaleString()}** damage!`)
     interaction.editReply({ embeds: [embed] });
-    console.log(`Defender hit for ${Defender.Power.toLocaleString()}`)
+    console.log(`Defender hit for ${defenderPower.toLocaleString()}`)
 }
 
 

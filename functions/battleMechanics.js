@@ -68,11 +68,11 @@ module.exports = {
                 embed
 					.setDescription(`${interaction.member} your **${AttackerStats.Name}** sucessfully Battled ${defender}'s **${DefenderStats.Name}**!`)
 
-async function sleep(ms) {
-    return new Promise(
-      resolve => setTimeout(resolve, ms)
-    );
-  }
+// async function sleep(ms) {
+//     return new Promise(
+//       resolve => setTimeout(resolve, ms)
+//     );
+//   }
 
 let AH = Attacker.Health, DH = Defender.Health
 while (DH >= 0 && AH >= 0) {

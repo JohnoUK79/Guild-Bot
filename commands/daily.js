@@ -24,12 +24,14 @@ module.exports = {
 
         	const wallet = Economy[0].war_coins
 			const bank = Economy[0].war_chest
-			const randomNumber = Math.floor(Math.random() * 25000) + 1;
-			const newWallet = wallet + randomNumber;
-			dailyUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
-
+			const unit = Economy[0].unit_level
+			const randomNumber = Math.floor(Math.random() * 50000) + 1;
+			const daily = Math.floor(randomNumber * unit) + 1;
+			const newWallet = wallet + daily;
+			const dailyUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
+			console.log(`Daily: ${dailyUpdate.info}`)
 			embed
-				.setDescription(`${interaction.member} You sucessfully claimed **$${randomNumber.toLocaleString()} War-Coins** as a **Daily Bonus** for being **Active**!`)
+				.setDescription(`${interaction.member} You sucessfully claimed **$${daily.toLocaleString()} War-Coins** as a **Daily Bonus** for being **Active**!`)
 				.addFields(
 					{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
 					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },

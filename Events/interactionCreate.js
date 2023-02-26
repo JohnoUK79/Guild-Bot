@@ -2,7 +2,7 @@ const time = require('../config/timestamp')
 const sql = require("../config/Database");
 const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const ms = require('ms-prettify').default
-const { buyBank, buyBase, chestUpgrade, baseUpgrade, cancel, buyOfficer, officerUpgrade, officerSelect, unitUpgrade, unitSelect, buyUnit} = require('../functions/warpathFunctions');
+const { buyBank, buyBase, chestUpgrade, baseUpgrade, cancel, buyOfficer, officerUpgrade, officerSelect, unitUpgrade, unitSelect, buyUnit, profile} = require('../functions/warpathFunctions');
 const { selfUpdateModal, playerUpdateModal, selfUpdateResponses, playerUpdateResponses } = require('../functions/playerDatabaseFunctions');
 const { top10, top20, top30, top40, top50 } = require('../functions/discordFunctions');
 module.exports = {
@@ -68,6 +68,11 @@ module.exports = {
 		if (interaction.customId === 'cancel') {
 		try {
 		cancel(interaction)
+		} catch (err) {console.log(err)}
+		}	
+		if (interaction.customId === 'profile') {
+		try {
+		profile(interaction)
 		} catch (err) {console.log(err)}
 		}		
 		//Dashboard Reports

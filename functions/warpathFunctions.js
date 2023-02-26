@@ -29,7 +29,7 @@ module.exports = {
                 .setLabel('Unit')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
-                .setCustomId("reset")
+                .setCustomId("profile")
                 .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
@@ -82,7 +82,7 @@ module.exports = {
                 .setLabel('Unit')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
-                .setCustomId("reset")
+                .setCustomId("profile")
                 .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
@@ -183,7 +183,7 @@ module.exports = {
                 .setLabel('Unit')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
-                .setCustomId("reset")
+                .setCustomId("profile")
                 .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
@@ -283,7 +283,7 @@ buyOfficer: async function (interaction) {
             .setLabel('Unit')
             .setStyle(ButtonStyle.Success),
         new ButtonBuilder()
-            .setCustomId("reset")
+            .setCustomId("profile")
             .setLabel('Profile')
             .setStyle(ButtonStyle.Secondary),
         )
@@ -388,7 +388,7 @@ cancel: async function (interaction) {
                 .setLabel('Unit')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
-                .setCustomId("reset")
+                .setCustomId("profile")
                 .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
@@ -534,7 +534,7 @@ officerUpgrade: async function (interaction) {
                 .setLabel('Unit')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
-                .setCustomId("reset")
+                .setCustomId("profile")
                 .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
@@ -857,5 +857,45 @@ buyUnit: async function (interaction) {
 const unitUpgrade = await sql.Execute(`UPDATE levels SET War_Coins = ${newWallet}, Unit_Level = '${newLevel}' WHERE discord_id = '${interaction.member.id}'`)
 console.log(unitUpgrade)
 return interaction.update({embeds: [upgradeUnitEmbed], components: [upgradeButtons]})
+},
+profile: async function (interaction) {
+    const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+    const profileEmbed = new EmbedBuilder();
+    const profileButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("cancel")
+                .setLabel('Done')
+                .setStyle(ButtonStyle.Success),
+        )
+    const guildIcon = interaction.member.guild.iconURL();
+    const guildName = interaction.member.guild.name	
+let officer = Level[0].officer
+if (officer === '') {let officer = 'No Officer Chosen'}
+let unit = Level[0].unit_type
+if (unit !== '') {let unit = 'No Unit Trained'}
+console.log(officer, unit)
+
+    
+    profileEmbed
+        .setColor('#ff5b05')
+        .setThumbnail(guildIcon)
+        .setTimestamp()
+        .setDescription(`**${interaction.member}'s Profile**`)
+        .addFields(
+            { name: `War-Coins:`, value: `$${Level[0].war_coins.toLocaleString()}`, inline: true }, 
+            { name: `War-Chest:`, value: `$${Level[0].war_chest.toLocaleString()}`, inline: true }, 
+            { name: `Base Level:`, value: `${Level[0].base_level}`, inline: true }, 
+            //{ name: `Officer:`, value: `${Level[0].officer}`, inline: true }, 
+            //{ name: `Officer Level:`, value: `${officer}`, inline: true },
+            //{ name: `Unit:`, value: `${unit}`, inline: true }, 
+            //{ name: `Unit Level:`, value: `${Level[0].unit_level}`, inline: true }, 
+
+        )
+        .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
+
+        
+return interaction.update({empheral: true, embeds: [profileEmbed], components: [profileButtons]})	
+
 }
 }

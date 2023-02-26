@@ -5,7 +5,7 @@ const { battle } = require('../functions/battleMechanics');
 setDate = timestamp.UTCdefault()
 
 module.exports = {
-    //cooldown: 1800000,
+    cooldown: 900000,
     data: new SlashCommandBuilder()
         //.setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
         .setName("battle")

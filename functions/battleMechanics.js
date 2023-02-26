@@ -68,47 +68,113 @@ module.exports = {
                 embed
 					.setDescription(`${interaction.member} your **${AttackerStats.Name}** sucessfully Battled ${defender}'s **${DefenderStats.Name}**!`)
 
-async function sleep(ms) {
-    return new Promise(
-      resolve => setTimeout(resolve, ms)
-    );
-  }
-
+// async function sleep(ms) {
+//     return new Promise(
+//       resolve => setTimeout(resolve, ms)
+//     );
+//   }
+  
 let AH = Attacker.Health, DH = Defender.Health
-while (DH >= 0 && AH >= 0) {
-    // Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
-let attackerPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
-    DH = DH - attackerPower
-    embed
-        .setDescription(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}** with a crushing blow. Dealing **${attackerPower.toLocaleString()}** damage!`)
-    interaction.editReply({ embeds: [embed] });
-    console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)
 
-let defenderPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
-    AH = AH - defenderPower
-    embed
-        .setDescription(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}** with a crushing blow. Dealing **${Defender.Power.toLocaleString()}** damage!`)
-    interaction.editReply({ embeds: [embed] });
-    console.log(`Defender hit for ${defenderPower.toLocaleString()}`)
+if (Attacker.Speed < Defender.Speed) {
+    console.log(`Attacker: ${Attacker.Speed} Defender: ${Defender.Speed}`)
+    while (DH >= 0 && AH >= 0) {
+        let defenderPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
+        if (DH >= 0) {let defenderPower = 0} 
+        AH = AH - defenderPower
+        var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
+    
+        embed
+            .setImage(playerImage)
+            .addFields(
+                { name: `${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`, value: `${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!` },
+            ) 
+        interaction.editReply({ embeds: [embed] });
+        console.log(`Defender hit for ${defenderPower.toLocaleString()}`)
+        
+        let attackerPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
+        if (AH >= 0) {let attackerPower = 0} 
+        DH = DH - attackerPower
+        var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
+    
+        embed
+            .setImage(playerImage)
+            .addFields(
+                { name: `${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`, value: `${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!` },
+            )     
+        interaction.editReply({ embeds: [embed] });
+        console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)
+    
+    }
+} else {
+    console.log(`Defender: ${Defender.Speed} Attacker: ${Attacker.Speed}`)
+    while (DH >= 0 && AH >= 0) {
+
+        let attackerPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
+        if (AH >= 0) {let attackerPower = 0} 
+        DH = DH - attackerPower
+        var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
+    
+        embed
+            .setImage(playerImage)
+            .addFields(
+                { name: `${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`, value: `${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!` },
+            )     
+        interaction.editReply({ embeds: [embed] });
+        console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)
+    
+    let defenderPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
+    if (DH >= 0) {let defenderPower = 0} 
+
+        AH = AH - defenderPower
+        var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
+    
+        embed
+            .setImage(playerImage)
+            .addFields(
+                { name: `${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`, value: `${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!` },
+            ) 
+        interaction.editReply({ embeds: [embed] });
+        console.log(`Defender hit for ${defenderPower.toLocaleString()}`)
+    }
 }
-
 
 if (AH < 0) {
-    embed 
+    var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
+    const winnings = DefenderDB[0].officer_level * 10000
+    const wallet = DefenderDB[0].war_coins
+    const newWallet = wallet + winnings
+    embed
+        .setImage(playerImage)
+        .addFields(
+            { name: `Defenders War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${defender}` },
+        )     
         .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by ${defender}'s **${Defender.Name}**.`)
-    interaction.editReply({ embeds: [embed] });   
-}
+    interaction.editReply({ embeds: [embed] });  
+    const updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${defender.id}`);
+console.log(updatePlayer.info)
+} else
 if (DH < 0) {
+    var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
+    const winnings = AttackerDB[0].officer_level * 10000
+    const wallet = AttackerDB[0].war_coins
+    const newWallet = wallet + winnings
     embed 
-    
+        .setImage(playerImage)
+        .addFields(
+            { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
+        )        
         .setDescription(`${defender}'s **${Defender.Name}** has been killed by ${interaction.member}'s **${Attacker.Name}**.`)
-    interaction.editReply({ embeds: [embed] });   
+    interaction.editReply({ embeds: [embed] });
+    const updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`);
+console.log(updatePlayer.info)
+
+
 }
+//updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`);
+//updateVictim = await sql.Execute(`UPDATE levels SET war_coins = '${newVictim}' WHERE discord_id = ${victim.id}`)
 
 
 
-				//updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`);
-				//updateVictim = await sql.Execute(`UPDATE levels SET war_coins = '${newVictim}' WHERE discord_id = ${victim.id}`)
-		// return interaction.editReply({ embeds: [embed] });
     }
 }

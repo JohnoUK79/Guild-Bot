@@ -32,10 +32,15 @@ module.exports = {
                         return interaction.editReply({ embeds: [embed] })
                     }
                 const DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${DefenderDB[0].unit_camp}' AND Unit_Type = '${DefenderDB[0].unit_type}' AND Unit_Level = '${DefenderDB[0].unit_level}'`)
-
+                console.log(DefenderUnit)
                 const AttackerDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`);
                 const AttackerUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${AttackerDB[0].unit_camp}' AND Unit_Type = '${AttackerDB[0].unit_type}' AND Unit_Level = '${AttackerDB[0].unit_level}'`)
-
+                console.log(AttackerUnit)
+                if (AttackerUnit !== '') {
+                    embed
+					    .setDescription(`${interaction.member} you haven't selected your **Unit**!\nUse **warpath-upgrade** to level up and get your **Unit**!`)
+                        return interaction.editReply({ embeds: [embed] });
+                }
                 const AttackerStats = {
                     Name: AttackerUnit[0].Unit_Name,
                     Firepower: AttackerUnit[0].Firepower,

@@ -118,56 +118,56 @@ module.exports = {
 		.setTimestamp()
 		.setFooter({ text: `Level Up - ${guildName}.`, iconURL: `${guildIcon}` });
 
-		// if (scoreLevel > 9) {
-		// 	var score = Math.floor(Math.random() * 200) * 2;
-		// 	levelup.setColor('#2e8f37') //forest green
-		// 	if (roleRank10) await message.member.roles.add(roleRank10).catch((e) => console.log(e))
-		// }
-		// if (scoreLevel > 19) {
-		// 	var score = Math.floor(Math.random() * 150) * 2;
-		// 	levelup.setColor('DARK_GREEN') //dark green
-		// 	if (roleRank20) await message.member.roles.add(roleRank20).catch((e) => console.log(e))
-		// }
-		// if (scoreLevel > 29) {
-		// 	var score = Math.floor(Math.random() * 125) * 2;
-		// 	levelup.setColor('#00ff80') //spring green
-		// 	if (roleRank30) await message.member.roles.add(roleRank30).catch((e) => console.log(e))
-		// }
-		// if (scoreLevel > 39) {
-		// 	var score = Math.floor(Math.random() * 100) * 2;
-		// 	levelup.setColor('#00ffff') //cyan
-		// 	if (roleRank40) await message.member.roles.add(roleRank40).catch((e) => console.log(e))
-		// }	
-		// if (scoreLevel > 49) {
-		// 	var score = Math.floor(Math.random() * 75) * 2;
-		// 	levelup.setColor('#0080ff') //dodger blue
-		// 	if (roleRank50) await message.member.roles.add(roleRank50).catch((e) => console.log(e))
-		// }	
-		// if (scoreLevel > 59) {
-		// 	var score = Math.floor(Math.random() * 50) * 2;
-		// 	levelup.setColor('#0000ff') //blue
-		// 	if (roleRank60) await message.member.roles.add(roleRank60).catch((e) => console.log(e))
-		// }	
-		// if (scoreLevel > 69) {
-		// 	var score = Math.floor(Math.random() * 25) + 1;
-		// 	levelup.setColor('#8000ff') //purple
-		// 	if (roleRank70) await message.member.roles.add(roleRank70).catch((e) => console.log(e))
-		// } 
-		// if (scoreLevel > 79) {
-		// 	var score = Math.floor(Math.random() * 15) +1;
-		// 	levelup.setColor('#ff0080') //magenta
-		// 	if (roleRank80) await message.member.roles.add(roleRank80).catch((e) => console.log(e))
-		// } 
-		// if (scoreLevel > 89) {
-		// 	var score = Math.floor(Math.random() * 10) +1;
-		// 	levelup.setColor('#ff0000') //red
-		// 	if (roleRank90) await message.member.roles.add(roleRank90).catch((e) => console.log(e))
-		// } 
-		// if (scoreLevel > 99) {
-		// 	var score = Math.floor(Math.random() * 5) +1;
-		// 	levelup.setColor('#ffff00') //yellow
-		// 	if (roleRank100) await message.member.roles.add(roleRank100).catch((e) => console.log(e))
-		// } 
+		if (scoreLevel > 9) {
+			var score = Math.floor(Math.random() * 200) * 2;
+			levelup.setColor('#2e8f37') //forest green
+			//if (roleRank10) await message.member.roles.add(roleRank10).catch((e) => console.log(e))
+		}
+		if (scoreLevel > 19) {
+			var score = Math.floor(Math.random() * 150) * 2;
+			levelup.setColor('DARK_GREEN') //dark green
+			//if (roleRank20) await message.member.roles.add(roleRank20).catch((e) => console.log(e))
+		}
+		if (scoreLevel > 29) {
+			var score = Math.floor(Math.random() * 125) * 2;
+			levelup.setColor('#00ff80') //spring green
+			//if (roleRank30) await message.member.roles.add(roleRank30).catch((e) => console.log(e))
+		}
+		if (scoreLevel > 39) {
+			var score = Math.floor(Math.random() * 100) * 2;
+			levelup.setColor('#00ffff') //cyan
+			//if (roleRank40) await message.member.roles.add(roleRank40).catch((e) => console.log(e))
+		}	
+		if (scoreLevel > 49) {
+			var score = Math.floor(Math.random() * 75) * 2;
+			levelup.setColor('#0080ff') //dodger blue
+			//if (roleRank50) await message.member.roles.add(roleRank50).catch((e) => console.log(e))
+		}	
+		if (scoreLevel > 59) {
+			var score = Math.floor(Math.random() * 50) * 2;
+			levelup.setColor('#0000ff') //blue
+			//if (roleRank60) await message.member.roles.add(roleRank60).catch((e) => console.log(e))
+		}	
+		if (scoreLevel > 69) {
+			var score = Math.floor(Math.random() * 25) + 1;
+			levelup.setColor('#8000ff') //purple
+			//if (roleRank70) await message.member.roles.add(roleRank70).catch((e) => console.log(e))
+		} 
+		if (scoreLevel > 79) {
+			var score = Math.floor(Math.random() * 15) +1;
+			levelup.setColor('#ff0080') //magenta
+			//if (roleRank80) await message.member.roles.add(roleRank80).catch((e) => console.log(e))
+		} 
+		if (scoreLevel > 89) {
+			var score = Math.floor(Math.random() * 10) +1;
+			levelup.setColor('#ff0000') //red
+			//if (roleRank90) await message.member.roles.add(roleRank90).catch((e) => console.log(e))
+		} 
+		if (scoreLevel > 99) {
+			var score = Math.floor(Math.random() * 5) +1;
+			levelup.setColor('#ffff00') //yellow
+			//if (roleRank100) await message.member.roles.add(roleRank100).catch((e) => console.log(e))
+		} 
 
 		let initiallevel = Levels[0].level
 		level = Math.floor((score + points) / 3666 )

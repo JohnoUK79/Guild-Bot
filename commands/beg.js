@@ -20,7 +20,7 @@ module.exports = {
 				.setThumbnail(guildIcon)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Begging for War-Coins`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `${guildName} - Begging`, iconURL: `${guildIcon}`});
 
 			const wallet = Economy[0].war_coins
 			const bank = Economy[0].war_chest

@@ -158,7 +158,7 @@ module.exports = {
 		.setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
 
     const bankUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, chest_level = '${newBank}' WHERE discord_id = '${interaction.member.id}'`)
-
+    console.log(`Bank: ${bankUpgrade.info}`)
     return interaction.update({embeds: [upgradeBankEmbed], components: [upgradeButtons]})	
     },
     buyBase: async function (interaction) {
@@ -204,7 +204,7 @@ module.exports = {
         const bank = Level[0].war_chest
         const baseLevel = Level[0].base_level
         const bankLevel = Level[0].chest_level
-        const cost = (baseLevel + 1) * 25000 * bankLevel
+        const cost = (baseLevel + 1) * 25000
         if (baseLevel > bankLevel ) {
             console.log(`Chest Upgrade Needed`),
             upgradeBaseEmbed
@@ -257,7 +257,7 @@ module.exports = {
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
     const baseUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, base_level = '${newBase}' WHERE discord_id = '${interaction.member.id}'`)
-
+    console.log(`Base ${baseUpgrade.info}`)
     return interaction.update({embeds: [upgradeBaseEmbed], components: [upgradeButtons]})	
 
 },
@@ -303,9 +303,7 @@ buyOfficer: async function (interaction) {
     const wallet = Level[0].war_coins
     const bank = Level[0].war_chest
     const baseLevel = Level[0].base_level
-    const officer = Level[0].officer
-    const officerLevel = Level[0].officer_level
-    const cost = (officerLevel + 1) * 50000
+    const cost = (baseLevel + 1) * 50000
 
     if (officerLevel > baseLevel ) {
         console.log(`Base Upgrade Needed`),
@@ -319,7 +317,6 @@ buyOfficer: async function (interaction) {
                     { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
                     { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
                     { name: `Base Level:`, value: `${baseLevel}`, inline: true },
-                    { name: `Officer Level:`, value: `${officerLevel}`, inline: true }, 
                 )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
 

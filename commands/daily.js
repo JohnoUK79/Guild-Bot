@@ -24,12 +24,12 @@ module.exports = {
 
         	const wallet = Economy[0].war_coins
 			const bank = Economy[0].war_chest
+			let officer = Economy[0].officer_level
+			if (officer !== '') {officer = 1}
 			const dailyBonus = Math.floor(Math.random() * (50000 - 25000 + 1)) + 25000
-			//console.log(`Daily:${dailyBonus}`)
-			const daily = (dailyBonus)
-			//const daily = Math.floor(increasedDaily);
-			//const randomNumber = Math.floor(Math.random() * 50000) + 1;
-			//console.log(increasedDaily)
+			console.log(`Daily:${dailyBonus}`)
+			const daily = (dailyBonus * officer)
+			console.log(daily)
 
 			const newWallet = wallet + daily;
 			const dailyUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)

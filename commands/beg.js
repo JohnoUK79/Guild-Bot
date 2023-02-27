@@ -25,13 +25,13 @@ module.exports = {
 			const wallet = Economy[0].war_coins
 			const bank = Economy[0].war_chest
 			let unitlevel = Economy[0].unit_level;
-			if (unitlevel !== '') {officerLevel = 0}
-			const beg = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000
-			console.log(beg)
-
+			if (unitlevel !== '') {unitlevel = 1}
+			const begBonus = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000
+			const beg = Math.round(begBonus * unitlevel)
 			const newWallet = wallet + beg;
 			const begUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
 			console.log(`Beg: ${begUpdate.info}`)
+			
 			embed
 				.setDescription(`${interaction.member} You sucessfully **Begged $${beg.toLocaleString()} War-Coins**!`)
 				.addFields(

@@ -539,7 +539,7 @@ officerUpgrade: async function (interaction) {
                 .setStyle(ButtonStyle.Secondary),
             )
 
-if (baseLevel < 2) {
+if (baseLevel < 1) {
 upgradeOfficerEmbed
     .setColor('#ff5b05')
     .setThumbnail(guildIcon)

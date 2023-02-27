@@ -302,8 +302,9 @@ buyOfficer: async function (interaction) {
     const guildName = interaction.member.guild.name	
     const wallet = Level[0].war_coins
     const bank = Level[0].war_chest
+    const officerLevel = Level[0].officer_level
     const baseLevel = Level[0].base_level
-    const cost = (baseLevel + 1) * 50000
+    const cost = (officerLevel + 1) * 50000
 
     if (officerLevel > baseLevel ) {
         console.log(`Base Upgrade Needed`),
@@ -488,7 +489,7 @@ officerUpgrade: async function (interaction) {
     const baseLevel = Level[0].base_level
     const officer = Level[0].officer
     const officerLevel = Level[0].officer_level
-    const cost = (officerLevel + 1) * 50000 * baseLevel
+    const cost = (officerLevel + 1) * 50000
 
     const upgradeOfficerButtons = new ActionRowBuilder()
         .addComponents(
@@ -643,7 +644,7 @@ unitUpgrade: async function (interaction) {
                 .setStyle(ButtonStyle.Secondary),
             )
 
-if (officerLevel < 2) {
+if (officerLevel < 1) {
 upgradeUnitEmbed
     .setColor('#ff5b05')
     .setThumbnail(guildIcon)

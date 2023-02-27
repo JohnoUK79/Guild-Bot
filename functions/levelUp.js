@@ -40,6 +40,7 @@ module.exports = {
 			{ name: `Name:`, value: `${message.member.displayName}` },
 			{ name: `XP:`, value: `${score}` },
 			{ name: `You will gain XP the more active you are in ${guildName}.`, value: `Stay active in our servers for regular rewards!`, inline: true },
+			{ name: `You have been provided $150,000 War-Coins to use in the Battle Bot ${guildName}.`, value: `use **/warpath upgrade** for more information!`, inline: true },
 			)
 		.setImage(guildIcon)
 		.setTimestamp()
@@ -48,7 +49,7 @@ module.exports = {
 		if (Levels.length === 0) {
 			console.log("First Post")
 			playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
-			warcoins = 1000
+			warcoins = 150000
 			warchest = 0
 			level = 0
 			var score = Math.floor(Math.random() * 150) * 3;
@@ -65,6 +66,7 @@ module.exports = {
 		Players = await sql.Execute(`select * from players where player_id = ${Levels[0].player_id}`);}
 				
 		if (!Players) {
+			console.log(message.author.username, 'No Player Data')
 			var score = Math.floor(Math.random() * 150) * 3;
 			let playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
 		} else {

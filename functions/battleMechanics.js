@@ -148,6 +148,10 @@ if (AH < 0) {
     var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
     const winnings = DefenderDB[0].officer_level * 10000
     const wallet = DefenderDB[0].war_coins
+    const wins = DefenderDB[0].battle_wins
+    const newWins = wins + 1
+    const losses = AttackerDB[0].battle_losses
+    const newLosses = losses + 1
     const newWallet = wallet + winnings
     embed
         .setImage(playerImage)
@@ -156,13 +160,18 @@ if (AH < 0) {
         )     
         .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by ${defender}'s **${Defender.Name}**.`)
     interaction.editReply({ embeds: [embed] });  
-    const updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${defender.id}`);
-console.log(updatePlayer.info)
+    const updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' battle_wins = '${newWins}' WHERE discord_id = ${defender.id}`);
+    const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)
+    console.log(updatePlayer.info, loss.info)
 } else
 if (DH < 0) {
     var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
     const winnings = AttackerDB[0].officer_level * 10000
     const wallet = AttackerDB[0].war_coins
+    const wins = AttackerDB[0].battle_wins
+    const newWins = wins + 1
+    const losses = DefenderDB[0].battle_losses
+    const newLosses = losses + 1
     const newWallet = wallet + winnings
     embed 
         .setImage(playerImage)
@@ -171,15 +180,11 @@ if (DH < 0) {
         )        
         .setDescription(`${defender}'s **${Defender.Name}** has been killed by ${interaction.member}'s **${Attacker.Name}**.`)
     interaction.editReply({ embeds: [embed] });
-    const updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`);
-console.log(updatePlayer.info)
-
-
-}
-//updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`);
-//updateVictim = await sql.Execute(`UPDATE levels SET war_coins = '${newVictim}' WHERE discord_id = ${victim.id}`)
-
+    const updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' battle_wins = '${newWins}' WHERE discord_id = ${interaction.member.id}`);
+    const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${defender.id}`)
+    console.log(updatePlayer.info, loss.info)
 
 
     }
+}
 }

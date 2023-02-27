@@ -26,8 +26,7 @@ module.exports = {
 			const bank = Economy[0].war_chest
 			let unitlevel = Economy[0].unit_level;
 			if (unitlevel !== '') {officerLevel = 0}
-			const randomNumber = Math.floor(Math.random() * 25000) * +1;
-			const beg = Math.floor(randomNumber * unitlevel) 
+			const beg = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000
 			console.log(beg)
 
 			const newWallet = wallet + beg;

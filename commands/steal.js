@@ -56,7 +56,7 @@ module.exports = {
 				const newVictim = victimWallet - bounty
 	
 				embed
-					.setDescription(`**${interaction.member}** you sucessfully stole **$${bounty.toLocaleString()}** from ${victim}!\nYou now have **$${newWallet.toLocaleString()} War-Coins** in your Wallet!`)
+					.setDescription(`**${interaction.member}** you sucessfully stole **$${bounty.toLocaleString()} War-Coins** from ${victim}!`)
 				
 				updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`);
 				updateVictim = await sql.Execute(`UPDATE levels SET war_coins = '${newVictim}' WHERE discord_id = ${victim.id}`)

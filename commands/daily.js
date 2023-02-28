@@ -36,10 +36,10 @@ module.exports = {
 			console.log(`Daily: ${dailyUpdate.info}`)
 			embed
 				.setDescription(`${interaction.member} You sucessfully claimed **$${daily.toLocaleString()} War-Coins** as a **Daily Bonus** for being **Active**!`)
-				.addFields(
-					{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
-				)
+				// .addFields(
+				// 	{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
+				// 	{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
+				// )
 		return interaction.reply({ embeds: [embed] });
 			} 
 		}

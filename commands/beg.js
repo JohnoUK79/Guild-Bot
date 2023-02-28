@@ -34,10 +34,10 @@ module.exports = {
 			
 			embed
 				.setDescription(`${interaction.member} You sucessfully **Begged $${beg.toLocaleString()} War-Coins**!`)
-				.addFields(
-					{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
-				)
+				// .addFields(
+				// 	{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
+				// 	{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
+				// )
 		return interaction.reply({ embeds: [embed] });
 			} 
 		}

@@ -474,8 +474,8 @@ officerSelect: async function (interaction) {
             { name: `Skill:`, value: `${officerSelection.Skill}`, inline: true }, 
         )
         .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
-    const updateOfficer = await sql.Execute(`UPDATE levels SET officer_name	= '${officerSelection.Officer_Name}' WHERE discord_id = '${interaction.member.id}'`)
-    console.log(updateOfficer)
+    const updateOfficer = await sql.Execute(`UPDATE levels SET officer_name	= '${officerSelection.Officer_Name}', officer_level = '1' WHERE discord_id = '${interaction.member.id}'`)
+    console.log(updateOfficer.info)
 return interaction.update({embeds: [selectOfficerEmbed], components: [selectOfficerButtons]})	
 
 },
@@ -487,7 +487,7 @@ officerUpgrade: async function (interaction) {
     const wallet = Level[0].war_coins
     const bank = Level[0].war_chest
     const baseLevel = Level[0].base_level
-    const officer = Level[0].officer
+    const officer = Level[0].officer_name
     const officerLevel = Level[0].officer_level
     const cost = (officerLevel + 1) * 50000
 
@@ -538,36 +538,37 @@ officerUpgrade: async function (interaction) {
             )
 
 if (baseLevel < 1) {
-upgradeOfficerEmbed
-    .setColor('#ff5b05')
-    .setThumbnail(guildIcon)
-    .setTimestamp()
-    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-    .setDescription(`${interaction.member}, You need to upgrade your **Base** to Select your **Officer**?`)
-        .addFields(
-            { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
-            { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
-            { name: `Base Level:`, value: `${baseLevel}`, inline: true }, 
-        )
-    .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
+    upgradeOfficerEmbed
+        .setColor('#ff5b05')
+        .setThumbnail(guildIcon)
+        .setTimestamp()
+        .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+        .setDescription(`${interaction.member}, You need to upgrade your **Base** to Select your **Officer**?`)
+            .addFields(
+                { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
+                { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
+                { name: `Base Level:`, value: `${baseLevel}`, inline: true }, 
+            )
+        .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
 
-return interaction.update({embeds: [upgradeOfficerEmbed], components: [upgradeButtons]})  
+    return interaction.update({embeds: [upgradeOfficerEmbed], components: [upgradeButtons]})  
 } else
-if (!officer) {
+console.log(officer)
+    if (officer === undefined) {
 
-upgradeOfficerEmbed
-    .setColor('#ff5b05')
-    .setThumbnail(guildIcon)
-    .setTimestamp()
-    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-    .setDescription(`**${interaction.member}**, First you need to select your **Officer**!`)
-        .addFields(
-            { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
-            { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
-        )
-    .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
+    upgradeOfficerEmbed
+        .setColor('#ff5b05')
+        .setThumbnail(guildIcon)
+        .setTimestamp()
+        .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+        .setDescription(`**${interaction.member}**, First you need to select your **Officer**!`)
+            .addFields(
+                { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
+                { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
+            )
+        .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
 
-return interaction.update({embeds: [upgradeOfficerEmbed], components: [chooseOfficerButtons]})        
+    return interaction.update({embeds: [upgradeOfficerEmbed], components: [chooseOfficerButtons]})        
 
 } else
         upgradeOfficerEmbed
@@ -868,11 +869,13 @@ profile: async function (interaction) {
         )
     const guildIcon = interaction.member.guild.iconURL();
     const guildName = interaction.member.guild.name	
-let officer = Level[0].officer
-if (officer === '') {let officer = 'No Officer Chosen'}
-let unit = Level[0].unit_type
-if (unit !== '') {let unit = 'No Unit Trained'}
-console.log(officer, unit)
+    let officer = Level[0].officer_name
+    const officerLevel = Level[0].officer_level
+    if (officer === '') {let officer = 'No Officer Chosen'}
+    let unitType = Level[0].Unit_Type
+    console.log(unitType)
+    if (unitType !== '') {let unit = 'No Unit Trained'}
+    console.log(unitType)
 
     
     profileEmbed
@@ -883,9 +886,10 @@ console.log(officer, unit)
         .addFields(
             { name: `War-Coins:`, value: `$${Level[0].war_coins.toLocaleString()}`, inline: true }, 
             { name: `War-Chest:`, value: `$${Level[0].war_chest.toLocaleString()}`, inline: true }, 
+            { name: `War-Chest Level:`, value: `${Level[0].chest_level.toLocaleString()}`, inline: true }, 
             { name: `Base Level:`, value: `${Level[0].base_level}`, inline: true }, 
-            //{ name: `Officer:`, value: `${Level[0].officer}`, inline: true }, 
-            //{ name: `Officer Level:`, value: `${officer}`, inline: true },
+            { name: `Officer:`, value: `${officer}`, inline: true }, 
+            { name: `Officer Level:`, value: `${officerLevel}`, inline: true },
             //{ name: `Unit:`, value: `${unit}`, inline: true }, 
             //{ name: `Unit Level:`, value: `${Level[0].unit_level}`, inline: true }, 
 

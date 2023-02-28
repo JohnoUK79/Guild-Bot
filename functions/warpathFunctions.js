@@ -461,7 +461,7 @@ officerSelect: async function (interaction) {
     const guildName = interaction.member.guild.name	
     const Officer = await sql.Execute(`SELECT Officer_Name, Officer_Camp, Skill FROM officers WHERE Officer_Type = 'GROUND'`)
     const officerSelection = Officer[Math.floor(Math.random() * Officer.length)]
-    console.log(Officer)
+    console.log(officerSelection)
 
     selectOfficerEmbed
         .setColor('#ff5b05')
@@ -474,8 +474,8 @@ officerSelect: async function (interaction) {
             { name: `Skill:`, value: `${officerSelection.Skill}`, inline: true }, 
         )
         .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
-const updateOfficer = await sql.Execute(`UPDATE levels SET officer = '${officerSelection.Officer_Name}' WHERE discord_id = '${interaction.member.id}'`)
-
+    const updateOfficer = await sql.Execute(`UPDATE levels SET officer_name	= '${officerSelection.Officer_Name}' WHERE discord_id = '${interaction.member.id}'`)
+    console.log(updateOfficer)
 return interaction.update({embeds: [selectOfficerEmbed], components: [selectOfficerButtons]})	
 
 },

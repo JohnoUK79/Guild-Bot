@@ -47,7 +47,7 @@ module.exports = {
 	async execute(interaction) {
 		await interaction.deferReply({
 			fetchReply: true,
-			ephemeral: false,
+			ephemeral: true,
 		})
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name

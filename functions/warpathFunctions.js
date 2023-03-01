@@ -706,7 +706,7 @@ unitSelect: async function (interaction) {
         )
     const guildIcon = interaction.member.guild.iconURL();
     const guildName = interaction.member.guild.name	
-    const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '4.0'`)
+    const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '4.0' AND Unit_Type LIKE '%Tank%'`)
     const unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
     console.log(unitSelection)
 

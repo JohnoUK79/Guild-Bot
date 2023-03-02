@@ -68,6 +68,24 @@ module.exports = {
             .setName("rank100")
             .setDescription("Set the Role for Rank 100 / General of The Army!")
             .setRequired(false)
+        )
+                                
+        .addStringOption((option) => option
+            .setName("rank250")
+            .setDescription("Set the Role for Rank 250 / Chief of Staff!")
+            .setRequired(false)
+        )
+                                
+        .addStringOption((option) => option
+            .setName("rank500")
+            .setDescription("Set the Role for Rank 500 / President!")
+            .setRequired(false)
+        )
+                                
+        .addStringOption((option) => option
+            .setName("rank1000")
+            .setDescription("Set the Role for Rank 1000 / God!")
+            .setRequired(false)
         ),
 
     async execute(interaction) {
@@ -84,6 +102,9 @@ module.exports = {
         var level80 = interaction.options.getString('rank80');
         var level90 = interaction.options.getString('rank90');
         var level100 = interaction.options.getString('rank100');
+        var level250 = interaction.options.getString('rank250');
+        var level500 = interaction.options.getString('rank500');
+        var level1000 = interaction.options.getString('rank1000');
 
         const addRanks = new EmbedBuilder()
             .setColor('#0099ff')
@@ -104,8 +125,11 @@ module.exports = {
                 { name: `Rank 80`, value: `${level80}` },
                 { name: `Rank 90`, value: `${level90}` },
                 { name: `Rank 100`, value: `${level100}` },
+                { name: `Rank 250`, value: `${level250}` },
+                { name: `Rank 500`, value: `${level500}` },
+                { name: `Rank 1000`, value: `${level1000}` },
             )
-            .setImage(`${guildName}`)
+            //.setImage(guildName)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Rank Roles.`, iconURL: `${guildIcon}` });
             await interaction.reply({
@@ -124,9 +148,14 @@ module.exports = {
         let r80 = level80.replace(/\D+/g, '');
         let r90 = level90.replace(/\D+/g, '');
         let r100 = level100.replace(/\D+/g, '');
+        let r250 = level100.replace(/\D+/g, '');
+        let r500 = level100.replace(/\D+/g, '');
+        let r1000 = level100.replace(/\D+/g, '');
 
 
-        updateRanks = await sql.Execute(`INSERT INTO settings (guild_id, Rank_10, Rank_20, Rank_30, Rank_40, Rank_50, Rank_60, Rank_70, Rank_80, Rank_90, Rank_100) VALUES ('${guildId}', '${r10}', '${r20}', '${r30}', '${r40}', '${r50}', '${r60}', '${r70}', '${r80}', '${r90}', '${r100}') ON DUPLICATE KEY UPDATE Rank_10 = '${r10}', Rank_20 = '${r20}', Rank_30 = '${r30}', Rank_40 = '${r40}', Rank_50 = '${r50}', Rank_60 = '${r60}', Rank_70 = '${r70}', Rank_80 = '${r80}', Rank_90 = '${r90}', Rank_100 = '${r100}', last_updated = '${setDate}';`)
+        updateRanks = await sql.Execute(`INSERT INTO settings (guild_id, Rank_10, Rank_20, Rank_30, Rank_40, Rank_50, Rank_60, Rank_70, Rank_80, Rank_90, Rank_100, Rank_250, Rank_500, Rank_1000) 
+        VALUES ('${guildId}', '${r10}', '${r20}', '${r30}', '${r40}', '${r50}', '${r60}', '${r70}', '${r80}', '${r90}', '${r100}', '${r250}', '${r500}', '${r1000}') 
+        ON DUPLICATE KEY UPDATE Rank_10 = '${r10}', Rank_20 = '${r20}', Rank_30 = '${r30}', Rank_40 = '${r40}', Rank_50 = '${r50}', Rank_60 = '${r60}', Rank_70 = '${r70}', Rank_80 = '${r80}', Rank_90 = '${r90}', Rank_100 = '${r100}', Rank_250 = '${r250}', Rank_500 = '${r500}', Rank_1000 = ${r1000}, last_updated = '${setDate}';`)
         console.log(updateRanks)
     },
 };

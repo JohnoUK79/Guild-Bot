@@ -98,7 +98,15 @@ module.exports = {
 		if (oldlevel > 99) {
 			playerLevel.setColor('#ffff00') //yellow
 		} 
-
+		if (oldlevel > 249) {
+			playerLevel.setColor('#ffbd00') //Deep Yellow
+		} 
+		if (oldlevel > 499) {
+			playerLevel.setColor('#d81159') //Deep Red
+		} 
+		if (oldlevel > 999) {
+			playerLevel.setColor('#72ddf7') //Light Blue
+		} 
 		if (!player) {
 			return interaction.reply({ embeds: [unknownLevel], components: [updatePlayer] });
 		} else return interaction.reply({ embeds: [playerLevel], components: [updatePlayer] });

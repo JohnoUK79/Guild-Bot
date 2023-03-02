@@ -92,10 +92,15 @@ module.exports = {
 		if (playerLevel > 99) {
 			leaderBoard.setColor('#ffff00') //yellow
 		} 
-
-
-
-
+		if (oldlevel > 249) {
+			playerLevel.setColor('#ffbd00') //Deep Yellow
+		} 
+		if (oldlevel > 499) {
+			playerLevel.setColor('#d81159') //Deep Red
+		} 
+		if (oldlevel > 999) {
+			playerLevel.setColor('#72ddf7') //Light Blue
+		} 
 
 		return interaction.reply({ embeds: [leaderBoard], components: [LeaderboardButtons]})
 	},

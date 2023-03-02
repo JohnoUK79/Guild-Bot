@@ -13,6 +13,63 @@ module.exports = {
 			empheral: true,
 			fetchReply: true,
 		});
+		//God
+		let roleGod = interaction.guild.roles.cache.find(role => role.name === "God");
+		if (!roleGod) {
+			console.log(`No Role Found`)
+			let roleGod = await interaction.guild.roles.create({ 
+				name: 'God',
+				color: '#72ddf7', //Light Blue
+				mentionable: true,
+				hoist: true,
+		})
+		console.log(`New Role Created`)
+		} else {
+		console.log(`Existing Role`)
+		roleGod.edit({
+			color: '#72ddf7', //Light Blue
+			mentionable: true,
+			hoist: true,
+		})
+		}
+		//President
+		let rolePresident = interaction.guild.roles.cache.find(role => role.name === "President");
+		if (!rolePresident) {
+			console.log(`No Role Found`)
+			let rolePresident = await interaction.guild.roles.create({ 
+				name: 'President',
+				color: '#d81159', //Deep Red
+				mentionable: true,
+				hoist: true,
+		})
+		console.log(`New Role Created`)
+		} else {
+		console.log(`Existing Role`)
+		rolePresident.edit({
+			color: '#d81159', //Deep Red
+			mentionable: true,
+			hoist: true,
+		})
+		}	
+		//ChiefStaff
+		let roleChiefStaff = interaction.guild.roles.cache.find(role => role.name === "Chief of Staff");
+		if (!roleChiefStaff) {
+			console.log(`No Role Found`)
+			let roleChiefStaff = await interaction.guild.roles.create({ 
+				name: 'Chief of Staff',
+				color: '#ffbd00', //Deep yellow
+				mentionable: true,
+				hoist: true,
+		})
+		console.log(`New Role Created`)
+		} else {
+		console.log(`Existing Role`)
+		roleChiefStaff.edit({
+			color: '#ffbd00', //Deep yellow
+			mentionable: true,
+			hoist: true,
+		})
+		}	
 		//GeneralArmy
 		let roleGeneralArmy = interaction.guild.roles.cache.find(role => role.name === "General of the Army");
 		if (!roleGeneralArmy) {
@@ -80,7 +137,6 @@ module.exports = {
 				mentionable: true,
 				hoist: true,
 		})
-		roleColonel.setPosition(10)
 		console.log(`New Role Created`)
 		} else {
 		console.log(`Existing Role`)
@@ -204,7 +260,9 @@ module.exports = {
 			hoist: true,
 		})
 		}
-		addRanks = await sql.Execute(`INSERT INTO settings (guild_id, Rank_10, Rank_20, Rank_30, Rank_40, Rank_50, Rank_60, Rank_70, Rank_80, Rank_90, Rank_100) VALUES ('${interaction.guildId}', '${rolePrivate.id}', '${roleCorporal.id}', '${roleSergeant.id}', '${roleLieutenant.id}', '${roleCaptain.id}', '${roleMajor.id}', '${roleColonel.id}', '${roleMajorGeneral.id}', '${roleGeneral.id}', '${roleMajorGeneral.id}') ON DUPLICATE KEY UPDATE Rank_10 = '${rolePrivate.id}', Rank_20 = '${roleCorporal.id}', Rank_30 = '${roleSergeant.id}', Rank_40 = '${roleLieutenant.id}', Rank_50 = '${roleCaptain.id}', Rank_60 = '${roleMajor.id}', Rank_70 = '${roleColonel.id}', Rank_80 = '${roleMajorGeneral.id}', Rank_90 = '${roleGeneral.id}', Rank_100 = '${roleGeneralArmy.id}', last_updated = '${setDate}';`)
+		addRanks = await sql.Execute(`INSERT INTO settings (guild_id, Rank_10, Rank_20, Rank_30, Rank_40, Rank_50, Rank_60, Rank_70, Rank_80, Rank_90, Rank_100, Rank_250, Rank_500, Rank_1000) 
+		VALUES ('${interaction.guildId}', '${rolePrivate.id}', '${roleCorporal.id}', '${roleSergeant.id}', '${roleLieutenant.id}', '${roleCaptain.id}', '${roleMajor.id}', '${roleColonel.id}', '${roleMajorGeneral.id}', '${roleGeneral.id}', '${roleGeneralArmy.id}', '${roleChiefStaff.id}', '${rolePresident.id}', '${roleGod.id}') 
+		ON DUPLICATE KEY UPDATE Rank_10 = '${rolePrivate.id}', Rank_20 = '${roleCorporal.id}', Rank_30 = '${roleSergeant.id}', Rank_40 = '${roleLieutenant.id}', Rank_50 = '${roleCaptain.id}', Rank_60 = '${roleMajor.id}', Rank_70 = '${roleColonel.id}', Rank_80 = '${roleMajorGeneral.id}', Rank_90 = '${roleGeneral.id}', Rank_100 = '${roleGeneralArmy.id}', Rank_250 = '${roleChiefStaff.id}', Rank_500 = '${rolePresident.id}', Rank_1000 = '${roleGod.id}', last_updated = '${setDate}';`)
         console.log(addRanks)
 		await interaction.editReply({ empheral: true, content: `Congratulations <@${interaction.user.id}>, Rank Roles Added!` })
 	},

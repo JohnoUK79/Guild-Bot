@@ -774,7 +774,7 @@ buyUnit: async function (interaction) {
     const wallet = Level[0].war_coins
     const bank = Level[0].war_chest
     const officerLevel = Level[0].officer_level
-    const cost = (unitLevel + 1) * (125000 * officerLevel)
+    const cost = (unitLevel + 1) * 125000
 
     if (unitLevel === '9.2') {
         console.log(`Unit Maxed`),

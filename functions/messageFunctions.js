@@ -95,5 +95,64 @@ module.exports = {
 			.setFooter({ text: `${guildName} - Translator.`, iconURL: `${guildIcon}` });
 		await message.reply({ embeds: [translationEmbed] })
 		message.delete({ timeout: 500 })
+	},
+	rankCheck: async function (message) {
+		console.log(`Rank Check`)
+		const Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
+		const scoreLevel = Levels[0].level
+		const roleRank10 = Settings[0].Rank_10
+		const roleRank20 = Settings[0].Rank_20
+		const roleRank30 = Settings[0].Rank_30
+		const roleRank40 = Settings[0].Rank_40
+		const roleRank50 = Settings[0].Rank_50
+		const roleRank60 = Settings[0].Rank_60
+		const roleRank70 = Settings[0].Rank_70
+		const roleRank80 = Settings[0].Rank_80
+		const roleRank90 = Settings[0].Rank_90
+		const roleRank100 = Settings[0].Rank_100
+		const roleRank250 = Settings[0].Rank_250
+		const roleRank500 = Settings[0].Rank_500
+		const roleRank1000 = Settings[0].Rank_1000
+
+		if (scoreLevel > 9) {
+			if (roleRank10) await message.member.roles.add(roleRank10).catch((e) => console.log(e))
+		}
+		if (scoreLevel > 19) {
+			if (roleRank20) await message.member.roles.add(roleRank20).catch((e) => console.log(e))
+		}
+		if (scoreLevel > 29) {
+			if (roleRank30) await message.member.roles.add(roleRank30).catch((e) => console.log(e))
+		}
+		if (scoreLevel > 39) {
+			if (roleRank40) await message.member.roles.add(roleRank40).catch((e) => console.log(e))
+		}	
+		if (scoreLevel > 49) {
+			if (roleRank50) await message.member.roles.add(roleRank50).catch((e) => console.log(e))
+		}	
+		if (scoreLevel > 59) {
+			if (roleRank60) await message.member.roles.add(roleRank60).catch((e) => console.log(e))
+		}	
+		if (scoreLevel > 69) {
+			if (roleRank70) await message.member.roles.add(roleRank70).catch((e) => console.log(e))
+		} 
+		if (scoreLevel > 79) {
+			if (roleRank80) await message.member.roles.add(roleRank80).catch((e) => console.log(e))
+		} 
+		if (scoreLevel > 89) {
+			if (roleRank90) await message.member.roles.add(roleRank90).catch((e) => console.log(e))
+		} 
+		if (scoreLevel > 99) {
+			if (roleRank100) await message.member.roles.add(roleRank100).catch((e) => console.log(e))
+		} 
+		if (scoreLevel > 249) {
+			if (roleRank250) await message.member.roles.add(roleRank100).catch((e) => console.log(e))
+		} 
+		if (scoreLevel > 499) {
+			if (roleRank500) await message.member.roles.add(roleRank100).catch((e) => console.log(e))
+		} 
+		if (scoreLevel > 999) {
+			if (roleRank1000) await message.member.roles.add(roleRank100).catch((e) => console.log(e))
+		} 
+
 	}
 }

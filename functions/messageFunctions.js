@@ -97,9 +97,9 @@ module.exports = {
 		message.delete({ timeout: 500 })
 	},
 	rankCheck: async function (message) {
-		console.log(`Rank Check`)
-		const Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
-		const scoreLevel = Levels[0].level
+		let Settings = await sql.Execute(`select * from settings where guild_id = '${message.guild.id}';`); 
+		let Levels = await sql.Execute(`select * from levels where discord_id = '${message.author.id}';`); 
+		let scoreLevel = Levels[0].level
 		const roleRank10 = Settings[0].Rank_10
 		const roleRank20 = Settings[0].Rank_20
 		const roleRank30 = Settings[0].Rank_30

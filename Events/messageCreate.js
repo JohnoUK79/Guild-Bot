@@ -28,9 +28,9 @@ module.exports = {
 		guildIcon = message.member.guild.iconURL();
 		guildName = message.member.guild.name
 		try {
-		rankCheck(message)
+		levelUp(message)
 		} catch (err) {console.log(err)}
 		try {
-		levelUp(message)
+		rankCheck(message)
 		} catch (err) {console.log(err)}
 	}}

@@ -16,6 +16,8 @@ module.exports = {
 		points = level[0].points
 		oldlevel = level[0].level
 		seen = level[0].last_seen
+		wins = level[0].battle_wins
+		losses = level[0].battle_losses
 		seenDiscord = level[0].last_seen_server
 
 		if (!player) {
@@ -43,7 +45,7 @@ module.exports = {
 		.addFields(
 			{ name: `Name:`, value: `${interaction.member.displayName}` },
 			{ name: `XP:`, value: `${points}` },
-			{ name: 'Level.', value: `${oldlevel}`, inline: true },
+			{ name: 'Level.', value: `${oldlevel}`, inline: false },
 			)
 		.setImage(playerImage)
 		.setTimestamp()
@@ -60,6 +62,8 @@ module.exports = {
 			{ name: `Name:`, value: `${interaction.member.displayName}` },
 			{ name: `Points:`, value: `${points}` },
 			{ name: 'XP.', value: `${oldlevel}`, inline: true },
+			{ name: 'Battle Wins.', value: `${wins}`, inline: false },
+			{ name: 'Battle Losses.', value: `${losses}`, inline: false },
 			{ name: 'Last Seen.', value: `${seen}`, inline: true },
 			{ name: 'Last Seen Discord Server.', value: `${seenDiscord}`, inline: true },
 			)

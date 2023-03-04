@@ -150,6 +150,8 @@ if (AH < 0) {
     await sleep(1000)
     var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
     const winnings = DefenderDB[0].officer_level * 10000
+    chest = DefenderDB[0].war_chest
+    console.log(chest)    
     const wallet = DefenderDB[0].war_coins
     const wins = DefenderDB[0].battle_wins
     const newWins = parseInt(wins + 1)
@@ -172,6 +174,8 @@ if (DH < 0) {
     await sleep(1000)
     var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
     const winnings = AttackerDB[0].officer_level * 10000
+    chest = AttackerDB[0].war_chest
+    console.log(chest)
     const wallet = AttackerDB[0].war_coins
     const wins = AttackerDB[0].battle_wins
     const newWins = parseInt(wins + 1)

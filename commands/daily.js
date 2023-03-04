@@ -25,15 +25,13 @@ module.exports = {
         	const wallet = Economy[0].war_coins
 			const bank = Economy[0].war_chest
 			let officer = Economy[0].officer_level
-			if (officer !== '') {officer = 1}
+			if (!officer) {officer = 1}
 			const dailyBonus = Math.floor(Math.random() * (50000 - 25000 + 1)) + 25000
-			console.log(`Daily:${dailyBonus}`)
 			const daily = (dailyBonus * officer)
-			console.log(daily)
 
 			const newWallet = wallet + daily;
 			const dailyUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
-			console.log(`Daily: ${dailyUpdate.info}`)
+			console.log(`Daily: ${interaction.member.displayName} ${dailyUpdate.info}`)
 			embed
 				.setDescription(`${interaction.member} You sucessfully claimed **$${daily.toLocaleString()} War-Coins** as a **Daily Bonus** for being **Active**!`)
 				// .addFields(

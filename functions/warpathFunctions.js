@@ -871,10 +871,10 @@ profile: async function (interaction) {
     const guildName = interaction.member.guild.name	
     let officer = Level[0].officer_name
     const officerLevel = Level[0].officer_level
-    if (officer === '') {let officer = 'No Officer Chosen'}
+    if (!officer) {let officer = 'No Officer Chosen'}
     let unitType = Level[0].Unit_Type
-    console.log(unitType)
-    if (unitType !== '') {let unit = 'No Unit Trained'}
+    console.log(officer)
+    if (!unitType) {let unit = 'No Unit Trained'}
     console.log(unitType)
 
     
@@ -888,7 +888,7 @@ profile: async function (interaction) {
             { name: `War-Chest:`, value: `$${Level[0].war_chest.toLocaleString()}`, inline: true }, 
             { name: `War-Chest Level:`, value: `${Level[0].chest_level.toLocaleString()}`, inline: true }, 
             { name: `Base Level:`, value: `${Level[0].base_level}`, inline: true }, 
-            { name: `Officer:`, value: `${officer}`, inline: true }, 
+            //{ name: `Officer:`, value: `${officer}`, inline: true }, 
             { name: `Officer Level:`, value: `${officerLevel}`, inline: true },
             //{ name: `Unit:`, value: `${unit}`, inline: true }, 
             //{ name: `Unit Level:`, value: `${Level[0].unit_level}`, inline: true }, 

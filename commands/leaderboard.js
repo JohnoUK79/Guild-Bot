@@ -66,7 +66,7 @@ module.exports = {
 			leaderBoard.setColor('#2e8f37') //forest green
 		}
 		if (playerLevel > 19) {
-			leaderBoard.setColor('#013220') //dark green
+			leaderBoard.setColor('#1b4332') //dark green
 		}
 		if (playerLevel > 29) {
 			leaderBoard.setColor('#00ff80') //spring green

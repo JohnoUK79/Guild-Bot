@@ -133,7 +133,7 @@ module.exports = {
 		}
 		if (scoreLevel > 19) {
 			var score = Math.floor(Math.random() * 150) * 2;
-			levelup.setColor('DARK_GREEN') //dark green
+			levelup.setColor('#1b4332') //dark green
 			//if (roleRank20) await message.member.roles.add(roleRank20).catch((e) => console.log(e))
 		}
 		if (scoreLevel > 29) {
@@ -205,15 +205,15 @@ module.exports = {
 			console.log("Rank Up")
 			if (!roleRank10) {
 			console.log("No Role Set")
-			await message.guild.channels.cache.get(LevelUpChannel).send({ content: `Congratulations **<@${message.member.id}>**, you have Ranked Up and achieved the rank of **Private**`})
 			await message.guild.channels.cache.get(LevelUpChannel).send({
 				embeds: [devSupport],
+				content: `Congratulations **<@${message.member.id}>**, you have Ranked Up and achieved the rank of **Private**`
 			}) 					
 			} else {
 			await message.member.roles.add(roleRank10).catch((e) => console.log(e))
-			await message.guild.channels.cache.get(LevelUpChannel).send({ content: `Congratulations **<@${message.member.id}>**, you have Ranked Up and achieved the rank of **${r10name.name}**` })
 			await message.guild.channels.cache.get(LevelUpChannel).send({
 				embeds: [devSupport],
+				content: `Congratulations **<@${message.member.id}>**, you have Ranked Up and achieved the rank of **${r10name.name}**`
 			})}
 		} 
 

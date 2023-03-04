@@ -33,10 +33,10 @@ module.exports = {
                         return interaction.editReply({ embeds: [embed] })
                     }
                 const DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${DefenderDB[0].unit_camp}' AND Unit_Type = '${DefenderDB[0].unit_type}' AND Unit_Level = '${DefenderDB[0].unit_level}'`)
-                console.log(DefenderUnit)
+                console.log(`Defender`, DefenderUnit)
                 const AttackerDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`);
                 const AttackerUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${AttackerDB[0].unit_camp}' AND Unit_Type = '${AttackerDB[0].unit_type}' AND Unit_Level = '${AttackerDB[0].unit_level}'`)
-                console.log(`Attacker: ${AttackerUnit}`)
+                console.log(`Attacker`, AttackerUnit)
                 if (!AttackerUnit) {
                     embed
 					    .setDescription(`${interaction.member} you haven't selected your **Unit**!\nUse **warpath-upgrade** to level up and get your **Unit**!`)
@@ -151,9 +151,9 @@ if (AH < 0) {
     const winnings = DefenderDB[0].officer_level * 10000
     const wallet = DefenderDB[0].war_coins
     const wins = DefenderDB[0].battle_wins
-    const newWins = wins + 1
+    const newWins = parseInt(wins + 1)
     const losses = AttackerDB[0].battle_losses
-    const newLosses = losses + 1
+    const newLosses = parseInt(losses + 1)
     const newWallet = wallet + winnings
     embed
         .setImage(playerImage)
@@ -162,9 +162,9 @@ if (AH < 0) {
         )     
         .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by ${defender}'s **${Defender.Name}**.`)
     interaction.editReply({ embeds: [embed] });  
-    const updatePlayer = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' battle_wins = '${newWins}' WHERE discord_id = ${defender.id}`);
+    const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${defender.id}`)
     const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)
-    console.log(updatePlayer, loss)
+    console.log(win.info, loss.info)
 } else
 if (DH < 0) {
     var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
@@ -175,7 +175,7 @@ if (DH < 0) {
     const losses = DefenderDB[0].battle_losses
     const newLosses = parseInt(losses + 1)
     const newWallet = parseInt(wallet + winnings)
-    console.log(newWins)
+
     embed 
         .setImage(playerImage)
         .addFields(

@@ -76,39 +76,39 @@ module.exports = {
 			console.log(message.author.username, updatePlayers.info)
 		}
 
-		let roleRank10 = Settings[0].Rank_10
-		let roleRank20 = Settings[0].Rank_20
-		let roleRank30 = Settings[0].Rank_30
-		let roleRank40 = Settings[0].Rank_40
-		let roleRank50 = Settings[0].Rank_50
-		let roleRank60 = Settings[0].Rank_60
-		let roleRank70 = Settings[0].Rank_70
-		let roleRank80 = Settings[0].Rank_80
-		let roleRank90 = Settings[0].Rank_90
-		let roleRank100 = Settings[0].Rank_100
-		let roleRank250 = Settings[0].Rank_250
-		let roleRank500 = Settings[0].Rank_500
-		let roleRank1000 = Settings[0].Rank_1000
+		const roleRank10 = Settings[0].Rank_10
+		const roleRank20 = Settings[0].Rank_20
+		const roleRank30 = Settings[0].Rank_30
+		const roleRank40 = Settings[0].Rank_40
+		const roleRank50 = Settings[0].Rank_50
+		const roleRank60 = Settings[0].Rank_60
+		const roleRank70 = Settings[0].Rank_70
+		const roleRank80 = Settings[0].Rank_80
+		const roleRank90 = Settings[0].Rank_90
+		const roleRank100 = Settings[0].Rank_100
+		const roleRank250 = Settings[0].Rank_250
+		const roleRank500 = Settings[0].Rank_500
+		const roleRank1000 = Settings[0].Rank_1000
 		
-		let scoreLevel = Levels[0].level
-		let r10name = message.guild.roles.cache.find( r => r.id === roleRank10 )
-		let r20name = message.guild.roles.cache.find( r => r.id === roleRank20 )
-		let r30name = message.guild.roles.cache.find( r => r.id === roleRank30 )
-		let r40name = message.guild.roles.cache.find( r => r.id === roleRank40 )
-		let r50name = message.guild.roles.cache.find( r => r.id === roleRank50 )
-		let r60name = message.guild.roles.cache.find( r => r.id === roleRank60 )
-		let r70name = message.guild.roles.cache.find( r => r.id === roleRank70 )
-		let r80name = message.guild.roles.cache.find( r => r.id === roleRank80 )
-		let r90name = message.guild.roles.cache.find( r => r.id === roleRank90 )
-		let r100name = message.guild.roles.cache.find( r => r.id === roleRank100 )
-		let r250name = message.guild.roles.cache.find( r => r.id === roleRank250 )
-		let r500name = message.guild.roles.cache.find( r => r.id === roleRank500 )
-		let r1000name = message.guild.roles.cache.find( r => r.id === roleRank1000 )
+		const scoreLevel = Levels[0].level
+		const r10name = message.guild.roles.cache.find( r => r.id === roleRank10 )
+		const r20name = message.guild.roles.cache.find( r => r.id === roleRank20 )
+		const r30name = message.guild.roles.cache.find( r => r.id === roleRank30 )
+		const r40name = message.guild.roles.cache.find( r => r.id === roleRank40 )
+		const r50name = message.guild.roles.cache.find( r => r.id === roleRank50 )
+		const r60name = message.guild.roles.cache.find( r => r.id === roleRank60 )
+		const r70name = message.guild.roles.cache.find( r => r.id === roleRank70 )
+		const r80name = message.guild.roles.cache.find( r => r.id === roleRank80 )
+		const r90name = message.guild.roles.cache.find( r => r.id === roleRank90 )
+		const r100name = message.guild.roles.cache.find( r => r.id === roleRank100 )
+		const r250name = message.guild.roles.cache.find( r => r.id === roleRank250 )
+		const r500name = message.guild.roles.cache.find( r => r.id === roleRank500 )
+		const r1000name = message.guild.roles.cache.find( r => r.id === roleRank1000 )
 
-		points = Levels[0].points
-		newPoints = (points + score)
-		newLevel = (Levels[0].level + 1)
-		let LevelUpChannel = Settings[0].level_up_channel_id
+		const points = Levels[0].points
+		const newPoints = (points + score)
+		const newLevel = (Levels[0].level + 1)
+		const LevelUpChannel = Settings[0].level_up_channel_id
 
 		const levelup = new EmbedBuilder()
 		.setColor('DARK_GOLD')
@@ -129,67 +129,54 @@ module.exports = {
 		if (scoreLevel > 9) {
 			var score = Math.floor(Math.random() * 200) * 2;
 			levelup.setColor('#2e8f37') //forest green
-			//if (roleRank10) await message.member.roles.add(roleRank10).catch((e) => console.log(e))
 		}
 		if (scoreLevel > 19) {
 			var score = Math.floor(Math.random() * 150) * 2;
 			levelup.setColor('#1b4332') //dark green
-			//if (roleRank20) await message.member.roles.add(roleRank20).catch((e) => console.log(e))
 		}
 		if (scoreLevel > 29) {
 			var score = Math.floor(Math.random() * 125) * 2;
 			levelup.setColor('#00ff80') //spring green
-			//if (roleRank30) await message.member.roles.add(roleRank30).catch((e) => console.log(e))
 		}
 		if (scoreLevel > 39) {
 			var score = Math.floor(Math.random() * 100) * 2;
 			levelup.setColor('#00ffff') //cyan
-			//if (roleRank40) await message.member.roles.add(roleRank40).catch((e) => console.log(e))
 		}	
 		if (scoreLevel > 49) {
 			var score = Math.floor(Math.random() * 75) * 2;
 			levelup.setColor('#0080ff') //dodger blue
-			//if (roleRank50) await message.member.roles.add(roleRank50).catch((e) => console.log(e))
 		}	
 		if (scoreLevel > 59) {
 			var score = Math.floor(Math.random() * 50) * 2;
 			levelup.setColor('#0000ff') //blue
-			//if (roleRank60) await message.member.roles.add(roleRank60).catch((e) => console.log(e))
 		}	
 		if (scoreLevel > 69) {
 			var score = Math.floor(Math.random() * 25) + 1;
 			levelup.setColor('#8000ff') //purple
-			//if (roleRank70) await message.member.roles.add(roleRank70).catch((e) => console.log(e))
 		} 
 		if (scoreLevel > 79) {
 			var score = Math.floor(Math.random() * 15) +1;
 			levelup.setColor('#ff0080') //magenta
-			//if (roleRank80) await message.member.roles.add(roleRank80).catch((e) => console.log(e))
 		} 
 		if (scoreLevel > 89) {
 			var score = Math.floor(Math.random() * 10) +1;
 			levelup.setColor('#ff0000') //red
-			//if (roleRank90) await message.member.roles.add(roleRank90).catch((e) => console.log(e))
 		} 
 		if (scoreLevel > 99) {
 			var score = Math.floor(Math.random() * 5) +1;
 			levelup.setColor('#ffff00') //yellow
-			//if (roleRank100) await message.member.roles.add(roleRank100).catch((e) => console.log(e))
 		} 
 		if (scoreLevel > 249) {
 			var score = Math.floor(Math.random() * 4) +1;
 			levelup.setColor('#ffbd00') // Deep yellow
-			//if (roleRank100) await message.member.roles.add(roleRank100).catch((e) => console.log(e))
 		} 
 		if (scoreLevel > 499) {
 			var score = Math.floor(Math.random() * 3) +1;
 			levelup.setColor('#d81159') // Deep Red
-			//if (roleRank100) await message.member.roles.add(roleRank100).catch((e) => console.log(e))
 		} 
 		if (scoreLevel > 999) {
 			var score = Math.floor(Math.random() * 2) +1;
 			levelup.setColor('#72ddf7') // Light Blue
-			//if (roleRank100) await message.member.roles.add(roleRank100).catch((e) => console.log(e))
 		} 
 		let initiallevel = Levels[0].level
 		level = Math.floor((score + points) / 3666 )

@@ -15,45 +15,40 @@ module.exports = {
         ),
 
     async execute(interaction) {
-        const { client } = require('../bot');
-        console.log(interaction)
+        const { client } = require('../bot')
         guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
         var message = interaction.options.getString('message');
-        const levelUpChannelIds = await sql.Execute(`SELECT level_up_channel_id FROM settings WHERE level_up_channel_id = '1000526899124117535'`)
-        console.log(levelUpChannelIds[0])
-        console.log(client)
-        //Loop through announcement channels
-        // for (let i = 0; i < levelUpChannelIds.length; i++) {
-        //     let levelUpChannelId = levelUpChannelIds[i];
-            
-        //     try {
-        //         let sendChannel = client.channels.cache.get(levelUpChannelId)                
-        //         console.log(levelUpChannelId);
-        //         sendChannel.send({ content: `${message}` })
-
-        //     }
-        //     catch (e) {
-        //         console.log(e);
-        //         console.log(levelUpChannelId);
-        //     }
-// }
-
-        
+        const levelUpChannelIds = await sql.Execute(`SELECT level_up_channel_id FROM settings WHERE 1`) //level_up_channel_id = '1000526899124117535'
         const announceEmbed = new EmbedBuilder()
-            .setColor('#0099ff')
-            .setTitle(`${guildName} - Announcement Sent`)
+            .setColor('#4ec9b0')
+            .setTitle(`${guildName} - Announcement`)
             .setURL('http://www.phfamily.co.uk/')
-            .setThumbnail(interaction.user.displayAvatarURL())
-            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
-            .setDescription(`**Announcement Sent!**`)
-            .setThumbnail('http://phfamily.co.uk/img/gifs/Poll.gif')
+            .setThumbnail(guildIcon)
+            .setAuthor({ name: guildName, iconURL: guildIcon})
+            .setThumbnail('http://phfamily.co.uk/img/gifs/Influencer.gif')
             .addFields(
-                { name: `Message`, value: `${message}` },
+                { name: `Announcement`, value: `${message}` },
             )
             .setImage(`${guildIcon}`)
             .setTimestamp()
-            .setFooter({ text: `${guildName} - Reaction Roles.`, iconURL: `${guildIcon}` });
+            .setFooter({ text: `${guildName} - Announcement.`, iconURL: `${guildIcon}` });
+
+        //Loop through announcement channels
+        for (let i = 0; i < levelUpChannelIds.length; i++) {
+            let levelUpChannelId = levelUpChannelIds[i];
+            try {
+                const sendChannel = client.channels.cache.get(levelUpChannelId.level_up_channel_id)                
+                console.log(sendChannel);
+                sendChannel.send({ embeds: [announceEmbed] })
+            }
+            catch (e) {
+                console.log(e);
+                console.log(levelUpChannelId);
+            }
+        }announceEmbed
+            .setTitle(`${guildName} - Announcement Sent`)
+
             await interaction.reply({
             ephemeral: true,
             embeds: [announceEmbed],

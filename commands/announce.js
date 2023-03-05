@@ -15,10 +15,31 @@ module.exports = {
         ),
 
     async execute(interaction) {
+        const { client } = require('../bot');
+        console.log(interaction)
         guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
         var message = interaction.options.getString('message');
+        const levelUpChannelIds = await sql.Execute(`SELECT level_up_channel_id FROM settings WHERE level_up_channel_id = '1000526899124117535'`)
+        console.log(levelUpChannelIds[0])
+        console.log(client)
+        //Loop through announcement channels
+        // for (let i = 0; i < levelUpChannelIds.length; i++) {
+        //     let levelUpChannelId = levelUpChannelIds[i];
+            
+        //     try {
+        //         let sendChannel = client.channels.cache.get(levelUpChannelId)                
+        //         console.log(levelUpChannelId);
+        //         sendChannel.send({ content: `${message}` })
 
+        //     }
+        //     catch (e) {
+        //         console.log(e);
+        //         console.log(levelUpChannelId);
+        //     }
+// }
+
+        
         const announceEmbed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Announcement Sent`)

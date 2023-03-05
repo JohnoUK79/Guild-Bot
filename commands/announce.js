@@ -22,17 +22,15 @@ module.exports = {
         const levelUpChannelIds = await sql.Execute(`SELECT level_up_channel_id FROM settings WHERE 1`) //level_up_channel_id = '1000526899124117535'
         const announceEmbed = new EmbedBuilder()
             .setColor('#4ec9b0')
-            .setTitle(`${guildName} - Announcement`)
+            .setTitle(`Announcement`)
             .setURL('http://www.phfamily.co.uk/')
-            .setThumbnail(guildIcon)
-            .setAuthor({ name: guildName, iconURL: guildIcon})
+            .setAuthor({ name: 'WarPath Announcement', iconURL: 'http://phfamily.co.uk/img/gifs/Influencer.gif'})
             .setThumbnail('http://phfamily.co.uk/img/gifs/Influencer.gif')
             .addFields(
                 { name: `Announcement`, value: `${message}` },
             )
-            .setImage(`${guildIcon}`)
             .setTimestamp()
-            .setFooter({ text: `${guildName} - Announcement.`, iconURL: `${guildIcon}` });
+            .setFooter({ text: `Announcement.`, iconURL: `http://phfamily.co.uk/img/gifs/Influencer.gif` });
 
         //Loop through announcement channels
         for (let i = 0; i < levelUpChannelIds.length; i++) {
@@ -47,7 +45,7 @@ module.exports = {
                 console.log(levelUpChannelId);
             }
         }announceEmbed
-            .setTitle(`${guildName} - Announcement Sent`)
+            .setTitle(`Announcement Sent`)
 
             await interaction.reply({
             ephemeral: true,

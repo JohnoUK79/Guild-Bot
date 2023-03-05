@@ -128,11 +128,11 @@ module.exports = {
 
 		if (scoreLevel > 9) {
 			var score = Math.floor(Math.random() * 200) * 2;
-			levelup.setColor('#2e8f37') //forest green
+			levelup.setColor('#1b4332') //dark green
 		}
 		if (scoreLevel > 19) {
 			var score = Math.floor(Math.random() * 150) * 2;
-			levelup.setColor('#1b4332') //dark green
+			levelup.setColor('#2e8f37') //forest green
 		}
 		if (scoreLevel > 29) {
 			var score = Math.floor(Math.random() * 125) * 2;

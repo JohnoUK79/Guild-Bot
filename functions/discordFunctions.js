@@ -43,21 +43,20 @@ module.exports = {
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
                 .addFields(
-                    { name: `${guildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
-                    { name: `Rank 1 :first_place::`, value: `${board[0].discord_username} - ${board[0].level} - ${board[0].points}` },
-                    { name: `Rank 2 :second_place::`, value: `${board[1].discord_username} - ${board[1].level} - ${board[1].points}` },
-                    { name: 'Rank 3 :third_place::', value: `${board[2].discord_username} - ${board[2].level} - ${board[2].points}` },
-                    { name: 'Best of the Rest:', value: `**Rank - Name - Level - XP**\n\n**Rank 4:** ${board[3].discord_username} - ${board[3].level} - ${board[3].points}\n\n**Rank 5:** ${board[4].discord_username} - ${board[4].level} - ${board[4].points}\n\n**Rank 6:** ${board[5].discord_username} - ${board[5].level} - ${board[5].points}\n\n**Rank 7:** ${board[6].discord_username} - ${board[6].level} - ${board[6].points}\n\n**Rank 8:** ${board[7].discord_username} - ${board[7].level} - ${board[7].points}\n\n**Rank 9:** ${board[8].discord_username} - ${board[8].level} - ${board[8].points}\n\n**Rank 10:** ${board[9].discord_username} - ${board[9].level} - ${board[9].points}` },
-        
+                    { name: `\n${guildName} - Levels Board`, value: `**Level - XP**` },
+                    { name: `Rank 1 :first_place: ${board[0].discord_username}`, value: `${board[0].level} - ${board[0].points.toLocaleString()}` },
+                    { name: `Rank 2 :second_place: ${board[1].discord_username}`, value: `${board[1].level} - ${board[1].points.toLocaleString()}` },
+                    { name: `Rank 3 :third_place: ${board[2].discord_username}`, value: `${board[2].level} - ${board[2].points.toLocaleString()}` },
+                    { name: 'Best of the Rest:', value: `**Rank - Name - Level - Points**\n**Rank 4 ${board[3].discord_username}**\n${board[3].level} - ${board[3].points.toLocaleString()}\n**Rank 5 ${board[4].discord_username}**\n${board[4].level} - ${board[4].points.toLocaleString()}\n**Rank 6 ${board[5].discord_username}**\n${board[5].level} - ${board[5].points.toLocaleString()}\n**Rank 7 ${board[6].discord_username}**\n${board[6].level} - ${board[6].points.toLocaleString()}\n**Rank 8 ${board[7].discord_username}**\n${board[7].level} - ${board[7].points.toLocaleString()}\n**Rank 9 ${board[8].discord_username}**\n${board[8].level} - ${board[8].points.toLocaleString()}\n**Rank 10 ${board[9].discord_username}**\n${board[9].level} - ${board[9].points.toLocaleString()}` },
                     )
                 .setImage(`${guildIcon}`) // to be linked to player search gif 
                 .setTimestamp()
                 .setFooter({ text: `${guildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
                 if (playerLevel > 9) {
-                    Top10.setColor('#2e8f37') //forest green
+                    Top10.setColor('#1b4332') //dark green
                 }
                 if (playerLevel > 19) {
-                    Top10.setColor('DARK_GREEN') //dark green
+                    Top10.setColor('#2e8f37') //forest green
                 }
                 if (playerLevel > 29) {
                     Top10.setColor('#00ff80') //spring green
@@ -125,28 +124,27 @@ module.exports = {
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${guildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
-			{ name: `Rank 11 :`, value: `${board[10].discord_username} - ${board[10].level} - ${board[10].points}` },
-			{ name: `Rank 12 :`, value: `${board[11].discord_username} - ${board[11].level} - ${board[11].points}` },
-			{ name: 'Rank 13 :', value: `${board[12].discord_username} - ${board[12].level} - ${board[12].points}` },
-			{ name: 'Rank 14 :', value: `${board[13].discord_username} - ${board[13].level} - ${board[12].points}` },
-			{ name: 'Rank 15 :', value: `${board[14].discord_username} - ${board[14].level} - ${board[12].points}` },
-			{ name: 'Rank 16 :', value: `${board[15].discord_username} - ${board[15].level} - ${board[12].points}` },
-			{ name: 'Rank 17 :', value: `${board[16].discord_username} - ${board[16].level} - ${board[12].points}` },
-			{ name: 'Rank 18 :', value: `${board[17].discord_username} - ${board[17].level} - ${board[12].points}` },
-			{ name: 'Rank 19 :', value: `${board[18].discord_username} - ${board[18].level} - ${board[12].points}` },
-			{ name: 'Rank 20 :', value: `${board[19].discord_username} - ${board[19].level} - ${board[12].points}` },
-
+			{ name: `${guildName} - XP Leaderboard`, value: `**Level - XP**\n` },
+			{ name: `Rank 11 ${board[10].discord_username}`, value: `${board[10].level} - ${board[10].points.toLocaleString()}` },
+			{ name: `Rank 12 ${board[11].discord_username}`, value: `${board[11].level} - ${board[11].points.toLocaleString()}` },
+			{ name: `Rank 13 ${board[12].discord_username}`, value: `${board[12].level} - ${board[12].points.toLocaleString()}` },
+			{ name: `Rank 14 ${board[13].discord_username}`, value: `${board[13].level} - ${board[13].points.toLocaleString()}` },
+			{ name: `Rank 15 ${board[14].discord_username}`, value: `${board[14].level} - ${board[14].points.toLocaleString()}` },
+			{ name: `Rank 16 ${board[15].discord_username}`, value: `${board[15].level} - ${board[15].points.toLocaleString()}` },
+			{ name: `Rank 17 ${board[16].discord_username}`, value: `${board[16].level} - ${board[16].points.toLocaleString()}` },
+			{ name: `Rank 18 ${board[17].discord_username}`, value: `${board[17].level} - ${board[17].points.toLocaleString()}` },
+			{ name: `Rank 19 ${board[18].discord_username}`, value: `${board[18].level} - ${board[18].points.toLocaleString()}` },
+			{ name: `Rank 20 ${board[19].discord_username}`, value: `${board[19].level} - ${board[19].points.toLocaleString()}` },
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
 
         if (playerLevel > 9) {
-            Top20.setColor('#2e8f37') //forest green
+			Top20.setColor('#1b4332') //dark green
         }
         if (playerLevel > 19) {
-            Top20.setColor('DARK_GREEN') //dark green
+			Top20.setColor('#2e8f37') //forest green
         }
         if (playerLevel > 29) {
             Top20.setColor('#00ff80') //spring green
@@ -214,28 +212,27 @@ module.exports = {
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${guildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
-			{ name: `Rank 21 :`, value: `${board[20].discord_username} - ${board[20].level} - ${board[20].points}` },
-			{ name: `Rank 22 :`, value: `${board[21].discord_username} - ${board[21].level} - ${board[21].points}` },
-			{ name: 'Rank 23 :', value: `${board[22].discord_username} - ${board[22].level} - ${board[22].points}` },
-			{ name: 'Rank 24 :', value: `${board[23].discord_username} - ${board[23].level} - ${board[23].points}` },
-			{ name: 'Rank 25 :', value: `${board[24].discord_username} - ${board[24].level} - ${board[24].points}` },
-			{ name: 'Rank 26 :', value: `${board[25].discord_username} - ${board[25].level} - ${board[25].points}` },
-			{ name: 'Rank 27 :', value: `${board[26].discord_username} - ${board[26].level} - ${board[26].points}` },
-			{ name: 'Rank 28 :', value: `${board[27].discord_username} - ${board[27].level} - ${board[27].points}` },
-			{ name: 'Rank 29 :', value: `${board[28].discord_username} - ${board[28].level} - ${board[28].points}` },
-			{ name: 'Rank 30 :', value: `${board[29].discord_username} - ${board[29].level} - ${board[29].points}` },
-
+			{ name: `${guildName} - XP Leaderboard`, value: `**Level - XP**\n` },
+			{ name: `Rank 21 ${board[20].discord_username}`, value: `${board[20].level} - ${board[20].points.toLocaleString()}` },
+			{ name: `Rank 22 ${board[21].discord_username}`, value: `${board[21].level} - ${board[21].points.toLocaleString()}` },
+			{ name: `Rank 23 ${board[22].discord_username}`, value: `${board[22].level} - ${board[22].points.toLocaleString()}` },
+			{ name: `Rank 24 ${board[23].discord_username}`, value: `${board[23].level} - ${board[23].points.toLocaleString()}` },
+			{ name: `Rank 25 ${board[24].discord_username}`, value: `${board[24].level} - ${board[24].points.toLocaleString()}` },
+			{ name: `Rank 26 ${board[25].discord_username}`, value: `${board[25].level} - ${board[25].points.toLocaleString()}` },
+			{ name: `Rank 27 ${board[26].discord_username}`, value: `${board[26].level} - ${board[26].points.toLocaleString()}` },
+			{ name: `Rank 28 ${board[27].discord_username}`, value: `${board[27].level} - ${board[27].points.toLocaleString()}` },
+			{ name: `Rank 29 ${board[28].discord_username}`, value: `${board[28].level} - ${board[28].points.toLocaleString()}` },
+			{ name: `Rank 30 ${board[29].discord_username}`, value: `${board[29].level} - ${board[29].points.toLocaleString()}` },
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
 
         if (playerLevel > 9) {
-            Top30.setColor('#2e8f37') //forest green
+			Top30.setColor('#1b4332') //dark green
         }
         if (playerLevel > 19) {
-            Top30.setColor('DARK_GREEN') //dark green
+			Top30.setColor('#2e8f37') //forest green
         }
         if (playerLevel > 29) {
             Top30.setColor('#00ff80') //spring green
@@ -303,27 +300,26 @@ module.exports = {
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${guildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
-			{ name: `Rank 31 :`, value: `${board[30].discord_username} - ${board[30].level} - ${board[30].points}` },
-			{ name: `Rank 32 :`, value: `${board[31].discord_username} - ${board[31].level} - ${board[31].points}` },
-			{ name: 'Rank 33 :', value: `${board[32].discord_username} - ${board[32].level} - ${board[32].points}` },
-			{ name: 'Rank 34 :', value: `${board[33].discord_username} - ${board[33].level} - ${board[33].points}` },
-			{ name: 'Rank 35 :', value: `${board[34].discord_username} - ${board[34].level} - ${board[34].points}` },
-			{ name: 'Rank 36 :', value: `${board[35].discord_username} - ${board[35].level} - ${board[35].points}` },
-			{ name: 'Rank 37 :', value: `${board[36].discord_username} - ${board[36].level} - ${board[36].points}` },
-			{ name: 'Rank 38 :', value: `${board[37].discord_username} - ${board[37].level} - ${board[37].points}` },
-			{ name: 'Rank 39 :', value: `${board[38].discord_username} - ${board[38].level} - ${board[38].points}` },
-			{ name: 'Rank 40 :', value: `${board[39].discord_username} - ${board[39].level} - ${board[39].points}` },
-
+			{ name: `${guildName} - XP Leaderboard`, value: `**Level - XP**\n` },
+			{ name: `Rank 31 ${board[30].discord_username}`, value: `${board[30].level} - ${board[30].points.toLocaleString()}` },
+			{ name: `Rank 32 ${board[31].discord_username}`, value: `${board[31].level} - ${board[31].points.toLocaleString()}` },
+			{ name: `Rank 33 ${board[32].discord_username}`, value: `${board[32].level} - ${board[32].points.toLocaleString()}` },
+			{ name: `Rank 34 ${board[33].discord_username}`, value: `${board[33].level} - ${board[33].points.toLocaleString()}` },
+			{ name: `Rank 35 ${board[34].discord_username}`, value: `${board[34].level} - ${board[34].points.toLocaleString()}` },
+			{ name: `Rank 36 ${board[35].discord_username}`, value: `${board[35].level} - ${board[35].points.toLocaleString()}` },
+			{ name: `Rank 37 ${board[36].discord_username}`, value: `${board[36].level} - ${board[36].points.toLocaleString()}` },
+			{ name: `Rank 38 ${board[37].discord_username}`, value: `${board[37].level} - ${board[37].points.toLocaleString()}` },
+			{ name: `Rank 39 ${board[38].discord_username}`, value: `${board[38].level} - ${board[38].points.toLocaleString()}` },
+			{ name: `Rank 40 ${board[39].discord_username}`, value: `${board[39].level} - ${board[39].points.toLocaleString()}` },
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
         if (playerLevel > 9) {
-            Top40.setColor('#2e8f37') //forest green
+			Top40.setColor('#1b4332') //dark green
         }
         if (playerLevel > 19) {
-            Top40.setColor('DARK_GREEN') //dark green
+			Top40.setColor('#2e8f37') //forest green
         }
         if (playerLevel > 29) {
             Top40.setColor('#00ff80') //spring green
@@ -391,27 +387,26 @@ module.exports = {
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${guildName} - XP Leaderboard`, value: `**Name - Level - XP**\n` },
-			{ name: `Rank 41 :`, value: `${board[40].discord_username} - ${board[40].level} - ${board[40].points}` },
-			{ name: `Rank 42 :`, value: `${board[41].discord_username} - ${board[41].level} - ${board[41].points}` },
-			{ name: 'Rank 43 :', value: `${board[42].discord_username} - ${board[42].level} - ${board[42].points}` },
-			{ name: 'Rank 44 :', value: `${board[43].discord_username} - ${board[43].level} - ${board[43].points}` },
-			{ name: 'Rank 45 :', value: `${board[44].discord_username} - ${board[44].level} - ${board[44].points}` },
-			{ name: 'Rank 46 :', value: `${board[45].discord_username} - ${board[45].level} - ${board[45].points}` },
-			{ name: 'Rank 47 :', value: `${board[46].discord_username} - ${board[46].level} - ${board[46].points}` },
-			{ name: 'Rank 48 :', value: `${board[47].discord_username} - ${board[47].level} - ${board[47].points}` },
-			{ name: 'Rank 49 :', value: `${board[48].discord_username} - ${board[48].level} - ${board[48].points}` },
-			{ name: 'Rank 50 :', value: `${board[49].discord_username} - ${board[49].level} - ${board[49].points}` },
-
+			{ name: `${guildName} - XP Leaderboard`, value: `**Level - XP**\n` },
+			{ name: `Rank 41 ${board[40].discord_username}`, value: `${board[40].level} - ${board[40].points.toLocaleString()}` },
+			{ name: `Rank 42 ${board[41].discord_username}`, value: `${board[41].level} - ${board[41].points.toLocaleString()}` },
+			{ name: `Rank 43 ${board[42].discord_username}`, value: `${board[42].level} - ${board[42].points.toLocaleString()}` },
+			{ name: `Rank 44 ${board[43].discord_username}`, value: `${board[43].level} - ${board[43].points.toLocaleString()}` },
+			{ name: `Rank 45 ${board[44].discord_username}`, value: `${board[44].level} - ${board[44].points.toLocaleString()}` },
+			{ name: `Rank 46 ${board[45].discord_username}`, value: `${board[45].level} - ${board[45].points.toLocaleString()}` },
+			{ name: `Rank 47 ${board[46].discord_username}`, value: `${board[46].level} - ${board[46].points.toLocaleString()}` },
+			{ name: `Rank 48 ${board[47].discord_username}`, value: `${board[47].level} - ${board[47].points.toLocaleString()}` },
+			{ name: `Rank 49 ${board[48].discord_username}`, value: `${board[48].level} - ${board[48].points.toLocaleString()}` },
+			{ name: `Rank 50 ${board[49].discord_username}`, value: `${board[49].level} - ${board[49].points.toLocaleString()}` },
 			)
 		.setImage(`${guildIcon}`) 
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - XP Leaderboard.`, iconURL: `${guildIcon}` });
         if (playerLevel > 9) {
-            Top50.setColor('#2e8f37') //forest green
+			Top50.setColor('#1b4332') //dark green
         }
         if (playerLevel > 19) {
-            Top50.setColor('DARK_GREEN') //dark green
+			Top50.setColor('#2e8f37') //forest green
         }
         if (playerLevel > 29) {
             Top50.setColor('#00ff80') //spring green

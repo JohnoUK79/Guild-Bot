@@ -51,23 +51,22 @@ module.exports = {
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `${guildName} - Levels Board`, value: `**Name - Level - Points**\n` },
-			{ name: `Rank 1 :first_place::`, value: `${board[0].discord_username} - ${board[0].level} - ${board[0].points}` },
-			{ name: `Rank 2 :second_place::`, value: `${board[1].discord_username} - ${board[1].level} - ${board[1].points}` },
-			{ name: 'Rank 3 :third_place::', value: `${board[2].discord_username} - ${board[2].level} - ${board[2].points}` },
-			{ name: 'Best of the Rest:', value: `**Rank - Name - Level - Points**\n\n**Rank 4:** ${board[3].discord_username} - ${board[3].level} - ${board[3].points}\n\n**Rank 5:** ${board[4].discord_username} - ${board[4].level} - ${board[4].points}\n\n**Rank 6:** ${board[5].discord_username} - ${board[5].level} - ${board[5].points}\n\n**Rank 7:** ${board[6].discord_username} - ${board[6].level} - ${board[6].points}\n\n**Rank 8:** ${board[7].discord_username} - ${board[7].level} - ${board[7].points}\n\n**Rank 9:** ${board[8].discord_username} - ${board[8].level} - ${board[8].points}\n\n**Rank 10:** ${board[9].discord_username} - ${board[9].level} - ${board[9].points}` },
-
+			{ name: `\n${guildName} - Levels Board`, value: `**Level - XP**` },
+			{ name: `Rank 1 :first_place: ${board[0].discord_username}`, value: `${board[0].level} - ${board[0].points.toLocaleString()}` },
+			{ name: `Rank 2 :second_place: ${board[1].discord_username}`, value: `${board[1].level} - ${board[1].points.toLocaleString()}` },
+			{ name: `Rank 3 :third_place: ${board[2].discord_username}`, value: `${board[2].level} - ${board[2].points.toLocaleString()}` },
+			{ name: 'Best of the Rest:', value: `**Rank - Name - Level - Points**\n**Rank 4 ${board[3].discord_username}**\n${board[3].level} - ${board[3].points.toLocaleString()}\n**Rank 5 ${board[4].discord_username}**\n${board[4].level} - ${board[4].points.toLocaleString()}\n**Rank 6 ${board[5].discord_username}**\n${board[5].level} - ${board[5].points.toLocaleString()}\n**Rank 7 ${board[6].discord_username}**\n${board[6].level} - ${board[6].points.toLocaleString()}\n**Rank 8 ${board[7].discord_username}**\n${board[7].level} - ${board[7].points.toLocaleString()}\n**Rank 9 ${board[8].discord_username}**\n${board[8].level} - ${board[8].points.toLocaleString()}\n**Rank 10 ${board[9].discord_username}**\n${board[9].level} - ${board[9].points.toLocaleString()}` },
 			)
 		.setImage(`${guildIcon}`)
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
 
-		if (playerLevel > 9) {
-			leaderBoard.setColor('#2e8f37') //forest green
-		}
-		if (playerLevel > 19) {
+        if (playerLevel > 9) {
 			leaderBoard.setColor('#1b4332') //dark green
-		}
+        }
+        if (playerLevel > 19) {
+			leaderBoard.setColor('#2e8f37') //forest green
+        }
 		if (playerLevel > 29) {
 			leaderBoard.setColor('#00ff80') //spring green
 		}

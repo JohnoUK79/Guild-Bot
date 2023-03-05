@@ -60,24 +60,24 @@ module.exports = {
 		.setDescription(`Your Rank **${interaction.member.displayName}**!`)
 		.addFields(
 			{ name: `Name:`, value: `${interaction.member.displayName}` },
-			{ name: `Points:`, value: `${points}` },
-			{ name: 'XP.', value: `${oldlevel}`, inline: true },
+			{ name: `XP:`, value: `${points.toLocaleString()}` },
+			{ name: 'Level.', value: `${oldlevel}`, inline: false },
 			{ name: 'Battle Wins.', value: `${wins}`, inline: false },
 			{ name: 'Battle Losses.', value: `${losses}`, inline: false },
-			{ name: 'Last Seen.', value: `${seen}`, inline: true },
-			{ name: 'Last Seen Discord Server.', value: `${seenDiscord}`, inline: true },
+			{ name: 'Last Seen.', value: `${seen}`, inline: false },
+			{ name: 'Last Seen Discord Server.', value: `${seenDiscord}`, inline: false },
 			)
 		.setImage(playerImage)
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - XP Rank - ${interaction.member.displayName}.`, iconURL: `${guildIcon}` });
 		if(!oldlevel) {oldlevel = 0}
 		
-		if (oldlevel > 9) {
-			playerLevel.setColor('#2e8f37') //forest green
-		}
-		if (oldlevel > 19) {
+        if (playerLevel > 9) {
 			playerLevel.setColor('#1b4332') //dark green
-		}
+        }
+        if (playerLevel > 19) {
+			playerLevel.setColor('#2e8f37') //forest green
+        }
 		if (oldlevel > 29) {
 			playerLevel.setColor('#00ff80') //spring green
 		}

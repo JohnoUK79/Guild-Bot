@@ -3,6 +3,7 @@ const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowB
 
 module.exports = {
     battle: async function (interaction) {
+        const { commandCooldowns } = require('../bot');
         const guildIcon = interaction.member.guild.iconURL();
 		const guildName = interaction.member.guild.name
 		const Battle = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
@@ -16,9 +17,15 @@ module.exports = {
 
 
 				const defender = interaction.options.getUser('target');
-				if (defender.bot === true) return interaction.editReply(`${interaction.member} Stop trying to **Bully the Bots**, You can only **Battle** real members\nMan Up and pick a better foe!`)
+				if (defender.bot === true) {
+                    commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, 0)
+
+                    return interaction.editReply(`${interaction.member} Stop trying to **Bully the Bots**, You can only **Battle** real members\nMan Up and pick a better foe!`)
+                }
 				const DefenderDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${defender.id}`)
 				if (defender.id === interaction.member.id) {
+                    commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, 0)
+
 				embed
 					.setDescription(`${interaction.member}, Stop picking fights with yourself!\nPlease select a worthy adversary!`)
 	
@@ -37,6 +44,8 @@ module.exports = {
                 const AttackerUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${AttackerDB[0].unit_camp}' AND Unit_Type = '${AttackerDB[0].unit_type}' AND Unit_Level = '${AttackerDB[0].unit_level}'`)
                 console.log(`Attacker`, AttackerUnit)
                 if (!AttackerUnit) {
+                    commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, 0)
+
                     embed
 					    .setDescription(`${interaction.member} you haven't selected your **Unit**!\nUse **warpath-upgrade** to level up and get your **Unit**!`)
                         return interaction.editReply({ embeds: [embed] });
@@ -85,7 +94,7 @@ let AH = Attacker.Health, DH = Defender.Health
 if (Attacker.Speed < Defender.Speed) {
     console.log(`Attacker: ${Attacker.Speed} Defender: ${Defender.Speed}`)
     while (DH >= 0 && AH >= 0) {
-        await sleep(1000)
+        await sleep(500)
         let defenderPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
         if (DH >= 0) {let defenderPower = 0} 
         AH = AH - defenderPower
@@ -108,7 +117,7 @@ if (Attacker.Speed < Defender.Speed) {
             .addFields(
                 { name: `${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`, value: `${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!` },
             )     
-        await sleep(1000)
+        await sleep(500)
         interaction.editReply({ embeds: [embed] });
         console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)
     
@@ -116,7 +125,7 @@ if (Attacker.Speed < Defender.Speed) {
 } else {
     console.log(`Defender: ${Defender.Speed} Attacker: ${Attacker.Speed}`)
     while (DH >= 0 && AH >= 0) {
-        await sleep(1000)
+        await sleep(500)
         let attackerPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
         if (AH >= 0) {let attackerPower = 0} 
         DH = DH - attackerPower
@@ -140,14 +149,14 @@ if (Attacker.Speed < Defender.Speed) {
             .addFields(
                 { name: `${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`, value: `${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!` },
             ) 
-        await sleep(1000)
+        await sleep(500)
         interaction.editReply({ embeds: [embed] });
         console.log(`Defender hit for ${defenderPower.toLocaleString()}`)
     }
 }
 
 if (AH < 0) {
-    await sleep(1000)
+    await sleep(500)
     var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
     const winnings = DefenderDB[0].officer_level * 10000
     chest = DefenderDB[0].war_chest
@@ -171,7 +180,7 @@ if (AH < 0) {
     console.log('Winner:', win.info,'Loser:', loss.info)
 } else
 if (DH < 0) {
-    await sleep(1000)
+    await sleep(500)
     var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
     const winnings = AttackerDB[0].officer_level * 10000
     chest = AttackerDB[0].war_chest

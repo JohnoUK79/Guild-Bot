@@ -487,7 +487,6 @@ officerUpgrade: async function (interaction) {
     const wallet = Level[0].war_coins
     const bank = Level[0].war_chest
     const baseLevel = Level[0].base_level
-    const officer = Level[0].officer_name
     const officerLevel = Level[0].officer_level
     const cost = (officerLevel + 1) * 50000
 
@@ -552,9 +551,10 @@ if (baseLevel < 1) {
         .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
 
     return interaction.update({embeds: [upgradeOfficerEmbed], components: [upgradeButtons]})  
-} else
-console.log(officer)
-    if (officer === undefined) {
+} 
+const officer = Level[0].officer_name
+
+if (officer === '') {
 
     upgradeOfficerEmbed
         .setColor('#ff5b05')
@@ -755,6 +755,30 @@ buyUnit: async function (interaction) {
             .setLabel('Profile')
             .setStyle(ButtonStyle.Secondary),
         )
+        const newUnitButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("bank")
+                .setLabel('War-Chest')
+                .setStyle(ButtonStyle.Primary),
+            new ButtonBuilder()
+                .setCustomId("base")
+                .setLabel('War-Base')
+                .setStyle(ButtonStyle.Primary),
+            new ButtonBuilder()
+                .setCustomId("officer")
+                .setLabel('Officer')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("newUnit")
+                .setLabel('Select New Unit')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
+            )
+    
     const upgradeUnitButtons = new ActionRowBuilder()
         .addComponents(
             new ButtonBuilder()
@@ -778,12 +802,13 @@ buyUnit: async function (interaction) {
 
     if (unitLevel === '9.2') {
         console.log(`Unit Maxed`),
+
         upgradeUnitEmbed
             .setColor('#ff5b05')
             .setThumbnail(guildIcon)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-            .setDescription(`${interaction.member}, You have already **Maxed** your **${unitType}**.\nUpgrade your **Officer** to increase your **Battle Rewards**!\nUpgrade your **War-Base** to increase your **Unit Strength**!`)
+            .setDescription(`${interaction.member}, You have already **Maxed** your **${unitType}**.\nUpgrade your **Officer** to increase your **Battle Rewards**!\nUpgrade your **War-Base** to increase your **Unit Strength**!\nSelect **New Unit** below to receive your next **Unit**`)
             .addFields(
                     { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
                     { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
@@ -791,7 +816,7 @@ buyUnit: async function (interaction) {
                 )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
 
-    return interaction.update({embeds: [upgradeUnitEmbed], components: [upgradeButtons]})
+    return interaction.update({embeds: [upgradeUnitEmbed], components: [newUnitButtons]})
     }
 
     if (unitLevel > officerLevel ) {
@@ -859,6 +884,7 @@ return interaction.update({embeds: [upgradeUnitEmbed], components: [upgradeButto
 },
 profile: async function (interaction) {
     const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+    console.log(Level)
     const profileEmbed = new EmbedBuilder();
     const profileButtons = new ActionRowBuilder()
         .addComponents(
@@ -869,14 +895,16 @@ profile: async function (interaction) {
         )
     const guildIcon = interaction.member.guild.iconURL();
     const guildName = interaction.member.guild.name	
-    let officer = Level[0].officer_name
     const officerLevel = Level[0].officer_level
-    if (!officer) {let officer = 'No Officer Chosen'}
-    let unitType = Level[0].Unit_Type
+    let officer = Level[0].officer_name
+    if (officer === '') {let officer = 'No Officer Chosen'}
     console.log(officer)
-    if (!unitType) {let unit = 'No Unit Trained'}
+    let unitType = Level[0].unit_type
+    if (unitType === '') {let unit = 'No Unit Trained'}
     console.log(unitType)
-
+    let unitLevel = Level[0].unit_level
+    if (unitLevel === '') {let unit = 'No Unit Trained'}
+    console.log(unitLevel)
     
     profileEmbed
         .setColor('#ff5b05')
@@ -889,9 +917,9 @@ profile: async function (interaction) {
             { name: `War-Chest Level:`, value: `${Level[0].chest_level.toLocaleString()}`, inline: true }, 
             { name: `Base Level:`, value: `${Level[0].base_level}`, inline: true }, 
             //{ name: `Officer:`, value: `${officer}`, inline: true }, 
-            { name: `Officer Level:`, value: `${officerLevel}`, inline: true },
-            //{ name: `Unit:`, value: `${unit}`, inline: true }, 
-            //{ name: `Unit Level:`, value: `${Level[0].unit_level}`, inline: true }, 
+            //{ name: `Officer Level:`, value: `${officerLevel}`, inline: true },
+            //{ name: `Unit:`, value: `${unitType}`, inline: true }, 
+            //{ name: `Unit Level:`, value: `${unitLevel}`, inline: true }, 
 
         )
         .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
@@ -899,5 +927,55 @@ profile: async function (interaction) {
         
 return interaction.update({empheral: true, embeds: [profileEmbed], components: [profileButtons]})	
 
+},
+newUnit: async function (interaction) {
+    const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+    const prestige = Level[0].prestige
+    const newPrestige = prestige + 1 
+    const newUnitEmbed = new EmbedBuilder();
+    const newUnitButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("cancel")
+                .setLabel('Done')
+                .setStyle(ButtonStyle.Success),
+        )
+    const guildIcon = interaction.member.guild.iconURL();
+    const guildName = interaction.member.guild.name	
+
+    newUnitSelection = async function (prestige) {
+        if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters'
+        if (prestige === 1) return newUnitLevel = '4.0', newUnitType = 'Infantry'
+        if (prestige === 2) return newUnitLevel = '5.0', newUnitType = 'SuperHeavy'
+        if (prestige === 3) return newUnitLevel = '4.0', newUnitType = 'Howitzer'
+        if (prestige === 4) return newUnitLevel = '5.0', newUnitType = 'Bombers'
+        module.exports.newUnitLevel = newUnitLevel
+        module.exports.newUnitType = newUnitType
+    }
+    newUnitSelection(prestige)
+    const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '${newUnitLevel}' AND Unit_Type LIKE '%${newUnitType}%'`)
+    const unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
+    console.log(unitSelection)
+    
+    newUnitEmbed
+        .setColor('#ff5b05')
+        .setThumbnail(guildIcon)
+        .setTimestamp()
+        .setDescription(`**${interaction.member}, New Unit Selection Successful**`)
+        .addFields(
+            { name: `Unit Name:`, value: `${unitSelection.Unit_Name}`, inline: true }, 
+            { name: `Unit Level:`, value: `${unitSelection.Unit_Level}`, inline: true },
+            { name: `Camp:`, value: `${unitSelection.Camp}`, inline: true }, 
+            { name: `Unit Type:`, value: `${unitSelection.Unit_Type}`, inline: true },
+            { name: `Firepower:`, value: `${unitSelection.Firepower}`, inline: true },
+            { name: `HP:`, value: `${unitSelection.HP}`, inline: true },
+            { name: `Speed:`, value: `${unitSelection.Speed}`, inline: true },
+        )
+        .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
+const saveUnit = await sql.Execute(`INSERT INTO playerunits (discord_id, camp, unit_type, unit_level) VALUES ('${interaction.member.id}', '${unitSelection.Camp}', '${unitSelection.Unit_Type}', '${unitSelection.Unit_Level}')`)
+console.log(saveUnit.info)
+const updateNewUnit = await sql.Execute(`UPDATE levels SET Unit_Camp = '${unitSelection.Camp}', Unit_Type = '${unitSelection.Unit_Type}', Unit_Level = '${unitSelection.Unit_Level}', prestige = '${newPrestige}' WHERE discord_id = '${interaction.member.id}'`)
+console.log(updateNewUnit.info)
+return interaction.update({embeds: [newUnitEmbed], components: [newUnitButtons]})
 }
 }

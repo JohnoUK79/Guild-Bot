@@ -884,7 +884,7 @@ return interaction.update({embeds: [upgradeUnitEmbed], components: [upgradeButto
 },
 profile: async function (interaction) {
     const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-    console.log(Level)
+
     const profileEmbed = new EmbedBuilder();
     const profileButtons = new ActionRowBuilder()
         .addComponents(
@@ -895,31 +895,36 @@ profile: async function (interaction) {
         )
     const guildIcon = interaction.member.guild.iconURL();
     const guildName = interaction.member.guild.name	
-    const officerLevel = Level[0].officer_level
-    let officer = Level[0].officer_name
-    if (officer === '') {let officer = 'No Officer Chosen'}
+    const officerLevel = Level[0].officer_level || 'No Officer Chosen'
+    console.log(officerLevel)
+    const officer = Level[0].officer_name || 'No Officer Chosen'
     console.log(officer)
-    let unitType = Level[0].unit_type
-    if (unitType === '') {let unit = 'No Unit Trained'}
+    const unitType = Level[0].unit_type || 'No Unit Trained'
     console.log(unitType)
-    let unitLevel = Level[0].unit_level
-    if (unitLevel === '') {let unit = 'No Unit Trained'}
+    const unitLevel = Level[0].unit_level || 'No Unit Trained'
     console.log(unitLevel)
+    const unitCamp = Level[0].unit_camp || 'No Unit Trained'
+    console.log(unitCamp)
+    const unitDB = await sql.Execute(`SELECT Unit_Name FROM units WHERE Camp = '${unitCamp}' AND Unit_Type = '${unitType}' AND Unit_Level = '${unitLevel}'`)
+
     
     profileEmbed
+
         .setColor('#ff5b05')
         .setThumbnail(guildIcon)
         .setTimestamp()
         .setDescription(`**${interaction.member}'s Profile**`)
         .addFields(
-            { name: `War-Coins:`, value: `$${Level[0].war_coins.toLocaleString()}`, inline: true }, 
-            { name: `War-Chest:`, value: `$${Level[0].war_chest.toLocaleString()}`, inline: true }, 
-            { name: `War-Chest Level:`, value: `${Level[0].chest_level.toLocaleString()}`, inline: true }, 
-            { name: `Base Level:`, value: `${Level[0].base_level}`, inline: true }, 
-            //{ name: `Officer:`, value: `${officer}`, inline: true }, 
-            //{ name: `Officer Level:`, value: `${officerLevel}`, inline: true },
-            //{ name: `Unit:`, value: `${unitType}`, inline: true }, 
-            //{ name: `Unit Level:`, value: `${unitLevel}`, inline: true }, 
+            { name: `War-Coins:`, value: `$${Level[0].war_coins.toLocaleString()}`, inline: false }, 
+            { name: `War-Chest:`, value: `$${Level[0].war_chest.toLocaleString()}`, inline: false }, 
+            { name: `War-Chest Level:`, value: `${Level[0].chest_level.toLocaleString()}`, inline: false }, 
+            { name: `Base Level:`, value: `${Level[0].base_level}`, inline: false }, 
+            { name: `Officer:`, value: `${officer}`, inline: false }, 
+            { name: `Officer Level:`, value: `${officerLevel}`, inline: false },
+            //{ name: `Unit:`, value: `${unit}`, inline: false }, 
+            { name: `Type:`, value: `${unitType}`, inline: false }, 
+            { name: `Level:`, value: `${unitLevel}`, inline: false }, 
+            { name: `Camp:`, value: `${unitCamp}`, inline: false }, 
 
         )
         .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});

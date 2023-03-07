@@ -42,8 +42,8 @@ module.exports = {
                 console.log(`Defender`, DefenderUnit)
                 const AttackerDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`);
                 const AttackerUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${AttackerDB[0].unit_camp}' AND Unit_Type = '${AttackerDB[0].unit_type}' AND Unit_Level = '${AttackerDB[0].unit_level}'`)
-                console.log(`Attacker`, AttackerUnit)
-                if (AttackerUnit !== '') {
+                console.log(AttackerDB[0].unit_type)
+                if (!AttackerDB[0].unit_type) {
                     commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, 0)
 
                     embed

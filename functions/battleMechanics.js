@@ -33,6 +33,8 @@ module.exports = {
 				}
                 console.log(DefenderDB[0].unit_type)
                 if (!DefenderDB[0].unit_type) {
+                    commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, 0)
+
                     embed
                         .setDescription(`${interaction.member}, ${defender} has not trained their troops!\nPlease select a worthy adversary!`)
         

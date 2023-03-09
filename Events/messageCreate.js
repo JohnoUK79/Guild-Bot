@@ -30,7 +30,7 @@ module.exports = {
 		try {
 		levelUp(message)
 		} catch (err) {console.log(err)}
-		try {
-		rankCheck(message)
-		} catch (err) {console.log(err)}
+		// try {
+		// rankCheck(message)
+		// } catch (err) {console.log(err)}
 	}}

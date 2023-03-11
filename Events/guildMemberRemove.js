@@ -6,8 +6,6 @@ module.exports = {
     async execute(member) {
         //console.log('Guild Member Remove', member)
         console.log("Member Left")
-        await member.guild.cache();
-        await member.fetch();
         if (member.partial) {
             try {
                 await member.fetch();

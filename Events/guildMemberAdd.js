@@ -6,9 +6,6 @@ module.exports = {
     async execute(member) {
         console.log(member)
         //console.log('Guild Member Add', member)
-        // await member.guild.members.fetch()
-        // await member.guild.cache();
-        // await member.fetch();
         //Load Guild Settings
         const Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         guildIcon = member.guild.iconURL();
@@ -19,7 +16,6 @@ module.exports = {
 
         //Track the Invite Used
         const { invites } = require('./ready')
-        console.log (invites)
         // To compare, we need to load the current invite list.
         const newInvites = await member.guild.invites.fetch()
         // This is the *existing* invites for the guild.

@@ -29,7 +29,7 @@ module.exports = {
             .setFooter({ text: `${guildName} - Invites Leaderboard.`, iconURL: `${guildIcon}` });
             
         console.log(`${guildName} Member Cache: ${interaction.guild.members.cache.size}`)
-        inviteBoard = await sql.Execute(`SELECT * FROM invites WHERE guildId = '${interaction.member.guild.id}' ORDER BY uses DESC`)
+        inviteBoard = await sql.Execute(`SELECT * FROM invites WHERE guildId = '${interaction.member.guild.id}' AND uses > 0 ORDER BY uses DESC`)
 
         for (let i = 0; i < 25 && inviteBoard[i]; i++) invitesEmbed.addFields(
             { name: `${inviteBoard[i].invitedBy}`, value: `**Code:** ${inviteBoard[i].code} **Uses:** ${inviteBoard[i].uses}` })

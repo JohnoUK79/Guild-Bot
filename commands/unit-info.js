@@ -57,7 +57,7 @@ module.exports = {
             
         console.log(`${guildName} Member Cache: ${interaction.guild.members.cache.size}`)
 
-        for (let i = 0; i < 25 && unitInfo[i]; i++) invitesEmbed.addFields(
+        for (let i = 0; i < 25 && unitInfo[i]; i++) unitInfoEmbed.addFields(
             { name: `${unitInfo[i].Unit_Level} ${unitInfo[i].Unit_Name}`, value: `**Firepower:** ${unitInfo[i].Firepower} **HP:** ${unitInfo[i].HP} **Speed:** ${unitInfo[i].Speed}` })
 
         await interaction.reply({

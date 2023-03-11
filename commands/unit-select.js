@@ -18,7 +18,7 @@ module.exports = {
 					{ name: 'Heavy Tanks', value: 'HeavyTanks' },
                     { name: 'Tank Hunters', value: 'TankHunters' },
 					{ name: 'Super Heavy Tanks', value: 'SuperHeavyTanks' },
-                    //{ name: 'Anti Tank Guns', value: 'AntiTankGuns' },
+                    { name: 'Anti Tank Guns', value: 'AntiTankGuns' },
 					{ name: 'Fighters', value: 'Fighters' },
 					{ name: 'Bombers', value: 'Bombers' },
                 )
@@ -55,7 +55,7 @@ module.exports = {
         let base = Level[0].base_level 
         if (base === 0) {base = 1}
         const currentHP = (unitSelect[0].HP * base)
-        console.log(currentHP)
+
         unitSelectEmbed
             .setColor('#0099ff')
             .setTitle(`Troop Information`)
@@ -69,7 +69,7 @@ module.exports = {
             .setFooter({ text: `${unitInfo[0].camp} - ${unitInfo[0].unit_type}.`, iconURL: `${guildIcon}` });
             
         console.log(`${guildName} Member Cache: ${interaction.guild.members.cache.size}`)
-        console.log(unitInfo)
+
         unitSelectEmbed
             .addFields(
             { name: `Name: ${unitSelect[0].Unit_Name}`, value: `**Firepower:** ${currentFirepower.toLocaleString()} **HP:** ${currentHP.toLocaleString()} **Speed:** ${unitSelect[0].Speed}` }

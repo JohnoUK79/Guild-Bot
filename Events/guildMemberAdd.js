@@ -4,12 +4,13 @@ const sql = require(`../config/Database`)
 module.exports = {
     name: "guildMemberAdd",
     async execute(member) {
+        console.log(member)
         //console.log('Guild Member Add', member)
-        await member.guild.members.fetch()
-        await member.guild.cache();
-        await member.fetch();
+        // await member.guild.members.fetch()
+        // await member.guild.cache();
+        // await member.fetch();
         //Load Guild Settings
-        Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
+        const Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         guildIcon = member.guild.iconURL();
         CHANNEL_ID = Data[0].welcome_channel_id
         ROLE_ID = Data[0].welcome_role_id
@@ -18,6 +19,7 @@ module.exports = {
 
         //Track the Invite Used
         const { invites } = require('./ready')
+        console.log (invites)
         // To compare, we need to load the current invite list.
         const newInvites = await member.guild.invites.fetch()
         // This is the *existing* invites for the guild.

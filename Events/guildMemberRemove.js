@@ -18,10 +18,11 @@ module.exports = {
             }
         }
         guildIcon = member.guild.iconURL();
-        Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
+        const Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         GUILD = member.guild.name
         
-        Channel_ID = Data[0].welcome_channel_id
+        const Channel_ID = Data[0].welcome_channel_id
+        console.log(Channel_ID)
             const goodByeEmbed = new EmbedBuilder()
             .setColor("#d81e5b")
             .setTitle("Player Left!")

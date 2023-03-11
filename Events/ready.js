@@ -31,7 +31,6 @@ module.exports = {
             invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, invite.uses])));
             module.exports.invites = invites
         });
-        
         // Add Invites to Database
         const InvitesDB = new Map();
         client.guilds.cache.forEach(guild => {

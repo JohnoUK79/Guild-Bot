@@ -43,7 +43,7 @@ module.exports = {
 
         const unitInfo = await sql.Execute(`SELECT * FROM units WHERE CAMP = '${camp}' AND Unit_Type = '${troop}' ORDER BY Unit_Level DESC`)
 
-        const invitesEmbed = new EmbedBuilder()
+        const unitInfoEmbed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`Troop Information`)
             .setURL('http://www.phfamily.co.uk/invites.php')
@@ -62,7 +62,7 @@ module.exports = {
 
         await interaction.reply({
             ephemeral: false,
-            embeds: [invitesEmbed],
+            embeds: [unitInfoEmbed],
         });
 
     },

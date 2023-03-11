@@ -31,7 +31,7 @@ module.exports = {
         guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
         const unitSelectEmbed = new EmbedBuilder()
-        const unitInfo = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}' AND Unit_Type = '${troop}' ORDER BY Unit_Level DESC`)
+        const unitInfo = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}' AND Unit_Type LIKE '${troop}' ORDER BY Unit_Level DESC`)
         console.log(unitInfo)
         if (!unitInfo[0]) {
             unitSelectEmbed

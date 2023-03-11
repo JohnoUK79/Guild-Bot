@@ -15,7 +15,7 @@ module.exports = {
 				.setRequired(true)
 				.addChoices(
                     { name: 'Liberty', value: 'Liberty' },
-					{ name: 'Martyrs Watch', value: 'MartyrsWatch' },
+					{ name: 'Martyrs Watch', value: 'MartyrsW' },
 					{ name: 'Vanguard', value: 'Vanguard' },
           ))
         .addStringOption(option => 
@@ -40,9 +40,14 @@ module.exports = {
         await interaction.guild.members.fetch()
         guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
-
+        let image = ''
         const unitInfo = await sql.Execute(`SELECT * FROM units WHERE CAMP = '${camp}' AND Unit_Type = '${troop}' ORDER BY Unit_Level DESC`)
-
+        if (!unitInfo[0]){
+            let image = 'NotFound'
+        } else {
+            let image = unitInfo[0].Camp
+        }
+        console.log(image)
         const unitInfoEmbed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`Troop Information`)

@@ -26,7 +26,7 @@ module.exports = {
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-		.setDescription(`Hey **${interaction.member.displayName}**! Battles Board - **Top 3 Receive Rewards 00:00 UTC MONDAYS**\n**Wins - Losses**`)
+		.setDescription(`${interaction.member.displayName}! Here's the **Battles Board**\n**Top 3 Receive Rewards 00:00 UTC MONDAYS**\n**Wins - Losses**`)
 		.addFields(
 			//{ name: `Rank 1 :first_place: ${board[0].discord_username}`, value: `${board[0].battle_wins} - ${board[0].battle_losses}` },
 			//{ name: `Rank 2 :second_place: ${board[1].discord_username}`, value: `${board[1].battle_wins} - ${board[1].battle_losses}` },

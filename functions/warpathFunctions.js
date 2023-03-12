@@ -971,6 +971,21 @@ newUnit: async function (interaction) {
         module.exports.newUnitType = newUnitType
     }
     newUnitSelection(prestige)
+
+    let presigeRequired = newPrestige * 10
+    console.log(presigeRequired, Level[0].officer_level)
+    if (presigeRequired >= Level[0].officer_level) {
+        console.log(`Officer Upgrade Required`)
+        newUnitEmbed
+            .setColor('#ff5b05')
+            .setThumbnail(guildIcon)
+            .setTimestamp()
+            .setDescription(`**${interaction.member}, Officer Upgrade Required**\nRequired Level: ${presigeRequired}`)
+            .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
+    return interaction.update({embeds: [newUnitEmbed], components: [newUnitButtons]})
+    } else console.log(`No Officer Upgrade Required`)
+
+
     const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '${newUnitLevel}' AND Unit_Type LIKE '%${newUnitType}%'`)
     const unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
     console.log(unitSelection)

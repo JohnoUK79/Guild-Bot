@@ -59,7 +59,8 @@ module.exports = {
                     HP: AttackerUnit[0].HP,
                     Speed: AttackerUnit[0].Speed,
                     BaseLevel: AttackerDB[0].base_level,
-                    OfficerLevel: AttackerDB[0].officer_level
+                    OfficerLevel: AttackerDB[0].officer_level,
+                    AttackType: AttackerUnit[0].Attack_Type
                 }
                 const DefenderStats = {
                     Name: DefenderUnit[0].Unit_Name,
@@ -67,19 +68,22 @@ module.exports = {
                     HP: DefenderUnit[0].HP,
                     Speed: DefenderUnit[0].Speed,
                     BaseLevel: DefenderDB[0].base_level,
-                    OfficerLevel: DefenderDB[0].officer_level
+                    OfficerLevel: DefenderDB[0].officer_level,
+                    AttackType: DefenderUnit[0].Attack_Type
                 }
                 const Attacker = {
                     Name: AttackerStats.Name,
                     Power: AttackerStats.Firepower * AttackerStats.OfficerLevel,
                     Health: AttackerStats.HP * AttackerStats.BaseLevel * 10,
-                    Speed: AttackerStats.Speed
+                    Speed: AttackerStats.Speed,
+                    AttackType: AttackerStats.AttackType
                 }
                 const Defender = {
                     Name: DefenderStats.Name,
                     Power: DefenderStats.Firepower * AttackerStats.OfficerLevel,
                     Health: DefenderStats.HP * AttackerStats.BaseLevel * 10,
-                    Speed: DefenderStats.Speed
+                    Speed: DefenderStats.Speed,
+                    AttackType: DefenderStats.AttackType
                 }
 
                 embed
@@ -96,29 +100,42 @@ let AH = Attacker.Health, DH = Defender.Health
 if (Attacker.Speed < Defender.Speed) {
     console.log(`Attacker: ${Attacker.Speed} Defender: ${Defender.Speed}`)
     while (DH >= 0 && AH >= 0) {
+        attackSelection = async function (Attacker, Defender) {
+            if (Attacker.AttackType === 'Ground' && Defender.AttackType === 'Ground') return attackerMultipler = 1.0, defenderMultipler = 1.0
+            if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Air') return attackerMultipler = 1.0, defenderMultipler = 1.0
+            if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Ground') return attackerMultipler = 1.5, defenderMultipler = 0.5
+            if (Attacker.AttackType === 'Ground' && Defender.AttackType === 'Air') return attackerMultipler = 0.5, defenderMultipler = 1.5
+
+            module.exports.attackerMultipler = attackerMultipler
+            module.exports.defenderMultipler = defenderMultipler
+        }
+        attackSelection(Attacker, Defender)
+        console.log(defenderMultipler, attackerMultipler)
         await sleep(500)
-        let defenderPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
+        const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
+        const defenderPower = (defendPower * defenderMultipler)
+        console.log(defenderPower)
         if (DH >= 0) {let defenderPower = 0} 
         AH = AH - defenderPower
         var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
     
         embed
             .setImage(playerImage)
-            .addFields(
-                { name: `${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`, value: `${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!` },
-            ) 
+            .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
+            .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed] });
         console.log(`Defender hit for ${defenderPower.toLocaleString()}`)        
-        let attackerPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
+        const  attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
+        const attackerPower = (attackPower * attackerMultipler)
+        console.log(attackerPower)
         if (AH >= 0) {let attackerPower = 0} 
         DH = DH - attackerPower
         var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
 
         embed
             .setImage(playerImage)
-            .addFields(
-                { name: `${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`, value: `${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!` },
-            )     
+            .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
+            .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         await sleep(500)
         interaction.editReply({ embeds: [embed] });
         console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)
@@ -127,30 +144,42 @@ if (Attacker.Speed < Defender.Speed) {
 } else {
     console.log(`Defender: ${Defender.Speed} Attacker: ${Attacker.Speed}`)
     while (DH >= 0 && AH >= 0) {
+        attackSelection = async function (Attacker, Defender) {
+            if (Attacker.AttackType === 'Ground' && Defender.AttackType === 'Ground') return attackerMultipler = 1.0, defenderMultipler = 1.0
+            if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Air') return attackerMultipler = 1.0, defenderMultipler = 1.0
+            if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Ground') return attackerMultipler = 1.5, defenderMultipler = 0.5
+            if (Attacker.AttackType === 'Ground' && Defender.AttackType === 'Air') return attackerMultipler = 0.5, defenderMultipler = 1.5
+
+            module.exports.attackerMultipler = attackerMultipler
+            module.exports.defenderMultipler = defenderMultipler
+        }
+        attackSelection(Attacker, Defender)
+        console.log(defenderMultipler, attackerMultipler)
         await sleep(500)
-        let attackerPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
+        const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
+        const attackerPower = (attackPower * attackerMultipler)
+        console.log(attackerPower)
         if (AH >= 0) {let attackerPower = 0} 
         DH = DH - attackerPower
         var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
 
         embed
             .setImage(playerImage)
-            .addFields(
-                { name: `${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`, value: `${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!` },
-            )     
+            .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
+            .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed] });
         console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)
     
-    let defenderPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
+    const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
+    const defenderPower = (defendPower * defenderMultipler)
     if (DH >= 0) {let defenderPower = 0} 
         AH = AH - defenderPower
         var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
     
         embed
             .setImage(playerImage)
-            .addFields(
-                { name: `${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`, value: `${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!` },
-            ) 
+            .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
+            .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
         await sleep(500)
         interaction.editReply({ embeds: [embed] });
         console.log(`Defender hit for ${defenderPower.toLocaleString()}`)

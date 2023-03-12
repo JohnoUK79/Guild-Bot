@@ -11,6 +11,9 @@ module.exports = {
 		const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
 		const board = await sql.Execute(`SELECT * FROM levels WHERE battle_wins > 0 ORDER BY battle_wins DESC;`);
 		console.log(board)
+		if (!board[0]) {
+			return await interaction.reply({content: `No Battle Data Available`, ephemeral: true})
+		} else
 		var playerLevel = Level[0].level
 		if (!playerLevel) {var playerLevel = 0}
 		user = board[0].discord_username
@@ -18,7 +21,6 @@ module.exports = {
 		losses = board[0].battle_losses
 		server = board[0].last_seen_server
 		result = (`${user} - ${wins} - ${losses}`)
-		console.log(user)
 
 		const leaderBoard = new EmbedBuilder()
 		.setColor('#0099ff')
@@ -27,11 +29,6 @@ module.exports = {
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 		.setDescription(`${interaction.member.displayName}! Here's the **Battles Board**\n**Top 3 Receive Rewards 00:00 UTC MONDAYS**\n**Wins - Losses**`)
-		.addFields(
-			//{ name: `Rank 1 :first_place: ${board[0].discord_username}`, value: `${board[0].battle_wins} - ${board[0].battle_losses}` },
-			//{ name: `Rank 2 :second_place: ${board[1].discord_username}`, value: `${board[1].battle_wins} - ${board[1].battle_losses}` },
-			//{ name: `Rank 3 :third_place: ${board[2].discord_username}`, value: `${board[2].battle_wins} - ${board[2].battle_losses}` },
-			)
 		.setImage(`${guildIcon}`)
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - Battles Leaderboard.`, iconURL: `${guildIcon}` });

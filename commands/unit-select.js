@@ -25,6 +25,10 @@ module.exports = {
                 .setRequired(true)),
 
     async execute(interaction) {
+		await interaction.deferReply({
+			fetchReply: true,
+			ephemeral: true,
+		})
         const troop = interaction.options.getString('troop');
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         await interaction.guild.members.fetch()
@@ -44,10 +48,10 @@ module.exports = {
                 .setThumbnail(guildIcon)
                 .setTimestamp()
                 .setFooter({ text: `Buy Unit - Coming Soon.`, iconURL: `${guildIcon}` });
-            return interaction.reply({ embeds: [unitSelectEmbed]})
+            return interaction.editReply({ embeds: [unitSelectEmbed]})
         }
         const unitSelect = await sql.Execute(`SELECT * FROM units WHERE Camp = '${unitInfo[0].camp}' AND Unit_Type = '${unitInfo[0].unit_type}' AND Unit_Level = '${unitInfo[0].unit_level}'`)
-
+        const updateUnit = await sql.Execute(`UPDATE levels SET unit_camp = '${unitInfo[0].camp}', unit_type = '${unitInfo[0].unit_type}', unit_level = '${unitInfo[0].unit_level}' WHERE discord_id = '${interaction.member.id}'`)
         let officer = Level[0].officer_level 
         if (officer === 0) {officer = 1}
         const currentFirepower = (unitSelect[0].Firepower * officer)
@@ -75,8 +79,7 @@ module.exports = {
             { name: `Name: ${unitSelect[0].Unit_Name}`, value: `**Firepower:** ${currentFirepower.toLocaleString()} **HP:** ${currentHP.toLocaleString()} **Speed:** ${unitSelect[0].Speed}` }
             )
 
-        await interaction.reply({
-            ephemeral: false,
+        await interaction.editReply({
             embeds: [unitSelectEmbed],
         });
 

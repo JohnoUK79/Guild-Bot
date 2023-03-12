@@ -727,6 +727,10 @@ unitSelect: async function (interaction) {
             { name: `Speed:`, value: `${unitSelection.Speed}`, inline: true },
         )
         .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
+
+const saveUnit = await sql.Execute(`INSERT INTO playerunits (discord_id, camp, unit_type, unit_level) VALUES ('${interaction.member.id}', '${unitSelection.Camp}', '${unitSelection.Unit_Type}', '${unitSelection.Unit_Level}')`)
+console.log(saveUnit.info)
+
 const updateOfficer = await sql.Execute(`UPDATE levels SET Unit_Camp = '${unitSelection.Camp}', Unit_Type = '${unitSelection.Unit_Type}', Unit_Level = '${unitSelection.Unit_Level}' WHERE discord_id = '${interaction.member.id}'`)
 console.log(updateOfficer.info)
 return interaction.update({embeds: [selectUnitEmbed], components: [selectUnitButtons]})	
@@ -882,8 +886,15 @@ buyUnit: async function (interaction) {
             { name: `New Level:`, value: `${newUnit[0].Unit_Level}`, inline: true }, 
         )
         .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
+
+
 const unitUpgrade = await sql.Execute(`UPDATE levels SET War_Coins = ${newWallet}, Unit_Level = '${newLevel}' WHERE discord_id = '${interaction.member.id}'`)
 console.log(unitUpgrade.info)
+
+const updateUnit = await sql.Execute(`UPDATE playerunits SET unit_level = '${Level[0].unit_level}' WHERE discord_id = '${interaction.member.id}' AND camp = '${Level[0].unit_camp}' AND unit_type = '${Level[0].unit_type}'`)
+console.log(updateUnit.info)
+
+
 return interaction.update({embeds: [upgradeUnitEmbed], components: [upgradeButtons]})
 },
 profile: async function (interaction) {
@@ -979,8 +990,9 @@ newUnit: async function (interaction) {
             { name: `Speed:`, value: `${unitSelection.Speed}`, inline: true },
         )
         .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
-const saveUnit = await sql.Execute(`INSERT INTO playerunits (discord_id, camp, unit_type, unit_level) VALUES ('${interaction.member.id}', '${unitSelection.Camp}', '${unitSelection.Unit_Type}', '${unitSelection.Unit_Level}')`)
-console.log(saveUnit.info)
+const updateUnit = await sql.Execute(`UPDATE playerunits SET unit_level = '${Level[0].unit_level}' WHERE discord_id = '${interaction.member.id}' AND camp = '${Level[0].unit_camp}' AND unit_type = '${Level[0].unit_type}'`)
+console.log(updateUnit.info)
+const saveNewUnit = await sql.Execute(`INSERT INTO playerunits (discord_id, camp, unit_type, unit_level) VALUES ('${interaction.member.id}', '${unitSelection.Camp}', '${unitSelection.Unit_Type}', '${unitSelection.Unit_Level}')`)
 const updateNewUnit = await sql.Execute(`UPDATE levels SET Unit_Camp = '${unitSelection.Camp}', Unit_Type = '${unitSelection.Unit_Type}', Unit_Level = '${unitSelection.Unit_Level}', prestige = '${newPrestige}' WHERE discord_id = '${interaction.member.id}'`)
 console.log(updateNewUnit.info)
 return interaction.update({embeds: [newUnitEmbed], components: [newUnitButtons]})

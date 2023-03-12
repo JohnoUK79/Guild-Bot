@@ -1,4 +1,4 @@
-const { REST, Routes, Collection } = require('discord.js');
+const { REST, Routes, Collection, EmbedBuilder } = require('discord.js');
 const { token, CLIENT_ID, GUILD_ID } = require('../config.json');
 const nodeCron = require("node-cron");
 const timestamp = require('../config/timestamp');
@@ -83,6 +83,120 @@ module.exports = {
                 })
         })   
                
+        })
+
+        const battleBoardRewards = nodeCron.schedule("0 0 * * MONDAY", async () => {
+        console.log("Battle Board Rewards")
+        const Board = await sql.Execute(`SELECT * FROM levels WHERE battle_wins > 0 ORDER BY battle_wins DESC`)
+        const levelUpChannels = await sql.Execute(`SELECT * FROM settings WHERE 1`)
+        const firstPlace = 500000 * Board[0].officer_level
+        const secondPlace = 250000 * Board[1].officer_level
+        const thirdPlace = 125000 * Board[2].officer_level
+//client.users.cache.get('id').send('Blabla')
+        console.log(firstPlace, secondPlace, thirdPlace)
+        try {  
+            const firstPlaceEmbed = new EmbedBuilder();
+                firstPlaceEmbed
+                    .setColor('#00FF80')
+                    .setTitle(`You have placed 1st in this Week's Battle Rewards`)
+                    .setDescription(`Your **Rewards** have been added to your **Wallet**!`)
+                    .setURL('http://www.phfamily.co.uk')
+                    .addFields(
+                        { name: `Rank 1:`, value: `<@${Board[0].discord_id}> **Wins:** ${Board[0].battle_wins}`, inline: true },
+                        { name: `Winnings:`, value: `$${firstPlace.toLocaleString()}`, inline: true },
+                    )
+                    .setTimestamp()
+                    .setFooter({ text: `Battle Rewards.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
+            let sendfirst = client.users.cache.get(`${Board[0].discord_id}`)                
+            console.log(Board[0].discord_id);
+            sendfirst.send({ embeds: [firstPlaceEmbed]})
+        }
+        catch (e) {
+            console.log(e);
+            console.log(Board[0].discord_id);
+        }
+        try {  
+            const secondPlaceEmbed = new EmbedBuilder();
+                secondPlaceEmbed
+                    .setColor('#00FF80')
+                    .setTitle(`You have placed 2nd in this Week's Battle Rewards`)
+                    .setDescription(`Your **Rewards** have been added to your **Wallet**!`)
+                    .setURL('http://www.phfamily.co.uk')
+                    .addFields(
+                        { name: `Rank 2:`, value: `<@${Board[1].discord_id}> **Wins:** ${Board[1].battle_wins}`, inline: true },
+                        { name: `Winnings:`, value: `$${secondPlace.toLocaleString()}`, inline: true },
+                    )
+                    .setTimestamp()
+                    .setFooter({ text: `Battle Rewards.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
+            let sendfirst = client.users.cache.get(`${Board[1].discord_id}`)                
+            console.log(Board[1].discord_id);
+            sendfirst.send({ embeds: [secondPlaceEmbed]})
+        }
+        catch (e) {
+            console.log(e);
+            console.log(Board[1].discord_id);
+        }
+        try {  
+            const thirdPlaceEmbed = new EmbedBuilder();
+                thirdPlaceEmbed
+                    .setColor('#00FF80')
+                    .setTitle(`You have placed 3rd in this Week's Battle Rewards`)
+                    .setDescription(`Your **Rewards** have been added to your **Wallet**!`)
+                    .setURL('http://www.phfamily.co.uk')
+                    .addFields(
+                        { name: `Rank 3:`, value: `<@${Board[2].discord_id}> **Wins:** ${Board[2].battle_wins}`, inline: true },
+                        { name: `Winnings:`, value: `$${thirdPlace.toLocaleString()}`, inline: true },
+                    )
+                    .setTimestamp()
+                    .setFooter({ text: `Battle Rewards.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
+            let sendfirst = client.users.cache.get(`${Board[2].discord_id}`)                
+            console.log(Board[2].discord_id);
+            sendfirst.send({ embeds: [thirdPlaceEmbed]})
+        }
+        catch (e) {
+            console.log(e);
+            console.log(Board[2].discord_id);
+        }
+        const firstWallet = Board[0].war_coins + firstPlace
+        const secondWallet = Board[1].war_coins + secondPlace
+        const thirdWallet = Board[2].war_coins + thirdPlace
+
+        const updateFirstWallet = await sql.Execute(`UPDATE levels SET war_coins = '${firstWallet}' WHERE discord_id = ${Board[0].discord_id}`)
+        const updateSecondWallet = await sql.Execute(`UPDATE levels SET war_coins = '${secondWallet}' WHERE discord_id = ${Board[1].discord_id}`)
+        const updateThirdWallet = await sql.Execute(`UPDATE levels SET war_coins = '${thirdWallet}' WHERE discord_id = ${Board[2].discord_id}`)
+        const clearBattleBoard = await sql.Execute(`UPDATE levels SET battle_wins = '0', battle_losses = '0' WHERE 1`)
+        console.log(clearBattleBoard.info)
+
+        const winningEmbed = new EmbedBuilder();
+            winningEmbed
+            .setColor('#00FF80')
+            .setTitle(`Battle Rewards`)
+            .setDescription(`This Week's **Battle Reward Winners** Are:`)
+            .setURL('http://www.phfamily.co.uk')
+            .addFields(
+                { name: `Rank 1:`, value: `<@${Board[0].discord_id}> **Wins:** ${Board[0].battle_wins}`, inline: true },
+                { name: `Rank 2:`, value: `<@${Board[1].discord_id}> **Wins:** ${Board[1].battle_wins}`, inline: true },
+                { name: `Rank 3:`, value: `<@${Board[2].discord_id}> **Wins:** ${Board[2].battle_wins}\n`, inline: true },
+                { name: `All Rewards have been sent to the Winners via DM`, value: `The **Leaderboard** has been **Reset**, who will **Lead** this week?`, inline: true },
+            )
+            .setTimestamp()
+            .setFooter({ text: `Battle Rewards.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
+
+        for (let i = 0; i < levelUpChannels.length; i++) {
+            let levelUpChannel = levelUpChannels[i].level_up_channel_id;
+            
+            try {  
+                let sendChannel = client.channels.cache.get(levelUpChannel)                
+                console.log(levelUpChannel);
+                sendChannel.send({ content: '**Congratulations**', embeds: [winningEmbed]})
+
+            }
+            catch (e) {
+                console.log(e);
+                console.log(levelUpChannel);
+            }
+        
+        }   
         })
 
         const guildSettingsUpdate = nodeCron.schedule("0 22 * * *", () => {

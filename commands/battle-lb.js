@@ -27,7 +27,7 @@ module.exports = {
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
 		.addFields(
-			{ name: `Battles Board - **Top 3 Receive Rewards 00:00 UTC SUNDAYS**`, value: `**Wins - Losses**` },
+			{ name: `Battles Board - **Top 3 Receive Rewards 00:00 UTC MONDAYS**`, value: `**Wins - Losses**` },
 			{ name: `Rank 1 :first_place: ${board[0].discord_username}`, value: `${board[0].battle_wins} - ${board[0].battle_losses}` },
 			{ name: `Rank 2 :second_place: ${board[1].discord_username}`, value: `${board[1].battle_wins} - ${board[1].battle_losses}` },
 			{ name: `Rank 3 :third_place: ${board[2].discord_username}`, value: `${board[2].battle_wins} - ${board[2].battle_losses}` },

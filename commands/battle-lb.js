@@ -34,7 +34,7 @@ module.exports = {
 			)
 		.setImage(`${guildIcon}`)
 		.setTimestamp()
-		.setFooter({ text: `${guildName} - Shit Talker Leaderboard.`, iconURL: `${guildIcon}` });
+		.setFooter({ text: `${guildName} - Battles Leaderboard.`, iconURL: `${guildIcon}` });
 
         if (playerLevel > 9) {
 			leaderBoard.setColor('#1b4332') //dark green

@@ -8,8 +8,9 @@ module.exports = {
 	async execute(interaction) {
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
-		Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-		board = await sql.Execute(`select * from levels where 1 ORDER BY battle_wins DESC;`);
+		const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+		const board = await sql.Execute(`SELECT * FROM levels WHERE battle_wins > 0 ORDER BY battle_wins DESC;`);
+		console.log(board)
 		var playerLevel = Level[0].level
 		if (!playerLevel) {var playerLevel = 0}
 		user = board[0].discord_username
@@ -25,16 +26,19 @@ module.exports = {
 		.setURL('http://www.phfamily.co.uk/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-		.setDescription(`Hey **${interaction.member.displayName}**! Here is the board you asked for.`)
+		.setDescription(`Hey **${interaction.member.displayName}**! Battles Board - **Top 3 Receive Rewards 00:00 UTC MONDAYS**\n**Wins - Losses**`)
 		.addFields(
-			{ name: `Battles Board - **Top 3 Receive Rewards 00:00 UTC MONDAYS**`, value: `**Wins - Losses**` },
-			{ name: `Rank 1 :first_place: ${board[0].discord_username}`, value: `${board[0].battle_wins} - ${board[0].battle_losses}` },
-			{ name: `Rank 2 :second_place: ${board[1].discord_username}`, value: `${board[1].battle_wins} - ${board[1].battle_losses}` },
-			{ name: `Rank 3 :third_place: ${board[2].discord_username}`, value: `${board[2].battle_wins} - ${board[2].battle_losses}` },
+			//{ name: `Rank 1 :first_place: ${board[0].discord_username}`, value: `${board[0].battle_wins} - ${board[0].battle_losses}` },
+			//{ name: `Rank 2 :second_place: ${board[1].discord_username}`, value: `${board[1].battle_wins} - ${board[1].battle_losses}` },
+			//{ name: `Rank 3 :third_place: ${board[2].discord_username}`, value: `${board[2].battle_wins} - ${board[2].battle_losses}` },
 			)
 		.setImage(`${guildIcon}`)
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - Battles Leaderboard.`, iconURL: `${guildIcon}` });
+
+        for (let i = 0; i < 25 && board[i]; i++) leaderBoard.addFields(
+            { name: `Rank ${i + 1} ${board[i].discord_username}`, value: `${board[i].battle_wins} - ${board[i].battle_losses}` })
+
 
         if (playerLevel > 9) {
 			leaderBoard.setColor('#1b4332') //dark green

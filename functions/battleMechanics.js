@@ -80,15 +80,15 @@ module.exports = {
                 }
                 const Defender = {
                     Name: DefenderStats.Name,
-                    Power: DefenderStats.Firepower * AttackerStats.OfficerLevel,
-                    Health: DefenderStats.HP * AttackerStats.BaseLevel * 10,
+                    Power: DefenderStats.Firepower * DefenderStats.OfficerLevel,
+                    Health: DefenderStats.HP * DefenderStats.BaseLevel * 10,
                     Speed: DefenderStats.Speed,
                     AttackType: DefenderStats.AttackType
                 }
 
                 embed
 					.setDescription(`${interaction.member} your **${AttackerStats.Name}** sucessfully Battled ${defender}'s **${DefenderStats.Name}**!`)
-
+console.log(Attacker, Defender)
 async function sleep(ms) {
     return new Promise(
       resolve => setTimeout(resolve, ms)

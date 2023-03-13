@@ -82,6 +82,15 @@ module.exports = {
                 if (playerLevel > 99) {
                     Top10.setColor('#ffff00') //yellow
                 } 
+				if (playerLevel > 249) {
+					Top10.setColor('#ffbd00') // Deep yellow
+				} 
+				if (playerLevel > 499) {
+					Top10.setColor('#d81159') // Deep Red
+				} 
+				if (playerLevel > 999) {
+					Top10.setColor('#72ddf7') // Light Blue
+				} 
                 await interaction.update( { embeds: [Top10], components: [Levels], ephemeral: false })                   
     },
     top20: async function(interaction) {
@@ -170,6 +179,15 @@ module.exports = {
         if (playerLevel > 99) {
             Top20.setColor('#ffff00') //yellow
         } 
+		if (playerLevel > 249) {
+			Top20.setColor('#ffbd00') // Deep yellow
+		} 
+		if (playerLevel > 499) {
+			Top20.setColor('#d81159') // Deep Red
+		} 
+		if (playerLevel > 999) {
+			Top20.setColor('#72ddf7') // Light Blue
+		} 
         await interaction.update({ embeds: [Top20], components: [Levels], ephemeral: false })
     },
     top30: async function(interaction) {
@@ -258,6 +276,15 @@ module.exports = {
         if (playerLevel > 99) {
             Top30.setColor('#ffff00') //yellow
         } 
+		if (playerLevel > 249) {
+			Top30.setColor('#ffbd00') // Deep yellow
+		} 
+		if (playerLevel > 499) {
+			Top30.setColor('#d81159') // Deep Red
+		} 
+		if (playerLevel > 999) {
+			Top30.setColor('#72ddf7') // Light Blue
+		} 
         await interaction.update({ embeds: [Top30], components: [Levels], ephemeral: false })
     },
     top40: async function(interaction) {
@@ -345,6 +372,15 @@ module.exports = {
         if (playerLevel > 99) {
             Top40.setColor('#ffff00') //yellow
         } 
+		if (playerLevel > 249) {
+			Top40.setColor('#ffbd00') // Deep yellow
+		} 
+		if (playerLevel > 499) {
+			Top40.setColor('#d81159') // Deep Red
+		} 
+		if (playerLevel > 999) {
+			Top40.setColor('#72ddf7') // Light Blue
+		} 
         await interaction.update({ embeds: [Top40], components: [Levels], ephemeral: false })
     },
     top50: async function(interaction) {
@@ -432,6 +468,15 @@ module.exports = {
         if (playerLevel > 99) {
             Top50.setColor('#ffff00') //yellow
         } 
+		if (playerLevel > 249) {
+			Top50.setColor('#ffbd00') // Deep yellow
+		} 
+		if (playerLevel > 499) {
+			Top50.setColor('#d81159') // Deep Red
+		} 
+		if (playerLevel > 999) {
+			Top50.setColor('#72ddf7') // Light Blue
+		} 
         await interaction.update({ embeds: [Top50], components: [Levels], ephemeral: false })
 }
 }

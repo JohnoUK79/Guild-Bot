@@ -110,11 +110,9 @@ if (Attacker.Speed < Defender.Speed) {
             module.exports.defenderMultipler = defenderMultipler
         }
         attackSelection(Attacker, Defender)
-        console.log(defenderMultipler, attackerMultipler)
         await sleep(500)
         const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
         const defenderPower = (defendPower * defenderMultipler)
-        console.log(defenderPower)
         if (DH >= 0) {let defenderPower = 0} 
         AH = AH - defenderPower
         var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
@@ -127,7 +125,6 @@ if (Attacker.Speed < Defender.Speed) {
         console.log(`Defender hit for ${defenderPower.toLocaleString()}`)        
         const  attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
         const attackerPower = (attackPower * attackerMultipler)
-        console.log(attackerPower)
         if (AH >= 0) {let attackerPower = 0} 
         DH = DH - attackerPower
         var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
@@ -156,10 +153,9 @@ if (Attacker.Speed < Defender.Speed) {
         attackSelection(Attacker, Defender)
         console.log(defenderMultipler, attackerMultipler)
         await sleep(500)
-        const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
-        const attackerPower = (attackPower * attackerMultipler)
-        console.log(attackerPower)
-        if (AH >= 0) {let attackerPower = 0} 
+    const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
+    const attackerPower = (attackPower * attackerMultipler)
+    if (AH >= 0) {let attackerPower = 0} 
         DH = DH - attackerPower
         var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
 
@@ -186,30 +182,6 @@ if (Attacker.Speed < Defender.Speed) {
     }
 }
 
-if (AH < 0) {
-    await sleep(500)
-    var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
-    const winnings = DefenderDB[0].officer_level * 10000
-    chest = DefenderDB[0].war_chest
-    console.log(chest)    
-    const wallet = DefenderDB[0].war_coins
-    const wins = DefenderDB[0].battle_wins
-    const newWins = parseInt(wins + 1)
-    const losses = AttackerDB[0].battle_losses
-    const newLosses = parseInt(losses + 1)
-    const newWallet = wallet + winnings
-
-    embed
-        .setImage(playerImage)
-        .addFields(
-            { name: `Defenders War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${defender}` },
-        )     
-        .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by ${defender}'s **${Defender.Name}**.`)
-    interaction.editReply({ embeds: [embed] });  
-    const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${defender.id}`)
-    const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)
-    console.log('Winner:', win.info,'Loser:', loss.info)
-} else
 if (DH < 0) {
     await sleep(500)
     var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
@@ -233,7 +205,31 @@ if (DH < 0) {
     interaction.editReply({ embeds: [embed] });
     const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
     const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${defender.id}`)
-    console.log('Winner:', win.info,'Loser:', loss.info)
+    console.log('Winner:', win.info,'\nLoser:', loss.info)
+    }
+    if (AH < 0) {
+        await sleep(500)
+        var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
+        const winnings = DefenderDB[0].officer_level * 10000
+        chest = DefenderDB[0].war_chest
+        console.log(chest)    
+        const wallet = DefenderDB[0].war_coins
+        const wins = DefenderDB[0].battle_wins
+        const newWins = parseInt(wins + 1)
+        const losses = AttackerDB[0].battle_losses
+        const newLosses = parseInt(losses + 1)
+        const newWallet = wallet + winnings
+    
+        embed
+            .setImage(playerImage)
+            .addFields(
+                { name: `Defenders War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${defender}` },
+            )     
+            .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by ${defender}'s **${Defender.Name}**.`)
+        interaction.editReply({ embeds: [embed] });  
+        const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${defender.id}`)
+        const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)
+        console.log('Winner:', win.info,'Loser:', loss.info)
     }
 }
 }

@@ -206,7 +206,7 @@ if (DH < 0) {
     const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
     const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${defender.id}`)
     console.log('Winner:', win.info,'\nLoser:', loss.info)
-    }
+    } else
     if (AH < 0) {
         await sleep(500)
         var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`

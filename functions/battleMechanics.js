@@ -22,7 +22,6 @@ module.exports = {
 
                     return interaction.editReply(`${interaction.member} Stop trying to **Bully the Bots**, You can only **Battle** real members\nMan Up and pick a better foe!`)
                 }
-				const DefenderDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${defender.id}`)
 				if (defender.id === interaction.member.id) {
                     commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, 0)
 
@@ -31,6 +30,7 @@ module.exports = {
 	
 					return interaction.editReply({ embeds: [embed] })
 				}
+				const DefenderDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${defender.id}`)
                 console.log(DefenderDB[0].unit_type)
                 if (!DefenderDB[0].unit_type) {
                     commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, 0)
@@ -44,7 +44,7 @@ module.exports = {
                 console.log(`Defender`, DefenderUnit)
                 const AttackerDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`);
                 const AttackerUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${AttackerDB[0].unit_camp}' AND Unit_Type = '${AttackerDB[0].unit_type}' AND Unit_Level = '${AttackerDB[0].unit_level}'`)
-                console.log(AttackerDB[0].unit_type)
+
                 if (!AttackerDB[0].unit_type) {
                     commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, 0)
 
@@ -52,7 +52,14 @@ module.exports = {
 					    .setDescription(`${interaction.member} you haven't selected your **Unit**!\nUse **warpath-upgrade** to level up and get your **Unit**!`)
                         return interaction.editReply({ embeds: [embed] });
                 }
+                const attackOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${AttackerDB[0].officer_name}'`)
 
+                const AttackerOfficer = {
+                    Name: attackOfficer[0].Officer_Name,
+                    Type: attackOfficer[0].Officer_Type,
+                    Camp: attackOfficer[0].Officer_Camp,
+                    Skill: attackOfficer[0].Skill
+                }
                 const AttackerStats = {
                     Name: AttackerUnit[0].Unit_Name,
                     Firepower: AttackerUnit[0].Firepower,
@@ -62,6 +69,16 @@ module.exports = {
                     OfficerLevel: AttackerDB[0].officer_level,
                     AttackType: AttackerUnit[0].Attack_Type
                 }
+
+                const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)
+
+                const DefenderOfficer = {
+                    Name: defendOfficer[0].Officer_Name,
+                    Type: defendOfficer[0].Officer_Type,
+                    Camp: defendOfficer[0].Officer_Camp,
+                    Skill: defendOfficer[0].Skill
+                }
+
                 const DefenderStats = {
                     Name: DefenderUnit[0].Unit_Name,
                     Firepower: DefenderUnit[0].Firepower,
@@ -76,14 +93,20 @@ module.exports = {
                     Power: AttackerStats.Firepower * AttackerStats.OfficerLevel,
                     Health: AttackerStats.HP * AttackerStats.BaseLevel * 10,
                     Speed: AttackerStats.Speed,
-                    AttackType: AttackerStats.AttackType
+                    AttackType: AttackerStats.AttackType,
+                    Officer: AttackerOfficer.Name,
+                    OfficerCamp: AttackerOfficer.Camp,
+                    OfficerSkill: AttackerOfficer.Skill
                 }
                 const Defender = {
                     Name: DefenderStats.Name,
                     Power: DefenderStats.Firepower * DefenderStats.OfficerLevel,
                     Health: DefenderStats.HP * DefenderStats.BaseLevel * 10,
                     Speed: DefenderStats.Speed,
-                    AttackType: DefenderStats.AttackType
+                    AttackType: DefenderStats.AttackType,
+                    Officer: DefenderOfficer.Name,
+                    OfficerCamp: DefenderOfficer.Camp,
+                    OfficerSkill: DefenderOfficer.Skill
                 }
 
                 embed
@@ -200,7 +223,7 @@ if (DH < 0) {
         .addFields(
             { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
         )        
-        .setDescription(`${defender}'s **${Defender.Name}** has been killed by ${interaction.member}'s **${Attacker.Name}**.`)
+        .setDescription(`${defender}'s **${Defender.Name}** has been killed by ${interaction.member}'s **${Attacker.Name} & ${Attacker.Officer} using ${Attacker.OfficerSkill}**.`)
     await sleep(1000)
     interaction.editReply({ embeds: [embed] });
     const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
@@ -225,7 +248,7 @@ if (DH < 0) {
             .addFields(
                 { name: `Defenders War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${defender}` },
             )     
-            .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by ${defender}'s **${Defender.Name}**.`)
+            .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by ${defender}'s **${Defender.Name} & ${Defender.Officer} using ${Defender.OfficerSkill}**.`)
         interaction.editReply({ embeds: [embed] });  
         const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${defender.id}`)
         const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)

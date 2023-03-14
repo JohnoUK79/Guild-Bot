@@ -42,6 +42,12 @@ module.exports = {
 	
 					return interaction.editReply({ embeds: [embed] })
 				}
+				if (!victimDB[0]) {
+					embed
+						.setDescription(`**${interaction.member}**, You have tried to **Steal** from an Inactive player!\n**${victim}** has not been **Active** in a while!\nPlease pick an **Active Victim**!`)
+		
+					return interaction.editReply({ embeds: [embed] })
+					} 
 				const victimWallet = victimDB[0].war_coins 
 				if (victimWallet < 1000) {
 				embed

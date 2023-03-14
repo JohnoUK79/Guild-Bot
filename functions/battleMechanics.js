@@ -1,5 +1,6 @@
 const sql = require("../config/Database");
 const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { officerSkills } = require("./officerSkills");
 
 module.exports = {
     battle: async function (interaction) {
@@ -133,6 +134,8 @@ if (Attacker.Speed < Defender.Speed) {
             module.exports.defenderMultipler = defenderMultipler
         }
         attackSelection(Attacker, Defender)
+        officerSkills(Attacker, Defender)
+        console.log(attackSkill)
         await sleep(500)
         const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
         const defenderPower = (defendPower * defenderMultipler)
@@ -169,11 +172,12 @@ if (Attacker.Speed < Defender.Speed) {
             if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Air') return attackerMultipler = 1.0, defenderMultipler = 1.0
             if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Ground') return attackerMultipler = 1.5, defenderMultipler = 0.5
             if (Attacker.AttackType === 'Ground' && Defender.AttackType === 'Air') return attackerMultipler = 0.5, defenderMultipler = 1.5
-
             module.exports.attackerMultipler = attackerMultipler
             module.exports.defenderMultipler = defenderMultipler
         }
         attackSelection(Attacker, Defender)
+        officerSkills(Attacker, Defender)
+        console.log(attackSkill)
         console.log(defenderMultipler, attackerMultipler)
         await sleep(500)
     const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2

@@ -461,7 +461,6 @@ officerSelect: async function (interaction) {
     const guildName = interaction.member.guild.name	
     const Officer = await sql.Execute(`SELECT Officer_Name, Officer_Camp, Skill FROM officers WHERE Officer_Type = 'GROUND'`)
     const officerSelection = Officer[Math.floor(Math.random() * Officer.length)]
-    console.log(officerSelection)
 
     selectOfficerEmbed
         .setColor('#ff5b05')
@@ -597,7 +596,6 @@ unitUpgrade: async function (interaction) {
     const unitLevel = Level[0].unit_level
     const officer = Level[0].officer
     const prestige = Level[0].prestige + 1
-    console.log(prestige)
     const officerLevel = Level[0].officer_level
     const cost = (unitLevel + 1) * (125000 * prestige)
 
@@ -710,7 +708,6 @@ unitSelect: async function (interaction) {
     const guildName = interaction.member.guild.name	
     const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '4.0' AND Unit_Type LIKE '%Tanks%'`)
     const unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
-    console.log(unitSelection)
 
     selectUnitEmbed
         .setColor('#ff5b05')
@@ -805,7 +802,6 @@ buyUnit: async function (interaction) {
     const bank = Level[0].war_chest
     const officerLevel = Level[0].officer_level
     const prestige = Level[0].prestige + 1
-    console.log(prestige)
     const cost = (unitLevel + 1) * (125000 * prestige)
 
     if (unitLevel === '9.2') {
@@ -867,7 +863,6 @@ buyUnit: async function (interaction) {
     }
     const newWallet = (wallet - cost)
     const newUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${camp}' AND Unit_Type = '${unitType}' AND Unit_Level > '${unitLevel}'`)
-    console.log(camp, unitType, unitLevel)
     const newLevel = newUnit[0].Unit_Level
     const newName = newUnit[0].Unit_Name
     const newFirepower = newUnit[0].Firepower
@@ -911,15 +906,10 @@ profile: async function (interaction) {
     const guildIcon = interaction.member.guild.iconURL();
     const guildName = interaction.member.guild.name	
     const officerLevel = Level[0].officer_level || 'No Officer Chosen'
-    console.log(officerLevel)
     const officer = Level[0].officer_name || 'No Officer Chosen'
-    console.log(officer)
     const unitType = Level[0].unit_type || 'No Unit Trained'
-    console.log(unitType)
     const unitLevel = Level[0].unit_level || 'No Unit Trained'
-    console.log(unitLevel)
     const unitCamp = Level[0].unit_camp || 'No Unit Trained'
-    console.log(unitCamp)
 
 
     profileEmbed
@@ -985,10 +975,8 @@ newUnit: async function (interaction) {
     return interaction.update({embeds: [newUnitEmbed], components: [newUnitButtons]})
     } else console.log(`No Officer Upgrade Required`)
 
-
     const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '${newUnitLevel}' AND Unit_Type LIKE '%${newUnitType}%'`)
     const unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
-    console.log(unitSelection)
     
     newUnitEmbed
         .setColor('#ff5b05')
@@ -1010,6 +998,26 @@ console.log(updateUnit.info)
 const saveNewUnit = await sql.Execute(`INSERT INTO playerunits (discord_id, camp, unit_type, unit_level) VALUES ('${interaction.member.id}', '${unitSelection.Camp}', '${unitSelection.Unit_Type}', '${unitSelection.Unit_Level}')`)
 const updateNewUnit = await sql.Execute(`UPDATE levels SET Unit_Camp = '${unitSelection.Camp}', Unit_Type = '${unitSelection.Unit_Type}', Unit_Level = '${unitSelection.Unit_Level}', prestige = '${newPrestige}' WHERE discord_id = '${interaction.member.id}'`)
 console.log(updateNewUnit.info)
+console.log(saveNewUnit.info)
+
 return interaction.update({embeds: [newUnitEmbed], components: [newUnitButtons]})
+},
+attackSelection: async function (Attacker, Defender) {
+    if (Attacker.AttackType === 'Ground' && Defender.AttackType === 'Ground') return attackerMultipler = 1.0, defenderMultipler = 1.0
+    if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Air') return attackerMultipler = 1.0, defenderMultipler = 1.0
+    if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Ground') return attackerMultipler = 1.25, defenderMultipler = 0.75
+    if (Attacker.AttackType === 'Ground' && Defender.AttackType === 'Air') return attackerMultipler = 0.75, defenderMultipler = 1.25
+
+    module.exports.attackerMultipler = attackerMultipler
+    module.exports.defenderMultipler = defenderMultipler
+},
+newUnitSelection: async function (prestige) {
+    if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters'
+    if (prestige === 1) return newUnitLevel = '4.0', newUnitType = 'Infantry'
+    if (prestige === 2) return newUnitLevel = '5.0', newUnitType = 'SuperHeavy'
+    if (prestige === 3) return newUnitLevel = '4.0', newUnitType = 'Howitzer'
+    if (prestige === 4) return newUnitLevel = '5.0', newUnitType = 'Bombers'
+    module.exports.newUnitLevel = newUnitLevel
+    module.exports.newUnitType = newUnitType
 }
 }

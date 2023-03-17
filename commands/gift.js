@@ -29,7 +29,7 @@ module.exports = {
 		})
 		const player = interaction.options.getUser('player');
 		const amount = interaction.options.getInteger('amount');
-
+		if (interaction.member.id != owner) {return interaction.editReply(`Only the Bot Owner Can Gift Coins! Contact <@${owner}> for more details.`)}
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
 		Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${player.id}`)

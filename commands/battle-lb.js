@@ -9,8 +9,8 @@ module.exports = {
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
 		const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-		const board = await sql.Execute(`SELECT * FROM levels WHERE battle_wins > 0 ORDER BY battle_wins DESC;`);
-		console.log(board)
+		const board = await sql.Execute(`SELECT * FROM levels WHERE battle_wins > 0 ORDER BY battle_wins DESC, battle_losses ASC;`);
+
 		if (!board[0]) {
 			return await interaction.reply({content: `No Battle Data Available`, ephemeral: true})
 		} else

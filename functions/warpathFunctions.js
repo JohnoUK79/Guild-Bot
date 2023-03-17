@@ -1019,5 +1019,14 @@ newUnitSelection: async function (prestige) {
     if (prestige === 4) return newUnitLevel = '5.0', newUnitType = 'Bombers'
     module.exports.newUnitLevel = newUnitLevel
     module.exports.newUnitType = newUnitType
+},
+campSelection: async function (Attacker, Defender, attackerMultipler, defenderMultipler) {
+    if (Attacker.UnitCamp === Attacker.OfficerCamp) return attackerMultipler = attackMultipler * 2
+    if (Defender.UnitCamp === Defender.OfficerCamp) return defenderMultipler = defenderMultipler * 2
+    if (Attacker.UnitCamp === Attacker.OfficerCamp && Attacker.AttackType === Attacker.OfficerType) return attackerMultipler = attackMultipler * 4
+    if (Defender.UnitCamp === Defender.OfficerCamp && Defender.AttackType === Defender.OfficerType) return defenderMultipler = defenderMultipler * 4
+
+    module.exports.attackerMultipler = attackerMultipler
+    module.exports.defenderMultipler = defenderMultipler
 }
 }

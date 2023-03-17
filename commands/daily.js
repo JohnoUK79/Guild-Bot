@@ -4,7 +4,7 @@ const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
 
 module.exports = {
-    cooldown: 28800000,
+    cooldown: 14400000,
     data: new SlashCommandBuilder()
         //.setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
         .setName("daily")
@@ -26,7 +26,7 @@ module.exports = {
 			const bank = Economy[0].war_chest
 			let officer = Economy[0].officer_level
 			if (!officer) {officer = 1}
-			const dailyBonus = Math.floor(Math.random() * (50000 - 25000 + 1)) + 25000
+			const dailyBonus = Math.floor(Math.random() * (100000 - 50000 + 1)) + 50000
 			const daily = (dailyBonus * officer)
 
 			const newWallet = wallet + daily;

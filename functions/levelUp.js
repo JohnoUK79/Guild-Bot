@@ -49,7 +49,7 @@ module.exports = {
 		if (Levels.length === 0) {
 			console.log("First Post")
 			playerImage = "http://phfamily.co.uk/img/gifs/NotFound.png"
-			warcoins = 150000
+			warcoins = 1500000
 			warchest = 0
 			level = 0
 			var score = Math.floor(Math.random() * 150) * 3;

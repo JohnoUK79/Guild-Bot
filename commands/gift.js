@@ -40,7 +40,6 @@ module.exports = {
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 				.setFooter({ text: `${guildName} - Daily Rewards`, iconURL: `${guildIcon}`});
-		if (player.id != owner) {return interaction.editReply(`Only the Owner of the Bot can gift coins!`)}
        	const wallet = Economy[0].war_coins
 		const bank = Economy[0].war_chest
 		const newWallet = wallet + amount;

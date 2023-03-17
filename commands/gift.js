@@ -1,4 +1,5 @@
 const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { OWNER } = require('../config.json');
 const sql = require("../config/Database");
 const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
@@ -22,12 +23,11 @@ module.exports = {
 			),
 
     async execute(interaction) {
-		const owner = '322100798651760640'
 		await interaction.deferReply({
 			fetchReply: true,
 			ephemeral: true,
 		})
-		if (interaction.member.id != owner) {return interaction.editReply(`Only the Bot Owner Can Gift Coins! Contact <@${owner}> for more details.`)}
+		if (interaction.member.id != OWNER) {return interaction.editReply(`Only the Bot Owner Can Gift Coins! Contact <@${owner}> for more details.`)}
 		const player = interaction.options.getUser('player');
 		const amount = interaction.options.getInteger('amount');
 		guildIcon = interaction.member.guild.iconURL();
@@ -39,12 +39,12 @@ module.exports = {
 				.setThumbnail(guildIcon)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Daily Rewards`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `${guildName} - Gift Rewards`, iconURL: `${guildIcon}`});
        	const wallet = Economy[0].war_coins
 		const bank = Economy[0].war_chest
 		const newWallet = wallet + amount;
-		const dailyUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
-		console.log(`Daily: ${interaction.member.displayName} ${dailyUpdate.info}`)
+		const giftUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
+		console.log(`Gift: ${player.username} ${giftUpdate.info}`)
 		embed
 			.setDescription(`${interaction.member} You sucessfully gifted **$${amount.toLocaleString()} War-Coins** to ${player}`)
 			.addFields(

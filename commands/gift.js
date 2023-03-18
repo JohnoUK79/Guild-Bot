@@ -43,7 +43,7 @@ module.exports = {
        	const wallet = Economy[0].war_coins
 		const bank = Economy[0].war_chest
 		const newWallet = wallet + amount;
-		const giftUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
+		const giftUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}' WHERE discord_id = ${player.id}`)
 		console.log(`Gift: ${player.username} ${giftUpdate.info}`)
 		embed
 			.setDescription(`${interaction.member} You sucessfully gifted **$${amount.toLocaleString()} War-Coins** to ${player}`)

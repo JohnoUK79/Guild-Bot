@@ -2,7 +2,7 @@ const fs = require('node:fs');
 const { Client, GatewayIntentBits, Partials, Collection, EmbedBuilder, Options } = require("discord.js");
 const rpc = require("discord-rpc");
 const { token, CLIENT_ID } = require('./config.json');
-const { Player } = require('discord-player');
+const { Player, useMetadata } = require('discord-player');
 let embed = new EmbedBuilder();
 embed
     .setColor('#ffff00')
@@ -73,90 +73,27 @@ const client = new Client({
 const commandCooldowns = new Collection();
 
 //Discord Player Setup
-const botJukebox = new Player(client, {
-    ytdlOptions: {
-    quality: 'highestaudio',
-    highWaterMark: 1 << 25
-    },
-    leaveOnEnd: false,
-    leaveOnStop: true,
-    leaveInEmpty: true,
-    leaveOnEndCooldown: 15000,
-    leaveOnEmptyCooldown: 15000,
-    autoSelfDeaf: true,
-    initialVolume: 30,
-    bufferingTimeout: 2500,
-    spotifyBride: true,
-    disableVolume: false,
-    smoothVolume: true
-    })
-botJukebox.on('error', (queue, error) => {
+const player = new Player(client);
+player.events.on('error', (queue, error) => {
     console.log(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
-    queue.connection.channel.send(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
 });
-botJukebox.on('connectionError', (queue, error) => {
+player.events.on('playerError', (queue, error) => {
     console.log(`[${queue.guild.name}] Error emitted from the connection: ${error.message}`);
-    queue.connection.channel.send(`[${queue.guild.name}] Error emitted from the connection: ${error.message}`);
 });
-botJukebox.on('trackStart', (queue, track) => {
-
-    embed
-        .setTitle('🎼| Now Playing:')
-        .setTimestamp()
-        .setDescription(`🎶 | [${track.title}](${track.url})!`);
-
-    console.log(`🎼| Now Playing: ${track.title} in ${queue.connection.channel.name}!`);
-    queue.connection.channel.send({
-        embeds: [embed]
-    });
+player.events.on('playerStart', (queue, track) => {
+    console.log(`🎼| Now Playing: ${track.title} in ${queue.metadata.channel.name}!`);
 });
-botJukebox.on('trackAdd', (queue, track) => {
-
-    embed
-        .setTitle('🎼| Track Queued:')
-        .setTimestamp()
-        .setDescription(`🎶| [${track.title}](${track.url})`);
-
+player.events.on('audioTrackAdd', (queue, track) => {
     console.log(`🎼| ${track.title} queued!`);
-    queue.connection.channel.send({
-        embeds: [embed]
-    });
-
 });
-botJukebox.on('botDisconnect', (queue) => {
-
-    embed
-        .setTitle(`❌ | I was manually disconnected from the Voice Channel, clearing queue!`)
-        .setTimestamp()
-        .setDescription(`❌ | **${queue.channel}**!`);
-
-    console.log(`❌ | I was manually disconnected from the Voice Channel, clearing queue!`);
-    queue.connection.channel.send({
-        embeds: [embed]
-    });
+player.events.on('disconnect', (queue) => {
+    console.log(`❌ | I was manually disconnected from the Voice Channel (${queue.metadata.channel.name}), clearing queue!`);
 });
-botJukebox.on('channelEmpty', (queue) => {
-
-    embed
-        .setTitle(`🎼 | I'm Singing to Myself in ${queue.connection.channel} Voice Channel...`)
-        .setTimestamp()
-        .setDescription(`🎶 | I'm leaving ${queue.connection.channel} for now!\nUse **/Jukebox song** to add more songs.`);
-
-    console.log(`❌ | Nobody is in the Voice Channel, leaving...`);
-    queue.connection.channel.send({
-        embeds: [embed]
-    });
+player.events.on('emptyChannel', (queue) => {
+    console.log(`❌ | Nobody is in the Voice Channel (${queue.metadata.channel.name}), leaving...`);
 });
-botJukebox.on('queueEnd', (queue) => {
-
-    embed
-        .setTitle(`🎶 | End of Queue in ${queue.connection.channel}`)
-        .setDescription(`🎼 | I have no more songs to play for ${queue.connection.channel}!\nMaybe use **/Jukebox loop** to keep the music playing!`);
-
+player.events.on('emptyQueue', (queue) => {
     console.log(`🎼 | Queue finished!`);
-    queue.connection.channel.send({
-        embeds: [embed]
-    });
 });
 console.log('=================Jukebox Online!=================')
 
@@ -208,7 +145,6 @@ client.login(token);
 //RPC login
 rpc_client.login({ clientId: CLIENT_ID }).catch(console.error);
 module.exports = {
-    botJukebox: botJukebox,
     commandCooldowns: commandCooldowns,
     client: client
 }

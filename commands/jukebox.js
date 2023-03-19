@@ -1,5 +1,7 @@
 const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { QueryType, QueueRepeatMode } = require('discord-player');
+const { useMasterPlayer, useQueue, QueryType, QueueRepeatMode } = require('discord-player');
+const { lyricsExtractor } = require("@discord-player/extractor")
+const search = lyricsExtractor()
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -11,223 +13,214 @@ module.exports = {
 				.setDescription('Searches for a Song!')
 				.addStringOption(option =>
 					option
-						.setName('searchterms')
+						.setName('query')
 						.setDescription('Search Keywords!')
 						.setRequired(true)
 					)
-			)
-		// .addSubcommand(subcommand => 
-		// 	subcommand
-		// 		.setName('playlist')
-		// 		.setDescription('Plays a Playlist from YouTube!')
-		// 		.addStringOption(option =>
-		// 			option
-		// 				.setName('url')
-		// 				.setDescription('Playlist URL!')
-		// 				.setRequired(true)
-		// 			)
-		// 	)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName('pause')
-					.setDescription('Pauses the Current Song!')
-			)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName('resume')
-					.setDescription('Resumes the Current Song!')
-			)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName('back')
-					.setDescription('Resumes the Current Song!')
-			)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName('skip')
-					.setDescription('Skips the Current Song!')
-			)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName('remove')
-					.setDescription('Removes a Track from the Queue!')
-					.addIntegerOption(option =>
-						option
-							.setName('track')
-							.setDescription('The number of the track to remove!')
-							.setRequired(true)
-						)
-			)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName('queue')
-					.setDescription('Shows the Current Queue!')
-			)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName('volume')
-					.setDescription('Sets the Player Volume!')
-					.addIntegerOption(option =>
-						option
-							.setName('amount')
-							.setDescription('Set the Volume Level (0-100)!')
-							.setRequired(false)
-						)
-			)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName('bassboost')
-					.setDescription('Toggles the BassBoost filter!')
-			)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName('loop')
-					.setDescription('Sets the LOOP Mode!')
-					.addIntegerOption(option =>
-						option
-							.setName('mode')
-							.setDescription('Set the LOOP Type!')
-							.setRequired(true)
-							.addChoices(
-								{
-									name:'Off',
-									value: QueueRepeatMode.OFF
-								},
-								{
-									name: 'Track',
-									value: QueueRepeatMode.TRACK
-								},
-								{
-									name: 'Queue',
-									value: QueueRepeatMode.QUEUE
-								},
-								{
-									name: 'Autoplay',
-									value: QueueRepeatMode.AUTOPLAY
-								}
-							)
-						)
-			)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName('clear')
-					.setDescription('Clears the Queue History!')
-			)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName('history')
-					.setDescription('Display the Queue History!')
-			)
-			.addSubcommand(subcommand =>
-				subcommand
-					.setName('exit')
-					.setDescription('Exits the Jukebox & Closes Player!')
-			)
-			,
-
-				
+		)
+        .addSubcommand(subcommand =>
+			subcommand
+		    	.setName('pause')
+				.setDescription('Pauses the Current Song!')
+		)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('resume')
+				.setDescription('Resumes the Current Song!')
+		)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('back')
+				.setDescription('Plays The Previous Song!')
+		)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('skip')
+				.setDescription('Skips the Current Song!')
+		)
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('remove')
+                .setDescription('Removes a Track from the Queue!')
+                .addIntegerOption(option =>
+                    option
+                        .setName('track')
+                        .setDescription('The number of the track to remove!')
+                        .setRequired(true)
+                    )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('queue')
+                .setDescription('Shows the Current Queue!')
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('volume')
+                .setDescription('Sets the Player Volume!')
+                .addIntegerOption(option =>
+                    option
+                        .setName('amount')
+                        .setDescription('Set the Volume Level (0-100)!')
+                        .setRequired(false)
+                    )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('bassboost')
+                .setDescription('Toggles the BassBoost filter!')
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('loop')
+                .setDescription('Sets the LOOP Mode!')
+                .addIntegerOption(option =>
+                    option
+                        .setName('mode')
+                        .setDescription('Set the LOOP Type!')
+                        .setRequired(true)
+                        .addChoices(
+                            {
+                                name:'Off',
+                                value: QueueRepeatMode.OFF
+                            },
+                            {
+                                name: 'Track',
+                                value: QueueRepeatMode.TRACK
+                            },
+                            {
+                                name: 'Queue',
+                                value: QueueRepeatMode.QUEUE
+                            },
+                            {
+                                name: 'Autoplay',
+                                value: QueueRepeatMode.AUTOPLAY
+                            }
+                        )
+                    )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('lyrics')
+                .setDescription('Search for Lyrics to a Song!')
+                .addStringOption(option =>
+                    option
+                        .setName('name')
+                        .setDescription('Name of the Song!')
+                        .setRequired(true)
+                    )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('clear')
+                .setDescription('Clears the Queue History!')
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('history')
+                .setDescription('Display the Queue History!')
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('exit')
+                .setDescription('Exits the Jukebox & Closes Player!')
+        ),
 	async execute(interaction) {
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
-		const { botJukebox } = require('../bot')
-		const player = botJukebox
-		if (!interaction.member.voice.channel) {
-			return interaction.reply({
-				content: 'You Need to Be in **Voice Chat** to Use This Command.',
-				ephemeral: true,
-			})
-		} 
-		const queue = await player.createQueue(interaction.guild, {
-			ytdlOptions: {
-				quality: 'highestaudio',
-				highWaterMark: 1 << 30
-				},
-			leaveOnEnd: false,
-			leaveOnStop: true,
-			leaveOnEmpty: true,
-			leaveOnEndCooldown: 15000,
-			leaveOnEmptyCooldown: 15000,
-			autoSelfDeaf: true,
-			initialVolume: 25,
-			bufferingTimeout: 2500,
-			spotifyBridge: true,
-			disableVolume: false,
-			smoothVolume: true,
-			metadata: {
-				interaction: interaction,
-				channel: interaction.channel,
-				guild: interaction.guild,
-				user: interaction.user
-			}
-		})
+        const player = useMasterPlayer(); // Get the player instance that we created earlier
+        const channel = interaction.member.voice.channel;
+        const playEmbed = new EmbedBuilder();
+        if (!channel) {
+            playEmbed
+                .setDescription(`<@${interaction.member.id}>, you need to be connected to a **Voice Channel** to use the **Jukebox**.`)
+                .setColor('#ffff00')
+                .setThumbnail(guildIcon)
+                .setTimestamp()
+                .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+            return interaction.reply({embeds: [playEmbed], ephemeral: true}); 
 
-		if(!queue.connection) await queue.connect(interaction.member.voice.channel)
-		await interaction.deferReply({
-			fetchReply: true,
-			ephemeral: false,
-		})
-		let embed = new EmbedBuilder();
-		if (interaction.options.getSubcommand() === 'song')
-		{
-			let url = interaction.options.getString('searchterms');
+        }
+        // let's defer the interaction as things can take time to process
+        await interaction.deferReply({
+            fetchReply: true,
+			ephemeral: true,
+        });
+        if (interaction.options.getSubcommand() === 'song') {
+        const query = interaction.options.getString('query', true); // we need input/query to play
+        const searchResult = await player.search(query, { requestedBy: interaction.user });
+        if (!searchResult.hasTracks()) {
+            // If player didn't find any songs for this query
+            await interaction.editReply(`We found no tracks for ${query}!`);
+            return;
+        } else {
+            try {
+                await player.play(channel, searchResult, {
+                    nodeOptions: {
+                        metadata: {
+                        channel: interaction.channel,
+                        client: interaction.guild.members.me,
+                        requestedBy: interaction.user,
+                        },
+                    selfDeaf: true,
+                    volume: 50,
+                    leaveOnEmpty: true,
+                    leaveOnEmptyCooldown: 300000,
+                    leaveOnEnd: true,
+                    leaveOnEndCooldown: 300000,
+                    },
+                });
+                const queue = useQueue(interaction.guild.id);
+                const song = searchResult.tracks[0]
+                playEmbed
+                    .setDescription(`Added [${song.title}](${song.url}) to the queue!`)
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setImage(song.thumbnail)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${song.author} ${song.title} - Duration: ${song.duration}`, iconURL: `${guildIcon}`});
 
-			const result = await player.search(url , {
-				requestedBy: interaction.user,
-				searchEngine: QueryType.AUTO
-			});
-
-			if (result.tracks.length === 0)
-			{
+                    await interaction.editReply({embeds: [playEmbed]});
+            } catch (e) {
+                // let's return error if something failed
+                return interaction.followUp(`Something went wrong: ${e}`);
+            }
+        }    
+        }
+        else if (interaction.options.getSubcommand() === 'pause') {
+            const queue = useQueue(interaction.guild.id);
+			if (!queue) {
+				playEmbed
+                    .setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 				return interaction.editReply({
-					content: `No Results Found for URL:${url}`,
-					ephemeral: true,
-				})
-			}
-			const song = result.tracks[0]
-			await queue.addTrack(song);
+					embeds: [playEmbed],
+				}) 
+			} 
+            const currentTrack = queue.currentTrack
+            queue.node.setPaused(!queue.node.isPaused());
 
-			embed
-				.setDescription(`Added [${song.title}](${song.url}) to the queue!`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setImage(song.thumbnail)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `Views [${song.views}] ${song.title} - Duration: ${song.duration}`, iconURL: `${guildIcon}`});
-		}
-		// else if (interaction.options.getSubcommand() === 'playlist')
-		// {
-		// 	let url = interaction.options.getString('url');
+            playEmbed
+                .setDescription(`[${currentTrack.title}](${currentTrack.url}) has been Paused!`)
+                .setColor('#ffff00')
+                .setThumbnail(guildIcon)
+                .setImage(currentTrack.thumbnail)
+                .setTimestamp()
+                .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                .setFooter({ text: `${currentTrack.author} ${currentTrack.title} - Duration: ${currentTrack.duration}`, iconURL: `${guildIcon}`});
 
-		// 	const result = await player.search(url , {
-		// 		requestedBy: interaction.user,
-		// 		searchEngine: QueryType.YOUTUBE_PLAYLIST
-		// 	});
-
-		// 	if (result.tracks.length === 0)
-		// 	{
-		// 		return interaction.editReply({
-		// 			content: `No Results Found for Playlist:${url}`,
-		// 			ephemeral: true,
-		// 		})
-		// 	}
-		// 	const playlist = result.playlist;
-		// 	console.log(playlist)
-		// 	await queue.addTracks(playlist)
-
-		// 	embed
-		// 		.setDescription(`Added [${playlist.title}](${playlist.url}) to the queue!`)
-		// 		.setColor('#ffff00')
-		// 		.setThumbnail(guildIcon)
-		// 		.setImage(playlist.thumbnail)
-		// 		.setTimestamp()
-		// 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-		// 		.setFooter({ text: `${guildName} - ${playlist.title} - Duration: ${playlist.duration}`, iconURL: `${guildIcon}`});
-		// 	} 
-		else if (interaction.options.getSubcommand() === 'pause')
-		{
-			if (!queue.playing) {
-				embed
+            await interaction.editReply({embeds: [playEmbed]});
+        }
+		else if (interaction.options.getSubcommand() === 'resume') {
+            const queue = useQueue(interaction.guild.id);
+			if (!queue) {
+				playEmbed
 				.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
 				.setColor('#ffff00')
 				.setThumbnail(guildIcon)
@@ -235,305 +228,339 @@ module.exports = {
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 				return interaction.editReply({
-					embeds: [embed],
+					embeds: [playEmbed],
 				}) 
 			} 
-			const currentSong = queue.current;
-			queue.setPaused(true);
+            const currentTrack = queue.currentTrack
+            queue.node.resume();
+            
 
-			embed
-				.setDescription(`**The Current Song**: [${currentSong.title}](${currentSong.url}) has been **Paused**!`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setImage(currentSong.thumbnail)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `Views [${currentSong.views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
-			}
-		else if (interaction.options.getSubcommand() === 'resume')
-		{
-			if (!queue.playing) {
-				embed
-				.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+            playEmbed
+                .setDescription(`[${currentTrack.title}](${currentTrack.url}) has been Resumed!`)
+                .setColor('#ffff00')
+                .setThumbnail(guildIcon)
+                .setImage(currentTrack.thumbnail)
+                .setTimestamp()
+                .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                .setFooter({ text: `${currentTrack.author} ${currentTrack.title} - Duration: ${currentTrack.duration}`, iconURL: `${guildIcon}`});
+
+            await interaction.editReply({embeds: [playEmbed]});
+        }
+		else if (interaction.options.getSubcommand() === 'back') {
+            const queue = useQueue(interaction.guild.id);
+
+            if (!queue) {
+				playEmbed
+                    .setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 				return interaction.editReply({
-					embeds: [embed],
+					embeds: [playEmbed],
 				}) 
 			} 
-			const currentSong = queue.current;
-			queue.setPaused(false);
 
-			embed
-				.setDescription(`**The Current Song**: [${currentSong.title}](${currentSong.url}) has been **Resumed**!`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setImage(currentSong.thumbnail)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `Views [${currentSong.views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
-		}
-		else if (interaction.options.getSubcommand() === 'back')
-		{
-			if (!queue.playing) {
-				embed
-				.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+            const currentTrack = queue.currentTrack
+
+            if(!queue.history.previousTrack){
+                console.log(`No History`)
+                playEmbed
+                    .setDescription(`[${currentTrack.title}](${currentTrack.url}) is the first song on the Queue!`)
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setImage(currentTrack.thumbnail)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${currentTrack.author} ${currentTrack.title} - Duration: ${currentTrack.duration}`, iconURL: `${guildIcon}`});
+
+            return interaction.editReply({embeds: [playEmbed]});
+            }
+
+            const previousTrack = queue.history.previousTrack
+
+            queue.history.back()
+
+            playEmbed
+                .setDescription(`[${previousTrack.title}](${previousTrack.url}) has been Rewound!`)
+                .setColor('#ffff00')
+                .setThumbnail(guildIcon)
+                .setImage(previousTrack.thumbnail)
+                .setTimestamp()
+                .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                .setFooter({ text: `${previousTrack.author} ${previousTrack.title} - Duration: ${previousTrack.duration}`, iconURL: `${guildIcon}`});
+
+            await interaction.editReply({embeds: [playEmbed]});
+        }
+        else if (interaction.options.getSubcommand() === 'skip') {
+            const queue = useQueue(interaction.guild.id);
+			if (!queue) {
+				playEmbed
+                    .setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 				return interaction.editReply({
-					embeds: [embed],
+					embeds: [playEmbed],
 				}) 
 			} 
-			await queue.back();
-			const currentSong = queue.current;
+            const currentTrack = queue.currentTrack
+            queue.node.skip();
 
+            playEmbed
+                .setDescription(`[${currentTrack.title}](${currentTrack.url}) has been Skipped!`)
+                .setColor('#ffff00')
+                .setThumbnail(guildIcon)
+                .setImage(currentTrack.thumbnail)
+                .setTimestamp()
+                .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                .setFooter({ text: `${currentTrack.author} ${currentTrack.title} - Duration: ${currentTrack.duration}`, iconURL: `${guildIcon}`});
 
-			embed
-				.setDescription(`**The Current Song**: [${currentSong.title}](${currentSong.url}) has been **Rewound**!`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setImage(currentSong.thumbnail)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `Views [${currentSong.views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
-		}
-		else if (interaction.options.getSubcommand() === 'skip')
-		{
-			if (!queue.playing) {
-				embed
-				.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+            await interaction.editReply({embeds: [playEmbed]});
+        }
+        else if (interaction.options.getSubcommand() === 'remove') {
+            const queue = useQueue(interaction.guild.id);
+			if (!queue) {
+				playEmbed
+                    .setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 				return interaction.editReply({
-					embeds: [embed],
+					embeds: [playEmbed],
 				}) 
 			} 
-			const currentSong = queue.current;
-			queue.skip();
+			const trackNumber = interaction.options.getInteger('track') -1
+            const tracks = queue.tracks.toArray()
+			const trackName = tracks[trackNumber];
+			queue.removeTrack(trackNumber);
 
-			embed
-				.setDescription(`**The Current Song**: [${currentSong.title}](${currentSong.url}) has been **Skipped**!`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setImage(currentSong.thumbnail)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `Views [${currentSong.views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
-		}
-		else if (interaction.options.getSubcommand() === 'remove')
-		{
-			if (!queue.playing) {
-				embed
-				.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+            playEmbed
+                .setDescription(`[${trackName.title}](${trackName.url}) has been removed from the Queue!`)
+                .setColor('#ffff00')
+                .setThumbnail(guildIcon)
+                .setImage(trackName.thumbnail)
+                .setTimestamp()
+                .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                .setFooter({ text: `${trackName.author} ${trackName.title} - Duration: ${trackName.duration}`, iconURL: `${guildIcon}`});
+
+            await interaction.editReply({embeds: [playEmbed]});
+        }
+        else if (interaction.options.getSubcommand() === 'queue') {
+            //TODO - Fix Queue Slice for Embed
+            const queue = useQueue(interaction.guild.id);
+			if (!queue) {
+				playEmbed
+                    .setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 				return interaction.editReply({
-					embeds: [embed],
+					embeds: [playEmbed],
 				}) 
 			} 
-			const track = interaction.options.getInteger('track') -1
-			console.log(track)
-			const trackName = queue.tracks[track].title;
-			console.log(trackName)
-			queue.remove(track);
+            const currentTrack = queue.currentTrack;
 
-			embed
-				.setDescription(`**The Song**: ${trackName} has been **Removed from Queue**!`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setImage(trackName.thumbnail)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `Views [${trackName.views}] ${trackName.title} - Duration: ${trackName.duration}`, iconURL: `${guildIcon}`});
-		}
-		else if (interaction.options.getSubcommand() === 'queue')
-		{
-			if (!queue.playing) {
-				embed
-				.setDescription(`Sorry <@${interaction.member.id}> there are no **Songs** in the queue!`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
-				return interaction.editReply({
-					embeds: [embed],
-				}) 
-			} 
-			const currentSong = queue.current;
+            let tracks;
+            try {
+                tracks = currentTrack.playlist.tracks;
+            } catch (e) {
+                tracks = null;
+            }
+        
+            const embed = new EmbedBuilder()
+                .setColor('#ffff00')
+                .setTitle('Queue')
+                .setDescription(`**Now playing:** ${currentTrack.title} (${currentTrack.duration})`);
+        
+            if (!tracks)
+                return main_interaction.followUp({
+                    embeds: [embed],
+                    ephemeral: true,
+                });
+        
+            for (let i = 1; i < 25; i++) {
+                if (i === 25) {
+                    embed.addFields({
+                        name: `Tracks ${i + 1} - ${tracks.size}`,
+                        value: `...`,
+                    });
+                    break;
+                }
+                embed.addFields({
+                    name: `Track ${i + 1}`,
+                    value: `${tracks[i].title} **(${tracks[i].duration})**`,
+                });
+            }
+        
+            return interaction.followUp({
+                embeds: [embed],
+                ephemeral: true,
+            });
+    
+        }
+        else if (interaction.options.getSubcommand() === 'volume') {
+            const queue = useQueue(interaction.guild.id);
 
-			if (queue.tracks.length === 0) {
-				embed
-				.setDescription(`**The Current Song**: [${currentSong.title}](${currentSong.url}) is the only **Song** in the queue!`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setImage(currentSong.thumbnail)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `Views [${currentSong.views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
+            if (!queue) {
+				playEmbed
+                    .setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 				return interaction.editReply({
-					embeds: [embed],
-				}) 
-			} 
-			const queueString = queue.tracks.slice(0, 10).map((song, i) => {
-				return `\n**(${i + 1})** [${song.duration}] - [${song.title}](${song.url}) - ${song.requestedBy}`;
-			}).join('\n');
-	
-			embed
-			.setColor('#ffff00')
-			.setDescription(`**Currently Playing**\n[${currentSong.title}](${currentSong.url})`)
-			.setThumbnail(guildIcon)
-			.addFields(
-				{ name: `Requested By:`, value: `<@${currentSong.requestedBy.id}>`, inline: true },
-				{ name: 'Playing Next.', value: `${queueString}`, inline: false },
-				)
-			.setImage(currentSong.thumbnail)
-			.setTimestamp()
-			.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-			.setFooter({ text: `Views [${currentSong.views}] ${currentSong.title} - Duration: ${currentSong.duration}`, iconURL: `${guildIcon}`});
-		}
-		else if (interaction.options.getSubcommand() === 'volume')
-		{
-			if (!queue.playing) {
-				embed
-				.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
-				return interaction.editReply({
-					embeds: [embed],
+					embeds: [playEmbed],
 				}) 
 			} 
 			const amount = interaction.options.getInteger('amount')
 			const vol = parseInt(amount)
-			if (!vol) return interaction.editReply({ content: `🎧 | Current volume is **${queue.volume}**%!` });
-			if (vol < 0 || vol > 100) return interaction.editReply({ content: '❌ | Volume range must be 0-100' });
-			const success = queue.setVolume(vol);
-			return interaction.editReply({
-				content: success ? `✅ | Volume set to **${vol}%**!` : '❌ | Something went wrong!'
-			});
-		}
-		else if (interaction.options.getSubcommand() === 'bassboost')
-		{
-			if (!queue.playing) {
-				embed
-				.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+			if (!vol) {
+                playEmbed
+                    .setDescription(`🎧 | Current volume is **${queue.node.volume}**%!`)
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+                return interaction.editReply({ embeds: [playEmbed]});
+            }
+			if (vol < 0 || vol > 100) {
+                playEmbed
+                    .setDescription(`❌ | Volume range must be 0-100.`)
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+                return interaction.editReply({ embeds: [playEmbed]});
+            }
+			const success = queue.node.setVolume(vol);
+                playEmbed
+                    .setDescription(success ? `✅ | Volume set to **${vol}%**!` : '❌ | Something went wrong!')
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+			return interaction.editReply({embeds: [playEmbed]});
+        }
+        else if (interaction.options.getSubcommand() === 'bassboost') {
+        }
+        else if (interaction.options.getSubcommand() === 'loop') {
+            const queue = useQueue(interaction.guild.id);
+			if (!queue) {
+				playEmbed
+                    .setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 				return interaction.editReply({
-					embeds: [embed],
+					embeds: [playEmbed],
 				}) 
 			} 
-			embed
-					.setDescription(`🎵 | Bassboost ${queue.getFiltersEnabled().includes('bassboost') ? 'Enabled' : 'Disabled'}!`)
-					.setColor('#ffff00')
-					.setThumbnail(guildIcon)
-					.setTimestamp()
-					.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-					.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+            try {        
+                if (!queue || !queue.isPlaying()) {
+                    playEmbed
+                        .setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+                        .setColor('#ffff00')
+                        .setThumbnail(guildIcon)
+                        .setTimestamp()
+                        .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                        .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 
-			await queue.setFilters({
-				bassboost: !queue.getFiltersEnabled().includes('bassboost'),
-				normalizer2: !queue.getFiltersEnabled().includes('bassboost') // because we need to toggle it with bass
-			});
+                    return interaction.editReply({ embeds: [playEmbed] })
+                }
+                const loopMode = interaction.options.getInteger("mode")
+                queue.setRepeatMode(loopMode)
+                const mode = loopMode === QueueRepeatMode.TRACK ? `🔂` : loopMode === QueueRepeatMode.QUEUE ? `🔁` : `▶`
 
-			setTimeout(() => {
-			}, queue.options.bufferingTimeout);
-		}
-		else if (interaction.options.getSubcommand() === 'loop')
-		{
-			if (!queue.playing) {
-				embed
-					.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
-					.setColor('#ffff00')
-					.setThumbnail(guildIcon)
-					.setTimestamp()
-					.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-					.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+                    playEmbed
+                        .setDescription(`${mode} | Updated loop mode`)
+                        .setColor('#ffff00')
+                        .setThumbnail(guildIcon)
+                        .setTimestamp()
+                        .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                        .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+
+                return interaction.editReply({ embeds:[playEmbed]})
+            } catch (error) {
+                console.log(error)
+            }        
+        }
+        else if (interaction.options.getSubcommand() === 'lyrics') {
+            try{                
+                const queue = useQueue(interaction.guild.id);
+                const music = interaction.options.getString("name")
+                if(!queue && !music) {
+                    return interaction.editReply({ content: "There is no queue and you didn't mention any song name!"})
+                }
+        
+                if (queue || music) {
+                const result = await search.search(music ?? queue.currentTrack.title)
+        
+                if (!result) {
+                    return interaction.editReply({ content: `No lyrics found for: ${music ? music : queue.currentTrack.title}` })
+                } 
+        
+                const trimmedLyrics = result.lyrics.substring(0, 1997);
+        
+                const embed = new EmbedBuilder()
+                    .setTitle(`${result.title}`)
+                    .setThumbnail(`${result.thumbnail}`)
+                    .setDescription(trimmedLyrics.length === 1997 ? `${trimmedLyrics}...` : trimmedLyrics)
+                await interaction.editReply({ embeds: [embed] })
+            }
+        }catch (error) {
+            console.log(error)
+        }
+        
+        }
+        else if (interaction.options.getSubcommand() === 'bassboost') {
+            const queue = useQueue(interaction.guild.id);
+            if (!queue) {
+				playEmbed
+                    .setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 				return interaction.editReply({
-					embeds: [embed],
+					embeds: [playEmbed],
 				}) 
-			} 
-			const loopMode = interaction.options.getInteger('mode');
-			const success = queue.setRepeatMode(loopMode);
-			const mode = loopMode === QueueRepeatMode.TRACK ? '🔂' : loopMode === QueueRepeatMode.QUEUE ? '🔁' : '▶';
-			console.log(mode)
-			//return interaction.editReply({ content: success ? `${mode} | Updated loop mode!` : '❌ | Could not update loop mode!' });
-			embed
-				.setDescription(success ? `${mode} | Updated Loop Mode | ${mode}` : '❌ | Could not update loop mode!')
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
-		}
-		else if (interaction.options.getSubcommand() === 'clear')
-		{
-			if (!queue.playing) {
-				embed
-					.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
-					.setColor('#ffff00')
-					.setThumbnail(guildIcon)
-					.setTimestamp()
-					.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-					.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
+        }
+        //TODO Add Bassboost Filter Toggle
+    }
+        else if (interaction.options.getSubcommand() === 'history') {
+            //TODO Add Queue history
+        }
+        else if (interaction.options.getSubcommand() === 'exit') {
+            const queue = useQueue(interaction.guild.id);
+            if (!queue) {
+				playEmbed
+                    .setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
+                    .setColor('#ffff00')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 				return interaction.editReply({
-					embeds: [embed],
+					embeds: [playEmbed],
 				}) 
-			} 
-			queue.clear();
-
-			embed
-				.setDescription(`The Current queue has been **Cleared**!`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
-		}
-		else if (interaction.options.getSubcommand() === 'exit')
-		{
-			if (!queue.playing) {
-				embed
-					.setDescription(`Sorry <@${interaction.member.id}>, there is no **Song** Playing.`)
-					.setColor('#ffff00')
-					.setThumbnail(guildIcon)
-					.setTimestamp()
-					.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-					.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
-				return interaction.editReply({
-					embeds: [embed],
-				}) 
-			} 
-			queue.destroy();
-
-			embed
-				.setDescription(`The Current queue has been **Ended**!`)
-				.setColor('#ffff00')
-				.setThumbnail(guildIcon)
-				.setTimestamp()
-				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
-		}
-		await interaction.editReply({embeds: [embed], ephemeral: false })
-		if (!queue.playing) await queue.play();
-		return;
-	},
-};
+            }    
+            queue.delete();    
+            return interaction.editReply({ content: "Player has been stopped, see you next time! ✅" });    
+        }
+	}
+}

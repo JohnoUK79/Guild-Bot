@@ -2,9 +2,10 @@ const fs = require('node:fs');
 const { Client, GatewayIntentBits, Partials, Collection, EmbedBuilder, Options } = require("discord.js");
 const rpc = require("discord-rpc");
 const { token, CLIENT_ID } = require('./config.json');
-const { Player, useMetadata } = require('discord-player');
-let embed = new EmbedBuilder();
-embed
+const { Player, useMetadata, Track } = require('discord-player');
+const { title } = require('node:process');
+const jukeBoxEventsEmbed = new EmbedBuilder();
+jukeBoxEventsEmbed
     .setColor('#ffff00')
     .setFooter({ text: `Jukebox`, iconURL: `http://phfamily.co.uk/img/gifs/Warpath.jpg`});
 
@@ -81,18 +82,46 @@ player.events.on('playerError', (queue, error) => {
     console.log(`[${queue.guild.name}] Error emitted from the connection: ${error.message}`);
 });
 player.events.on('playerStart', (queue, track) => {
+    jukeBoxEventsEmbed
+        .setDescription(`🎼| Now Playing: [${track.title}](${track.url})!`)
+        .setTimestamp()
+    queue.metadata.channel.send({embeds: [jukeBoxEventsEmbed]})
     console.log(`🎼| Now Playing: ${track.title} in ${queue.metadata.channel.name}!`);
 });
 player.events.on('audioTrackAdd', (queue, track) => {
+    jukeBoxEventsEmbed
+        .setDescription(`🎼| [${track.title}](${track.url}) queued!`)
+        .setTimestamp()
+    queue.metadata.channel.send({embeds: [jukeBoxEventsEmbed]})
     console.log(`🎼| ${track.title} queued!`);
 });
+// player.events.on('audioTracksAdd', (queue, track) => {
+//     console.log(track)
+//     jukeBoxEventsEmbed
+//         .setDescription(`🎼| [${track.title}](${track.url}) queued!`)
+//         .setTimestamp()
+//     queue.metadata.channel.send({embeds: [jukeBoxEventsEmbed]})
+//     console.log(`🎼| ${track.title} queued!`);
+// });
 player.events.on('disconnect', (queue) => {
+    jukeBoxEventsEmbed
+        .setDescription(`❌ | I was manually disconnected from the Voice Channel, clearing queue!`)
+        .setTimestamp()
+    queue.metadata.channel.send({embeds: [jukeBoxEventsEmbed]})
     console.log(`❌ | I was manually disconnected from the Voice Channel (${queue.metadata.channel.name}), clearing queue!`);
 });
 player.events.on('emptyChannel', (queue) => {
+    jukeBoxEventsEmbed
+        .setDescription(`❌ | Nobody is in the Voice Channel, leaving...`)
+        .setTimestamp()
+    queue.metadata.channel.send({embeds: [jukeBoxEventsEmbed]})
     console.log(`❌ | Nobody is in the Voice Channel (${queue.metadata.channel.name}), leaving...`);
 });
 player.events.on('emptyQueue', (queue) => {
+    jukeBoxEventsEmbed
+        .setDescription(`🎼 | Queue finished!`)
+        .setTimestamp()
+    queue.metadata.channel.send({embeds: [jukeBoxEventsEmbed]})
     console.log(`🎼 | Queue finished!`);
 });
 console.log('=================Jukebox Online!=================')

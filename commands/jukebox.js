@@ -453,8 +453,6 @@ module.exports = {
                     .setFooter({ text: `${guildName} - Jukebox`, iconURL: `${guildIcon}`});
 			return interaction.editReply({embeds: [playEmbed]});
         }
-        else if (interaction.options.getSubcommand() === 'bassboost') {
-        }
         else if (interaction.options.getSubcommand() === 'loop') {
             const queue = useQueue(interaction.guild.id);
 			if (!queue) {
@@ -541,6 +539,14 @@ module.exports = {
 				}) 
         }
         //TODO Add Bassboost Filter Toggle
+        await queue.filters.ffmpeg.toggle(['bassboost', 'nightcore']);
+        console.log(queue.filters.ffmpeg)
+            playEmbed
+                    .setDescription(`Filter applied.`)
+				return interaction.editReply({
+					embeds: [playEmbed],
+				}) 
+
     }
         else if (interaction.options.getSubcommand() === 'history') {
             //TODO Add Queue history

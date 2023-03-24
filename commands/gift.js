@@ -27,7 +27,7 @@ module.exports = {
 			fetchReply: true,
 			ephemeral: true,
 		})
-		if (interaction.member.id != OWNER) {return interaction.editReply(`Only the Bot Owner Can Gift Coins! Contact <@${owner}> for more details.`)}
+		if (interaction.member.id != OWNER) {return interaction.editReply(`Only the Bot Owner Can Gift Coins! Contact <@${OWNER}> for more details.`)}
 		const player = interaction.options.getUser('player');
 		const amount = interaction.options.getInteger('amount');
 		guildIcon = interaction.member.guild.iconURL();

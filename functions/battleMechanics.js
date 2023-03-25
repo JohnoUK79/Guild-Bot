@@ -56,71 +56,38 @@ module.exports = {
                 }
                 const attackOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${AttackerDB[0].officer_name}'`)
 
-                const AttackerOfficer = {
-                    Name: attackOfficer[0].Officer_Name,
-                    Type: attackOfficer[0].Officer_Type,
-                    Camp: attackOfficer[0].Officer_Camp,
-                    Skill: attackOfficer[0].Skill
-                }
-                const AttackerStats = {
+                const Attacker = {
                     Name: AttackerUnit[0].Unit_Name,
-                    Firepower: AttackerUnit[0].Firepower,
-                    HP: AttackerUnit[0].HP,
+                    Power: AttackerUnit[0].Firepower * AttackerDB[0].officer_level,
+                    Health: AttackerUnit[0].HP * AttackerDB[0].base_level * 10,
                     UnitCamp: AttackerDB[0].unit_camp,
                     Speed: AttackerUnit[0].Speed,
-                    BaseLevel: AttackerDB[0].base_level,
-                    OfficerLevel: AttackerDB[0].officer_level,
                     AttackType: AttackerUnit[0].Attack_Type,
-                    OfficerType: AttackerDB[0].officer_type
+                    Officer: attackOfficer[0].Officer_Name,
+                    OfficerCamp: attackOfficer[0].Officer_Camp,
+                    OfficerSkill: attackOfficer[0].Skill,
+                    OfficerType: attackOfficer[0].Officer_Type,
+                    Multiplier: 1
                 }
 
                 const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)
 
-                const DefenderOfficer = {
-                    Name: defendOfficer[0].Officer_Name,
-                    Type: defendOfficer[0].Officer_Type,
-                    Camp: defendOfficer[0].Officer_Camp,
-                    Skill: defendOfficer[0].Skill
-                }
-
-                const DefenderStats = {
-                    Name: DefenderUnit[0].Unit_Name,
-                    Firepower: DefenderUnit[0].Firepower,
-                    HP: DefenderUnit[0].HP,
-                    UnitCamp: DefenderDB[0].unit_camp,
-                    AttackType: DefenderUnit[0].Attack_Type,
-                    Speed: DefenderUnit[0].Speed,
-                    BaseLevel: DefenderDB[0].base_level,
-                    OfficerLevel: DefenderDB[0].officer_level,
-                    OfficerType: DefenderDB[0].officer_type
-                }
-                const Attacker = {
-                    Name: AttackerStats.Name,
-                    Power: AttackerStats.Firepower * AttackerStats.OfficerLevel,
-                    Health: AttackerStats.HP * AttackerStats.BaseLevel * 10,
-                    UnitCamp: AttackerStats.UnitCamp,
-                    Speed: AttackerStats.Speed,
-                    AttackType: AttackerStats.AttackType,
-                    Officer: AttackerOfficer.Name,
-                    OfficerCamp: AttackerOfficer.Camp,
-                    OfficerSkill: AttackerOfficer.Skill,
-                    OfficerType: AttackerStats.OfficerType
-                }
                 const Defender = {
-                    Name: DefenderStats.Name,
-                    Power: DefenderStats.Firepower * DefenderStats.OfficerLevel,
-                    Health: DefenderStats.HP * DefenderStats.BaseLevel * 10,
-                    UnitCamp: DefenderStats.UnitCamp,
-                    Speed: DefenderStats.Speed,
-                    AttackType: DefenderStats.AttackType,
-                    Officer: DefenderOfficer.Name,
-                    OfficerCamp: DefenderOfficer.Camp,
-                    OfficerSkill: DefenderOfficer.Skill,
-                    OfficerType: AttackerStats.OfficerType
+                    Name: DefenderUnit[0].Unit_Name,
+                    Power: DefenderUnit[0].Firepower * DefenderDB[0].officer_level,
+                    Health: DefenderUnit[0].HP * DefenderDB[0].base_level * 10,
+                    UnitCamp: DefenderDB[0].unit_camp,
+                    Speed: DefenderUnit[0].Speed,
+                    AttackType: DefenderUnit[0].Attack_Type,
+                    Officer: defendOfficer[0].Officer_Name,
+                    OfficerCamp: defendOfficer[0].Officer_Camp,
+                    OfficerSkill: defendOfficer[0].Skill,
+                    OfficerType: defendOfficer[0].Officer_Type,
+                    Multiplier: 1
                 }
 
                 embed
-					.setDescription(`${interaction.member} your **${AttackerStats.Name}** sucessfully Battled ${defender}'s **${DefenderStats.Name}**!`)
+					.setDescription(`${interaction.member} your **${Attacker.Name}** sucessfully Battled ${defender}'s **${Defender.Name}**!`)
                     
 async function sleep(ms) {
     return new Promise(
@@ -136,10 +103,10 @@ if (Attacker.Speed < Defender.Speed) {
         await sleep(500)
         attackSelection(Attacker, Defender)
         officerSkills(Attacker, Defender)
-        campSelection(Attacker, Defender, attackerMultipler, defenderMultipler) 
+        campSelection(Attacker, Defender) 
         const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
-        const defenderPower = (defendPower * defenderMultipler)
-        console.log('Defend', defendPower, defenderPower)
+        const defenderPower = (defendPower * Defender.Multiplier)
+        console.log('Defend', defendPower, Defender.Multiplier, defenderPower)
         if (DH >= 0) {let defenderPower = 0} 
         AH = AH - defenderPower
         var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
@@ -151,8 +118,8 @@ if (Attacker.Speed < Defender.Speed) {
         interaction.editReply({ embeds: [embed] });
         console.log(`Defender hit for ${defenderPower.toLocaleString()}`)        
         const  attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
-        const attackerPower = (attackPower * attackerMultipler)
-        console.log('Attack', attackPower, attackerPower)
+        const attackerPower = (attackPower * Attacker.Multiplier)
+        console.log('Attack', attackPower, Attacker.Multiplier, attackerPower)
 
         if (AH >= 0) {let attackerPower = 0} 
         DH = DH - attackerPower
@@ -172,11 +139,11 @@ if (Attacker.Speed < Defender.Speed) {
     while (DH >= 0 && AH >= 0) {
     attackSelection(Attacker, Defender)
     officerSkills(Attacker, Defender)
-    campSelection(Attacker, Defender, attackerMultipler, defenderMultipler) 
+    campSelection(Attacker, Defender) 
     await sleep(500)
     const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
-    const attackerPower = (attackPower * attackerMultipler)
-    console.log('Attack', attackPower, attackerPower)
+    const attackerPower = (attackPower * Attacker.Multiplier)
+    console.log('Attack', attackPower, Attacker.Multiplier, attackerPower)
 
     if (AH >= 0) {let attackerPower = 0} 
         DH = DH - attackerPower
@@ -190,8 +157,8 @@ if (Attacker.Speed < Defender.Speed) {
     console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)
     
     const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
-    const defenderPower = (defendPower * defenderMultipler)
-    console.log('Defend', defendPower, defenderPower)
+    const defenderPower = (defendPower * Defender.Multiplier)
+    console.log('Defend', defendPower, Defender.Multiplier, defenderPower)
     if (DH >= 0) {let defenderPower = 0} 
         AH = AH - defenderPower
         var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`

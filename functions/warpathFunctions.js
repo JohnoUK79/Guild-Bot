@@ -910,8 +910,12 @@ profile: async function (interaction) {
     const unitType = Level[0].unit_type || 'No Unit Trained'
     const unitLevel = Level[0].unit_level || 'No Unit Trained'
     const unitCamp = Level[0].unit_camp || 'No Unit Trained'
+    const officerDetails = await sql.Execute(`SELECT * from officers WHERE Officer_Name = '${officer}'`)
+    const officerType = officerDetails[0].Officer_Type || 'No Officer Chosen'
+    const officerCamp = officerDetails[0].Officer_Camp || 'No Officer Chosen'
+    const officerSkill = officerDetails[0].Skill || 'No Officer Chosen'
 
-
+    console.log(officerDetails)
     profileEmbed
 
         .setColor('#ff5b05')
@@ -925,9 +929,12 @@ profile: async function (interaction) {
             { name: `Base Level:`, value: `${Level[0].base_level}`, inline: false }, 
             { name: `Officer:`, value: `${officer}`, inline: false }, 
             { name: `Officer Level:`, value: `${officerLevel}`, inline: false },
-            { name: `Type:`, value: `${unitType}`, inline: false }, 
-            { name: `Level:`, value: `${unitLevel}`, inline: false }, 
-            { name: `Camp:`, value: `${unitCamp}`, inline: false }, 
+            { name: `Officer Type:`, value: `${officerType}`, inline: false },
+            { name: `Officer Camp:`, value: `${officerCamp}`, inline: false },
+            { name: `Officer Skill:`, value: `${officerSkill}`, inline: false },
+            { name: `Unit Type:`, value: `${unitType}`, inline: false }, 
+            { name: `Unit Level:`, value: `${unitLevel}`, inline: false }, 
+            { name: `Unit Camp:`, value: `${unitCamp}`, inline: false }, 
 
         )
         .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}`});
@@ -1003,13 +1010,10 @@ console.log(saveNewUnit.info)
 return interaction.update({embeds: [newUnitEmbed], components: [newUnitButtons]})
 },
 attackSelection: async function (Attacker, Defender) {
-    if (Attacker.AttackType === 'Ground' && Defender.AttackType === 'Ground') return attackerMultipler = 1.0, defenderMultipler = 1.0
-    if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Air') return attackerMultipler = 1.0, defenderMultipler = 1.0
-    if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Ground') return attackerMultipler = 1.25, defenderMultipler = 0.75
-    if (Attacker.AttackType === 'Ground' && Defender.AttackType === 'Air') return attackerMultipler = 0.75, defenderMultipler = 1.25
-
-    module.exports.attackerMultipler = attackerMultipler
-    module.exports.defenderMultipler = defenderMultipler
+    if (Attacker.AttackType === 'Ground' && Defender.AttackType === 'Ground') return Attacker.Multiplier = Attacker.Multiplier * 1, Defender.Multiplier = Defender.Multiplier * 1
+    if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Air') return Attacker.Multiplier = Attacker.Multiplier * 1, Defender.Multiplier = Defender.Multiplier * 1
+    if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Ground') return Attacker.Multiplier = Attacker.Multiplier * 1.25, Defender.Multiplier = Defender.Multiplier * 0.75
+    if (Attacker.AttackType === 'Ground' && Defender.AttackType === 'Air') return Attacker.Multiplier = Attacker.Multiplier * 0.75, Defender.Multiplier = Defender.Multiplier * 1.25
 },
 newUnitSelection: async function (prestige) {
     if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters'
@@ -1020,13 +1024,13 @@ newUnitSelection: async function (prestige) {
     module.exports.newUnitLevel = newUnitLevel
     module.exports.newUnitType = newUnitType
 },
-campSelection: async function (Attacker, Defender, attackerMultipler, defenderMultipler) {
-    if (Attacker.UnitCamp === Attacker.OfficerCamp) return attackerMultipler = attackMultipler * 2
-    if (Defender.UnitCamp === Defender.OfficerCamp) return defenderMultipler = defenderMultipler * 2
-    if (Attacker.UnitCamp === Attacker.OfficerCamp && Attacker.AttackType === Attacker.OfficerType) return attackerMultipler = attackMultipler * 4
-    if (Defender.UnitCamp === Defender.OfficerCamp && Defender.AttackType === Defender.OfficerType) return defenderMultipler = defenderMultipler * 4
-
-    module.exports.attackerMultipler = attackerMultipler
-    module.exports.defenderMultipler = defenderMultipler
+campSelection: async function (Attacker, Defender) {
+    if (Attacker.UnitCamp === Attacker.OfficerCamp && Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier * 4
+    if (Defender.UnitCamp === Defender.OfficerCamp && Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier * 4
+    if (Attacker.UnitCamp === Attacker.OfficerCamp) return Attacker.Multiplier = Attacker.Multiplier * 2
+    if (Defender.UnitCamp === Defender.OfficerCamp) return Defender.Multiplier = Defender.Multiplier * 2
+    console.log(Attacker.Multiplier, Defender.Multiplier)
+    // module.exports.attackerMultipler = attackerMultipler
+    // module.exports.defenderMultipler = defenderMultipler
 }
 }

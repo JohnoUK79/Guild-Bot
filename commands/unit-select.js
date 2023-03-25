@@ -36,7 +36,7 @@ module.exports = {
 		guildName = interaction.member.guild.name
         const unitSelectEmbed = new EmbedBuilder()
         const unitInfo = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}' AND Unit_Type LIKE '${troop}' ORDER BY Unit_Level DESC`)
-        console.log(unitInfo)
+
         if (!unitInfo[0]) {
             unitSelectEmbed
                 .setColor('#0099ff')

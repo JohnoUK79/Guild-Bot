@@ -107,7 +107,7 @@ module.exports = {
                     )
                     .setTimestamp()
                     .setFooter({ text: `Battle Rewards.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
-            let sendfirst = client.users.cache.get(`${Board[0].discord_id}`)                
+            const sendfirst = client.users.cache.get(`${Board[0].discord_id}`)                
             console.log(Board[0].discord_id);
             sendfirst.send({ embeds: [firstPlaceEmbed]})
         }
@@ -128,9 +128,9 @@ module.exports = {
                     )
                     .setTimestamp()
                     .setFooter({ text: `Battle Rewards.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
-            let sendfirst = client.users.cache.get(`${Board[1].discord_id}`)                
+            const sendSecond = client.users.cache.get(`${Board[1].discord_id}`)                
             console.log(Board[1].discord_id);
-            sendfirst.send({ embeds: [secondPlaceEmbed]})
+            sendSecond.send({ embeds: [secondPlaceEmbed]})
         }
         catch (e) {
             console.log(e);
@@ -149,9 +149,9 @@ module.exports = {
                     )
                     .setTimestamp()
                     .setFooter({ text: `Battle Rewards.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
-            let sendfirst = client.users.cache.get(`${Board[2].discord_id}`)                
+            const sendThird = client.users.cache.get(`${Board[2].discord_id}`)                
             console.log(Board[2].discord_id);
-            sendfirst.send({ embeds: [thirdPlaceEmbed]})
+            sendThird.send({ embeds: [thirdPlaceEmbed]})
         }
         catch (e) {
             console.log(e);
@@ -165,7 +165,7 @@ module.exports = {
         const updateSecondWallet = await sql.Execute(`UPDATE levels SET war_coins = '${secondWallet}' WHERE discord_id = ${Board[1].discord_id}`)
         const updateThirdWallet = await sql.Execute(`UPDATE levels SET war_coins = '${thirdWallet}' WHERE discord_id = ${Board[2].discord_id}`)
         const clearBattleBoard = await sql.Execute(`UPDATE levels SET battle_wins = '0', battle_losses = '0' WHERE 1`)
-        console.log(clearBattleBoard.info)
+        console.log(`1st: ${updateFirstWallet.info}\n2nd: ${updateSecondWallet.info}\n3rd: ${updateThirdWallet.info}\nCleared: ${clearBattleBoard.info}`)
 
         const winningEmbed = new EmbedBuilder();
             winningEmbed

@@ -1,4 +1,4 @@
-const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { useMasterPlayer, useQueue, QueryType, QueueRepeatMode } = require('discord-player');
 const { lyricsExtractor } = require("@discord-player/extractor")
 const search = lyricsExtractor()

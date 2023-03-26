@@ -7,7 +7,6 @@ setDate = timestamp.UTCdefault()
 module.exports = {
     data: new SlashCommandBuilder()
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
-
         .setName("welcome")
         .setDescription("Set Up the **Welcome Channel** & **Welcome Role**!")
 

@@ -7,7 +7,6 @@ setDate = timestamp.UTCdefault()
 module.exports = {
     data: new SlashCommandBuilder()
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
-
         .setName("update-enemy")
         .setDescription("Update Players Status on Bot!")
 

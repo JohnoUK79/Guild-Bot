@@ -6,7 +6,6 @@ setDate = timestamp.UTCdefault()
 module.exports = {
     data: new SlashCommandBuilder()
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
-
         .setName("set-ranks")
         .setDescription("Setup the Rank Roles for Levels")
 

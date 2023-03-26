@@ -2,7 +2,6 @@ const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder } = require('disc
 const sql = require("../config/Database");
 const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
-//$env:GOOGLE_APPLICATION_CREDENTIALS="C:\Users\username\Downloads[FILE_NAME].json"; node yourappstartupfile.js
 module.exports = {
     data: new SlashCommandBuilder()
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)

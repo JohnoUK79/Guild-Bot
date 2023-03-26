@@ -7,7 +7,6 @@ setDate = timestamp.UTCdefault()
 module.exports = {
     data: new SlashCommandBuilder()
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
-
         .setName("welcome")
         .setDescription("Set Up the **Welcome Channel** & **Welcome Role**!")
 
@@ -19,7 +18,7 @@ module.exports = {
         .addStringOption((option) => option
         .setName("role")
         .setDescription("Role to be Provided with Reaction Selected!")
-        .setRequired(false)
+        .setRequired(true)
         ),
 
     async execute(interaction) {

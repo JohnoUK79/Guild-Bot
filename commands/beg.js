@@ -1,4 +1,4 @@
-const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const sql = require("../config/Database");
 const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
@@ -6,7 +6,6 @@ setDate = timestamp.UTCdefault()
 module.exports = {
     cooldown: 900000,
     data: new SlashCommandBuilder()
-        //.setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
         .setName("beg")
         .setDescription("Beg for War-Coins!"),
 

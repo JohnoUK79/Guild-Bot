@@ -18,7 +18,7 @@ module.exports = {
         .addStringOption((option) => option
         .setName("role")
         .setDescription("Role to be Provided with Reaction Selected!")
-        .setRequired(false)
+        .setRequired(true)
         ),
 
     async execute(interaction) {

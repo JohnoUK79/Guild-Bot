@@ -70,12 +70,12 @@ module.exports = {
                     Multiplier: 1,
                     Image: `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
                 }
-                if (AttackerUnit[0].Image) {
-                    Attacker.Image = AttackerUnit[0].Image
-                }
                 if (attackOfficer[0].Image) {
                     Attacker.Image = attackOfficer[0].Image
                 } 
+                if (AttackerUnit[0].Image) {
+                    Attacker.Image = AttackerUnit[0].Image
+                }
 
                 const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)
 
@@ -93,12 +93,12 @@ module.exports = {
                     Multiplier: 1,
                     Image: `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
                 }
-                if (DefenderUnit[0].Image) {
-                    Defender.Image = DefenderUnit[0].Image
-                }
                 if (defendOfficer[0].Image) {
                     Defender.Image = defendOfficer[0].Image
                 } 
+                if (DefenderUnit[0].Image) {
+                    Defender.Image = DefenderUnit[0].Image
+                }
 
                 embed
 					.setDescription(`${interaction.member} your **${Attacker.Name}** sucessfully Battled ${defender}'s **${Defender.Name}**!`)

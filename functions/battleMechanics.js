@@ -67,8 +67,15 @@ module.exports = {
                     OfficerCamp: attackOfficer[0].Officer_Camp,
                     OfficerSkill: attackOfficer[0].Skill,
                     OfficerType: attackOfficer[0].Officer_Type,
-                    Multiplier: 1
+                    Multiplier: 1,
+                    Image: `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
                 }
+                if (AttackerUnit[0].Image) {
+                    Attacker.Image = AttackerUnit[0].Image
+                }
+                if (AttackerDB[0].Image) {
+                    Attacker.Image = AttackerDB[0].Image
+                } 
 
                 const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)
 
@@ -83,8 +90,15 @@ module.exports = {
                     OfficerCamp: defendOfficer[0].Officer_Camp,
                     OfficerSkill: defendOfficer[0].Skill,
                     OfficerType: defendOfficer[0].Officer_Type,
-                    Multiplier: 1
+                    Multiplier: 1,
+                    Image: `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
                 }
+                if (DefenderUnit[0].Image) {
+                    Defender.Image = DefenderUnit[0].Image
+                }
+                if (DefenderDB[0].Image) {
+                    Defender.Image = DefenderDB[0].Image
+                } 
 
                 embed
 					.setDescription(`${interaction.member} your **${Attacker.Name}** sucessfully Battled ${defender}'s **${Defender.Name}**!`)
@@ -109,7 +123,7 @@ if (Attacker.Speed < Defender.Speed) {
         console.log('Defend', defendPower, Defender.Multiplier, defenderPower)
         if (DH >= 0) {let defenderPower = 0} 
         AH = AH - defenderPower
-        var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
+        var playerImage = Defender.Image
     
         embed
             .setImage(playerImage)
@@ -123,7 +137,7 @@ if (Attacker.Speed < Defender.Speed) {
 
         if (AH >= 0) {let attackerPower = 0} 
         DH = DH - attackerPower
-        var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
+        var playerImage = Attacker.Image
 
         embed
             .setImage(playerImage)
@@ -147,7 +161,7 @@ if (Attacker.Speed < Defender.Speed) {
 
     if (AH >= 0) {let attackerPower = 0} 
         DH = DH - attackerPower
-        var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
+        var playerImage = Attacker.Image
 
         embed
             .setImage(playerImage)
@@ -161,7 +175,7 @@ if (Attacker.Speed < Defender.Speed) {
     console.log('Defend', defendPower, Defender.Multiplier, defenderPower)
     if (DH >= 0) {let defenderPower = 0} 
         AH = AH - defenderPower
-        var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
+        var playerImage = Defender.Image
     
         embed
             .setImage(playerImage)
@@ -175,7 +189,7 @@ if (Attacker.Speed < Defender.Speed) {
 
     if (DH < 0) {
         await sleep(500)
-        var playerImage = `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
+        var playerImage = Defender.Image
         const winnings = AttackerDB[0].officer_level * 10000
         chest = AttackerDB[0].war_chest
         const wallet = AttackerDB[0].war_coins
@@ -200,7 +214,7 @@ if (Attacker.Speed < Defender.Speed) {
     } else
     if (AH < 0) {
         await sleep(500)
-        var playerImage = `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
+        var playerImage = Attacker.Image
         const winnings = DefenderDB[0].officer_level * 10000
         chest = DefenderDB[0].war_chest
         const wallet = DefenderDB[0].war_coins

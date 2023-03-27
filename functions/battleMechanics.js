@@ -122,6 +122,7 @@ if (Attacker.Speed < Defender.Speed) {
         const defenderPower = (defendPower * Defender.Multiplier)
         console.log('Defend', defendPower, Defender.Multiplier, defenderPower)
         if (DH >= 0) {let defenderPower = 0} 
+        await sleep(500)
         AH = AH - defenderPower
         var playerImage = Defender.Image
     
@@ -136,6 +137,7 @@ if (Attacker.Speed < Defender.Speed) {
         console.log('Attack', attackPower, Attacker.Multiplier, attackerPower)
 
         if (AH >= 0) {let attackerPower = 0} 
+        await sleep(500)
         DH = DH - attackerPower
         var playerImage = Attacker.Image
 
@@ -151,6 +153,7 @@ if (Attacker.Speed < Defender.Speed) {
 } else {
     console.log(`Defender: ${Defender.Speed} Attacker: ${Attacker.Speed}`)
     while (DH >= 0 && AH >= 0) {
+    await sleep(500)
     attackSelection(Attacker, Defender)
     officerSkills(Attacker, Defender)
     campSelection(Attacker, Defender) 
@@ -160,6 +163,7 @@ if (Attacker.Speed < Defender.Speed) {
     console.log('Attack', attackPower, Attacker.Multiplier, attackerPower)
 
     if (AH >= 0) {let attackerPower = 0} 
+    await sleep(500)
         DH = DH - attackerPower
         var playerImage = Attacker.Image
 
@@ -174,6 +178,7 @@ if (Attacker.Speed < Defender.Speed) {
     const defenderPower = (defendPower * Defender.Multiplier)
     console.log('Defend', defendPower, Defender.Multiplier, defenderPower)
     if (DH >= 0) {let defenderPower = 0} 
+    await sleep(500)
         AH = AH - defenderPower
         var playerImage = Defender.Image
     
@@ -231,6 +236,7 @@ if (Attacker.Speed < Defender.Speed) {
             )     
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by ${defender}'s **${Defender.Name} & ${Defender.Officer} using ${Defender.OfficerSkill}**.`)
         interaction.editReply({ embeds: [embed] });  
+        await sleep(500)
         const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${defender.id}`)
         const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)
         console.log(`Winner: ${defender.username}`, win.info,`\nLoser: ${interaction.member.displayName}`, loss.info)

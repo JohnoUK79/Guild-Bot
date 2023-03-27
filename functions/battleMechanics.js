@@ -73,8 +73,8 @@ module.exports = {
                 if (AttackerUnit[0].Image) {
                     Attacker.Image = AttackerUnit[0].Image
                 }
-                if (AttackerDB[0].Image) {
-                    Attacker.Image = AttackerDB[0].Image
+                if (attackOfficer[0].Image) {
+                    Attacker.Image = attackOfficer[0].Image
                 } 
 
                 const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)
@@ -96,8 +96,8 @@ module.exports = {
                 if (DefenderUnit[0].Image) {
                     Defender.Image = DefenderUnit[0].Image
                 }
-                if (DefenderDB[0].Image) {
-                    Defender.Image = DefenderDB[0].Image
+                if (defendOfficer[0].Image) {
+                    Defender.Image = defendOfficer[0].Image
                 } 
 
                 embed
@@ -114,7 +114,6 @@ let AH = Attacker.Health, DH = Defender.Health
 if (Attacker.Speed < Defender.Speed) {
     console.log(`Attacker: ${Attacker.Speed} Defender: ${Defender.Speed}`)
     while (DH >= 0 && AH >= 0) {
-        await sleep(500)
         attackSelection(Attacker, Defender)
         officerSkills(Attacker, Defender)
         campSelection(Attacker, Defender) 
@@ -122,7 +121,7 @@ if (Attacker.Speed < Defender.Speed) {
         const defenderPower = (defendPower * Defender.Multiplier)
         console.log('Defend', defendPower, Defender.Multiplier, defenderPower)
         if (DH >= 0) {let defenderPower = 0} 
-        await sleep(500)
+        await sleep(1000)
         AH = AH - defenderPower
         var playerImage = Defender.Image
     
@@ -137,7 +136,7 @@ if (Attacker.Speed < Defender.Speed) {
         console.log('Attack', attackPower, Attacker.Multiplier, attackerPower)
 
         if (AH >= 0) {let attackerPower = 0} 
-        await sleep(500)
+        await sleep(1000)
         DH = DH - attackerPower
         var playerImage = Attacker.Image
 
@@ -145,25 +144,22 @@ if (Attacker.Speed < Defender.Speed) {
             .setImage(playerImage)
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
-        await sleep(500)
         interaction.editReply({ embeds: [embed] });
         console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)
-    
     }
 } else {
     console.log(`Defender: ${Defender.Speed} Attacker: ${Attacker.Speed}`)
     while (DH >= 0 && AH >= 0) {
-    await sleep(500)
+    await sleep(1000)
     attackSelection(Attacker, Defender)
     officerSkills(Attacker, Defender)
     campSelection(Attacker, Defender) 
-    await sleep(500)
     const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
     const attackerPower = (attackPower * Attacker.Multiplier)
     console.log('Attack', attackPower, Attacker.Multiplier, attackerPower)
 
     if (AH >= 0) {let attackerPower = 0} 
-    await sleep(500)
+    await sleep(1000)
         DH = DH - attackerPower
         var playerImage = Attacker.Image
 
@@ -178,7 +174,7 @@ if (Attacker.Speed < Defender.Speed) {
     const defenderPower = (defendPower * Defender.Multiplier)
     console.log('Defend', defendPower, Defender.Multiplier, defenderPower)
     if (DH >= 0) {let defenderPower = 0} 
-    await sleep(500)
+    await sleep(1000)
         AH = AH - defenderPower
         var playerImage = Defender.Image
     
@@ -186,15 +182,14 @@ if (Attacker.Speed < Defender.Speed) {
             .setImage(playerImage)
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
-        await sleep(500)
         interaction.editReply({ embeds: [embed] });
     console.log(`Defender hit for ${defenderPower.toLocaleString()}`)
     }
 }
 
     if (DH < 0) {
-        await sleep(500)
-        var playerImage = Defender.Image
+        await sleep(1000)
+        var playerImage = Attacker.Image
         const winnings = AttackerDB[0].officer_level * 10000
         chest = AttackerDB[0].war_chest
         const wallet = AttackerDB[0].war_coins
@@ -218,8 +213,8 @@ if (Attacker.Speed < Defender.Speed) {
     console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${defender.username}`, loss.info)
     } else
     if (AH < 0) {
-        await sleep(500)
-        var playerImage = Attacker.Image
+        await sleep(1000)
+        var playerImage = Defender.Image
         const winnings = DefenderDB[0].officer_level * 10000
         chest = DefenderDB[0].war_chest
         const wallet = DefenderDB[0].war_coins

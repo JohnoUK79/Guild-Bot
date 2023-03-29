@@ -76,7 +76,7 @@ module.exports = {
                     Image: `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
                 }
                 if (attackOfficer[0].Image) {
-                    Attacker.Image = attackOfficer[0].Image
+                    Attacker.Image = `http://phfamily.co.uk/img/Warpath/${attackOfficer[0].Image}`
                     console.log(`Attacker: ${Attacker.Image}`)
                 } 
                 if (AttackerUnit[0].Image) {
@@ -100,7 +100,7 @@ module.exports = {
                     Image: `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
                 }
                 if (defendOfficer[0].Image) {
-                    Defender.Image = defendOfficer[0].Image
+                    Defender.Image = `http://phfamily.co.uk/img/Warpath/${defendOfficer[0].Image}`
                 } 
                 if (DefenderUnit[0].Image) {
                     Defender.Image = DefenderUnit[0].Image

@@ -14,7 +14,7 @@
     "@google-cloud/translate": "^7.0.5",
     "discord-player": "^6.1.1",
     "discord-rpc": "^4.0.1",
-    "discord.js": "14.7",
+    "discord.js": "^14.8.0",
     "dotenv": "^16.0.1",
     "ffmpeg-static": "^5.1.0",
     "fs": "^0.0.1-security",

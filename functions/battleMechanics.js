@@ -1,5 +1,5 @@
 const sql = require("../config/Database");
-const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 const { officerSkills } = require("./officerSkills");
 const { attackSelection, campSelection } = require("./warpathFunctions");
 
@@ -8,6 +8,11 @@ module.exports = {
         const { commandCooldowns } = require('../bot');
         const guildIcon = interaction.member.guild.iconURL();
 		const guildName = interaction.member.guild.name
+        async function sleep(ms) {
+            return new Promise(
+              resolve => setTimeout(resolve, ms)
+            );
+          }
 		const Battle = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
 		const embed = new EmbedBuilder();
 			embed
@@ -72,11 +77,12 @@ module.exports = {
                 }
                 if (attackOfficer[0].Image) {
                     Attacker.Image = attackOfficer[0].Image
+                    console.log(`Attacker: ${Attacker.Image}`)
                 } 
                 if (AttackerUnit[0].Image) {
                     Attacker.Image = AttackerUnit[0].Image
                 }
-
+                await sleep(500)
                 const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)
 
                 const Defender = {
@@ -99,16 +105,10 @@ module.exports = {
                 if (DefenderUnit[0].Image) {
                     Defender.Image = DefenderUnit[0].Image
                 }
-
+                await sleep(500)
                 embed
 					.setDescription(`${interaction.member} your **${Attacker.Name}** sucessfully Battled ${defender}'s **${Defender.Name}**!`)
                     
-async function sleep(ms) {
-    return new Promise(
-      resolve => setTimeout(resolve, ms)
-    );
-  }
-
 let AH = Attacker.Health, DH = Defender.Health
 
 if (Attacker.Speed < Defender.Speed) {
@@ -121,7 +121,7 @@ if (Attacker.Speed < Defender.Speed) {
         const defenderPower = (defendPower * Defender.Multiplier)
         console.log('Defend', defendPower, Defender.Multiplier, defenderPower)
         if (DH >= 0) {let defenderPower = 0} 
-        await sleep(500)
+        await sleep(750)
         AH = AH - defenderPower
         var playerImage = Defender.Image
     
@@ -136,7 +136,7 @@ if (Attacker.Speed < Defender.Speed) {
         console.log('Attack', attackPower, Attacker.Multiplier, attackerPower)
 
         if (AH >= 0) {let attackerPower = 0} 
-        await sleep(500)
+        await sleep(750)
         DH = DH - attackerPower
         var playerImage = Attacker.Image
 
@@ -150,7 +150,7 @@ if (Attacker.Speed < Defender.Speed) {
 } else {
     console.log(`Defender: ${Defender.Speed} Attacker: ${Attacker.Speed}`)
     while (DH >= 0 && AH >= 0) {
-    await sleep(500)
+    await sleep(750)
     attackSelection(Attacker, Defender)
     officerSkills(Attacker, Defender)
     campSelection(Attacker, Defender) 
@@ -159,7 +159,7 @@ if (Attacker.Speed < Defender.Speed) {
     console.log('Attack', attackPower, Attacker.Multiplier, attackerPower)
 
     if (AH >= 0) {let attackerPower = 0} 
-    await sleep(500)
+    await sleep(750)
         DH = DH - attackerPower
         var playerImage = Attacker.Image
 
@@ -174,7 +174,7 @@ if (Attacker.Speed < Defender.Speed) {
     const defenderPower = (defendPower * Defender.Multiplier)
     console.log('Defend', defendPower, Defender.Multiplier, defenderPower)
     if (DH >= 0) {let defenderPower = 0} 
-    await sleep(500)
+    await sleep(750)
         AH = AH - defenderPower
         var playerImage = Defender.Image
     
@@ -188,7 +188,6 @@ if (Attacker.Speed < Defender.Speed) {
 }
 
     if (DH < 0) {
-        await sleep(500)
         var playerImage = Attacker.Image
         const winnings = AttackerDB[0].officer_level * 10000
         chest = AttackerDB[0].war_chest
@@ -213,7 +212,6 @@ if (Attacker.Speed < Defender.Speed) {
     console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${defender.username}`, loss.info)
     } else
     if (AH < 0) {
-        await sleep(500)
         var playerImage = Defender.Image
         const winnings = DefenderDB[0].officer_level * 10000
         chest = DefenderDB[0].war_chest

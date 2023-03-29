@@ -4,6 +4,7 @@ const rpc = require("discord-rpc");
 const { token, CLIENT_ID } = require('./config.json');
 const { Player, useMetadata, Track } = require('discord-player');
 const { title } = require('node:process');
+const { officerImageCache } = require('./functions/imageCache');
 const jukeBoxEventsEmbed = new EmbedBuilder();
 jukeBoxEventsEmbed
     .setColor('#ffff00')
@@ -71,6 +72,10 @@ const client = new Client({
         Partials.Reaction
       ]
     });
+
+try {
+officerImageCache()
+} catch (err) {console.log(err)}
 const commandCooldowns = new Collection();
 
 //Discord Player Setup

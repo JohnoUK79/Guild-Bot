@@ -126,7 +126,7 @@ if (Attacker.Speed < Defender.Speed) {
         var playerImage = Defender.Image
     
         embed
-            .setImage(playerImage)
+            //.setImage(playerImage)
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed] });
@@ -141,7 +141,7 @@ if (Attacker.Speed < Defender.Speed) {
         var playerImage = Attacker.Image
 
         embed
-            .setImage(playerImage)
+            //.setImage(playerImage)
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed] });
@@ -164,7 +164,7 @@ if (Attacker.Speed < Defender.Speed) {
         var playerImage = Attacker.Image
 
         embed
-            .setImage(playerImage)
+            //.setImage(playerImage)
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed] });
@@ -179,7 +179,7 @@ if (Attacker.Speed < Defender.Speed) {
         var playerImage = Defender.Image
     
         embed
-            .setImage(playerImage)
+            //.setImage(playerImage)
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed] });
@@ -199,7 +199,7 @@ if (Attacker.Speed < Defender.Speed) {
         const newWallet = parseInt(wallet + winnings)
 
         embed 
-            .setImage(playerImage)
+            //.setImage(playerImage)
             .addFields(
                 { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
             )        
@@ -223,7 +223,7 @@ if (Attacker.Speed < Defender.Speed) {
         const newWallet = wallet + winnings
     
         embed
-            .setImage(playerImage)
+            //.setImage(playerImage)
             .addFields(
                 { name: `Defenders War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${defender}` },
             )     

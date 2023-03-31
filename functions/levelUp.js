@@ -111,7 +111,7 @@ module.exports = {
 		const LevelUpChannel = Settings[0].level_up_channel_id
 
 		const levelup = new EmbedBuilder()
-		.setColor('DARK_GOLD')
+		.setColor('#ffbd00')
 		.setTitle('Level Up')
 		.setURL('http://www.phfamily.co.uk')
 		.setThumbnail(message.member.displayAvatarURL())

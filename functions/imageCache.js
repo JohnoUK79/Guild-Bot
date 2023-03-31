@@ -9,7 +9,7 @@ officerImageCache: async function () {
     officerLinks.forEach(u => {
         fetch(`http://www.phfamily.co.uk/img/officers/${u.Image}`)
         .then(res => {
-            const dest = fs.createWriteStream(`C:/Website/htdocs/img/Officers/${u.Image}`);
+            const dest = fs.createWriteStream(`C:/xampp/htdocs/img/Officers/${u.Image}`);
             res.body.pipe(dest);
         }); 
         console.log(u.Image)

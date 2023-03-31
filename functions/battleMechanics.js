@@ -76,11 +76,11 @@ module.exports = {
                     Image: `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
                 }
                 if (attackOfficer[0].Image) {
-                    Attacker.Image = `http://phfamily.co.uk/img/Warpath/${attackOfficer[0].Image}`
+                    Attacker.Image = `http://phfamily.co.uk/img/Warpath/Officers/${attackOfficer[0].Image}`
                     console.log(`Attacker: ${Attacker.Image}`)
                 } 
                 if (AttackerUnit[0].Image) {
-                    Attacker.Image = AttackerUnit[0].Image
+                    Attacker.Image = `http://phfamily.co.uk/img/Warpath/Units/${AttackerUnit[0].Image}`
                 }
                 await sleep(500)
                 const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)

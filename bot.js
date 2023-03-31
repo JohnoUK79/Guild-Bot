@@ -49,7 +49,6 @@ const client = new Client({
       intents: [
         GatewayIntentBits.Guilds, // for guild related things
         GatewayIntentBits.GuildMembers, // for guild members related things
-        GatewayIntentBits.GuildBans, // for manage guild bans
         GatewayIntentBits.GuildEmojisAndStickers, // for manage emojis and stickers
         GatewayIntentBits.GuildIntegrations, // for discord Integrations
         GatewayIntentBits.GuildWebhooks, // for discord webhooks
@@ -61,7 +60,7 @@ const client = new Client({
         GatewayIntentBits.GuildMessageTyping, // for message typing things
         GatewayIntentBits.DirectMessages, // for dm messages
         GatewayIntentBits.DirectMessageReactions, // for dm message reaction
-        GatewayIntentBits.DirectMessageTyping, // for dm message typinh
+        GatewayIntentBits.DirectMessageTyping, // for dm message typing
         GatewayIntentBits.MessageContent // enable if you need message content things
       ],
       partials: [

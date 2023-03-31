@@ -76,11 +76,11 @@ module.exports = {
                     Image: `http://phfamily.co.uk/img/Warpath/${AttackerDB[0].unit_camp}.png`
                 }
                 if (attackOfficer[0].Image) {
-                    Attacker.Image = `http://phfamily.co.uk/img/Warpath/${attackOfficer[0].Image}`
+                    Attacker.Image = `http://phfamily.co.uk/img/Officers/${attackOfficer[0].Image}`
                     console.log(`Attacker: ${Attacker.Image}`)
                 } 
                 if (AttackerUnit[0].Image) {
-                    Attacker.Image = AttackerUnit[0].Image
+                    Attacker.Image = `http://phfamily.co.uk/img/Officers/${AttackerUnit[0].Image}`
                 }
                 await sleep(500)
                 const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)
@@ -100,10 +100,10 @@ module.exports = {
                     Image: `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
                 }
                 if (defendOfficer[0].Image) {
-                    Defender.Image = `http://phfamily.co.uk/img/Warpath/${defendOfficer[0].Image}`
+                    Defender.Image = `http://phfamily.co.uk/img/Officer/${defendOfficer[0].Image}`
                 } 
                 if (DefenderUnit[0].Image) {
-                    Defender.Image = DefenderUnit[0].Image
+                    Defender.Image = `http://phfamily.co.uk/img/Units/${DefenderUnit[0].Image}`
                 }
                 await sleep(500)
                 embed
@@ -124,6 +124,7 @@ if (Attacker.Speed < Defender.Speed) {
         await sleep(750)
         AH = AH - defenderPower
         var playerImage = Defender.Image
+        console.log(playerImage)
     
         embed
             .setImage(playerImage)
@@ -139,6 +140,7 @@ if (Attacker.Speed < Defender.Speed) {
         await sleep(750)
         DH = DH - attackerPower
         var playerImage = Attacker.Image
+        console.log(playerImage)
 
         embed
             .setImage(playerImage)
@@ -162,6 +164,7 @@ if (Attacker.Speed < Defender.Speed) {
     await sleep(750)
         DH = DH - attackerPower
         var playerImage = Attacker.Image
+        console.log(playerImage)
 
         embed
             .setImage(playerImage)
@@ -177,6 +180,7 @@ if (Attacker.Speed < Defender.Speed) {
     await sleep(750)
         AH = AH - defenderPower
         var playerImage = Defender.Image
+        console.log(playerImage)
     
         embed
             .setImage(playerImage)
@@ -189,6 +193,7 @@ if (Attacker.Speed < Defender.Speed) {
 
     if (DH < 0) {
         var playerImage = Attacker.Image
+        console.log(playerImage)
         const winnings = AttackerDB[0].officer_level * 10000
         chest = AttackerDB[0].war_chest
         const wallet = AttackerDB[0].war_coins
@@ -213,6 +218,7 @@ if (Attacker.Speed < Defender.Speed) {
     } else
     if (AH < 0) {
         var playerImage = Defender.Image
+        console.log(playerImage)
         const winnings = DefenderDB[0].officer_level * 10000
         chest = DefenderDB[0].war_chest
         const wallet = DefenderDB[0].war_coins

@@ -4,7 +4,7 @@ const rpc = require("discord-rpc");
 const { token, CLIENT_ID } = require('./config.json');
 const { Player, useMetadata, Track } = require('discord-player');
 const { title } = require('node:process');
-const { officerImageCache } = require('./functions/imageCache');
+const { officerImageCache, unitImageCache } = require('./functions/imageCache');
 const jukeBoxEventsEmbed = new EmbedBuilder();
 jukeBoxEventsEmbed
     .setColor('#ffff00')
@@ -74,6 +74,9 @@ const client = new Client({
 
 try {
 officerImageCache()
+} catch (err) {console.log(err)}
+try {
+unitImageCache()
 } catch (err) {console.log(err)}
 const commandCooldowns = new Collection();
 

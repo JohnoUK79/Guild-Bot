@@ -9,15 +9,22 @@ officerImageCache: async function () {
     officerLinks.forEach(u => {
         fetch(`http://www.phfamily.co.uk/img/officers/${u.Image}`)
         .then(res => {
-            const dest = fs.createWriteStream(`C:/xampp/htdocs/img/Officers/${u.Image}`);
+            const dest = fs.createWriteStream(`./img/${u.Image}`);
             res.body.pipe(dest);
         }); 
         console.log(u.Image)
-    })
-    // fetch('http://www.phfamily.co.uk/img/officers/Sergeant_Spanner.png')
-    // .then(res => {
-    //     const dest = fs.createWriteStream('./Sergeant_Spanner.png');
-    //     res.body.pipe(dest);
-    // });     
+    })  
+},
+unitImageCache: async function () {
+    const unitLinks = await sql.Execute(`SELECT * FROM units WHERE Image NOT LIKE ''`)
+    console.log(unitLinks[0].Image)
+    unitLinks.forEach(u => {
+        fetch(`http://www.phfamily.co.uk/img/units/${u.Image}`)
+        .then(res => {
+            const dest = fs.createWriteStream(`./img/${u.Image}`);
+            res.body.pipe(dest);
+        }); 
+        console.log(u.Image)
+    })  
 }
 }

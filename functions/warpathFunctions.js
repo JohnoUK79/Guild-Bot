@@ -706,7 +706,7 @@ unitSelect: async function (interaction) {
         )
     const guildIcon = interaction.member.guild.iconURL();
     const guildName = interaction.member.guild.name	
-    const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '4.0' AND Unit_Type LIKE '%Tanks%'`)
+    const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '4.0' AND Unit_Type = 'MediumTanks'`)
     const unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
 
     selectUnitEmbed
@@ -962,8 +962,11 @@ newUnit: async function (interaction) {
         if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters'
         if (prestige === 1) return newUnitLevel = '4.0', newUnitType = 'Infantry'
         if (prestige === 2) return newUnitLevel = '5.0', newUnitType = 'SuperHeavy'
-        if (prestige === 3) return newUnitLevel = '4.0', newUnitType = 'Howitzer'
+        if (prestige === 3) return newUnitLevel = '4.0', newUnitType = 'Howitzers'
         if (prestige === 4) return newUnitLevel = '5.0', newUnitType = 'Bombers'
+        if (prestige === 5) return newUnitLevel = '4.0', newUnitType = 'TankHunters'
+        if (prestige === 6) return newUnitLevel = '5.0', newUnitType = 'RocketLaunchers'    
+        if (prestige === 7) return newUnitLevel = '4.0', newUnitType = 'HeavyTanks'    
         module.exports.newUnitLevel = newUnitLevel
         module.exports.newUnitType = newUnitType
     }
@@ -1019,9 +1022,12 @@ newUnitSelection: async function (prestige) {
     if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters'
     if (prestige === 1) return newUnitLevel = '4.0', newUnitType = 'Infantry'
     if (prestige === 2) return newUnitLevel = '5.0', newUnitType = 'SuperHeavy'
-    if (prestige === 3) return newUnitLevel = '4.0', newUnitType = 'Howitzer'
+    if (prestige === 3) return newUnitLevel = '4.0', newUnitType = 'Howitzers'
     if (prestige === 4) return newUnitLevel = '5.0', newUnitType = 'Bombers'
-    module.exports.newUnitLevel = newUnitLevel
+    if (prestige === 5) return newUnitLevel = '4.0', newUnitType = 'TankHunters'
+    if (prestige === 6) return newUnitLevel = '5.0', newUnitType = 'RocketLaunchers'    
+    if (prestige === 7) return newUnitLevel = '4.0', newUnitType = 'HeavyTanks'    
+module.exports.newUnitLevel = newUnitLevel
     module.exports.newUnitType = newUnitType
 },
 campSelection: async function (Attacker, Defender) {

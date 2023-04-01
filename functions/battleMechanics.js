@@ -76,11 +76,11 @@ module.exports = {
                     Image: `http://phfamily.co.uk/img/${AttackerDB[0].unit_camp}.png`
                 }
                 if (attackOfficer[0].Image) {
-                    Attacker.Image = `http://phfamily.co.uk/img/Officers/${attackOfficer[0].Image}`
+                    Attacker.Image = `http://phfamily.co.uk/img/${attackOfficer[0].Image}`
                     console.log(`Attacker: ${Attacker.Image}`)
                 } 
                 if (AttackerUnit[0].Image) {
-                    Attacker.Image = `http://phfamily.co.uk/img/Units/${AttackerUnit[0].Image}`
+                    Attacker.Image = `http://phfamily.co.uk/img/${AttackerUnit[0].Image}`
                 }
                 await sleep(500)
                 const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)
@@ -97,13 +97,13 @@ module.exports = {
                     OfficerSkill: defendOfficer[0].Skill,
                     OfficerType: defendOfficer[0].Officer_Type,
                     Multiplier: 1,
-                    Image: `http://phfamily.co.uk/img/Warpath/${DefenderDB[0].unit_camp}.png`
+                    Image: `http://phfamily.co.uk/img/${DefenderDB[0].unit_camp}.png`
                 }
                 if (defendOfficer[0].Image) {
-                    Defender.Image = `http://phfamily.co.uk/img/Officer/${defendOfficer[0].Image}`
+                    Defender.Image = `http://phfamily.co.uk/img/${defendOfficer[0].Image}`
                 } 
                 if (DefenderUnit[0].Image) {
-                    Defender.Image = `http://phfamily.co.uk/img/Units/${DefenderUnit[0].Image}`
+                    Defender.Image = `http://phfamily.co.uk/img/${DefenderUnit[0].Image}`
                 }
                 await sleep(500)
                 embed

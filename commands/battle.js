@@ -5,7 +5,7 @@ const { battle } = require('../functions/battleMechanics');
 setDate = timestamp.UTCdefault()
 
 module.exports = {
-    cooldown: 900000,
+    cooldown: 300000,
     data: new SlashCommandBuilder()
         .setName("battle")
         .setDescription("Battle with a fellow Member!")

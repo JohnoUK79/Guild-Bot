@@ -139,8 +139,11 @@ if (Attacker.Speed < Defender.Speed) {
         console.log(playerImage)
     
         embed
-            .setImage(`attachment://${Defender.ImageFile}`)
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
+            .setImage(`attachment://${Defender.ImageFile}`)
+            .addFields(
+                { name: `${defender}'s **${Defender.Name}** hit`, value: `${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!` },
+            )  
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
         console.log(`Defender hit for ${defenderPower.toLocaleString()}`)        
@@ -156,6 +159,9 @@ if (Attacker.Speed < Defender.Speed) {
 
         embed
             .setImage(`attachment://${Attacker.ImageFile}`)
+            .addFields(
+                { name: `${interaction.member}'s **${Attacker.Name}** hit`, value: `${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!` },
+            )  
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
@@ -180,6 +186,9 @@ if (Attacker.Speed < Defender.Speed) {
 
         embed
             .setImage(`attachment://${Attacker.ImageFile}`)
+            .addFields(
+                { name: `${interaction.member}'s **${Attacker.Name}** hit`, value: `${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!` },
+            )  
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
@@ -196,6 +205,9 @@ if (Attacker.Speed < Defender.Speed) {
     
         embed
             .setImage(`attachment://${Defender.ImageFile}`)
+            .addFields(
+                { name: `${defender}'s **${Defender.Name}** hit`, value: `${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!` },
+            )  
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
@@ -203,7 +215,7 @@ if (Attacker.Speed < Defender.Speed) {
     }
 }
 
-    if (DH < 0) {
+if (DH < 0) {
         var playerImage = Attacker.Image
         console.log(playerImage)
         const winnings = AttackerDB[0].officer_level * 10000
@@ -228,7 +240,7 @@ if (Attacker.Speed < Defender.Speed) {
     const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${defender.id}`)
     console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${defender.username}`, loss.info)
     } else
-    if (AH < 0) {
+if (AH < 0) {
         var playerImage = Defender.Image
         console.log(playerImage)
         const winnings = DefenderDB[0].officer_level * 10000

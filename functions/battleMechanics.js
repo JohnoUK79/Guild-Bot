@@ -155,7 +155,7 @@ if (Attacker.Speed < Defender.Speed) {
         console.log(playerImage)
 
         embed
-            .setImage(`attach ment://${Attacker.ImageFile}`)
+            .setImage(`attachment://${Attacker.ImageFile}`)
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });

@@ -73,14 +73,18 @@ module.exports = {
                     OfficerSkill: attackOfficer[0].Skill,
                     OfficerType: attackOfficer[0].Officer_Type,
                     Multiplier: 1,
-                    Image: `http://phfamily.co.uk/img/${AttackerDB[0].unit_camp}.png`
+                    Image: `http://phfamily.co.uk/img/${AttackerDB[0].unit_camp}.png`,
+                    ImageFile: `${AttackerDB[0].unit_camp}.png`
                 }
                 if (attackOfficer[0].Image) {
                     Attacker.Image = `http://phfamily.co.uk/img/${attackOfficer[0].Image}`
-                    console.log(`Attacker: ${Attacker.Image}`)
+                    Attacker.ImageFile = attackOfficer[0].Image
+                    console.log(`Attacker: ${Attacker.Image}\n${Attacker.ImageFile}`)
                 } 
                 if (AttackerUnit[0].Image) {
                     Attacker.Image = `http://phfamily.co.uk/img/${AttackerUnit[0].Image}`
+                    Attacker.ImageFile = AttackerUnit[0].Image
+                    console.log(`Attacker: ${Attacker.Image}\n${Attacker.ImageFile}`)
                 }
                 await sleep(500)
                 const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)
@@ -97,18 +101,26 @@ module.exports = {
                     OfficerSkill: defendOfficer[0].Skill,
                     OfficerType: defendOfficer[0].Officer_Type,
                     Multiplier: 1,
-                    Image: `http://phfamily.co.uk/img/${DefenderDB[0].unit_camp}.png`
+                    Image: `http://phfamily.co.uk/img/${DefenderDB[0].unit_camp}.png`,
+                    ImageFile: `${DefenderDB[0].unit_camp}.png`
                 }
                 if (defendOfficer[0].Image) {
                     Defender.Image = `http://phfamily.co.uk/img/${defendOfficer[0].Image}`
+                    Defender.ImageFile = defendOfficer[0].Image
+                    console.log(`Defender: ${Defender.Image}\n${Defender.ImageFile}`)
                 } 
                 if (DefenderUnit[0].Image) {
                     Defender.Image = `http://phfamily.co.uk/img/${DefenderUnit[0].Image}`
+                    Defender.ImageFile = DefenderUnit[0].Image
+                    console.log(`Defender: ${Defender.Image}\n${Defender.ImageFile}`)
                 }
                 await sleep(500)
                 embed
 					.setDescription(`${interaction.member} your **${Attacker.Name}** sucessfully Battled ${defender}'s **${Defender.Name}**!`)
-                    
+
+const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)
+const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)
+
 let AH = Attacker.Health, DH = Defender.Health
 
 if (Attacker.Speed < Defender.Speed) {
@@ -127,10 +139,10 @@ if (Attacker.Speed < Defender.Speed) {
         console.log(playerImage)
     
         embed
-            .setImage(playerImage)
+            .setImage(`attachment://${Defender.ImageFile}`)
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
-        interaction.editReply({ embeds: [embed] });
+        interaction.editReply({ embeds: [embed], files: [defendImage] });
         console.log(`Defender hit for ${defenderPower.toLocaleString()}`)        
         const  attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
         const attackerPower = (attackPower * Attacker.Multiplier)
@@ -143,10 +155,10 @@ if (Attacker.Speed < Defender.Speed) {
         console.log(playerImage)
 
         embed
-            .setImage(playerImage)
+            .setImage(`attach ment://${Attacker.ImageFile}`)
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
-        interaction.editReply({ embeds: [embed] });
+        interaction.editReply({ embeds: [embed], files: [attackImage] });
         console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)
     }
 } else {
@@ -167,10 +179,10 @@ if (Attacker.Speed < Defender.Speed) {
         console.log(playerImage)
 
         embed
-            .setImage(playerImage)
+            .setImage(`attachment://${Attacker.ImageFile}`)
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
-        interaction.editReply({ embeds: [embed] });
+        interaction.editReply({ embeds: [embed], files: [attackImage] });
     console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)
     
     const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
@@ -183,10 +195,10 @@ if (Attacker.Speed < Defender.Speed) {
         console.log(playerImage)
     
         embed
-            .setImage(playerImage)
+            .setImage(`attachment://${Defender.ImageFile}`)
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
-        interaction.editReply({ embeds: [embed] });
+        interaction.editReply({ embeds: [embed], files: [defendImage] });
     console.log(`Defender hit for ${defenderPower.toLocaleString()}`)
     }
 }
@@ -204,13 +216,13 @@ if (Attacker.Speed < Defender.Speed) {
         const newWallet = parseInt(wallet + winnings)
 
         embed 
-            .setImage(playerImage)
+            .setImage(`attachment://${Attacker.ImageFile}`)
             .addFields(
                 { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
             )        
             .setDescription(`${defender}'s **${Defender.Name}** has been killed by ${interaction.member}'s **${Attacker.Name} & ${Attacker.Officer} using ${Attacker.OfficerSkill}**.`)
 
-        interaction.editReply({ embeds: [embed] });
+        interaction.editReply({ embeds: [embed], files: [attackImage] });
     
     const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
     const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${defender.id}`)
@@ -229,12 +241,12 @@ if (Attacker.Speed < Defender.Speed) {
         const newWallet = wallet + winnings
     
         embed
-            .setImage(playerImage)
+            .setImage(`attachment://${Defender.ImageFile}`)
             .addFields(
                 { name: `Defenders War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${defender}` },
             )     
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by ${defender}'s **${Defender.Name} & ${Defender.Officer} using ${Defender.OfficerSkill}**.`)
-        interaction.editReply({ embeds: [embed] });  
+        interaction.editReply({ embeds: [embed], files: [defendImage] });  
 
         const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${defender.id}`)
         const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)

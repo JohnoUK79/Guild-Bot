@@ -4,7 +4,7 @@ const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
 
 module.exports = {
-    cooldown: 1800000,
+    cooldown: 300000,
     data: new SlashCommandBuilder()
         .setName("steal")
         .setDescription("Steal War-Coins from fellow Member!")

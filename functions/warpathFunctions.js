@@ -1052,8 +1052,8 @@ campSelection: async function (Attacker, Defender) {
     if (Attacker.UnitCamp === Attacker.OfficerCamp && Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier + Attacker.Multiplier + Attacker.Multiplier
     if (Defender.UnitCamp === Defender.OfficerCamp && Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier + Defender.Multiplier + Defender.Multiplier
     console.log(Attacker.Multiplier, Defender.Multiplier)
-    module.exports.attackerMultipler = attackerMultipler
-    module.exports.defenderMultipler = defenderMultipler
+    //module.exports.attackerMultipler = attackerMultipler
+    //module.exports.defenderMultipler = defenderMultipler
 },
 selectunit: async function (interaction) {
     const playerUnits = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}'`)

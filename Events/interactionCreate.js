@@ -2,7 +2,7 @@ const time = require('../config/timestamp')
 const sql = require("../config/Database");
 const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const ms = require('ms-prettify').default
-const { buyBank, buyBase, chestUpgrade, baseUpgrade, cancel, buyOfficer, officerUpgrade, officerSelect, unitUpgrade, unitSelect, buyUnit, profile, newUnit} = require('../functions/warpathFunctions');
+const { buyBank, buyBase, chestUpgrade, baseUpgrade, cancel, buyOfficer, officerUpgrade, officerSelect, unitUpgrade, unitSelect, buyUnit, profile, newUnit, selectunit, selectofficer, campaign, challenge} = require('../functions/warpathFunctions');
 const { selfUpdateModal, playerUpdateModal, selfUpdateResponses, playerUpdateResponses } = require('../functions/playerDatabaseFunctions');
 const { top10, top20, top30, top40, top50 } = require('../functions/discordFunctions');
 module.exports = {
@@ -78,6 +78,26 @@ module.exports = {
 		if (interaction.customId === 'newUnit') {
 		try {
 		newUnit(interaction)
+		} catch (err) {console.log(err)}
+		}	
+		if (interaction.customId === 'selectunit') {
+		try {
+		selectunit(interaction)
+		} catch (err) {console.log(err)}
+		}	
+		if (interaction.customId === 'selectofficer') {
+		try {
+		selectofficer(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'campaign') {
+		try {
+		campaign(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'challenge') {
+		try {
+		challenge(interaction)
 		} catch (err) {console.log(err)}
 		}			
 		//Dashboard Reports

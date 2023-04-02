@@ -899,9 +899,25 @@ profile: async function (interaction) {
     const profileButtons = new ActionRowBuilder()
         .addComponents(
             new ButtonBuilder()
+                .setCustomId("campaign")
+                .setLabel('Raven Campaign')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("challenge")
+                .setLabel('Pro Challenge Mode')
+                .setStyle(ButtonStyle.Secondary),
+            new ButtonBuilder()
+                .setCustomId("selectunit")
+                .setLabel('Select Unit')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectofficer")
+                .setLabel('Select Officer')
+                .setStyle(ButtonStyle.Secondary),
+            new ButtonBuilder()
                 .setCustomId("cancel")
                 .setLabel('Done')
-                .setStyle(ButtonStyle.Success),
+                .setStyle(ButtonStyle.Primary),
         )
     const guildIcon = interaction.member.guild.iconURL();
     const guildName = interaction.member.guild.name	
@@ -972,7 +988,7 @@ newUnit: async function (interaction) {
     }
     newUnitSelection(prestige)
 
-    let presigeRequired = newPrestige * 10
+    let presigeRequired = newPrestige * 10 - 1
     console.log(presigeRequired, Level[0].officer_level)
     if (presigeRequired >= Level[0].officer_level) {
         console.log(`Officer Upgrade Required`)
@@ -1036,7 +1052,73 @@ campSelection: async function (Attacker, Defender) {
     if (Attacker.UnitCamp === Attacker.OfficerCamp && Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier + Attacker.Multiplier + Attacker.Multiplier
     if (Defender.UnitCamp === Defender.OfficerCamp && Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier + Defender.Multiplier + Defender.Multiplier
     console.log(Attacker.Multiplier, Defender.Multiplier)
-    // module.exports.attackerMultipler = attackerMultipler
-    // module.exports.defenderMultipler = defenderMultipler
+    module.exports.attackerMultipler = attackerMultipler
+    module.exports.defenderMultipler = defenderMultipler
+},
+selectunit: async function (interaction) {
+    const playerUnits = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}'`)
+    console.log(playerUnits)
+    const selectUnitButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("cancel")
+                .setLabel('Done')
+                .setStyle(ButtonStyle.Success),
+        )
+    const selectUnitEmbed = new EmbedBuilder()
+        .setDescription(`Coming Soon...`)
+        .setTitle(`Select Your Unit!`)
+    interaction.update({
+        embeds: [selectUnitEmbed],
+        components: [selectUnitButtons]
+    })
+},
+selectofficer: async function (interaction) {
+    const selectOfficerButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("cancel")
+                .setLabel('Done')
+                .setStyle(ButtonStyle.Success),
+        )
+    const selectOfficerEmbed = new EmbedBuilder()
+        .setDescription(`Coming Soon...`)
+        .setTitle(`Select Your Officer!`)
+    interaction.update({
+        embeds: [selectOfficerEmbed],
+        components: [selectOfficerButtons]
+    })
+},
+campaign: async function (interaction) {
+    const campaignButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("cancel")
+                .setLabel('Done')
+                .setStyle(ButtonStyle.Success),
+        )
+    const campaignEmbed = new EmbedBuilder()
+        .setDescription(`Coming Soon...`)
+        .setTitle(`Campaign Mode!`)
+    interaction.update({
+        embeds: [campaignEmbed],
+        components: [campaignButtons]
+    })
+},
+challenge: async function (interaction) {
+    const challengeButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("cancel")
+                .setLabel('Done')
+                .setStyle(ButtonStyle.Success),
+        )
+    const challengeEmbed = new EmbedBuilder()
+        .setDescription(`Coming Soon...`)
+        .setTitle(`Challenge Mode!`)
+    interaction.update({
+        embeds: [challengeEmbed],
+        components: [challengeButtons]
+    })
 }
 }

@@ -63,7 +63,7 @@ module.exports = {
 
                 const Attacker = {
                     Name: AttackerUnit[0].Unit_Name,
-                    Power: AttackerUnit[0].Firepower * AttackerDB[0].officer_level,
+                    Power: AttackerUnit[0].Firepower * (AttackerDB[0].officer_level / 10),
                     Health: AttackerUnit[0].HP * AttackerDB[0].base_level * 10,
                     UnitCamp: AttackerDB[0].unit_camp,
                     Speed: AttackerUnit[0].Speed,
@@ -91,7 +91,7 @@ module.exports = {
 
                 const Defender = {
                     Name: DefenderUnit[0].Unit_Name,
-                    Power: DefenderUnit[0].Firepower * DefenderDB[0].officer_level,
+                    Power: DefenderUnit[0].Firepower * (DefenderDB[0].officer_level / 10),
                     Health: DefenderUnit[0].HP * DefenderDB[0].base_level * 10,
                     UnitCamp: DefenderDB[0].unit_camp,
                     Speed: DefenderUnit[0].Speed,

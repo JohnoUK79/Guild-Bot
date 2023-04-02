@@ -1100,7 +1100,7 @@ module.exports = {
         const selectedUnit = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}' AND unit_type = '${selected}'`)
         const newUnitSelect = await sql.Execute(`SELECT * FROM units WHERE Camp = '${selectedUnit[0].camp}' AND Unit_Type = '${selectedUnit[0].unit_type}' AND Unit_Level = '${selectedUnit[0].unit_level}'`)
         const playerProfile = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const firepower = newUnitSelect[0].Firepower * playerProfile[0].officer_level
+        const firepower = newUnitSelect[0].Firepower * (playerProfile[0].officer_level / 10)
         const HP = newUnitSelect[0].HP * playerProfile[0].base_level * 10
         const unitImage = `http://phfamily.co.uk/img/${newUnitSelect[0].Image}`
         const updateUnit = await sql.Execute(`UPDATE levels SET unit_level = '${selectedUnit[0].unit_level}', unit_camp = '${selectedUnit[0].camp}', unit_type = '${selectedUnit[0].unit_type}' WHERE discord_id = '${interaction.member.id}'`)

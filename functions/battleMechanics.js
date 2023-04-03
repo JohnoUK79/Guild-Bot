@@ -159,9 +159,9 @@ if (Attacker.Speed < Defender.Speed) {
 
         embed
             .setImage(`attachment://${Attacker.ImageFile}`)
-            .addFields(
-                { name: `${interaction.member}'s **${Attacker.Name}** hit`, value: `${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!` },
-            )  
+            // .addFields(
+            //     { name: `${interaction.member}'s **${Attacker.Name}** hit`, value: `${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!` },
+            // )  
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
@@ -186,9 +186,9 @@ if (Attacker.Speed < Defender.Speed) {
 
         embed
             .setImage(`attachment://${Attacker.ImageFile}`)
-            .addFields(
-                { name: `${interaction.member}'s **${Attacker.Name}** hit`, value: `${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!` },
-            )  
+            // .addFields(
+            //     { name: `${interaction.member}'s **${Attacker.Name}** hit`, value: `${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!` },
+            // )  
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
@@ -205,9 +205,9 @@ if (Attacker.Speed < Defender.Speed) {
     
         embed
             .setImage(`attachment://${Defender.ImageFile}`)
-            .addFields(
-                { name: `${defender}'s **${Defender.Name}** hit`, value: `${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!` },
-            )  
+            // .addFields(
+            //     { name: `${defender}'s **${Defender.Name}** hit`, value: `${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!` },
+            // )  
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
@@ -229,9 +229,9 @@ if (DH < 0) {
 
         embed 
             .setImage(`attachment://${Attacker.ImageFile}`)
-            .addFields(
-                { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
-            )        
+            // .addFields(
+            //     { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
+            // )        
             .setDescription(`${defender}'s **${Defender.Name}** has been killed by ${interaction.member}'s **${Attacker.Name} & ${Attacker.Officer} using ${Attacker.OfficerSkill}**.`)
 
         interaction.editReply({ embeds: [embed], files: [attackImage] });
@@ -254,9 +254,9 @@ if (AH < 0) {
     
         embed
             .setImage(`attachment://${Defender.ImageFile}`)
-            .addFields(
-                { name: `Defenders War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${defender}` },
-            )     
+            // .addFields(
+            //     { name: `Defenders War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${defender}` },
+            // )     
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by ${defender}'s **${Defender.Name} & ${Defender.Officer} using ${Defender.OfficerSkill}**.`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });  
 

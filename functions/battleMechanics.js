@@ -140,9 +140,6 @@ if (Attacker.Speed < Defender.Speed) {
         embed
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
             .setImage(`attachment://${Defender.ImageFile}`)
-            // .addFields(
-            //     { name: `${defender}'s **${Defender.Name}** hit`, value: `${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!` },
-            // )  
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
         console.log(`Defender hit for ${defenderPower.toLocaleString()}`)        
@@ -157,9 +154,6 @@ if (Attacker.Speed < Defender.Speed) {
 
         embed
             .setImage(`attachment://${Attacker.ImageFile}`)
-            // .addFields(
-            //     { name: `${interaction.member}'s **${Attacker.Name}** hit`, value: `${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!` },
-            // )  
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
@@ -184,9 +178,6 @@ if (Attacker.Speed < Defender.Speed) {
 
         embed
             .setImage(`attachment://${Attacker.ImageFile}`)
-            // .addFields(
-            //     { name: `${interaction.member}'s **${Attacker.Name}** hit`, value: `${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!` },
-            // )  
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
@@ -201,9 +192,6 @@ if (Attacker.Speed < Defender.Speed) {
     
         embed
             .setImage(`attachment://${Defender.ImageFile}`)
-            // .addFields(
-            //     { name: `${defender}'s **${Defender.Name}** hit`, value: `${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!` },
-            // )  
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });

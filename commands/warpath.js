@@ -64,7 +64,7 @@ module.exports = {
 			const balance = Economy[0].war_coins
 			const bank = Economy[0].war_chest
 			embed			
-				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`})
+				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`})
 				.addFields(
 					{ name: `War-Coins:`, value: `$${balance.toLocaleString()}`, inline: true }, 
 					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
@@ -83,7 +83,7 @@ module.exports = {
 			if (amount <= 0) {
 			embed
 				.setDescription(`${interaction.member} are you **Broke**? Try adding some **War-Coins** to the **War-Chest**!`)
-				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
 			return interaction.editReply({ embeds: [embed] })
 			}
 			
@@ -91,7 +91,7 @@ module.exports = {
 			difference = bankMax - bank
 			embed
 				.setDescription(`${interaction.member} your **War-Chest** can't hold that many **War-Coins**, try upgrading your **War-Chest** to hold more!\nYou have space for **$${difference.toLocaleString()}** **War-Coins** in your **War-Chest**!`)
-				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
 			return interaction.editReply({ embeds: [embed] })
 			}
 
@@ -99,7 +99,7 @@ module.exports = {
 				if (amount > wallet) {
 				embed
 					.setDescription(`${interaction.member} You do not have enough **War-Coins** for that Deposit!\nYou have **$${wallet.toLocaleString()} War-Coins** available!`)
-					.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
+					.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
 				return interaction.editReply({ embeds: [embed] });
 				} 
 
@@ -111,7 +111,7 @@ module.exports = {
 						{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
 						{ name: `War-Chest:`, value: `$${newBank.toLocaleString()}`, inline: true },
 					)
-					.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
+					.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
 
 				depositUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}', war_chest = '${newBank}' WHERE discord_id = ${interaction.member.id}`)
 
@@ -137,7 +137,7 @@ module.exports = {
 						{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
 						{ name: `War-Chest:`, value: `$${newBank.toLocaleString()}`, inline: true },
 					)
-					.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
+					.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
 
 				withdrawUpdate = await sql.Execute(`UPDATE levels SET war_coins = '${newWallet}', war_chest = '${newBank}' WHERE discord_id = ${interaction.member.id}`)
 
@@ -150,7 +150,7 @@ module.exports = {
 		{
 			embed
 				.setDescription(`**Coming Soon**!`)
-				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
 		}
 
 		else if (interaction.options.getSubcommand() === 'upgrade')
@@ -186,7 +186,7 @@ module.exports = {
 					{ name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
 					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
 				)
-				.setFooter({ text: `${guildName} - ${interaction.options._subcommand}`, iconURL: `${guildIcon}`});
+				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
 				
 		return interaction.editReply({embeds: [embed], components: [upgradeButtons]})
 		}

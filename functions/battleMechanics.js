@@ -124,7 +124,8 @@ let AH = Attacker.Health, DH = Defender.Health
 if (Attacker.Speed < Defender.Speed) {
     console.log(`Attacker Speed: ${Attacker.Speed} Defender Speed: ${Defender.Speed}`)
     while (DH >= 0 && AH >= 0) {
-        await sleep(1000)
+        console.count()
+        await sleep(800)
         console.log(Attacker, Defender)
         attackSelection(Attacker, Defender)
         officerSkills(Attacker, Defender)
@@ -133,7 +134,7 @@ if (Attacker.Speed < Defender.Speed) {
         const defenderPower = (defendPower * Defender.Multiplier)
         console.log('Defend Multiplier', Defender.Multiplier )
         if (DH >= 0) {let defenderPower = 0} 
-        await sleep(1000)
+        await sleep(800)
         AH = AH - defenderPower
         console.log(Defender.ImageFile)
     
@@ -148,7 +149,7 @@ if (Attacker.Speed < Defender.Speed) {
         console.log('Attack Multiplier', Attacker.Multiplier )
 
         if (AH >= 0) {let attackerPower = 0} 
-        await sleep(1000)
+        await sleep(800)
         DH = DH - attackerPower
         console.log(Attacker.ImageFile)
 
@@ -162,7 +163,8 @@ if (Attacker.Speed < Defender.Speed) {
 } else {
     console.log(`Defender Speed: ${Defender.Speed} Attacker Speed: ${Attacker.Speed}`)
     while (DH >= 0 && AH >= 0) {
-    await sleep(1000)
+    console.count()
+    await sleep(800)
     console.log(Attacker, Defender)
     attackSelection(Attacker, Defender)
     officerSkills(Attacker, Defender)
@@ -172,7 +174,7 @@ if (Attacker.Speed < Defender.Speed) {
     console.log('Attack Multiplier', Attacker.Multiplier )
 
     if (AH >= 0) {let attackerPower = 0} 
-        await sleep(1000)
+        await sleep(800)
         DH = DH - attackerPower
         console.log(Attacker.ImageFile)
 
@@ -186,7 +188,7 @@ if (Attacker.Speed < Defender.Speed) {
     const defenderPower = (defendPower * Defender.Multiplier)
     console.log('Defend Multiplier', Defender.Multiplier )
     if (DH >= 0) {let defenderPower = 0} 
-        await sleep(1000)
+        await sleep(800)
         AH = AH - defenderPower
         console.log(Defender.ImageFile)
     
@@ -200,7 +202,7 @@ if (Attacker.Speed < Defender.Speed) {
 }
 
 if (DH < 0) {
-        await sleep(1000)
+        await sleep(800)
         console.log(Attacker.ImageFile)
         const winnings = AttackerDB[0].officer_level * 10000
         chest = AttackerDB[0].war_chest
@@ -224,7 +226,7 @@ if (DH < 0) {
     console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${defender.username}`, loss.info)
     } else
 if (AH < 0) {
-        await sleep(1000)  
+        await sleep(800)  
         console.log(Defender.ImageFile)
         const winnings = DefenderDB[0].officer_level * 10000
         chest = DefenderDB[0].war_chest

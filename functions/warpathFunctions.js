@@ -1025,8 +1025,8 @@ module.exports = {
         return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons] })
     },
     attackSelection: async function (Attacker, Defender) {
-        if (Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier = Attacker.Multiplier * 1.5
-        if (Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier = Defender.Multiplier * 1.5
+        if (Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier * 1.5
+        if (Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier * 1.5
     },
     newUnitSelection: async function (prestige) { //Medium is Starter Troop
         if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters'

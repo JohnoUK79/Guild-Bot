@@ -1274,7 +1274,7 @@ console.log(officerSelection)
             )
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
-        let presigeRequired = newPrestige * 20 + 1
+        let presigeRequired = currentOfficers.length * 20 + 1
         if (currentOfficers.length < 2 ) {
             console.log(`Less than 2`)
             presigeRequired = 1

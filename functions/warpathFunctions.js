@@ -1138,6 +1138,30 @@ console.log(officerSelection)
 
     },
     selectofficer: async function (interaction) {
+        const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}'`)
+        const officerChoices = [];
+        for (const entry in playerOfficers) {
+            const name = playerOfficers[entry].Officer_Name
+            const type = playerOfficers[entry].Officer_Type
+            const camp = playerOfficers[entry].Officer_Camp
+            const skill = playerOfficers[entry].Skill
+            const level = playerOfficers[entry].Officer_Level
+            const skill_level = playerOfficers[entry].Skill_Level
+
+
+            officerChoices.push({
+                label: name,
+                description: `${level} - ${camp} - ${type} - ${skill} - ${skill_level}`,
+                value: name.toString()
+            })
+        }
+        const officerMenu = new ActionRowBuilder()
+            .addComponents(
+                new StringSelectMenuBuilder()
+                    .setCustomId("selectofficermenu")
+                    .setPlaceholder('Select your Officer')
+                    .addOptions(officerChoices),
+            )
         const selectOfficerButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
@@ -1146,12 +1170,57 @@ console.log(officerSelection)
                     .setStyle(ButtonStyle.Success),
             )
         const selectOfficerEmbed = new EmbedBuilder()
-            .setDescription(`Coming Soon...`)
+            .setColor('#ff5b05')
+            .setThumbnail(guildIcon)
+            .setTimestamp()
             .setTitle(`Select Your Officer!`)
         interaction.update({
             embeds: [selectOfficerEmbed],
-            components: [selectOfficerButtons]
+            components: [officerMenu]
         })
+    },
+    selectofficermenu: async function (interaction) {
+        const selected = interaction.values[0]
+        const selectedOfficer = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' AND Officer_Name = '${selected}'`)
+        //const newOfficerSelect = await sql.Execute(`SELECT * FROM units WHERE Camp = '${selectedUnit[0].camp}' AND Unit_Type = '${selectedUnit[0].unit_type}' AND Unit_Level = '${selectedUnit[0].unit_level}'`)
+        const playerProfile = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        //const firepower = newUnitSelect[0].Firepower * (playerProfile[0].officer_level / 10)
+        //const HP = newUnitSelect[0].HP * playerProfile[0].base_level * 10
+        const officerImage = `http://phfamily.co.uk/img/${selectedOfficer[0].Image}`
+        const updateOfficer = await sql.Execute(`UPDATE levels SET officer_name = '${selectedOfficer[0].Officer_Name}', officer_level = '${selectedOfficer[0].Officer_Level}', skill_level = '${selectedOfficer[0].Skill_Level}' WHERE discord_id = '${interaction.member.id}'`)
+        console.log(`Officer Selected: ${updateOfficer.info}`)
+        const selectOfficerMenuButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("cancel")
+                .setLabel('Upgrade')
+                .setStyle(ButtonStyle.Success),
+        )
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
+        )
+        const selectedOfficerEmbed = new EmbedBuilder()
+            .setTitle(`${selected} chosen`)
+            .setColor('#ff5b05')
+            .setImage(officerImage)
+            .setTimestamp()
+            .addFields(
+                { name: `Officer Name:`, value: `${selectedOfficer[0].Officer_Name}`, inline: true },
+                { name: `Officer Level:`, value: `${selectedOfficer[0].Officer_Level}`, inline: true },
+                { name: `Camp:`, value: `${selectedOfficer[0].Officer_Camp}`, inline: true },
+                { name: `Officer Type:`, value: `${selectedOfficer[0].Officer_Type}`, inline: true },
+                { name: `Skill:`, value: `${selectedOfficer[0].Skill}`, inline: true },
+                { name: `Skill Level:`, value: `${selectedOfficer[0].Skill_Level}`, inline: true },
+            )
+        
+        interaction.update({
+            embeds: [selectedOfficerEmbed],
+            components: [selectOfficerMenuButtons]
+        })
+
     },
     campaign: async function (interaction) {
         const campaignButtons = new ActionRowBuilder()

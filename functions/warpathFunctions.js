@@ -1311,8 +1311,7 @@ console.log(officerSelection)
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
         const saveNewOfficer = await sql.Execute(`INSERT INTO playerofficers (Discord_ID, Officer_ID, Officer_Type, Officer_Name, Officer_Camp, Skill, Image) 
         VALUES ('${interaction.member.id}', '${officerSelection.Officer_ID}', '${officerSelection.Officer_Type}', '${officerSelection.Officer_Name}', '${officerSelection.Officer_Camp}', '${officerSelection.Skill}', '${officerSelection.Image}')`)
-        const updateNewOfficer = await sql.Execute(`UPDATE levels SET officer_name = '${officerSelection.Officer_Name}', Officer_Level = '0', SKill_Level = '0' WHERE discord_id = '${interaction.member.id}'`)
-        // console.log(updateUnit.info)
+        const updateNewOfficer = await sql.Execute(`UPDATE levels SET officer_name = '${officerSelection.Officer_Name}', officer_level = '0', skill_level = '0' WHERE discord_id = '${interaction.member.id}'`)
         console.log(updateNewOfficer.info)
         console.log(saveNewOfficer.info)
 

@@ -1,4 +1,4 @@
-const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder, Collection } = require('discord.js');
 const sql = require("../config/Database");
 
 module.exports = {
@@ -19,8 +19,8 @@ module.exports = {
         guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
 
-        const playerOfficers = await sql.Execute(`SELECT * FROM levels WHERE officer_name NOT LIKE ''`) //level_up_channel_id = '1000526899124117535'
-        console.log(playerOfficers)
+        // const playerOfficers = await sql.Execute(`SELECT * FROM levels WHERE officer_name NOT LIKE ''`) //level_up_channel_id = '1000526899124117535'
+        // console.log(playerOfficers)
 
         
         const cleanupEmbed = new EmbedBuilder()
@@ -34,8 +34,19 @@ module.exports = {
             // )
             .setTimestamp()
             .setFooter({ text: `Clean Up Database.`, iconURL: `http://phfamily.co.uk/img/gifs/Influencer.gif` });
-        
+            const Officers = await sql.Execute(`SELECT * FROM officers WHERE Officer_ID NOT IN (SELECT Officer_ID FROM playerofficers WHERE Discord_ID = '${interaction.member.id}');`)
+            const officerSelection = Officers[Math.floor(Math.random() * Officers.length)]
+            console.log(officerSelection)
+            const currentOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}'`)
+            console.log(currentOfficers.length)
+            if (currentOfficers.length < 2) {
+                console.log(`Less Than 2`)
+            } else console.log(`2 or More`)
+
+
+
         //Added Officers to Main DB Completed 08/04/23
+        // const playerOfficers = await sql.Execute(`SELECT * FROM levels WHERE officer_name NOT LIKE ''`)
         // for (let i = 0; i < playerOfficers.length; i++) {
         //     let discord_id = playerOfficers[i].discord_id
         //     let officer_name = playerOfficers[i].officer_name

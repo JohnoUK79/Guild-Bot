@@ -1,5 +1,5 @@
 const sql = require("../config/Database");
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, Collection } = require('discord.js');
 module.exports = {
     baseUpgrade: async function (interaction) {
         const guildIcon = interaction.member.guild.iconURL();
@@ -497,6 +497,10 @@ console.log(officerSelection)
                     .setCustomId("buyofficer")
                     .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("newofficer")
+                    .setLabel('New Officer')
+                    .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("cancel")
                     .setLabel('Cancel')
@@ -1253,5 +1257,66 @@ console.log(officerSelection)
             embeds: [challengeEmbed],
             components: [challengeButtons]
         })
-    }
+    },
+    newOfficer: async function (interaction) {
+        const Officers = await sql.Execute(`SELECT * FROM officers WHERE Officer_ID NOT IN (SELECT Officer_ID FROM playerofficers WHERE Discord_ID = '${interaction.member.id}');`)            
+        const currentOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}'`)
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)        
+        const prestige = Level[0].prestige
+        const newPrestige = prestige + 1
+        const newOfficerEmbed = new EmbedBuilder();
+        const newOfficerButtons = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId("cancel")
+                    .setLabel('Upgrade')
+                    .setStyle(ButtonStyle.Success),
+            )
+        const guildIcon = interaction.member.guild.iconURL();
+        const guildName = interaction.member.guild.name
+        let presigeRequired = newPrestige * 20 + 1
+        if (currentOfficers.length < 2 ) {
+            console.log(`Less than 2`)
+            presigeRequired = 1
+        }
+        if (presigeRequired >= Level[0].officer_level) {
+            console.log(`Officer Upgrade Required`)
+            newOfficerEmbed
+                .setColor('#ff5b05')
+                .setThumbnail(guildIcon)
+                .setTimestamp()
+                .addFields(
+                    { name: `Required Level: ${presigeRequired}`, value: `Current Level: ${Level[0].officer_level}` },
+                )  
+                .setDescription(`**${interaction.member}, Officer Upgrade Required**`)
+                .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
+            return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons] })
+        } else console.log(`No Officer Upgrade Required`)
+
+        const officerSelection = Officers[Math.floor(Math.random() * Officers.length)]
+        console.log(officerSelection)
+
+        newOfficerEmbed
+            .setColor('#ff5b05')
+            .setThumbnail(guildIcon)
+            .setTimestamp()
+            .setDescription(`**${interaction.member}, New Officer Selection Successful**`)
+            .addFields(
+                { name: `Officer Name:`, value: `${officerSelection.Officer_Name}`, inline: true },
+                { name: `Officer Level:`, value: `0`, inline: true },
+                { name: `Camp:`, value: `${officerSelection.Officer_Camp}`, inline: true },
+                { name: `Officer Type:`, value: `${officerSelection.Officer_Type}`, inline: true },
+                { name: `Skill:`, value: `${officerSelection.Skill}`, inline: true },
+            )
+            .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
+        const saveNewOfficer = await sql.Execute(`INSERT INTO playerofficers (Discord_ID, Officer_ID, Officer_Type, Officer_Name, Officer_Camp, Skill, Image) 
+        VALUES ('${interaction.member.id}', '${officerSelection.Officer_ID}', '${officerSelection.Officer_Type}', '${officerSelection.Officer_Name}', '${officerSelection.Officer_Camp}', '${officerSelection.Skill}', '${officerSelection.Image}')`)
+        const updateNewOfficer = await sql.Execute(`UPDATE levels SET officer_name = '${officerSelection.Officer_Name}', Officer_Level = '0', SKill_Level = '0' WHERE discord_id = '${interaction.member.id}'`)
+        // console.log(updateUnit.info)
+        console.log(updateNewOfficer.info)
+        console.log(saveNewOfficer.info)
+
+        return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons] })
+    },
+
 }

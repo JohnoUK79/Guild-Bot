@@ -46,18 +46,18 @@ module.exports = {
 
 
         //Added Officers to Main DB Completed 08/04/23
-        // const playerOfficers = await sql.Execute(`SELECT * FROM levels WHERE officer_name NOT LIKE ''`)
-        // for (let i = 0; i < playerOfficers.length; i++) {
-        //     let discord_id = playerOfficers[i].discord_id
-        //     let officer_name = playerOfficers[i].officer_name
-        //     let officer_level = playerOfficers[i].officer_level
-        //     let skill_level = playerOfficers[i].skill_level
-        //     console.log(discord_id, officer_name)
-        //     const officerDetail = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${officer_name}'`)
-        //     console.log(officerDetail)
-        //     const updateOfficers = await sql.Execute(`INSERT INTO playerofficers (Discord_ID, Officer_ID, Officer_Name, Officer_Type, Officer_Camp, Skill, Image, Officer_Level, Skill_Level) 
-        //     VALUES ('${discord_id}', '${officerDetail[0].Officer_ID}', '${officer_name}', '${officerDetail[0].Officer_Type}', '${officerDetail[0].Officer_Camp}', '${officerDetail[0].Skill}', '${officerDetail[0].Image}', '${officer_level}', '${skill_level}')`)
-        // }
+        const playerOfficers = await sql.Execute(`SELECT * FROM levels WHERE officer_name NOT LIKE ''`)
+        for (let i = 0; i < playerOfficers.length; i++) {
+            let discord_id = playerOfficers[i].discord_id
+            let officer_name = playerOfficers[i].officer_name
+            let officer_level = playerOfficers[i].officer_level
+            let skill_level = playerOfficers[i].skill_level
+            console.log(discord_id, officer_name)
+            const officerDetail = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${officer_name}'`)
+            console.log(officerDetail)
+            const updateOfficers = await sql.Execute(`INSERT INTO playerofficers (Discord_ID, Officer_ID, Officer_Name, Officer_Type, Officer_Camp, Skill, Image, Officer_Level, Skill_Level) 
+            VALUES ('${discord_id}', '${officerDetail[0].Officer_ID}', '${officer_name}', '${officerDetail[0].Officer_Type}', '${officerDetail[0].Officer_Camp}', '${officerDetail[0].Skill}', '${officerDetail[0].Image}', '${officer_level}', '${skill_level}')`)
+        }
         //Loop through announcement channels
         // for (let i = 0; i < levelUpChannelIds.length; i++) {
         //     let levelUpChannelId = levelUpChannelIds[i];

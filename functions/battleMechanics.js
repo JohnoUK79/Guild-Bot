@@ -255,22 +255,6 @@ campaignMode: async function (interaction) {
     const guildName = interaction.member.guild.name
 	const { commandCooldowns } = require('../bot');
 	let t = commandCooldowns.get(`${interaction.member.id}_${interaction.customId}`) || 0
-    console.log(t)
-    console.log(Date.now() - t)
-    if (Date.now() - t < 0) {
-    const campaigncooldownEmbed = new EmbedBuilder()
-	    campaigncooldownEmbed
-            .setColor('#ff5b05')
-            .setThumbnail(guildIcon)
-            .setTimestamp()
-            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-            .setFooter({ text: `${guildName} - ${interaction.commandName}`, iconURL: `${guildIcon}`})
-            .setDescription(`${interaction.user} you have already used the **${interaction.customId}** command recently, you can use the **${interaction.customId}** command again in **${ms(t - Date.now())}**`);
-	return interaction.reply({ embeds: [campaigncooldownEmbed] })
-	}
-    interaction.deferReply({
-        fetchReply: true
-    })
     async function sleep(ms) {
         return new Promise(
           resolve => setTimeout(resolve, ms)
@@ -303,7 +287,23 @@ campaignMode: async function (interaction) {
         if (interaction.customId === 'camp15') {campaign = 14}
         if (interaction.customId === 'camp16') {campaign = 15}
         campaignSelection(campaign)
-
+        console.log(t)
+        console.log(Date.now() - t)
+        if (Date.now() - t < 0) {
+        const campaigncooldownEmbed = new EmbedBuilder()
+            campaigncooldownEmbed
+                .setColor('#ff5b05')
+                .setThumbnail(guildIcon)
+                .setTimestamp()
+                .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                .setFooter({ text: `${guildName} - ${interaction.commandName}`, iconURL: `${guildIcon}`})
+                .setDescription(`${interaction.user} you have already battled **${campaignOfficer}** recently, you can battle **${campaignOfficer}** again in **${ms(t - Date.now())}**`);
+        return interaction.reply({ embeds: [campaigncooldownEmbed] })
+        }
+        interaction.deferReply({
+            fetchReply: true
+        })
+    
             const DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${campaignUnitCamp}' AND Unit_Type = '${campaignUnitType}' AND Unit_Level = '${campaignUnitLevel}'`)
 
             const AttackerDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`);

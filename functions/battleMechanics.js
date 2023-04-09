@@ -462,7 +462,7 @@ console.log(`Defender hit for ${defenderPower.toLocaleString()}`)
 if (DH < 0) {
     await sleep(800)
     console.log(Attacker.ImageFile)
-    const winnings = AttackerDB[0].officer_level * 100000
+    const winnings = AttackerDB[0].officer_level * 100000 * campaignOfficerLevel
     chest = AttackerDB[0].war_chest
     const wallet = AttackerDB[0].war_coins
     const wins = AttackerDB[0].battle_wins

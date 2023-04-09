@@ -260,14 +260,6 @@ campaignMode: async function (interaction) {
           resolve => setTimeout(resolve, ms)
         );
       }
-
-    const embed = new EmbedBuilder();
-        embed
-            .setColor('#ff5b05')
-            .setThumbnail(guildIcon)
-            .setTimestamp()
-            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-            .setFooter({ text: `${guildName} - Battles`, iconURL: `${guildIcon}`});
         
         let campaign = 0
         if (interaction.customId === 'camp1') {campaign = 0}
@@ -296,18 +288,26 @@ campaignMode: async function (interaction) {
                 .setThumbnail(guildIcon)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-                .setFooter({ text: `${guildName} - ${interaction.commandName}`, iconURL: `${guildIcon}`})
+                .setFooter({ text: `${guildName} - ${campaignOfficer}`, iconURL: `${guildIcon}`})
                 .setDescription(`${interaction.user} you have already battled **${campaignOfficer}** recently, you can battle **${campaignOfficer}** again in **${ms(t - Date.now())}**`);
         return interaction.reply({ embeds: [campaigncooldownEmbed] })
         }
         interaction.deferReply({
             fetchReply: true
         })
-    
-            const DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${campaignUnitCamp}' AND Unit_Type = '${campaignUnitType}' AND Unit_Level = '${campaignUnitLevel}'`)
+        const embed = new EmbedBuilder();
+        embed
+            .setColor('#ff5b05')
+            .setThumbnail(guildIcon)
+            .setTimestamp()
+            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+            .setFooter({ text: `${guildName} - ${campaignOfficer}`, iconURL: `${guildIcon}`});
 
-            const AttackerDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`);
-            const AttackerUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${AttackerDB[0].unit_camp}' AND Unit_Type = '${AttackerDB[0].unit_type}' AND Unit_Level = '${AttackerDB[0].unit_level}'`)
+    
+        const DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${campaignUnitCamp}' AND Unit_Type = '${campaignUnitType}' AND Unit_Level = '${campaignUnitLevel}'`)
+
+        const AttackerDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`);
+        const AttackerUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${AttackerDB[0].unit_camp}' AND Unit_Type = '${AttackerDB[0].unit_type}' AND Unit_Level = '${AttackerDB[0].unit_level}'`)
 
             if (!AttackerDB[0].unit_type) {
                 commandCooldowns.set(`${interaction.member.id}_${interaction.customId}`, 0)
@@ -316,7 +316,7 @@ campaignMode: async function (interaction) {
                     .setDescription(`${interaction.member} you haven't selected your **Unit**!\nUse **warpath-upgrade** to level up and get your **Unit**!`)
                     return interaction.editReply({ embeds: [embed] });
             }
-            const attackOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${AttackerDB[0].officer_name}'`)
+        const attackOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${AttackerDB[0].officer_name}'`)
 
             const Attacker = {
                 Name: AttackerUnit[0].Unit_Name,

@@ -1039,6 +1039,7 @@ console.log(officerSelection)
     attackSelection: async function (Attacker, Defender) {
         if (Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier * 1.5
         if (Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier * 1.5
+        console.log(Defender)
     },
     newUnitSelection: async function (prestige) { //Medium is Starter Troop
         if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters'
@@ -1230,16 +1231,99 @@ console.log(officerSelection)
         const campaignButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
+                    .setCustomId("camp1")
+                    .setLabel('Professor Pain (20)')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("camp2")
+                    .setLabel('The Witcher (40)')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("camp3")
+                    .setLabel('Percy (60)')
+                    .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
+                    .setCustomId("camp4")
+                    .setLabel('Thorn Countess (80)')
+                    .setStyle(ButtonStyle.Danger),
+            )
+            const campaignButtons2 = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId("camp5")
+                    .setLabel('The Erupter (100)')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("camp6")
+                    .setLabel('El Cartero (120)')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("camp7")
+                    .setLabel('Argent Flamce (140)')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("camp8")
+                    .setLabel('Steel Fighter (160)')
+                    .setStyle(ButtonStyle.Primary),
+            )
+            const campaignButtons3 = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId("camp9")
+                    .setLabel('Valkrie (180)')
+                    .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
+                    .setCustomId("camp10")
+                    .setLabel('Saber of The Nation (200)')
+                    .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
+                    .setCustomId("camp11")
+                    .setLabel('Berserker Bear (220)')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("camp12")
+                    .setLabel('War Machine (240)')
+                    .setStyle(ButtonStyle.Success),
+            )
+            const campaignButtons4 = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId("camp13")
+                    .setLabel('Guardian of Truth (260)')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("camp14")
+                    .setLabel('Iron Bastion (280)')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("camp15")
+                    .setLabel('Angel of Light (300)')
+                    .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
+                    .setCustomId("camp16")
+                    .setLabel('Sergeant Spanner (320)')
+                    .setStyle(ButtonStyle.Danger),
+            )
+            const campaignButtons5 = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
                     .setCustomId("cancel")
                     .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Profile')
+                    .setStyle(ButtonStyle.Secondary),
             )
         const campaignEmbed = new EmbedBuilder()
-            .setDescription(`Coming Soon...`)
-            .setTitle(`Campaign Mode!`)
+            .setColor('#ff5b05')
+            .setThumbnail(guildIcon)
+            .setTimestamp()
+            .setDescription(`Pick your Enemy`)
+            .setTitle(`Select your opponent!`)
         interaction.update({
             embeds: [campaignEmbed],
-            components: [campaignButtons]
+            components: [campaignButtons, campaignButtons2, campaignButtons3, campaignButtons4, campaignButtons5]
         })
     },
     challenge: async function (interaction) {
@@ -1262,8 +1346,6 @@ console.log(officerSelection)
         const Officers = await sql.Execute(`SELECT * FROM officers WHERE Officer_ID NOT IN (SELECT Officer_ID FROM playerofficers WHERE Discord_ID = '${interaction.member.id}');`)            
         const currentOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}'`)
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)        
-        const prestige = Level[0].prestige
-        const newPrestige = prestige + 1
         const newOfficerEmbed = new EmbedBuilder();
         const newOfficerButtons = new ActionRowBuilder()
             .addComponents(
@@ -1316,6 +1398,34 @@ console.log(officerSelection)
         console.log(saveNewOfficer.info)
 
         return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons] })
+    },
+    campaignSelection: async function (campaign) { //Medium is Starter Troop
+        if (campaign === 0) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Professor Pain', campaignOfficerLevel = 20, campaignBaseLevel = 20
+        if (campaign === 1) return campaignUnitLevel = '9.2', campaignUnitType = 'Fighters', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'The Witcher', campaignOfficerLevel = 40, campaignBaseLevel = 40
+        if (campaign === 2) return campaignUnitLevel = '9.2', campaignUnitType = 'Infantry', campaignUnitCamp = 'Liberty', campaignOfficer = 'Percy', campaignOfficerLevel = 60, campaignBaseLevel = 60
+        if (campaign === 3) return campaignUnitLevel = '9.2', campaignUnitType = 'SuperHeavyTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Thorn Countess', campaignOfficerLevel = 80, campaignBaseLevel = 80
+        if (campaign === 4) return campaignUnitLevel = '9.2', campaignUnitType = 'Howitzers', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'The Erupter', campaignOfficerLevel = 100, campaignBaseLevel = 100
+        if (campaign === 5) return campaignUnitLevel = '9.2', campaignUnitType = 'Bombers', campaignUnitCamp = 'Liberty', campaignOfficer = 'El Cartero', campaignOfficerLevel = 120, campaignBaseLevel = 120
+        if (campaign === 6) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Argent Flamce', campaignOfficerLevel = 140, campaignBaseLevel = 140
+        if (campaign === 7) return campaignUnitLevel = '9.2', campaignUnitType = 'RocketLaunchers', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Steel Fighter', campaignOfficerLevel = 160, campaignBaseLevel = 160
+        if (campaign === 8) return campaignUnitLevel = '9.2', campaignUnitType = 'LightTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Valkrie', campaignOfficerLevel = 180, campaignBaseLevel = 180
+        if (campaign === 9) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Saber of the Nation', campaignOfficerLevel = 200, campaignBaseLevel = 200
+        if (campaign === 10) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Berserker Bear', campaignOfficerLevel = 220, campaignBaseLevel = 220
+        if (campaign === 11) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'War Machine', campaignOfficerLevel = 240, campaignBaseLevel = 240
+        if (campaign === 12) return campaignUnitLevel = '9.2', campaignUnitType = 'AntiTankGuns', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Guardian of Truth', campaignOfficerLevel = 260, campaignBaseLevel = 260
+        if (campaign === 13) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Iron Bastion', campaignOfficerLevel = 280, campaignBaseLevel = 280
+        if (campaign === 14) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Angel of Light', campaignOfficerLevel = 300, campaignBaseLevel = 300
+        if (campaign === 15) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Liberty', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 300, campaignBaseLevel = 300
+        // module.exports.newUnitLevel = newUnitLevel
+        // module.exports.newUnitType = newUnitType
+        module.exports = {
+            campaignUnitLevel: campaignUnitLevel,
+            campaignUnitType: campaignUnitType,
+            campaignUnitCamp: campaignUnitCamp,
+            campaignOfficer: campaignOfficer,
+            campaignOfficerLevel: campaignOfficerLevel,
+            campaignBaseLevel: campaignBaseLevel
+        }
     },
 
 }

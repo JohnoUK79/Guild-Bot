@@ -1,10 +1,11 @@
 const time = require('../config/timestamp')
 const sql = require("../config/Database");
-const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const ms = require('ms-prettify').default
 const { buyBank, buyBase, chestUpgrade, baseUpgrade, cancel, buyOfficer, officerUpgrade, officerSelect, unitUpgrade, unitSelect, buyUnit, profile, newUnit, selectunit, selectofficer, campaign, challenge, selectunitmenu, selectofficermenu, newOfficer} = require('../functions/warpathFunctions');
 const { selfUpdateModal, playerUpdateModal, selfUpdateResponses, playerUpdateResponses } = require('../functions/playerDatabaseFunctions');
 const { top10, top20, top30, top40, top50 } = require('../functions/discordFunctions');
+const { campaignMode } = require('../functions/battleMechanics');
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
@@ -110,6 +111,86 @@ module.exports = {
 		campaign(interaction)
 		} catch (err) {console.log(err)}
 		}
+		if (interaction.customId === 'camp1') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp2') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp3') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp4') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp5') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp6') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp7') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp8') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp9') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp10') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp11') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp12') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp13') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp14') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp15') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp16') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
 		if (interaction.customId === 'challenge') {
 		try {
 		challenge(interaction)
@@ -179,7 +260,6 @@ module.exports = {
 		} catch (err) {console.log(err)}
         }
 
-
         if (!interaction.isChatInputCommand()) return;
     try {
         const command = interaction.client.commands.get(interaction.commandName)
@@ -205,6 +285,5 @@ module.exports = {
         console.error(setDate, error);
         await interaction.reply({ content: 'There was an error executing this command!', ephemeral: true });
     }
-
     },
 };

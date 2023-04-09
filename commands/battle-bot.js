@@ -3,7 +3,7 @@ const sql = require("../config/Database");
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('warpath')
+		.setName('battle-bot')
 		.setDescription('Build your Mini Warpath Empire!')
 		.addSubcommand(subcommand =>
 			subcommand
@@ -39,7 +39,7 @@ module.exports = {
 			)
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('upgrade')
+				.setName('main')
 				.setDescription('Upgrade your Empire!')
 			),
 
@@ -153,7 +153,7 @@ module.exports = {
 				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
 		}
 
-		else if (interaction.options.getSubcommand() === 'upgrade')
+		else if (interaction.options.getSubcommand() === 'main')
 		{
 		const upgradeButtons = new ActionRowBuilder()
 			.addComponents(
@@ -181,7 +181,7 @@ module.exports = {
 		const wallet = Economy[0].war_coins
 		const bank = Economy[0].war_chest
 			embed
-				.setDescription(`**What would you like to upgrade**?`)
+				.setDescription(`**What would you like to do today**?`)
 				.addFields(
 					{ name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
 					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },

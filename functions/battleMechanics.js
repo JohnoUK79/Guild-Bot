@@ -151,6 +151,9 @@ if (Attacker.Speed < Defender.Speed) {
 
         if (AH >= 0) {let attackerPower = 0} 
         await sleep(800)
+        attackSelection(Attacker, Defender)
+        officerSkills(Attacker, Defender)
+        campSelection(Attacker, Defender) 
         DH = DH - attackerPower
         console.log(Attacker.ImageFile)
 
@@ -176,6 +179,9 @@ if (Attacker.Speed < Defender.Speed) {
 
     if (AH >= 0) {let attackerPower = 0} 
         await sleep(800)
+        attackSelection(Attacker, Defender)
+        officerSkills(Attacker, Defender)
+        campSelection(Attacker, Defender) 
         DH = DH - attackerPower
         console.log(Attacker.ImageFile)
 
@@ -192,7 +198,9 @@ if (Attacker.Speed < Defender.Speed) {
         await sleep(800)
         AH = AH - defenderPower
         console.log(Defender.ImageFile)
-    
+        attackSelection(Attacker, Defender)
+        officerSkills(Attacker, Defender)
+        campSelection(Attacker, Defender) 
         embed
             .setImage(`attachment://${Defender.ImageFile}`)
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)

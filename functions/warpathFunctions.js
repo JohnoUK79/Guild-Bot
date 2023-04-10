@@ -1070,13 +1070,13 @@ console.log(officerSelection)
             const level = playerUnits[entry].unit_level
             const playerEmoji = playerUnits[entry].emoji || 'Guardian_of_the_Truth'
             const image = await interaction.member.guild.emojis.cache.find(emoji => emoji.name == playerEmoji)
-            console.log(playerEmoji)
+            console.log(image)
 
             unitChoices.push({
                 label: type,
                 description: `${camp} - ${type} - ${level}`,
                 value: type.toString(),
-                emoji: image.toString()
+                //emoji: image.toString()
             })
         }
         const unitMenu = new ActionRowBuilder()

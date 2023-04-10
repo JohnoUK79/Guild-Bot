@@ -1069,9 +1069,8 @@ console.log(officerSelection)
             const type = playerUnits[entry].unit_type
             const level = playerUnits[entry].unit_level
             const playerEmoji = playerUnits[entry].emoji || 'Guardian_of_the_Truth'
-            let image = await interaction.member.guild.emojis.cache.find(emoji => emoji.name == playerEmoji)
-            console.log(playerUnits[entry].emoji)
-            //var image = interaction.member.guild.emojis.find(emoji => emoji.name == `${emoji}`);
+            const image = await interaction.member.guild.emojis.cache.find(emoji => emoji.name == playerEmoji)
+            console.log(playerEmoji)
 
             unitChoices.push({
                 label: type,

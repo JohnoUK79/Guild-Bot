@@ -36,14 +36,24 @@ module.exports = {
             .setFooter({ text: `Clean Up Database.`, iconURL: `http://phfamily.co.uk/img/gifs/Influencer.gif` });
             const Officers = await sql.Execute(`SELECT * FROM officers WHERE Officer_ID NOT IN (SELECT Officer_ID FROM playerofficers WHERE Discord_ID = '${interaction.member.id}');`)
             const officerSelection = Officers[Math.floor(Math.random() * Officers.length)]
-            console.log(officerSelection)
+            //console.log(officerSelection)
             const currentOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}'`)
-            console.log(currentOfficers.length)
-            if (currentOfficers.length < 2) {
-                console.log(`Less Than 2`)
-            } else console.log(`2 or More`)
+            //console.log(currentOfficers.length)
+            // if (currentOfficers.length < 2) {
+            //     console.log(`Less Than 2`)
+            // } else console.log(`2 or More`)
 
-
+        const playerUnits = await sql.Execute(`SELECT * FROM playerunits WHERE unit_id NOT LIKE ''`)
+        for (let i = 0; i < playerUnits.length; i++) {
+                let unitID = playerUnits[i].unit_id
+                let image = await sql.Execute(`SELECT * FROM units WHERE Unit_ID = '${unitID}'`)
+                let emoji = image[0].Image || 'Guardian_of_the_Truth.png'
+                console.log(image)
+                emoji = emoji.slice(0, -4); 
+                console.log(emoji)
+                let update = await sql.Execute(`UPDATE playerunits SET emoji = '${emoji}' WHERE unit_id = '${unitID}'`)
+                console.log(update)
+            }
 
         //Added Officers to Main DB Completed 08/04/23
         // const playerOfficers = await sql.Execute(`SELECT * FROM levels WHERE officer_name NOT LIKE ''`)

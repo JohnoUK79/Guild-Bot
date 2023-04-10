@@ -43,17 +43,30 @@ module.exports = {
             //     console.log(`Less Than 2`)
             // } else console.log(`2 or More`)
 
-        const playerUnits = await sql.Execute(`SELECT * FROM playerunits WHERE unit_id NOT LIKE ''`)
+        const playerUnits = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id NOT LIKE ''`)
         for (let i = 0; i < playerUnits.length; i++) {
-                let unitID = playerUnits[i].unit_id
-                let image = await sql.Execute(`SELECT * FROM units WHERE Unit_ID = '${unitID}'`)
-                let emoji = image[0].Image || 'Guardian_of_the_Truth.png'
-                console.log(image)
-                emoji = emoji.slice(0, -4); 
-                console.log(emoji)
-                let update = await sql.Execute(`UPDATE playerunits SET emoji = '${emoji}' WHERE unit_id = '${unitID}'`)
-                console.log(update)
+                let type = playerUnits[i].unit_type
+                let camp = playerUnits[i].camp
+                let level = playerUnits[i].unit_level
+                let id = await sql.Execute(`SELECT * FROM units WHERE Camp = '${camp}' AND Unit_Type = '${type}' AND Unit_Level = '${level}'`)
+                emoji = id[0].Image.slice(0, -4) || 'Guardian_of_the_Truth'
+
+                let updatePlayerUnits = await sql.Execute(`UPDATE playerunits SET unit_id = '${id[0].Unit_ID}', emoji = '${emoji}' WHERE unit_type = '${type}' AND Camp = '${camp}'`)
+                // let update = await sql.Execute(`UPDATE playerunits SET emoji = '${emoji}' WHERE unit_id = '${unitID}'`)
+                // console.log(update)
             }
+
+        // const playerUnits = await sql.Execute(`SELECT * FROM playerunits WHERE unit_id NOT LIKE ''`)
+        // for (let i = 0; i < playerUnits.length; i++) {
+        //         let unitID = playerUnits[i].unit_id
+        //         let image = await sql.Execute(`SELECT * FROM units WHERE Unit_ID = '${unitID}'`)
+        //         let emoji = image[0].Image || 'Guardian_of_the_Truth.png'
+        //         console.log(image)
+        //         emoji = emoji.slice(0, -4); 
+        //         console.log(emoji)
+        //         let update = await sql.Execute(`UPDATE playerunits SET emoji = '${emoji}' WHERE unit_id = '${unitID}'`)
+        //         console.log(update)
+        //     }
 
         //Added Officers to Main DB Completed 08/04/23
         // const playerOfficers = await sql.Execute(`SELECT * FROM levels WHERE officer_name NOT LIKE ''`)

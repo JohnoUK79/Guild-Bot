@@ -356,7 +356,7 @@ campaignMode: async function (interaction) {
                 OfficerCamp: defendOfficer[0].Officer_Camp,
                 OfficerSkill: defendOfficer[0].Skill,
                 OfficerType: defendOfficer[0].Officer_Type,
-                Multiplier: campaignOfficerLevel / 10 / 2 / 10,
+                Multiplier: campaignOfficerLevel / 10 / 2,
                 Image: `http://phfamily.co.uk/img/${campaignUnitCamp}.png`,
                 ImageFile: `${campaignUnitCamp}.png`
             }
@@ -453,13 +453,16 @@ console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)
 if (DH < 0) {
     await sleep(800)
     console.log(Attacker.ImageFile)
-    const winnings = AttackerDB[0].officer_level * 100000 * campaignOfficerLevel / 10
+    const winnings = AttackerDB[0].officer_level * 10000 * campaignOfficerLevel / 10
     chest = AttackerDB[0].war_chest
     const wallet = AttackerDB[0].war_coins
     const wins = AttackerDB[0].battle_wins
     const newWins = parseInt(wins + 1)
     const newWallet = parseInt(wallet + winnings)
     commandCooldowns.set(`${interaction.member.id}_${interaction.customId}`, Date.now() + 60 * 60 * 1000 * 12)
+    if (interaction.guild.id === '964496256057630720') {
+        commandCooldowns.set(`${interaction.user.id}_${interaction.customId}`, 0)
+    }
     console.log(`${interaction.member.id}_${interaction.customId}`)
     console.log(commandCooldowns)
 

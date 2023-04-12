@@ -3,6 +3,10 @@ const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowB
 
 module.exports = {
     officerSkills: async function (interaction, Attacker, Defender, AH, DH) {
+        if (Attacker.OfficerLevel === 0) {
+            console.log(`Officer Not Levelled Up`)
+            Attacker.OfficerLevel = 1
+        }
         const skillEmbed = new EmbedBuilder();
             skillEmbed 
                     .setColor('#ff5b05')
@@ -139,10 +143,11 @@ module.exports = {
                 console.log(skillSuccess)
                 if (skillSuccess === 'Yes') {
                 console.log(`The Motherland`)
-                Attacker.AttackPower = Math.round(Attacker.AttackPower + Attacker.AttackPower * 0.05)
+                const damage = Math.round(Attacker.AttackPower + Attacker.AttackPower * 0.5)
+                Attacker.AttackPower = damage
                 skillEmbed
                     .addFields(
-                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Attacker.AttackPower.toLocaleString()}**` },
+                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${damage.toLocaleString()}**` },
                     ),   
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'

@@ -61,15 +61,18 @@ module.exports = {
                         return interaction.editReply({ embeds: [embed] });
                 }
                 const attackOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${AttackerDB[0].officer_name}'`)
-
+                if (AttackerDB[0].officer_level === 0) {
+                    OfficerLevel = 1
+                } else OfficerLevel = AttackerDB[0].officer_level
                 const Attacker = {
                     Name: AttackerUnit[0].Unit_Name,
-                    Power: AttackerUnit[0].Firepower * (AttackerDB[0].officer_level / 10),
+                    Power: AttackerUnit[0].Firepower * (OfficerLevel / 10),
                     Health: AttackerUnit[0].HP * AttackerDB[0].base_level * 10,
                     UnitCamp: AttackerDB[0].unit_camp,
                     Speed: AttackerUnit[0].Speed,
                     AttackType: AttackerUnit[0].Attack_Type,
                     Officer: attackOfficer[0].Officer_Name,
+                    OfficerLevel: OfficerLevel,
                     OfficerCamp: attackOfficer[0].Officer_Camp,
                     OfficerSkill: attackOfficer[0].Skill,
                     OfficerType: attackOfficer[0].Officer_Type,
@@ -313,15 +316,20 @@ campaignMode: async function (interaction) {
                     return interaction.editReply({ embeds: [embed] });
             }
         const attackOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${AttackerDB[0].officer_name}'`)
+            if (AttackerDB[0].officer_level === 0) {
+                OfficerLevel = 1
+            } else OfficerLevel = AttackerDB[0].officer_level
 
             const Attacker = {
                 Name: AttackerUnit[0].Unit_Name,
-                Power: AttackerUnit[0].Firepower * AttackerDB[0].officer_level / 10,
+                Power: AttackerUnit[0].Firepower * OfficerLevel / 10,
                 Health: (AttackerUnit[0].HP * AttackerDB[0].base_level) * 10,
                 UnitCamp: AttackerDB[0].unit_camp,
                 Speed: AttackerUnit[0].Speed,
                 AttackType: AttackerUnit[0].Attack_Type,
                 Officer: attackOfficer[0].Officer_Name,
+                OfficerLevel: OfficerLevel,
+                OfficerLevel: AttackerDB[0].officer_level,
                 OfficerCamp: attackOfficer[0].Officer_Camp,
                 OfficerSkill: attackOfficer[0].Skill,
                 OfficerType: attackOfficer[0].Officer_Type,

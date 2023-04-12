@@ -204,7 +204,7 @@ if (Attacker.Speed < Defender.Speed) {
 
 if (DH < 0) {
         console.log(Attacker.ImageFile)
-        const winnings = AttackerDB[0].officer_level * 10000
+        const winnings = Attacker.OfficerLevel * 10000
         chest = AttackerDB[0].war_chest
         const wallet = AttackerDB[0].war_coins
         const wins = AttackerDB[0].battle_wins

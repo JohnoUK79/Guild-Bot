@@ -126,7 +126,7 @@ if (Attacker.Speed < Defender.Speed) {
     console.log(`Attacker Speed: ${Attacker.Speed} Defender Speed: ${Defender.Speed}`)
     while (DH >= 0 && AH >= 0) {
         attackSelection(Attacker, Defender)
-        officerSkills(Attacker, Defender)
+        officerSkills(interaction, Attacker, Defender, AH, DH)
         campSelection(Attacker, Defender) 
         const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
         Defender.AttackPower = (defendPower * Defender.Multiplier)
@@ -145,7 +145,7 @@ if (Attacker.Speed < Defender.Speed) {
         Attacker.AttackPower = (attackPower * Attacker.Multiplier)
         console.log('Attack Multiplier', Attacker.Multiplier )
         attackSelection(Attacker, Defender)
-        officerSkills(Attacker, Defender)
+        officerSkills(interaction, Attacker, Defender, AH, DH)
         campSelection(Attacker, Defender) 
         DH = DH - Attacker.AttackPower
         console.log(Attacker.ImageFile)
@@ -163,13 +163,13 @@ if (Attacker.Speed < Defender.Speed) {
     console.count()
     await sleep(800)
     attackSelection(Attacker, Defender)
-    officerSkills(Attacker, Defender)
+    officerSkills(interaction, Attacker, Defender, AH, DH)
     campSelection(Attacker, Defender) 
     const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
     Attacker.AttackPower = (attackPower * Attacker.Multiplier)
     console.log('Attack Multiplier', Attacker.Multiplier )
         attackSelection(Attacker, Defender)
-        officerSkills(Attacker, Defender)
+        officerSkills(interaction, Attacker, Defender, AH, DH)
         campSelection(Attacker, Defender) 
         DH = DH - Attacker.AttackPower
         console.log(Attacker.ImageFile)
@@ -187,7 +187,7 @@ if (Attacker.Speed < Defender.Speed) {
         AH = AH - Defender.AttackPower
         console.log(Defender.ImageFile)
         attackSelection(Attacker, Defender)
-        officerSkills(Attacker, Defender)
+        officerSkills(interaction, Attacker, Defender, AH, DH)
         campSelection(Attacker, Defender) 
         embed
             .setImage(`attachment://${Defender.ImageFile}`)
@@ -375,7 +375,7 @@ if (Attacker.Speed < Defender.Speed) {
 console.log(`Attacker Speed: ${Attacker.Speed} Defender Speed: ${Defender.Speed}`)
 while (DH >= 0 && AH >= 0) {
     attackSelection(Attacker, Defender)
-    officerSkills(Attacker, Defender)
+    officerSkills(interaction, Attacker, Defender, AH, DH)
     campSelection(Attacker, Defender) 
     Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
     const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
@@ -409,7 +409,7 @@ while (DH >= 0 && AH >= 0) {
 console.log(`Defender Speed: ${Defender.Speed} Attacker Speed: ${Attacker.Speed}`)
 while (DH >= 0 && AH >= 0) {
 attackSelection(Attacker, Defender)
-officerSkills(Attacker, Defender)
+officerSkills(interaction, Attacker, Defender, AH, DH)
 campSelection(Attacker, Defender) 
 Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
 const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2

@@ -2,12 +2,54 @@ const sql = require("../config/Database");
 const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
-    officerSkills: async function (Attacker, Defender) {
+    officerSkills: async function (interaction, Attacker, Defender, AH, DH) {
         if (Attacker.OfficerSkill === 'Indomitable') {
             console.log(`Indomitable`) 
-            return attackSkill = `Indomitable`       
-            //return attackerMultipler = 1.0, defenderMultipler = 1.0
-        }
+            Attacker.SkillUsed, Defender.SkillUsed = ''
+            const guildIcon = interaction.member.guild.iconURL();
+            const guildName = interaction.member.guild.name
+            const skillEmbed = new EmbedBuilder();
+            skillEmbed 
+                    .setColor('#ff5b05')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Battles`, iconURL: `${guildIcon}`});
+    
+            if (Attacker.OfficerSkill === 'Indomitable') {
+                const chance = [
+                    'Yes',
+                    'No',
+                    'Yes',
+                    'No',
+                    'Yes',
+                    'No',
+                    'Yes',
+                    'Yes',
+                    'No',
+                    'Yes',
+                ]
+    
+                const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+                console.log(skillSuccess)
+                if (skillSuccess === 'Yes') {
+                    console.log(`Indomitable`) 
+                    AH = AH + AH * 0.3
+                    if (AH > 0) {
+                        console.log(`Health Increased`)
+                        health = Math.round(AH)
+                    } else return console.log(`Health Error`)
+                    console.log(AH)
+    
+                    skillEmbed
+                            .addFields(
+                                { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Health** to **${health.toLocaleString()}**` },
+                            )   
+                Attacker.SkillUsed = 'Health'
+                interaction.followUp({embeds: [skillEmbed]})
+                } else return
+                        }            
+            }
         if (Attacker.OfficerSkill === 'Caring Angel') {
             console.log(`Caring Angel`)        
             return attackSkill = `Caring Angel`           
@@ -158,8 +200,5 @@ module.exports = {
             return attackSkill = `Last Gasp`           
             //return attackerMultipler = 1.0, defenderMultipler = 1.0
         }
-        module.exports.attackSkill = attackSkill
-        // module.exports.defenderMultipler = defenderMultipler
-
     }
 }

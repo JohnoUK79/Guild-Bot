@@ -4,6 +4,13 @@ const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowB
 module.exports = {
     officerSkills: async function (interaction, Attacker, Defender, AH, DH) {
         const skillEmbed = new EmbedBuilder();
+            skillEmbed 
+                    .setColor('#ff5b05')
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
+                    .setFooter({ text: `${guildName} - Battles`, iconURL: `${guildIcon}`});
+
 
         if (Attacker.OfficerSkill === 'Indomitable') {
             console.log(`Indomitable`) 
@@ -208,7 +215,8 @@ module.exports = {
                 console.log(skillSuccess)
                 if (skillSuccess === 'Yes') {
                 console.log(`Flaming Meteors`)
-                Attacker.AttackPower = Math.round(Attacker.AttackPower + Attacker.AttackPower * 0.3)
+                const damage = Math.round(Attacker.AttackPower + Attacker.AttackPower * 0.3)
+                Attacker.AttackPower = damage
                 skillEmbed
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Attacker.AttackPower.toLocaleString()}**` },

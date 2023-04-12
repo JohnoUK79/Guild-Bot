@@ -81,16 +81,16 @@ module.exports = {
             }
         if (Attacker.OfficerSkill === `The Soldier's Soldier`) {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -109,16 +109,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Undaunted') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -153,16 +153,16 @@ module.exports = {
             } else return        }        
         if (Attacker.OfficerSkill === 'Guardian Angel') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -210,16 +210,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Frontline Fire') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -238,16 +238,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Vengeance') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -299,16 +299,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Mine Detonator') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -364,16 +364,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Inpenetrable') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -395,16 +395,16 @@ module.exports = {
             } else return        }        
         if (Attacker.OfficerSkill === 'Breaching Charge') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -461,16 +461,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Master of War') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -490,16 +490,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Phantom Power') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -522,16 +522,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Blinding Flash') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -609,16 +609,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Beauty Worth Preserving') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -641,16 +641,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Forlorn Hope') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -699,16 +699,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Untouchable') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -788,16 +788,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Night Evader') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -847,16 +847,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Sticky Situation') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
@@ -876,16 +876,16 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Desperate Counterattack') {
             const chance = [
-                'Yes',
                 'No',
                 'No',
                 'No',
                 'No',
                 'Yes',
                 'No',
-                'Nos',
                 'No',
-                'Yes',
+                'No',
+                'No',
+                'No',
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)

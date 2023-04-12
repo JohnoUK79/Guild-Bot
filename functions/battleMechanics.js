@@ -119,7 +119,7 @@ module.exports = {
 
 const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)
 const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)
-
+console.log(Attacker, Defender)
 let AH = Attacker.Health, DH = Defender.Health
 
 if (Attacker.Speed < Defender.Speed) {
@@ -127,86 +127,80 @@ if (Attacker.Speed < Defender.Speed) {
     while (DH >= 0 && AH >= 0) {
         console.count()
         await sleep(800)
-        console.log(Attacker, Defender)
         attackSelection(Attacker, Defender)
         officerSkills(Attacker, Defender)
         campSelection(Attacker, Defender) 
         const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
-        const defenderPower = (defendPower * Defender.Multiplier)
+        Defender.AttackPower = (defendPower * Defender.Multiplier)
         console.log('Defend Multiplier', Defender.Multiplier )
-        if (DH >= 0) {let defenderPower = 0} 
         await sleep(800)
-        AH = AH - defenderPower
+        AH = AH - Defender.AttackPower
         console.log(Defender.ImageFile)
     
         embed
-            .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
+            .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
             .setImage(`attachment://${Defender.ImageFile}`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
-        console.log(`Defender hit for ${defenderPower.toLocaleString()}`)        
+        console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)        
         const  attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
-        const attackerPower = (attackPower * Attacker.Multiplier)
+        Attacker.AttackPower = (attackPower * Attacker.Multiplier)
         console.log('Attack Multiplier', Attacker.Multiplier )
 
-        if (AH >= 0) {let attackerPower = 0} 
         await sleep(800)
         attackSelection(Attacker, Defender)
         officerSkills(Attacker, Defender)
         campSelection(Attacker, Defender) 
-        DH = DH - attackerPower
+        DH = DH - Attacker.AttackPower
         console.log(Attacker.ImageFile)
 
         embed
             .setImage(`attachment://${Attacker.ImageFile}`)
-            .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
+            .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
-        console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)
+        console.log(`Attacker hit for ${Attacker.AttackPower.toLocaleString()}`)
     }
 } else {
     console.log(`Defender Speed: ${Defender.Speed} Attacker Speed: ${Attacker.Speed}`)
     while (DH >= 0 && AH >= 0) {
     console.count()
     await sleep(800)
-    console.log(Attacker, Defender)
     attackSelection(Attacker, Defender)
     officerSkills(Attacker, Defender)
     campSelection(Attacker, Defender) 
     const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
-    const attackerPower = (attackPower * Attacker.Multiplier)
+    Attacker.AttackPower = (attackPower * Attacker.Multiplier)
     console.log('Attack Multiplier', Attacker.Multiplier )
 
-    if (AH >= 0) {let attackerPower = 0} 
         await sleep(800)
         attackSelection(Attacker, Defender)
         officerSkills(Attacker, Defender)
         campSelection(Attacker, Defender) 
-        DH = DH - attackerPower
+        DH = DH - Attacker.AttackPower
         console.log(Attacker.ImageFile)
 
         embed
             .setImage(`attachment://${Attacker.ImageFile}`)
-            .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
+            .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
-    console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)    
+    console.log(`Attacker hit for ${Attacker.AttackPower.toLocaleString()}`)    
     const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
-    const defenderPower = (defendPower * Defender.Multiplier)
+    Defender.AttackPower = (defendPower * Defender.Multiplier)
     console.log('Defend Multiplier', Defender.Multiplier )
-    if (DH >= 0) {let defenderPower = 0} 
         await sleep(800)
-        AH = AH - defenderPower
+        AH = AH - Defender.AttackPower
         console.log(Defender.ImageFile)
         attackSelection(Attacker, Defender)
         officerSkills(Attacker, Defender)
         campSelection(Attacker, Defender) 
         embed
             .setImage(`attachment://${Defender.ImageFile}`)
-            .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
+            .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
-    console.log(`Defender hit for ${defenderPower.toLocaleString()}`)
+    console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)
     }
 }
 
@@ -236,7 +230,6 @@ if (DH < 0) {
     } else
 if (AH < 0) {
         await sleep(800)  
-        console.log(Defender.ImageFile)
         const winnings = DefenderDB[0].officer_level * 10000
         chest = DefenderDB[0].war_chest
         const wallet = DefenderDB[0].war_coins
@@ -344,12 +337,10 @@ campaignMode: async function (interaction) {
             if (attackOfficer[0].Image) {
                 Attacker.Image = `http://phfamily.co.uk/img/${attackOfficer[0].Image}`
                 Attacker.ImageFile = attackOfficer[0].Image
-                console.log(`Attacker: ${Attacker.Image}\n${Attacker.ImageFile}`)
             } 
             if (AttackerUnit[0].Image) {
                 Attacker.Image = `http://phfamily.co.uk/img/${AttackerUnit[0].Image}`
                 Attacker.ImageFile = AttackerUnit[0].Image
-                console.log(`Attacker: ${Attacker.Image}\n${Attacker.ImageFile}`)
             }
 
             const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${campaignOfficer}'`)
@@ -372,98 +363,90 @@ campaignMode: async function (interaction) {
             if (defendOfficer[0].Image) {
                 Defender.Image = `http://phfamily.co.uk/img/${defendOfficer[0].Image}`
                 Defender.ImageFile = defendOfficer[0].Image
-                console.log(`Defender: ${Defender.Image}\n${Defender.ImageFile}`)
             } 
             if (DefenderUnit[0].Image) {
                 Defender.Image = `http://phfamily.co.uk/img/${DefenderUnit[0].Image}`
                 Defender.ImageFile = DefenderUnit[0].Image
-                console.log(`Defender: ${Defender.Image}\n${Defender.ImageFile}`)
             }
             embed
                 .setDescription(`${interaction.member} your **${Attacker.Name}** sucessfully Battled ${campaignOfficer}'s **${Defender.Name}**!`)
 
 const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)
 const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)
-//console.log(commandCooldowns)
+console.log(Attacker, Defender)
 let AH = Attacker.Health, DH = Defender.Health
 
 if (Attacker.Speed < Defender.Speed) {
 console.log(`Attacker Speed: ${Attacker.Speed} Defender Speed: ${Defender.Speed}`)
 while (DH >= 0 && AH >= 0) {
-    console.count()
     await sleep(800)
     attackSelection(Attacker, Defender)
     officerSkills(Attacker, Defender)
     campSelection(Attacker, Defender) 
     Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
     const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
-    const defenderPower = (defendPower * Defender.Multiplier)
+    Defender.AttackPower = (defendPower * Defender.Multiplier)
     console.log('Defend Multiplier', Defender.Multiplier )
-    if (DH >= 0) {let defenderPower = 0} 
     await sleep(800)
-    AH = AH - defenderPower
+    AH = AH - Defender.AttackPower
     console.log(Defender.ImageFile)
 
     embed
-        .setTitle(`${campaignOfficer}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
+        .setTitle(`${campaignOfficer}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
         .setImage(`attachment://${Defender.ImageFile}`)
         .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [defendImage] });
-    console.log(`Defender hit for ${defenderPower.toLocaleString()}`)        
+    console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)        
     const  attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
-    const attackerPower = (attackPower * Attacker.Multiplier)
+    Attacker.AttackPower = (attackPower * Attacker.Multiplier)
     console.log('Attack Multiplier', Attacker.Multiplier )
 
-    if (AH >= 0) {let attackerPower = 0} 
     await sleep(800)
-    DH = DH - attackerPower
+    DH = DH - Attacker.AttackPower
     console.log(Attacker.ImageFile)
 
     embed
         .setImage(`attachment://${Attacker.ImageFile}`)
-        .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${campaignOfficer}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
+        .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${campaignOfficer}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
         .setDescription(`${campaignOfficer}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [attackImage] });
-    console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)
+    console.log(`Attacker hit for ${Attacker.AttackPower.toLocaleString()}`)
 }
 } else {
 console.log(`Defender Speed: ${Defender.Speed} Attacker Speed: ${Attacker.Speed}`)
 while (DH >= 0 && AH >= 0) {
-console.count()
 await sleep(800)
 attackSelection(Attacker, Defender)
 officerSkills(Attacker, Defender)
 campSelection(Attacker, Defender) 
 Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
 const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
-const attackerPower = (attackPower * Attacker.Multiplier)
+Attacker.AttackPower = (attackPower * Attacker.Multiplier)
 console.log('Attack Multiplier', Attacker.Multiplier )
 
-if (AH >= 0) {let attackerPower = 0} 
     await sleep(800)
-    DH = DH - attackerPower
+    DH = DH - Attacker.AttackPower
     console.log(Attacker.ImageFile)
 
     embed
         .setImage(`attachment://${Attacker.ImageFile}`)
-        .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${campaignOfficer}'s **${Defender.Name}**! Dealing **${attackerPower.toLocaleString()}** damage!`)
+        .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${campaignOfficer}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
         .setDescription(`${campaignOfficer}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [attackImage] });
-console.log(`Attacker hit for ${attackerPower.toLocaleString()}`)    
+console.log(`Attacker hit for ${Attacker.AttackPower.toLocaleString()}`)    
 const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
-const defenderPower = (defendPower * Defender.Multiplier)
+Defender.AttackPower = (defendPower * Defender.Multiplier)
 console.log('Defend Multiplier', Defender.Multiplier )
-if (DH >= 0) {let defenderPower = 0} 
     await sleep(800)
-    AH = AH - defenderPower
+    AH = AH - Defender.AttackPower
     console.log(Defender.ImageFile)
 
     embed
         .setImage(`attachment://${Defender.ImageFile}`)
-        .setTitle(`${campaignOfficer}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${defenderPower.toLocaleString()}** damage!`)
+        .setTitle(`${campaignOfficer}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
         .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [defendImage] });
-console.log(`Defender hit for ${defenderPower.toLocaleString()}`)
+console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)
 }
 }
 

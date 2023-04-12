@@ -378,20 +378,20 @@ module.exports = {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
-                console.log(`Inpenetrable`) 
-                AH = AH + AH * 0.5
-                if (AH > 0) {
-                    console.log(`Health Increased`)
-                    health = Math.round(AH)
-                } else return console.log(`Health Error`)
-                console.log(AH)
+            //     console.log(`Inpenetrable`) 
+            //     AH = AH + AH * 0.5
+            //     if (AH > 0) {
+            //         console.log(`Health Increased`)
+            //         health = Math.round(AH)
+            //     } else return console.log(`Health Error`)
+            //     console.log(AH)
 
-                skillEmbed
-                        .addFields(
-                            { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Health** to **${health.toLocaleString()}**` },
-                        )   
-            Attacker.SkillUsed = 'Health'
-            interaction.followUp({embeds: [skillEmbed]})
+            //     skillEmbed
+            //             .addFields(
+            //                 { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Health** to **${health.toLocaleString()}**` },
+            //             )   
+            // Attacker.SkillUsed = 'Health'
+            // interaction.followUp({embeds: [skillEmbed]})
             } else return        }        
         if (Attacker.OfficerSkill === 'Breaching Charge') {
             const chance = [

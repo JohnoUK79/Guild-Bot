@@ -902,10 +902,10 @@ console.log(officerSelection)
         const profileEmbed = new EmbedBuilder();
         const profileButtons = new ActionRowBuilder()
             .addComponents(
-                new ButtonBuilder()
-                    .setCustomId("campaign")
-                    .setLabel('Raven Campaign')
-                    .setStyle(ButtonStyle.Success),
+                // new ButtonBuilder()
+                //     .setCustomId("campaign")
+                //     .setLabel('Raven Campaign')
+                //     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("challenge")
                     .setLabel('Pro Challenge Mode')
@@ -1248,7 +1248,7 @@ console.log(officerSelection)
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("camp4")
-                    .setLabel('Thorn Countess (80)')
+                    .setLabel('Argent Flamce (80)')
                     .setStyle(ButtonStyle.Danger),
             )
             const campaignButtons2 = new ActionRowBuilder()
@@ -1263,7 +1263,7 @@ console.log(officerSelection)
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp7")
-                    .setLabel('Argent Flamce (140)')
+                    .setLabel('Thorn Countess (140)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp8")
@@ -1407,10 +1407,10 @@ console.log(officerSelection)
         if (campaign === 0) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Professor Pain', campaignOfficerLevel = 20, campaignBaseLevel = 20
         if (campaign === 1) return campaignUnitLevel = '9.2', campaignUnitType = 'Fighters', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'The Witcher', campaignOfficerLevel = 40, campaignBaseLevel = 40
         if (campaign === 2) return campaignUnitLevel = '9.2', campaignUnitType = 'Infantry', campaignUnitCamp = 'Liberty', campaignOfficer = 'Percy', campaignOfficerLevel = 60, campaignBaseLevel = 60
-        if (campaign === 3) return campaignUnitLevel = '9.2', campaignUnitType = 'SuperHeavyTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Thorn Countess', campaignOfficerLevel = 80, campaignBaseLevel = 80
+        if (campaign === 3) return campaignUnitLevel = '9.2', campaignUnitType = 'SuperHeavyTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Argent Flamce', campaignOfficerLevel = 80, campaignBaseLevel = 80
         if (campaign === 4) return campaignUnitLevel = '9.2', campaignUnitType = 'Howitzers', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'The Erupter', campaignOfficerLevel = 100, campaignBaseLevel = 100
         if (campaign === 5) return campaignUnitLevel = '9.2', campaignUnitType = 'Bombers', campaignUnitCamp = 'Liberty', campaignOfficer = 'El Cartero', campaignOfficerLevel = 120, campaignBaseLevel = 120
-        if (campaign === 6) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Argent Flamce', campaignOfficerLevel = 140, campaignBaseLevel = 140
+        if (campaign === 6) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Thorn Countess', campaignOfficerLevel = 140, campaignBaseLevel = 140
         if (campaign === 7) return campaignUnitLevel = '9.2', campaignUnitType = 'RocketLaunchers', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Steel Fighter', campaignOfficerLevel = 160, campaignBaseLevel = 160
         if (campaign === 8) return campaignUnitLevel = '9.2', campaignUnitType = 'LightTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Valkrie', campaignOfficerLevel = 180, campaignBaseLevel = 180
         if (campaign === 9) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Saber of the Nation', campaignOfficerLevel = 200, campaignBaseLevel = 200

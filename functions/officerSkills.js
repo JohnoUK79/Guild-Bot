@@ -3,6 +3,7 @@ const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowB
 
 module.exports = {
     officerSkills: async function (interaction, Attacker, Defender, AH, DH) {
+
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
         Attacker.SkillUsed, Defender.SkillUsed = ''
@@ -622,22 +623,22 @@ module.exports = {
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
-            if (skillSuccess === 'Yes') {
+            // if (skillSuccess === 'Yes') {
 
-                console.log(`Beauty Worth Preserving`)            
-                Attacker.AttackPower = Math.round(Attacker.AttackPower + Attacker.AttackPower * 0.15)
-                const damage = Math.round(Defender.AttackPower = Defender.AttackPower * .1)
-                Defender.AttackPower - damage
+            //     console.log(`Beauty Worth Preserving`)            
+            //     Attacker.AttackPower = Math.round(Attacker.AttackPower + Attacker.AttackPower * 0.15)
+            //     const damage = Math.round(Defender.AttackPower = Defender.AttackPower * .1)
+            //     Defender.AttackPower - damage
 
-                skillEmbed
-                    .addFields(
-                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Attacker.AttackPower.toLocaleString()}**` },
-                        { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** & decreases ${Defender.Player} **${Defender.Name}'s Health** by **${damage.toLocaleString()}**` },
-                    ),   
-            console.log(Attacker.AttackPower.toLocaleString())
-            Attacker.SkillUsed = 'Attack'
-            interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            //     skillEmbed
+            //         .addFields(
+            //             { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Attacker.AttackPower.toLocaleString()}**` },
+            //             { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** & decreases ${Defender.Player} **${Defender.Name}'s Health** by **${damage.toLocaleString()}**` },
+            //         ),   
+            // console.log(Attacker.AttackPower.toLocaleString())
+            // Attacker.SkillUsed = 'Attack'
+            // interaction.followUp({embeds: [skillEmbed]})
+            // } else return
         }        
         if (Attacker.OfficerSkill === 'Forlorn Hope') {
             const chance = [

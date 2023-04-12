@@ -356,7 +356,7 @@ campaignMode: async function (interaction) {
                 OfficerCamp: defendOfficer[0].Officer_Camp,
                 OfficerSkill: defendOfficer[0].Skill,
                 OfficerType: defendOfficer[0].Officer_Type,
-                Multiplier: campaignOfficerLevel / 10,
+                Multiplier: campaignOfficerLevel / 10 / 2 / 10,
                 Image: `http://phfamily.co.uk/img/${campaignUnitCamp}.png`,
                 ImageFile: `${campaignUnitCamp}.png`
             }

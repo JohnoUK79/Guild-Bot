@@ -278,7 +278,9 @@ module.exports = {
 		return interaction.reply({ embeds: [cooldownEmbed] })
 		}
 		commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, Date.now() + command.cooldown || 0)
-
+		if (interaction.guild.id === '964496256057630720') {
+			commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, 0)
+		}
         await command.execute(interaction);
         
     } catch (error) {

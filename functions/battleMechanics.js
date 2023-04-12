@@ -381,7 +381,7 @@ while (DH >= 0 && AH >= 0) {
     const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
     Defender.AttackPower = (defendPower * Defender.Multiplier)
     console.log('Defend Multiplier', Defender.Multiplier )
-    officerSkills(interaction, Attacker, Defender, battleEmbed, AH, DH)
+    officerSkills(interaction, Attacker, Defender, battleEmbed, AH, DH, defender)
     await sleep(800)
     AH = AH - Defender.AttackPower
 

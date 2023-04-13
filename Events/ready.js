@@ -20,7 +20,16 @@ module.exports = {
             .catch(console.error);
 
         console.log(`================ Warpath BOT Ready! ================`);
-        
+        client.guilds.cache.forEach(async (guild) => {
+        client.user.setPresence({ activities: [{ name: 'Warpath Battle-Bot' }], status: 'Online' });
+        guild.members.fetch({ withPresences: true }).then(fetchedMembers => {
+            const totalOnline = fetchedMembers.filter(member => member.presence?.status === 'online');
+            // Now you have a collection with all online member objects in the totalOnline variable
+            console.log(`There are currently ${totalOnline.size} members online in this guild ${guild.name}!`);
+            console.log(totalOnline)
+        });
+    });
+
         //Create Invite Cache
         const invites = new Collection();
         // Loop over all the guilds

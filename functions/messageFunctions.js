@@ -81,7 +81,7 @@ module.exports = {
 
 		const [translation] = await translate.translate(text, target);
 		const translationEmbed = new EmbedBuilder()
-			.setColor('	#C32148')
+			.setColor('#C32148')
 			.setTitle(`${guildName} - Translator`)
 			.setURL('http://www.phfamily.co.uk')
 			.setThumbnail(guildIcon)

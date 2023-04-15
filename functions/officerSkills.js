@@ -1,5 +1,5 @@
 const sql = require("../config/Database");
-const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     officerSkills: async function (interaction, Attacker, Defender, AH, DH) {
@@ -8,8 +8,8 @@ module.exports = {
         const guildName = interaction.member.guild.name
         Attacker.SkillUsed, Defender.SkillUsed = ''
         if (Attacker.OfficerLevel === 0) {
+            Attacker.OfficerLevel = 1
             console.log(`Officer Not Levelled Up`)
-            return
         }
         const skillEmbed = new EmbedBuilder();
             skillEmbed 
@@ -20,7 +20,6 @@ module.exports = {
                     .setFooter({ text: `${guildName} - Battles`, iconURL: `${guildIcon}`});
 
 
-        if (Attacker.OfficerSkill === 'Indomitable') {
             console.log(`Indomitable`) 
             skillEmbed 
                     .setColor('#ff5b05')
@@ -29,7 +28,7 @@ module.exports = {
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
                     .setFooter({ text: `${guildName} - Battles`, iconURL: `${guildIcon}`});
     
-            if (Attacker.OfficerSkill === 'Indomitable') {
+        if (Attacker.OfficerSkill === 'Indomitable') {
                 const chance = [
                     'Yes',
                     'No',
@@ -61,8 +60,8 @@ module.exports = {
                 Attacker.SkillUsed = 'Health'
                 interaction.followUp({embeds: [skillEmbed]})
                 } else return
-                        }            
-            }
+        }            
+            
         if (Attacker.OfficerSkill === 'Caring Angel') {
             if (Defender.SkillUsed === 'Attack') {
                 console.log(`Caring Angel`)   
@@ -379,21 +378,22 @@ module.exports = {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
-            //     console.log(`Inpenetrable`) 
-            //     AH = AH + AH * 0.5
-            //     if (AH > 0) {
-            //         console.log(`Health Increased`)
-            //         health = Math.round(AH)
-            //     } else return console.log(`Health Error`)
-            //     console.log(AH)
+                console.log(`Inpenetrable`) 
+                AH = AH + AH * 0.5
+                if (AH > 0) {
+                    console.log(`Health Increased`)
+                    health = Math.round(AH)
+                } else return console.log(`Health Error`)
+                console.log(AH)
 
-            //     skillEmbed
-            //             .addFields(
-            //                 { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Health** to **${health.toLocaleString()}**` },
-            //             )   
-            // Attacker.SkillUsed = 'Health'
-            // interaction.followUp({embeds: [skillEmbed]})
-            } else return        }        
+                skillEmbed
+                        .addFields(
+                            { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Health** to **${health.toLocaleString()}**` },
+                        )   
+            Attacker.SkillUsed = 'Health'
+            interaction.followUp({embeds: [skillEmbed]})
+            } else return        
+        }        
         if (Attacker.OfficerSkill === 'Breaching Charge') {
             const chance = [
                 'No',
@@ -623,22 +623,22 @@ module.exports = {
             ]
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess)
-            // if (skillSuccess === 'Yes') {
+            if (skillSuccess === 'Yes') {
 
-            //     console.log(`Beauty Worth Preserving`)            
-            //     Attacker.AttackPower = Math.round(Attacker.AttackPower + Attacker.AttackPower * 0.15)
-            //     const damage = Math.round(Defender.AttackPower = Defender.AttackPower * .1)
-            //     Defender.AttackPower - damage
+                console.log(`Beauty Worth Preserving`)            
+                Attacker.AttackPower = Math.round(Attacker.AttackPower + Attacker.AttackPower * 0.15)
+                const damage = Math.round(Defender.AttackPower = Defender.AttackPower * .1)
+                Defender.AttackPower - damage
 
-            //     skillEmbed
-            //         .addFields(
-            //             { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Attacker.AttackPower.toLocaleString()}**` },
-            //             { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** & decreases ${Defender.Player} **${Defender.Name}'s Health** by **${damage.toLocaleString()}**` },
-            //         ),   
-            // console.log(Attacker.AttackPower.toLocaleString())
-            // Attacker.SkillUsed = 'Attack'
-            // interaction.followUp({embeds: [skillEmbed]})
-            // } else return
+                skillEmbed
+                    .addFields(
+                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Attacker.AttackPower.toLocaleString()}**` },
+                        { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** & decreases ${Defender.Player} **${Defender.Name}'s Health** by **${damage.toLocaleString()}**` },
+                    ),   
+            console.log(Attacker.AttackPower.toLocaleString())
+            Attacker.SkillUsed = 'Attack'
+            interaction.followUp({embeds: [skillEmbed]})
+            } else return
         }        
         if (Attacker.OfficerSkill === 'Forlorn Hope') {
             const chance = [
@@ -932,7 +932,919 @@ module.exports = {
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
         }
-            } else return
+        } else return
         }
+
+    //Defender Skills
+    skillEmbed 
+        .setAuthor({ name: Defender.Player.username || Defender.Name, iconURL: Defender.Player.displayAvatarURL({ dynamic: true }) || Defender.Image})
+
+    if (Defender.OfficerSkill === 'Indomitable') {
+    console.log(`Indomitable`) 
+        const chance = [
+            'Yes',
+            'No',
+            'No',
+            'No',
+            'No',
+            'Yes',
+            'No',
+            'Nos',
+            'No',
+            'Yes',
+        ]
+
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        console.log(skillSuccess)
+        if (skillSuccess === 'Yes') {
+            console.log(`Indomitable`) 
+            DH = DH + DH * 0.3
+            if (AH > 0) {
+                console.log(`Health Increased`)
+                health = Math.round(DH)
+            } else return console.log(`Health Error`)
+            console.log(DH)
+
+            skillEmbed
+                    .addFields(
+                        { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
+                    )   
+        Attacker.SkillUsed = 'Health'
+        interaction.followUp({embeds: [skillEmbed]})
+        } else return
+                }            
+    
+if (Defender.OfficerSkill === 'Caring Angel') {
+    if (Attacker.SkillUsed === 'Attack') {
+        console.log(`Caring Angel`)   
+        DH = DH + DH * 0.35
+        if (DH > 0) {
+            console.log(`Health Increased`)
+            health = Math.round(DH)
+        } else return console.log(`Health Error`)
+
+        skillEmbed
+                .addFields(
+                    { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
+                )  
+        interaction.followUp({embeds: [skillEmbed]})
+        Defender.SkillUsed = 'Health'
+    } else return
     }
+if (Defender.OfficerSkill === `The Soldier's Soldier`) {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`The Soldier's Soldier`)  
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.125)
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Undaunted') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`Undaunted`)  
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.5)
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Who Dares Wins') {
+    if (Defender.AttackType === 'Ground') {
+        console.log(`Who Dares Wins`)   
+        const health = Math.round(DH = DH - DH * 0.2)
+        DH - health
+        if (DH > 0) {
+            console.log(`Health Decreased`)
+        } else return console.log(`Health Error`)
+
+        skillEmbed
+                .addFields(
+                    { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & decreases ${Attacker.Player} **${Attacker.Name}'s Health** by **${health.toLocaleString()}**` },
+                )  
+        interaction.followUp({embeds: [skillEmbed]})
+        Defender.SkillUsed = 'Health'
+    } else return        }        
+if (Defender.OfficerSkill === 'Guardian Angel') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+    console.log(skillSuccess)
+        console.log(`Guardian Angel`)  
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.2)
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Hand of Destruction') {
+    if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
+        const chance = [
+            'Yes',
+            'No',
+            'No',
+            'No',
+            'No',
+            'Yes',
+            'No',
+            'Nos',
+            'No',
+            'Yes',
+        ]
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        console.log(skillSuccess)
+        if (skillSuccess === 'Yes') {
+        console.log(`Hand of Destruction`)
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.4)
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]}) 
+}
+    } else return
+}        
+if (Defender.OfficerSkill === 'Frontline Fire') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`Frontline Fire`)            
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.08)
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Vengeance') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`Vengeance`)            
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.3)
+        if (Defender.UnitType === 'Infantry') {
+            Defender.AttackPower = Defender.AttackPower + Defender.AttackPower * 0.25
+        }
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'The Motherland') {
+    if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
+        const chance = [
+            'Yes',
+            'No',
+            'No',
+            'No',
+            'No',
+            'Yes',
+            'No',
+            'Nos',
+            'No',
+            'Yes',
+        ]
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        console.log(skillSuccess)
+        if (skillSuccess === 'Yes') {
+        console.log(`The Motherland`)
+        const damage = Math.round(Defender.AttackPower + Defender.AttackPower * 0.5)
+        Defender.AttackPower = damage
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${damage.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]}) 
+}
+    } else return
+}        
+if (Defender.OfficerSkill === 'Mine Detonator') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`Mine Detonator`)            
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.135)
+        if (Defender.UnitType === 'Infantry') {
+            const health = DH = DH - DH * .05
+            skillEmbed
+            .addFields(
+                { name: `${Defender.OfficerSkill}`, value: `**${Defender.Officer}** & reduces ${Attacker.Player} **${Attacker.Name}'s Heal** by **${health.toLocaleString()}**` },
+            ) 
+        }
+
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Flamestorm') {
+    if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
+        const chance = [
+            'Yes',
+            'No',
+            'No',
+            'No',
+            'No',
+            'Yes',
+            'No',
+            'Nos',
+            'No',
+            'Yes',
+        ]
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        console.log(skillSuccess)
+        if (skillSuccess === 'Yes') {
+        console.log(`Flamestorm`)
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.1)
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]}) 
+}
+    } else return
+}        
+if (Defender.OfficerSkill === 'Inpenetrable') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+        console.log(`Inpenetrable`) 
+        DH = DH + DH * 0.5
+        if (DH > 0) {
+            console.log(`Health Increased`)
+            health = Math.round(DH)
+        } else return console.log(`Health Error`)
+        console.log(DH)
+
+        skillEmbed
+                .addFields(
+                    { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
+                )   
+    Defender.SkillUsed = 'Health'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return        
+}        
+if (Defender.OfficerSkill === 'Breaching Charge') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`Breaching Charge`)            
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.13)
+        if (Attacker.UnitType === 'Infantry') {
+            Defender.AttackPower = Defender.AttackPower - Defender.AttackPower * .5
+            skillEmbed
+            .addFields(
+                { name: `${Defender.OfficerSkill}`, value: `**${Defender.Officer}** & reduces ${Attacker.Player} **${Attacker.Name}'s Heal** by **${health.toLocaleString()}**` },
+            ) 
+        }
+
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Flaming Meteors') {
+    if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
+        const chance = [
+            'Yes',
+            'No',
+            'No',
+            'No',
+            'No',
+            'Yes',
+            'No',
+            'Nos',
+            'No',
+            'Yes',
+        ]
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        console.log(skillSuccess)
+        if (skillSuccess === 'Yes') {
+        console.log(`Flaming Meteors`)
+        const damage = Math.round(Defender.AttackPower + Defender.AttackPower * 0.3)
+        Defender.AttackPower = damage
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]}) 
+}
+    } else return
+}        
+if (Defender.OfficerSkill === 'Master of War') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`Master of War`)            
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.10)
+
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Phantom Power') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`Phantom Power`)            
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.10)
+        const damage = AH - AH * .2
+        AH - damage
+
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+                { name: `${Defender.OfficerSkill}`, value: `**${Defender.Officer}** decreases ${Attacker.Player} **${Attacker.Name}'s Health** by **${damage.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Blinding Flash') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`Blinding Flash`)            
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.10)
+
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Rain of Blades') {
+    if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
+        const chance = [
+            'Yes',
+            'No',
+            'No',
+            'No',
+            'No',
+            'Yes',
+            'No',
+            'Nos',
+            'No',
+            'Yes',
+        ]
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        console.log(skillSuccess)
+        if (skillSuccess === 'Yes') {
+        console.log(`Rain of Blades`)
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.1)
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]}) 
+}
+    } else return
+}        
+if (Defender.OfficerSkill === 'Devastation') {
+    if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
+        const chance = [
+            'Yes',
+            'No',
+            'No',
+            'No',
+            'No',
+            'Yes',
+            'No',
+            'Nos',
+            'No',
+            'Yes',
+        ]
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        console.log(skillSuccess)
+        if (skillSuccess === 'Yes') {
+        console.log(`Devastation`)
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.25)
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]}) 
+}
+    } else return
+}        
+if (Defender.OfficerSkill === 'Beauty Worth Preserving') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`Beauty Worth Preserving`)            
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.15)
+        const damage = Math.round(Defender.AttackPower = Defender.AttackPower * .1)
+        Attacker.AttackPower - damage
+
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+                { name: `${Defender.OfficerSkill}`, value: `**${Defender.Officer}** & decreases ${Attacker.Player} **${Attacker.Name}'s Health** by **${damage.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Forlorn Hope') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`Forlorn Hope`)            
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.25)
+
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Sky Dancer') {
+    if (Defender.UnitType === 'Bombers' || 'Fighters'){
+        const chance = [
+            'Yes',
+            'No',
+            'No',
+            'No',
+            'No',
+            'Yes',
+            'No',
+            'Nos',
+            'No',
+            'Yes',
+        ]
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        console.log(skillSuccess)
+        if (skillSuccess === 'Yes') {
+        console.log(`Sky Dancer`)
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.15)
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]}) 
+}
+    } else return
+}        
+if (Defender.OfficerSkill === 'Untouchable') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`Untouchable`)            
+        Defender.AttackPower = 0
+
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & decreases ${Attacker.Player} **${Attacker.Name}'s Attack** to **${Attacker.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    console.log(Attacker.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Heavenly Rays') {
+    if (Defender.UnitType === 'Fighters' && Defender.UnitType === 'Fighters'){
+        const chance = [
+            'Yes',
+            'No',
+            'No',
+            'No',
+            'No',
+            'Yes',
+            'No',
+            'Nos',
+            'No',
+            'Yes',
+        ]
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        console.log(skillSuccess)
+        if (skillSuccess === 'Yes') {
+        console.log(`Heavenly Rays`)    
+        Defender.AttackPower = Math.round(Defender.AttackPower  - Defender.AttackPower * 0.15)
+
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** to **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]}) 
+}
+    } else return
+}        
+if (Defender.OfficerSkill === 'Twin Fangs') {
+    if (Defender.UnitType === 'Bombers' || 'Fighters'){
+        const chance = [
+            'Yes',
+            'No',
+            'No',
+            'No',
+            'No',
+            'Yes',
+            'No',
+            'Nos',
+            'No',
+            'Yes',
+        ]
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        console.log(skillSuccess)
+        if (skillSuccess === 'Yes') {
+        console.log(`Twin Fangs`)            
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 0.25)
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]}) 
+}
+    } else return
+}        
+if (Defender.OfficerSkill === 'Night Evader') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`Night Evader`)            
+        Attacker.AttackPower = Attacker.AttackPower - Attacker.AttackPower * .2
+
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & decreases ${Attacker.Player} **${Attacker.Name}'s Attack** to **${Attacker.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    console.log(Attacker.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Unleashed Justice') {
+    if (Defender.UnitType === 'Bombers'){
+        const chance = [
+            'Yes',
+            'No',
+            'No',
+            'No',
+            'No',
+            'Yes',
+            'No',
+            'No',
+            'No',
+            'Yes',
+        ]
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        console.log(skillSuccess)
+        if (skillSuccess === 'Yes') {
+        console.log(`Unleashed Justice`)            
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 2)
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]}) 
+}
+    } else return
+}        
+if (Defender.OfficerSkill === 'Sticky Situation') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+
+        console.log(`Sticky Situation`)            
+        Defender.AttackPower = Defender.AttackPower + Defender.AttackPower * .2
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    console.log(Attacker.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+    } else return
+}        
+if (Defender.OfficerSkill === 'Desperate Counterattack') {
+    const chance = [
+        'No',
+        'No',
+        'No',
+        'No',
+        'Yes',
+        'No',
+        'No',
+        'No',
+        'No',
+        'No',
+    ]
+    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+    console.log(skillSuccess)
+    if (skillSuccess === 'Yes') {
+    if (Defender.UnitType === 'Fighter') {
+        console.log(`Desperate Counterattack`)        
+        Defender.AttackPower = Defender.AttackPower + Defender.AttackPower * .25
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    console.log(Attacker.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]})
+}
+    } else return
+}        
+if (Defender.OfficerSkill === 'Last Gasp') {
+    if (Defender.UnitType === 'Bombers'){
+        const chance = [
+            'Yes',
+            'No',
+            'No',
+            'No',
+            'No',
+            'Yes',
+            'No',
+            'Nos',
+            'No',
+            'Yes',
+        ]
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        console.log(skillSuccess)
+        if (skillSuccess === 'Yes') {
+        console.log(`Last Gasp`)            
+        Defender.AttackPower = Math.round(Defender.AttackPower + Defender.AttackPower * 2)
+        skillEmbed
+            .addFields(
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+            ),   
+    console.log(Defender.AttackPower.toLocaleString())
+    Defender.SkillUsed = 'Attack'
+    interaction.followUp({embeds: [skillEmbed]}) 
+}
+} else return
+}
+}
 }

@@ -65,6 +65,7 @@ module.exports = {
                     OfficerLevel = 1
                 } else OfficerLevel = AttackerDB[0].officer_level
                 const Attacker = {
+                    Player: interaction.member,
                     Name: AttackerUnit[0].Unit_Name,
                     Power: AttackerUnit[0].Firepower * (OfficerLevel / 10),
                     Health: AttackerUnit[0].HP * AttackerDB[0].base_level * 10,
@@ -93,6 +94,7 @@ module.exports = {
                 const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)
 
                 const Defender = {
+                    Player: defender, 
                     Name: DefenderUnit[0].Unit_Name,
                     Power: DefenderUnit[0].Firepower * (DefenderDB[0].officer_level / 10),
                     Health: DefenderUnit[0].HP * DefenderDB[0].base_level * 10,
@@ -320,6 +322,7 @@ campaignMode: async function (interaction) {
             } else OfficerLevel = AttackerDB[0].officer_level
 
             const Attacker = {
+                Player: interaction.member,
                 Name: AttackerUnit[0].Unit_Name,
                 Power: AttackerUnit[0].Firepower * OfficerLevel / 10,
                 Health: (AttackerUnit[0].HP * AttackerDB[0].base_level) * 10,
@@ -348,6 +351,7 @@ campaignMode: async function (interaction) {
             const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${campaignOfficer}'`)
 
             const Defender = {
+                Player: campaignOfficer,
                 Name: DefenderUnit[0].Unit_Name,
                 Power: DefenderUnit[0].Firepower * (campaignOfficerLevel / 10),
                 Health: DefenderUnit[0].HP * campaignBaseLevel * 10,
@@ -372,6 +376,7 @@ campaignMode: async function (interaction) {
             }
             embed
                 .setDescription(`${interaction.member} your **${Attacker.Name}** sucessfully Battled ${campaignOfficer}'s **${Defender.Name}**!`)
+console.log(Defender.Player)
 
 const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)
 const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)

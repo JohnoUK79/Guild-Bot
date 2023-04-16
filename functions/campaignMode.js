@@ -123,7 +123,7 @@ campaignMode: async function (interaction) {
             }
             if (campaign > 0 ) {
                 console.log(`Defender Buff`, campaign)
-                Defender.Multiplier = campaign
+                Defender.Multiplier = campaign + 1
             }
             if (defendOfficer[0].Image) {
                 Defender.Image = `http://phfamily.co.uk/img/${defendOfficer[0].Image}`

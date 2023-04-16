@@ -902,10 +902,10 @@ console.log(officerSelection)
         const profileEmbed = new EmbedBuilder();
         const profileButtons = new ActionRowBuilder()
             .addComponents(
-                // new ButtonBuilder()
-                //     .setCustomId("campaign")
-                //     .setLabel('Raven Campaign')
-                //     .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("campaign")
+                    .setLabel('Raven Campaign')
+                    .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("challenge")
                     .setLabel('Pro Challenge Mode')
@@ -1237,30 +1237,26 @@ console.log(officerSelection)
                 new ButtonBuilder()
                     .setCustomId("camp1")
                     .setLabel('Professor Pain (20)')
-                    .setStyle(ButtonStyle.Primary),
+                    .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp2")
                     .setLabel('The Witcher (40)')
-                    .setStyle(ButtonStyle.Primary),
+                    .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp3")
                     .setLabel('Percy (60)')
-                    .setStyle(ButtonStyle.Danger),
+                    .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp4")
                     .setLabel('Argent Flamce (80)')
-                    .setStyle(ButtonStyle.Danger),
-                new ButtonBuilder()
-                    .setCustomId("profile")
-                    .setLabel('Profile')
-                    .setStyle(ButtonStyle.Secondary),
-            )
-            const campaignButtons2 = new ActionRowBuilder()
-            .addComponents(
+                    .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp5")
                     .setLabel('The Erupter (100)')
-                    .setStyle(ButtonStyle.Success),
+                    .setStyle(ButtonStyle.Danger),
+            )
+            const campaignButtons2 = new ActionRowBuilder()
+            .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp6")
                     .setLabel('El Cartero (120)')
@@ -1274,13 +1270,6 @@ console.log(officerSelection)
                     .setLabel('Steel Fighter (160)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
-                    .setCustomId("profile")
-                    .setLabel('Profile')
-                    .setStyle(ButtonStyle.Secondary),
-            )
-            const campaignButtons3 = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
                     .setCustomId("camp9")
                     .setLabel('Valkrie (180)')
                     .setStyle(ButtonStyle.Danger),
@@ -1288,6 +1277,9 @@ console.log(officerSelection)
                     .setCustomId("camp10")
                     .setLabel('Saber of The Nation (200)')
                     .setStyle(ButtonStyle.Danger),
+            )
+            const campaignButtons3 = new ActionRowBuilder()
+            .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp11")
                     .setLabel('Berserker Bear (220)')
@@ -1296,13 +1288,6 @@ console.log(officerSelection)
                     .setCustomId("camp12")
                     .setLabel('War Machine (240)')
                     .setStyle(ButtonStyle.Success),
-                new ButtonBuilder()
-                    .setCustomId("profile")
-                    .setLabel('Profile')
-                    .setStyle(ButtonStyle.Secondary),
-            )
-            const campaignButtons4 = new ActionRowBuilder()
-            .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp13")
                     .setLabel('Guardian of Truth (260)')
@@ -1315,6 +1300,9 @@ console.log(officerSelection)
                     .setCustomId("camp15")
                     .setLabel('Angel of Light (300)')
                     .setStyle(ButtonStyle.Danger),
+            )
+            const campaignButtons4 = new ActionRowBuilder()
+            .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp16")
                     .setLabel('Sergeant Spanner (320)')
@@ -1323,7 +1311,18 @@ console.log(officerSelection)
                     .setCustomId("profile")
                     .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
-                    )
+            )
+            const campaignButtonsMenu = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId("cancel")
+                    .setLabel('Upgrade')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Profile')
+                    .setStyle(ButtonStyle.Secondary),
+            )
 
         const campaignEmbed = new EmbedBuilder()
             .setColor('#ff5b05')
@@ -1333,7 +1332,7 @@ console.log(officerSelection)
             .setTitle(`Select your opponent!`)
         interaction.update({
             embeds: [campaignEmbed],
-            components: [campaignButtons] //, campaignButtons2, campaignButtons3, campaignButtons4, campaignButtons5]
+            components: [campaignButtons, campaignButtonsMenu] //, campaignButtons2, campaignButtons3, campaignButtons4, campaignButtons5]
         })
     },
     challenge: async function (interaction) {

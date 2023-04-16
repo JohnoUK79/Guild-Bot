@@ -35,7 +35,7 @@ module.exports = {
                     'No',
                     'Yes',
                     'No',
-                    'Nos',
+                    'No',
                     'No',
                     'Yes',
                 ]
@@ -193,7 +193,7 @@ module.exports = {
                     'No',
                     'Yes',
                     'No',
-                    'Nos',
+                    'No',
                     'No',
                     'Yes',
                 ]
@@ -284,7 +284,7 @@ module.exports = {
                     'No',
                     'Yes',
                     'No',
-                    'Nos',
+                    'No',
                     'No',
                     'Yes',
                 ]
@@ -352,7 +352,7 @@ module.exports = {
                     'No',
                     'Yes',
                     'No',
-                    'Nos',
+                    'No',
                     'No',
                     'Yes',
                 ]
@@ -452,7 +452,7 @@ module.exports = {
                     'No',
                     'Yes',
                     'No',
-                    'Nos',
+                    'No',
                     'No',
                     'Yes',
                 ]
@@ -576,7 +576,7 @@ module.exports = {
                     'No',
                     'Yes',
                     'No',
-                    'Nos',
+                    'No',
                     'No',
                     'Yes',
                 ]
@@ -606,7 +606,7 @@ module.exports = {
                     'No',
                     'Yes',
                     'No',
-                    'Nos',
+                    'No',
                     'No',
                     'Yes',
                 ]
@@ -699,7 +699,7 @@ module.exports = {
                     'No',
                     'Yes',
                     'No',
-                    'Nos',
+                    'No',
                     'No',
                     'Yes',
                 ]
@@ -760,7 +760,7 @@ module.exports = {
                     'No',
                     'Yes',
                     'No',
-                    'Nos',
+                    'No',
                     'No',
                     'Yes',
                 ]
@@ -791,7 +791,7 @@ module.exports = {
                     'No',
                     'Yes',
                     'No',
-                    'Nos',
+                    'No',
                     'No',
                     'Yes',
                 ]
@@ -943,7 +943,7 @@ module.exports = {
                     'No',
                     'Yes',
                     'No',
-                    'Nos',
+                    'No',
                     'No',
                     'Yes',
                 ]
@@ -966,7 +966,7 @@ module.exports = {
 
     //Defender Skills
     skillEmbed 
-        .setAuthor({ name: Defender.Player.username || Defender.Name, iconURL: Defender.Player.displayAvatarURL({ dynamic: true }) || Defender.Image})
+        .setAuthor({ name: Defender.Player.username || Defender.Name, iconURL: Defender.Image })
 
     if (Defender.OfficerSkill === 'Indomitable') {
     console.log(`Indomitable`) 
@@ -978,7 +978,7 @@ module.exports = {
             'No',
             'Yes',
             'No',
-            'Nos',
+            'No',
             'No',
             'Yes',
         ]
@@ -1136,7 +1136,7 @@ if (Defender.OfficerSkill === 'Hand of Destruction') {
             'No',
             'Yes',
             'No',
-            'Nos',
+            'No',
             'No',
             'Yes',
         ]
@@ -1227,7 +1227,7 @@ if (Defender.OfficerSkill === 'The Motherland') {
             'No',
             'Yes',
             'No',
-            'Nos',
+            'No',
             'No',
             'Yes',
         ]
@@ -1295,7 +1295,7 @@ if (Defender.OfficerSkill === 'Flamestorm') {
             'No',
             'Yes',
             'No',
-            'Nos',
+            'No',
             'No',
             'Yes',
         ]
@@ -1395,7 +1395,7 @@ if (Defender.OfficerSkill === 'Flaming Meteors') {
             'No',
             'Yes',
             'No',
-            'Nos',
+            'No',
             'No',
             'Yes',
         ]
@@ -1519,7 +1519,7 @@ if (Defender.OfficerSkill === 'Rain of Blades') {
             'No',
             'Yes',
             'No',
-            'Nos',
+            'No',
             'No',
             'Yes',
         ]
@@ -1549,7 +1549,7 @@ if (Defender.OfficerSkill === 'Devastation') {
             'No',
             'Yes',
             'No',
-            'Nos',
+            'No',
             'No',
             'Yes',
         ]
@@ -1642,7 +1642,7 @@ if (Defender.OfficerSkill === 'Sky Dancer') {
             'No',
             'Yes',
             'No',
-            'Nos',
+            'No',
             'No',
             'Yes',
         ]
@@ -1703,7 +1703,7 @@ if (Defender.OfficerSkill === 'Heavenly Rays') {
             'No',
             'Yes',
             'No',
-            'Nos',
+            'No',
             'No',
             'Yes',
         ]
@@ -1734,7 +1734,7 @@ if (Defender.OfficerSkill === 'Twin Fangs') {
             'No',
             'Yes',
             'No',
-            'Nos',
+            'No',
             'No',
             'Yes',
         ]
@@ -1886,7 +1886,7 @@ if (Defender.OfficerSkill === 'Last Gasp') {
             'No',
             'Yes',
             'No',
-            'Nos',
+            'No',
             'No',
             'Yes',
         ]

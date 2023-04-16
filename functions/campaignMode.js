@@ -116,9 +116,13 @@ campaignMode: async function (interaction) {
                 OfficerCamp: defendOfficer[0].Officer_Camp,
                 OfficerSkill: defendOfficer[0].Skill,
                 OfficerType: defendOfficer[0].Officer_Type,
-                Multiplier: campaignOfficerLevel / 10 / 2,
+                Multiplier: 1,
                 Image: `http://phfamily.co.uk/img/${campaignUnitCamp}.png`,
                 ImageFile: `${campaignUnitCamp}.png`
+            }
+            if (campaign < 0 ) {
+                console.log(`Defender Buff`, campaign)
+                Defender.Multiplier = campaign
             }
             if (defendOfficer[0].Image) {
                 Defender.Image = `http://phfamily.co.uk/img/${defendOfficer[0].Image}`
@@ -130,7 +134,6 @@ campaignMode: async function (interaction) {
             }
             embed
                 .setDescription(`${interaction.member} your **${Attacker.Name}** sucessfully Battled ${campaignOfficer}'s **${Defender.Name}**!`)
-console.log(Defender.Player)
 
 const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)
 const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)
@@ -203,6 +206,7 @@ await sleep(950)
 }
 
 if (DH < 0) {
+    await sleep(950)      
     const winnings = AttackerDB[0].officer_level * 10000 * campaignOfficerLevel / 10
     chest = AttackerDB[0].war_chest
     const wallet = AttackerDB[0].war_coins
@@ -227,9 +231,9 @@ if (DH < 0) {
     interaction.editReply({ embeds: [embed], files: [attackImage] });
 const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
 console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${campaignOfficer}`)
-await sleep(950)      
 } else
 if (AH < 0) {
+    await sleep(950)      
     console.log(Defender.ImageFile)
     const losses = AttackerDB[0].battle_losses
     const newLosses = parseInt(losses + 1)
@@ -245,7 +249,6 @@ if (AH < 0) {
     interaction.editReply({ embeds: [embed], files: [defendImage] });
     const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)
     console.log(`Winner: ${campaignOfficer}`,`\nLoser: ${interaction.member.displayName}`, loss.info)
-    await sleep(950)      
 }
 }
 }

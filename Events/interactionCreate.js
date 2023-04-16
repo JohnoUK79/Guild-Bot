@@ -5,7 +5,7 @@ const ms = require('ms-prettify').default
 const { buyBank, buyBase, chestUpgrade, baseUpgrade, cancel, buyOfficer, officerUpgrade, officerSelect, unitUpgrade, unitSelect, buyUnit, profile, newUnit, selectunit, selectofficer, campaign, challenge, selectunitmenu, selectofficermenu, newOfficer} = require('../functions/warpathFunctions');
 const { selfUpdateModal, playerUpdateModal, selfUpdateResponses, playerUpdateResponses } = require('../functions/playerDatabaseFunctions');
 const { top10, top20, top30, top40, top50 } = require('../functions/discordFunctions');
-const { campaignMode } = require('../functions/battleMechanics');
+const { campaignMode } = require('../functions/campaignMode');
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
@@ -112,6 +112,7 @@ module.exports = {
 		} catch (err) {console.log(err)}
 		}
 		if (interaction.customId === 'camp1') {
+		interaction.deferReply
 		try {
 		campaignMode(interaction)
 		} catch (err) {console.log(err)}

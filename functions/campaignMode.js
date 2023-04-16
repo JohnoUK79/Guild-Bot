@@ -1,8 +1,10 @@
+const { campSelection, campaignSelection, attackSelection } = require('../functions/warpathFunctions');
+const { officerSkills } = require('../functions/officerSkills');
+const sql = require("../config/Database");
+const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 module.exports = {
 campaignMode: async function (interaction) {
     interaction.deferReply();
-    console.log(interaction)
-
     const guildIcon = interaction.member.guild.iconURL();
     const guildName = interaction.member.guild.name
 	const { commandCooldowns } = require('../bot');

@@ -4,7 +4,10 @@ const sql = require("../config/Database");
 const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 module.exports = {
 campaignMode: async function (interaction) {
-    interaction.deferReply();
+    await interaction.deferReply({
+        fetchReply: true,
+        empheral: false
+    });
     const guildIcon = interaction.member.guild.iconURL();
     const guildName = interaction.member.guild.name
 	const { commandCooldowns } = require('../bot');
@@ -169,7 +172,6 @@ while (DH >= 0 && AH >= 0) {
 } else {
 console.log(`Defender Speed: ${Defender.Speed} Attacker Speed: ${Attacker.Speed}`)
 while (DH >= 0 && AH >= 0) {
-interaction.deferReply()
 attackSelection(Attacker, Defender)
 officerSkills(interaction, Attacker, Defender, AH, DH)
 campSelection(Attacker, Defender) 

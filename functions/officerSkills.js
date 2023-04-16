@@ -19,8 +19,6 @@ module.exports = {
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
                     .setFooter({ text: `${guildName} - Battles`, iconURL: `${guildIcon}`});
 
-
-            console.log(`Indomitable`) 
             skillEmbed 
                     .setColor('#ff5b05')
                     .setThumbnail(guildIcon)
@@ -59,7 +57,8 @@ module.exports = {
                             )   
                 Attacker.SkillUsed = 'Health'
                 interaction.followUp({embeds: [skillEmbed]})
-                } else return
+                return
+                } 
         }            
             
         if (Attacker.OfficerSkill === 'Caring Angel') {
@@ -77,7 +76,8 @@ module.exports = {
                         )  
                 interaction.followUp({embeds: [skillEmbed]})
                 Attacker.SkillUsed = 'Health'
-            } else return
+                return
+            } 
             }
         if (Attacker.OfficerSkill === `The Soldier's Soldier`) {
             const chance = [
@@ -105,7 +105,8 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Undaunted') {
             const chance = [
@@ -133,7 +134,8 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Who Dares Wins') {
             if (Defender.AttackType === 'Ground') {
@@ -150,7 +152,8 @@ module.exports = {
                         )  
                 interaction.followUp({embeds: [skillEmbed]})
                 Attacker.SkillUsed = 'Health'
-            } else return        }        
+                return
+            }         }        
         if (Attacker.OfficerSkill === 'Guardian Angel') {
             const chance = [
                 'No',
@@ -177,7 +180,8 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Hand of Destruction') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
@@ -205,8 +209,9 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
+            return
         }
-            } else return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Frontline Fire') {
             const chance = [
@@ -234,7 +239,8 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Vengeance') {
             const chance = [
@@ -265,7 +271,8 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'The Motherland') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
@@ -294,8 +301,9 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
+            return
         }
-            } else return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Mine Detonator') {
             const chance = [
@@ -331,7 +339,8 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Flamestorm') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
@@ -359,8 +368,9 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
+            return
         }
-            } else return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Inpenetrable') {
             const chance = [
@@ -392,7 +402,8 @@ module.exports = {
                         )   
             Attacker.SkillUsed = 'Health'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return        
+            return
+            }         
         }        
         if (Attacker.OfficerSkill === 'Breaching Charge') {
             const chance = [
@@ -428,7 +439,8 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Flaming Meteors') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
@@ -457,8 +469,9 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
+            return
         }
-            } else return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Master of War') {
             const chance = [
@@ -487,7 +500,8 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Phantom Power') {
             const chance = [
@@ -519,7 +533,8 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Blinding Flash') {
             const chance = [
@@ -548,7 +563,8 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Rain of Blades') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
@@ -576,8 +592,9 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
+            return
         }
-            } else return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Devastation') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
@@ -605,8 +622,9 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
+            return
         }
-            } else return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Beauty Worth Preserving') {
             const chance = [
@@ -638,7 +656,8 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Forlorn Hope') {
             const chance = [
@@ -667,7 +686,8 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Sky Dancer') {
             if (Attacker.UnitType === 'Bombers' || 'Fighters'){
@@ -695,8 +715,9 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
+            return
         }
-            } else return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Untouchable') {
             const chance = [
@@ -726,7 +747,8 @@ module.exports = {
             console.log(Defender.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Heavenly Rays') {
             if (Attacker.UnitType === 'Fighters' && Attacker.UnitType === 'Fighters'){
@@ -755,8 +777,9 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
+            return
         }
-            } else return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Twin Fangs') {
             if (Attacker.UnitType === 'Bombers' || 'Fighters'){
@@ -784,8 +807,9 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
+            return
         }
-            } else return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Night Evader') {
             const chance = [
@@ -815,7 +839,8 @@ module.exports = {
             console.log(Defender.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Unleashed Justice') {
             if (Attacker.UnitType === 'Bombers'){
@@ -843,8 +868,9 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
+            return
         }
-            } else return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Sticky Situation') {
             const chance = [
@@ -873,7 +899,8 @@ module.exports = {
             console.log(Defender.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
-            } else return
+            return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Desperate Counterattack') {
             const chance = [
@@ -902,8 +929,9 @@ module.exports = {
             console.log(Defender.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
+            return
         }
-            } else return
+            } 
         }        
         if (Attacker.OfficerSkill === 'Last Gasp') {
             if (Attacker.UnitType === 'Bombers'){
@@ -931,8 +959,9 @@ module.exports = {
             console.log(Attacker.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
+            return
         }
-        } else return
+        } 
         }
 
     //Defender Skills
@@ -971,7 +1000,8 @@ module.exports = {
                     )   
         Attacker.SkillUsed = 'Health'
         interaction.followUp({embeds: [skillEmbed]})
-        } else return
+        return
+        } 
                 }            
     
 if (Defender.OfficerSkill === 'Caring Angel') {
@@ -988,8 +1018,9 @@ if (Defender.OfficerSkill === 'Caring Angel') {
                     { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
                 )  
         interaction.followUp({embeds: [skillEmbed]})
+        return
         Defender.SkillUsed = 'Health'
-    } else return
+    } 
     }
 if (Defender.OfficerSkill === `The Soldier's Soldier`) {
     const chance = [
@@ -1017,7 +1048,8 @@ if (Defender.OfficerSkill === `The Soldier's Soldier`) {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Undaunted') {
     const chance = [
@@ -1045,7 +1077,8 @@ if (Defender.OfficerSkill === 'Undaunted') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Who Dares Wins') {
     if (Defender.AttackType === 'Ground') {
@@ -1062,7 +1095,8 @@ if (Defender.OfficerSkill === 'Who Dares Wins') {
                 )  
         interaction.followUp({embeds: [skillEmbed]})
         Defender.SkillUsed = 'Health'
-    } else return        }        
+        return
+    }         }        
 if (Defender.OfficerSkill === 'Guardian Angel') {
     const chance = [
         'No',
@@ -1089,7 +1123,8 @@ if (Defender.OfficerSkill === 'Guardian Angel') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Hand of Destruction') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
@@ -1117,8 +1152,9 @@ if (Defender.OfficerSkill === 'Hand of Destruction') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]}) 
+    return
 }
-    } else return
+    } 
 }        
 if (Defender.OfficerSkill === 'Frontline Fire') {
     const chance = [
@@ -1146,7 +1182,8 @@ if (Defender.OfficerSkill === 'Frontline Fire') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Vengeance') {
     const chance = [
@@ -1177,7 +1214,8 @@ if (Defender.OfficerSkill === 'Vengeance') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'The Motherland') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
@@ -1206,8 +1244,9 @@ if (Defender.OfficerSkill === 'The Motherland') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]}) 
+    return
 }
-    } else return
+    } 
 }        
 if (Defender.OfficerSkill === 'Mine Detonator') {
     const chance = [
@@ -1243,7 +1282,8 @@ if (Defender.OfficerSkill === 'Mine Detonator') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Flamestorm') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
@@ -1271,8 +1311,9 @@ if (Defender.OfficerSkill === 'Flamestorm') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]}) 
+    return
 }
-    } else return
+    } 
 }        
 if (Defender.OfficerSkill === 'Inpenetrable') {
     const chance = [
@@ -1304,7 +1345,8 @@ if (Defender.OfficerSkill === 'Inpenetrable') {
                 )   
     Defender.SkillUsed = 'Health'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return        
+    return
+    }         
 }        
 if (Defender.OfficerSkill === 'Breaching Charge') {
     const chance = [
@@ -1340,7 +1382,8 @@ if (Defender.OfficerSkill === 'Breaching Charge') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Flaming Meteors') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
@@ -1369,8 +1412,9 @@ if (Defender.OfficerSkill === 'Flaming Meteors') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]}) 
+    return
 }
-    } else return
+    } 
 }        
 if (Defender.OfficerSkill === 'Master of War') {
     const chance = [
@@ -1399,7 +1443,8 @@ if (Defender.OfficerSkill === 'Master of War') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Phantom Power') {
     const chance = [
@@ -1431,7 +1476,8 @@ if (Defender.OfficerSkill === 'Phantom Power') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Blinding Flash') {
     const chance = [
@@ -1460,7 +1506,8 @@ if (Defender.OfficerSkill === 'Blinding Flash') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Rain of Blades') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
@@ -1488,8 +1535,9 @@ if (Defender.OfficerSkill === 'Rain of Blades') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]}) 
+    return
 }
-    } else return
+    } 
 }        
 if (Defender.OfficerSkill === 'Devastation') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
@@ -1517,8 +1565,9 @@ if (Defender.OfficerSkill === 'Devastation') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]}) 
+    return
 }
-    } else return
+    } 
 }        
 if (Defender.OfficerSkill === 'Beauty Worth Preserving') {
     const chance = [
@@ -1550,7 +1599,8 @@ if (Defender.OfficerSkill === 'Beauty Worth Preserving') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Forlorn Hope') {
     const chance = [
@@ -1579,7 +1629,8 @@ if (Defender.OfficerSkill === 'Forlorn Hope') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Sky Dancer') {
     if (Defender.UnitType === 'Bombers' || 'Fighters'){
@@ -1607,8 +1658,9 @@ if (Defender.OfficerSkill === 'Sky Dancer') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]}) 
+    return
 }
-    } else return
+    } 
 }        
 if (Defender.OfficerSkill === 'Untouchable') {
     const chance = [
@@ -1638,7 +1690,8 @@ if (Defender.OfficerSkill === 'Untouchable') {
     console.log(Attacker.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Heavenly Rays') {
     if (Defender.UnitType === 'Fighters' && Defender.UnitType === 'Fighters'){
@@ -1667,8 +1720,9 @@ if (Defender.OfficerSkill === 'Heavenly Rays') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]}) 
+    return
 }
-    } else return
+    } 
 }        
 if (Defender.OfficerSkill === 'Twin Fangs') {
     if (Defender.UnitType === 'Bombers' || 'Fighters'){
@@ -1696,8 +1750,9 @@ if (Defender.OfficerSkill === 'Twin Fangs') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]}) 
+    return
 }
-    } else return
+    } 
 }        
 if (Defender.OfficerSkill === 'Night Evader') {
     const chance = [
@@ -1727,7 +1782,8 @@ if (Defender.OfficerSkill === 'Night Evader') {
     console.log(Attacker.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Unleashed Justice') {
     if (Defender.UnitType === 'Bombers'){
@@ -1755,8 +1811,9 @@ if (Defender.OfficerSkill === 'Unleashed Justice') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]}) 
+    return
 }
-    } else return
+    } 
 }        
 if (Defender.OfficerSkill === 'Sticky Situation') {
     const chance = [
@@ -1785,7 +1842,8 @@ if (Defender.OfficerSkill === 'Sticky Situation') {
     console.log(Attacker.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
-    } else return
+    return
+    } 
 }        
 if (Defender.OfficerSkill === 'Desperate Counterattack') {
     const chance = [
@@ -1814,8 +1872,9 @@ if (Defender.OfficerSkill === 'Desperate Counterattack') {
     console.log(Attacker.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
+    return
 }
-    } else return
+    } 
 }        
 if (Defender.OfficerSkill === 'Last Gasp') {
     if (Defender.UnitType === 'Bombers'){
@@ -1843,8 +1902,9 @@ if (Defender.OfficerSkill === 'Last Gasp') {
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]}) 
+    return
 }
-} else return
+} 
 }
 }
 }

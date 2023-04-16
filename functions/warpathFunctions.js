@@ -902,10 +902,10 @@ console.log(officerSelection)
         const profileEmbed = new EmbedBuilder();
         const profileButtons = new ActionRowBuilder()
             .addComponents(
-                new ButtonBuilder()
-                    .setCustomId("campaign")
-                    .setLabel('Campaign')
-                    .setStyle(ButtonStyle.Danger),
+                // new ButtonBuilder()
+                //     .setCustomId("campaign")
+                //     .setLabel('Campaign')
+                //     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("selectunit")
                     .setLabel('Select Unit')

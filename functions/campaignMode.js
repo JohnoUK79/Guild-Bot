@@ -1,3 +1,4 @@
+const ms = require('ms-prettify').default
 const { campSelection, campaignSelection, attackSelection } = require('../functions/warpathFunctions');
 const { officerSkills } = require('../functions/officerSkills');
 const sql = require("../config/Database");
@@ -47,7 +48,7 @@ campaignMode: async function (interaction) {
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
                 .setFooter({ text: `${guildName} - ${campaignOfficer}`, iconURL: `${guildIcon}`})
                 .setDescription(`${interaction.user} you have already battled **${campaignOfficer}** recently, you can battle **${campaignOfficer}** again in **${ms(t - Date.now())}**`);
-        return interaction.reply({ embeds: [campaigncooldownEmbed] })
+        return interaction.editReply({ embeds: [campaigncooldownEmbed] })
         }
         const embed = new EmbedBuilder();
         embed
@@ -120,7 +121,7 @@ campaignMode: async function (interaction) {
                 Image: `http://phfamily.co.uk/img/${campaignUnitCamp}.png`,
                 ImageFile: `${campaignUnitCamp}.png`
             }
-            if (campaign < 0 ) {
+            if (campaign > 0 ) {
                 console.log(`Defender Buff`, campaign)
                 Defender.Multiplier = campaign
             }
@@ -214,11 +215,9 @@ if (DH < 0) {
     const newWins = parseInt(wins + 1)
     const newWallet = parseInt(wallet + winnings)
     commandCooldowns.set(`${interaction.member.id}_${interaction.customId}`, Date.now() + 60 * 60 * 1000 * 12)
-    if (interaction.guild.id === '964496256057630720') {
-        commandCooldowns.set(`${interaction.user.id}_${interaction.customId}`, 0)
-    }
-    console.log(`${interaction.member.id}_${interaction.customId}`)
-    console.log(commandCooldowns)
+    // if (interaction.guild.id === '964496256057630720') {
+    //     commandCooldowns.set(`${interaction.user.id}_${interaction.customId}`, 0)
+    // }
 
     embed 
         .setImage(`attachment://${Attacker.ImageFile}`)
@@ -237,8 +236,6 @@ if (AH < 0) {
     console.log(Defender.ImageFile)
     const losses = AttackerDB[0].battle_losses
     const newLosses = parseInt(losses + 1)
-    commandCooldowns.set(`${interaction.member.id}_${interaction.customId}`, 0)
-    console.log(`${interaction.member.id}_${interaction.customId}`)
 
     embed
         .setImage(`attachment://${Defender.ImageFile}`)

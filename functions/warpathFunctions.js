@@ -904,12 +904,8 @@ console.log(officerSelection)
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("campaign")
-                    .setLabel('Raven Campaign')
-                    .setStyle(ButtonStyle.Success),
-                new ButtonBuilder()
-                    .setCustomId("challenge")
-                    .setLabel('Pro Challenge Mode')
-                    .setStyle(ButtonStyle.Secondary),
+                    .setLabel('Campaign')
+                    .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("selectunit")
                     .setLabel('Select Unit')
@@ -917,11 +913,15 @@ console.log(officerSelection)
                 new ButtonBuilder()
                     .setCustomId("selectofficer")
                     .setLabel('Select Officer')
-                    .setStyle(ButtonStyle.Secondary),
+                    .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
                     .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Profile')
+                    .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
@@ -1342,13 +1342,17 @@ console.log(officerSelection)
                     .setCustomId("cancel")
                     .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Profile')
+                    .setStyle(ButtonStyle.Secondary),
             )
         const challengeEmbed = new EmbedBuilder()
             .setDescription(`Coming Soon...`)
             .setTitle(`Challenge Mode!`)
         interaction.editReply({
             embeds: [challengeEmbed],
-            components: [challengeButtons]
+            //components: [challengeButtons]
         })
     },
     newOfficer: async function (interaction) {

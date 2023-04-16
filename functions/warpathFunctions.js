@@ -1250,6 +1250,10 @@ console.log(officerSelection)
                     .setCustomId("camp4")
                     .setLabel('Argent Flamce (80)')
                     .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Profile')
+                    .setStyle(ButtonStyle.Secondary),
             )
             const campaignButtons2 = new ActionRowBuilder()
             .addComponents(
@@ -1269,6 +1273,10 @@ console.log(officerSelection)
                     .setCustomId("camp8")
                     .setLabel('Steel Fighter (160)')
                     .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Profile')
+                    .setStyle(ButtonStyle.Secondary),
             )
             const campaignButtons3 = new ActionRowBuilder()
             .addComponents(
@@ -1288,6 +1296,10 @@ console.log(officerSelection)
                     .setCustomId("camp12")
                     .setLabel('War Machine (240)')
                     .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Profile')
+                    .setStyle(ButtonStyle.Secondary),
             )
             const campaignButtons4 = new ActionRowBuilder()
             .addComponents(
@@ -1307,18 +1319,12 @@ console.log(officerSelection)
                     .setCustomId("camp16")
                     .setLabel('Sergeant Spanner (320)')
                     .setStyle(ButtonStyle.Danger),
-            )
-            const campaignButtons5 = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId("cancel")
-                    .setLabel('Upgrade')
-                    .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
                     .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
-            )
+                    )
+
         const campaignEmbed = new EmbedBuilder()
             .setColor('#ff5b05')
             .setThumbnail(guildIcon)
@@ -1327,7 +1333,7 @@ console.log(officerSelection)
             .setTitle(`Select your opponent!`)
         interaction.update({
             embeds: [campaignEmbed],
-            components: [campaignButtons, campaignButtons2, campaignButtons3, campaignButtons4, campaignButtons5]
+            components: [campaignButtons] //, campaignButtons2, campaignButtons3, campaignButtons4, campaignButtons5]
         })
     },
     challenge: async function (interaction) {
@@ -1341,7 +1347,7 @@ console.log(officerSelection)
         const challengeEmbed = new EmbedBuilder()
             .setDescription(`Coming Soon...`)
             .setTitle(`Challenge Mode!`)
-        interaction.update({
+        interaction.editReply({
             embeds: [challengeEmbed],
             components: [challengeButtons]
         })
@@ -1420,8 +1426,6 @@ console.log(officerSelection)
         if (campaign === 13) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Iron Bastion', campaignOfficerLevel = 280, campaignBaseLevel = 280
         if (campaign === 14) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Angel of Light', campaignOfficerLevel = 300, campaignBaseLevel = 300
         if (campaign === 15) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Liberty', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 300, campaignBaseLevel = 300
-        // module.exports.newUnitLevel = newUnitLevel
-        // module.exports.newUnitType = newUnitType
         module.exports = {
             campaignUnitLevel: campaignUnitLevel,
             campaignUnitType: campaignUnitType,

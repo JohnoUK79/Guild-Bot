@@ -91,6 +91,7 @@ campaignMode: async function (interaction) {
                 OfficerSkill: attackOfficer[0].Skill,
                 OfficerType: attackOfficer[0].Officer_Type,
                 Multiplier: 1,
+                Prestige: AttackerDB[0].prestige,
                 Image: `http://phfamily.co.uk/img/${AttackerDB[0].unit_camp}.png`,
                 ImageFile: `${AttackerDB[0].unit_camp}.png`
             }
@@ -121,9 +122,9 @@ campaignMode: async function (interaction) {
                 Image: `http://phfamily.co.uk/img/${campaignUnitCamp}.png`,
                 ImageFile: `${campaignUnitCamp}.png`
             }
-            if (campaign > 0 ) {
-                console.log(`Defender Buff`, campaign)
-                Defender.Multiplier = campaign * 2
+            if (Attacker.Prestige > 0 ) {
+                console.log(`Defender Buff`, Attacker.Prestige)
+                Defender.Multiplier = Attacker.Prestige / 2
             }
             if (defendOfficer[0].Image) {
                 Defender.Image = `http://phfamily.co.uk/img/${defendOfficer[0].Image}`

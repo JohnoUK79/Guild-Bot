@@ -124,7 +124,7 @@ campaignMode: async function (interaction) {
             }
             if (Attacker.Prestige > 0 ) {
                 console.log(`Defender Buff`, Attacker.Prestige)
-                Defender.Multiplier = Attacker.Prestige / 2
+                Defender.Multiplier = Attacker.Prestige
             }
             if (defendOfficer[0].Image) {
                 Defender.Image = `http://phfamily.co.uk/img/${defendOfficer[0].Image}`

@@ -20,6 +20,13 @@ module.exports = {
             .catch(console.error);
 
         console.log(`================ Warpath BOT Ready! ================`);
+        //Member Update
+        client.guilds.cache.forEach(async (guild) => {
+            guild.members.fetch()
+                console.log(guild.members.cache)
+                // client.user.setPresence({ activities: [{ name: `Battle-Bot with ${totalOnline.size.toLocaleString()} Members Online!` }], status: 'Online' });
+            });
+        
         //Presence Update
         client.guilds.cache.forEach(async (guild) => {
             guild.members.fetch({ withPresences: true }).then(fetchedMembers => {

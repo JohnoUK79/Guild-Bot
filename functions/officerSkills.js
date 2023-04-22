@@ -1182,8 +1182,7 @@ if (Defender.OfficerSkill === 'Night Evader') {
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & decreases ${Attacker.Player} **${Attacker.Name}'s Attack** to **${Power.toLocaleString()}**` },
             ),   
-    console.log(Defender.AttackPower.toLocaleString())
-    console.log(Attacker.AttackPower.toLocaleString())
+    console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
     return
@@ -1222,7 +1221,6 @@ if (Defender.OfficerSkill === 'Sticky Situation') {
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
-    console.log(Attacker.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
     return
@@ -1242,7 +1240,6 @@ if (Defender.OfficerSkill === 'Desperate Counterattack') {
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
-    console.log(Attacker.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
     return

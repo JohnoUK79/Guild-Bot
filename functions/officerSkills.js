@@ -354,9 +354,9 @@ module.exports = {
             console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
                 console.log(`Phantom Power`)            
-                Power = Math.round(Attacker.Attacker.AttackPower * 0.10)
+                Power = Attacker.AttackPower * 0.10
                 Attacker.AttackPower = Attacker.AttackPower + Power
-                Damage = DH * .2
+                Damage = DH * 0.2
                 DH = DH - damage
 
                 skillEmbed

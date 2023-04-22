@@ -16,7 +16,7 @@ module.exports = {
         let inviterID = invite.inviter.id
 
         var sendChannel = settings[0].updates_channel
-        if (sendChannel !== null) {
+        if (!settings[0].updates_channel) {
             sendChannel = invite.channel.id
         } 
         

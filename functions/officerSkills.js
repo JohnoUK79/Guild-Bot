@@ -357,7 +357,7 @@ module.exports = {
                 Power = Attacker.AttackPower * 0.10
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 Damage = DH * 0.2
-                DH = DH - damage
+                DH = DH - Damage
 
                 skillEmbed
                     .addFields(

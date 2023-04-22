@@ -20,8 +20,9 @@ module.exports = {
             .catch(console.error);
         console.log(`================ Warpath BOT Ready! ================`);  
         const serverTimeChannelIDs = [
-            '1099378914503184384',
-            '1099379616961015809'
+            '1099378914503184384',//Test Server
+            '1099379616961015809',//FIRE
+            '1099445994048999454',//PHU
         ]
         const servertimeupdate = nodeCron.schedule("4,9,14,19,24,29,34,39,44,49,54,59 * * * *", () => {   
             for (let i = 0; i < serverTimeChannelIDs.length; i++) {
@@ -29,7 +30,7 @@ module.exports = {
             try {  
                 const timeChannel = client.channels.cache.get(serverTimeChannelID)
                 timeChannel
-                    .setName(`UTC_TIME-${timestamp.UTChours()}${timestamp.UTCminutes()}`)            }
+                    .setName(`UTC-TIME-${timestamp.UTChours()}${timestamp.UTCminutes()}`)            }
             catch (e) {
                 console.log(e);
                 console.log(serverTimeChannelID);

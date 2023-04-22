@@ -1,4 +1,4 @@
-const { REST, Routes, Collection, EmbedBuilder } = require('discord.js');
+const { REST, Routes, Collection, EmbedBuilder, time } = require('discord.js');
 const { token, CLIENT_ID, GUILD_ID } = require('../config.json');
 const nodeCron = require("node-cron");
 const timestamp = require('../config/timestamp');
@@ -18,31 +18,33 @@ module.exports = {
                 console.log(`Successfully registered Global Commands!`);
             })
             .catch(console.error);
-
-        console.log(`================ Warpath BOT Ready! ================`);
-        //Member Update
-        // client.guilds.cache.forEach(async (guild) => {
-        //     guild.members.fetch()
-        //         console.log(guild.members.cache)
-        //         // client.user.setPresence({ activities: [{ name: `Battle-Bot with ${totalOnline.size.toLocaleString()} Members Online!` }], status: 'Online' });
-        //     });
-        
+        console.log(`================ Warpath BOT Ready! ================`);  
+        const serverTimeChannelIDs = [
+            '1099379616961015809',
+            '1099378914503184384'
+        ]
+        const servertimeupdate = nodeCron.schedule("4,9,14,19,24,29,34,39,44,49,54,59 * * * *", () => {   
+            for (let i = 0; i < serverTimeChannelIDs.length; i++) {
+            let serverTimeChannelID = serverTimeChannelIDs[i];
+            const timeChannel = client.channels.cache.get(serverTimeChannelID)
+            timeChannel
+                .setName(`UTC-${timestamp.default()}`)
+            }
+        })
         //Presence Update
         client.guilds.cache.forEach(async (guild) => {
             guild.members.fetch({ withPresences: true }).then(fetchedMembers => {
-                const totalOnline = fetchedMembers.filter(member => member.presence?.status === 'online');
                 // Now you have a collection with all online member objects in the totalOnline variable
-                console.log(`There are currently ${totalOnline.size} members online in this guild ${guild.name}!`);
-                client.user.setPresence({ activities: [{ name: `Battle-Bot with ${totalOnline.size.toLocaleString()} Members Online!` }], status: 'Online' });
+                console.log(`There are currently ${fetchedMembers.size} members using the Bot!`);
+                client.user.setPresence({ activities: [{ name: `Battle-Bot with ${fetchedMembers.size.toLocaleString()} Warriors!` }], status: 'Online' });
             });
         })    
         const memberRefresh = nodeCron.schedule("0,15,30,45 * * * *", () => {
         client.guilds.cache.forEach(async (guild) => {
         guild.members.fetch({ withPresences: true }).then(fetchedMembers => {
-            const totalOnline = fetchedMembers.filter(member => member.presence?.status === 'online');
             // Now you have a collection with all online member objects in the totalOnline variable
-            console.log(`There are currently ${totalOnline.size} members online in this guild ${guild.name}!`);
-            client.user.setPresence({ activities: [{ name: `Battle-Bot with ${totalOnline.size.toLocaleString()} Members Online!` }], status: 'Online' });
+            console.log(`There are currently ${fetchedMembers.size} members in the BOT cache!`);
+            client.user.setPresence({ activities: [{ name: `Battle-Bot with ${fetchedMembers.size.toLocaleString()} Warriors!` }], status: 'Online' });
         });
         });
         })

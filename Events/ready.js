@@ -21,6 +21,7 @@ module.exports = {
         console.log(`================ Warpath BOT Ready! ================`);  
         const serverTimeChannelIDs = [
             '1099378914503184384',
+            '1099379616961015809'
         ]
         const servertimeupdate = nodeCron.schedule("4,9,14,19,24,29,34,39,44,49,54,59 * * * *", () => {   
             for (let i = 0; i < serverTimeChannelIDs.length; i++) {

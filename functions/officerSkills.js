@@ -320,7 +320,7 @@ module.exports = {
                 if (skillSuccess === 'Yes') {
                 console.log(`Flaming Meteors`)
                 Power = Attacker.AttackPower * 0.3
-                Attacker.AttackPower = Attacker.AttackPower + damage
+                Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
@@ -1119,10 +1119,9 @@ if (Defender.OfficerSkill === 'Untouchable') {
 
         skillEmbed
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & decreases ${Attacker.Player} **${Attacker.Name}'s Attack** to **${Attacker.AttackPower.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & decreases ${Attacker.Player} **${Attacker.Name}'s Attack** to **${Power.toLocaleString()}**` },
             ),   
-    console.log(Defender.AttackPower.toLocaleString())
-    console.log(Attacker.AttackPower.toLocaleString())
+    console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
     sleep(1000)

@@ -20,15 +20,19 @@ module.exports = {
             .catch(console.error);
         console.log(`================ Warpath BOT Ready! ================`);  
         const serverTimeChannelIDs = [
-            '1099379616961015809',
-            '1099378914503184384'
+            '1099378914503184384',
         ]
         const servertimeupdate = nodeCron.schedule("4,9,14,19,24,29,34,39,44,49,54,59 * * * *", () => {   
             for (let i = 0; i < serverTimeChannelIDs.length; i++) {
             let serverTimeChannelID = serverTimeChannelIDs[i];
-            const timeChannel = client.channels.cache.get(serverTimeChannelID)
-            timeChannel
-                .setName(`UTC-${timestamp.default()}`)
+            try {  
+                const timeChannel = client.channels.cache.get(serverTimeChannelID)
+                timeChannel
+                    .setName(`UTC-${timestamp.default()}`)            }
+            catch (e) {
+                console.log(e);
+                console.log(serverTimeChannelID);
+            }
             }
         })
         //Presence Update

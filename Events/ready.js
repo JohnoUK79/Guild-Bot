@@ -28,7 +28,7 @@ module.exports = {
             try {  
                 const timeChannel = client.channels.cache.get(serverTimeChannelID)
                 timeChannel
-                    .setName(`UTC-${timestamp.default()}`)            }
+                    .setName(`UTC-${timestamp.UTChours()}${timestamp.UTCminutes()}`)            }
             catch (e) {
                 console.log(e);
                 console.log(serverTimeChannelID);

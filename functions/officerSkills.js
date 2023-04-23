@@ -391,7 +391,7 @@ module.exports = {
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                         { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** decreases ${Defender.Player} **${Defender.Name}'s Attack** by **${health.toLocaleString()}**` },
                     ),   
-            console.log(Damage.toLocaleString() || Power.toLocaleString())
+            console.log(health.toLocaleString() || Power.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
             return

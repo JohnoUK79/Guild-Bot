@@ -7,7 +7,7 @@ async function sleep(ms) {
     }
 module.exports = {
     officerSkills: async function (interaction, Attacker, Defender, AH, DH) {
-        const Boom = 'http://phfamily.co.uk/img/Boom.jpg'
+        const Boom = 'http://phfamily.co.uk/img/Boom.gif'
         const RedCross = 'http://phfamily.co.uk/img/RedCross.png'
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name

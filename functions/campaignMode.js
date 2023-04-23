@@ -158,6 +158,7 @@ while (DH >= 0 && AH >= 0) {
     embed
         .setTitle(`${campaignOfficer}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
         .setImage(`attachment://${Defender.ImageFile}`)
+        .setThumbnail(`attachment://${Attacker.ImageFile}`)
         .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [defendImage] });
     console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)     
@@ -169,6 +170,7 @@ while (DH >= 0 && AH >= 0) {
 
     embed
         .setImage(`attachment://${Attacker.ImageFile}`)
+        .setThumbnail(`attachment://${Defender.ImageFile}`)
         .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${campaignOfficer}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
         .setDescription(`${campaignOfficer}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [attackImage] });
@@ -187,6 +189,7 @@ console.log('Attack Multiplier', Attacker.Multiplier )
 DH = DH - Attacker.AttackPower
     embed
         .setImage(`attachment://${Attacker.ImageFile}`)
+        .setThumbnail(`attachment://${Defender.ImageFile}`)
         .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${campaignOfficer}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
         .setDescription(`${campaignOfficer}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [attackImage] });
@@ -199,6 +202,7 @@ AH = AH - Defender.AttackPower
 
     embed
         .setImage(`attachment://${Defender.ImageFile}`)
+        .setThumbnail(`attachment://${Attacker.ImageFile}`)
         .setTitle(`${campaignOfficer}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
         .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [defendImage] });
@@ -222,6 +226,7 @@ if (DH < 0) {
 
     embed 
         .setImage(`attachment://${Attacker.ImageFile}`)
+        .setThumbnail(`attachment://${Defender.ImageFile}`)
         .addFields(
             { name: `Congratulations`, value: `You have defeated **${campaignOfficer}**! You can now challenge the next campaign` },
             { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
@@ -240,6 +245,7 @@ if (AH < 0) {
 
     embed
         .setImage(`attachment://${Defender.ImageFile}`)
+        .setThumbnail(`attachment://${Attacker.ImageFile}`)
         .addFields(
             { name: `You Were Unsuccessful`, value: `**You Failed**! You were unable to defeat **${campaignOfficer}**` },
         )     

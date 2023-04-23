@@ -7,7 +7,8 @@ async function sleep(ms) {
     }
 module.exports = {
     officerSkills: async function (interaction, Attacker, Defender, AH, DH) {
-
+        const Boom = 'http://phfamily.co.uk/img/Boom.jpg'
+        const RedCross = 'http://phfamily.co.uk/img/RedCross.png'
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
         Attacker.SkillUsed, Defender.SkillUsed = ''
@@ -48,6 +49,7 @@ module.exports = {
                     console.log(health)
     
                     skillEmbed
+                            .setThumbnail(Boom)
                             .addFields(
                                 { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Health** to **${health.toLocaleString()}**` },
                             )   
@@ -67,6 +69,7 @@ module.exports = {
                 } else return console.log(`Health Error`)
     
                 skillEmbed
+                        .setThumbnail(RedCross)
                         .addFields(
                             { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Health** to **${health.toLocaleString()}**` },
                         )  
@@ -83,6 +86,7 @@ module.exports = {
                 Power = Attacker.AttackPower * 0.125
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -100,6 +104,7 @@ module.exports = {
                 Power = Attacker.AttackPower * 0.5
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -119,6 +124,7 @@ module.exports = {
                 } else return console.log(`Health Error`)
     
                 skillEmbed
+                        .setThumbnail(RedCross)
                         .addFields(
                             { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & decreases ${Defender.Player} **${Defender.Name}'s Health** by **${health.toLocaleString()}**` },
                         )  
@@ -135,6 +141,7 @@ module.exports = {
                 Power = Attacker.AttackPower * 0.2
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -153,6 +160,7 @@ module.exports = {
                 Power = Attacker.AttackPower * 0.4
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -172,6 +180,7 @@ module.exports = {
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -194,6 +203,7 @@ module.exports = {
                     Attacker.AttackPower = Attacker.AttackPower + Special
                 }
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Special.toLocaleString() || Power.toLocaleString()}**` },
                     ),   
@@ -212,6 +222,7 @@ module.exports = {
                 damage = Attacker.AttackPower * 0.5
                 Attacker.AttackPower = Attacker.AttackPower + damage
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${damage.toLocaleString()}**` },
                     ),   
@@ -233,12 +244,14 @@ module.exports = {
                     health = DH * .05
                     DH = DH - health
                     skillEmbed
+                        .setImage(RedCross)
                         .addFields(
                             { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** & reduces ${Defender.Player} **${Defender.Name}'s Heal** by **${health.toLocaleString()}**` },
                     ) 
                 }
 
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${damage.toLocaleString()}**` },
                     ),   
@@ -257,6 +270,7 @@ module.exports = {
                 Power = Attacker.AttackPower * 0.1
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -279,6 +293,7 @@ module.exports = {
                 } else return console.log(`Health Error`)
 
                 skillEmbed
+                    .setThumbnail(RedCross)
                         .addFields(
                             { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Health** to **${health.toLocaleString()}**` },
                         )   
@@ -298,12 +313,14 @@ module.exports = {
                     Special = Attacker.AttackPower * .5
                     Attacker.AttackPower = Attacker.AttackPower + Special
                     skillEmbed
+                        .setImage(Boom)
                         .addFields(
                             { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** & reduces ${Defender.Player} **${Defender.Name}'s Health** by **${Special.toLocaleString()}**` },
                     ) 
                 }
 
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -322,6 +339,7 @@ module.exports = {
                 Power = Attacker.AttackPower * 0.3
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -340,6 +358,7 @@ module.exports = {
                 Power = Attacker.AttackPower * 0.10
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -360,6 +379,8 @@ module.exports = {
                 DH = DH - Damage
 
                 skillEmbed
+                    .setThumbnail(RedCross)
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                         { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** decreases ${Defender.Player} **${Defender.Name}'s Health** by **${Damage.toLocaleString()}**` },
@@ -379,6 +400,7 @@ module.exports = {
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -398,6 +420,7 @@ module.exports = {
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -417,6 +440,7 @@ module.exports = {
                 Power = Attacker.AttackPower * 0.25
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -438,6 +462,8 @@ module.exports = {
                 Defender.AttackPower = Defender.AttackPower - Special
 
                 skillEmbed
+                    .setThumbnail(RedCross)
+                    .setImage(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                         { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** & decreases ${Defender.Player} **${Defender.Name}'s Health** by **${Special.toLocaleString()}**` },
@@ -457,6 +483,7 @@ module.exports = {
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -475,6 +502,7 @@ module.exports = {
                 Power = Attacker.AttackPower * 0.15
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -494,6 +522,7 @@ module.exports = {
                 Defender.AttackPower = 0
 
                 skillEmbed
+                    .setThumbnail(RedCross)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & decreases ${Defender.Player} **${Defender.Name}'s Attack** to **${Defender.AttackPower.toLocaleString()}**` },
                     ),   
@@ -516,6 +545,7 @@ module.exports = {
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** to **${Power.toLocaleString()}**` },
                     ),   
@@ -536,6 +566,7 @@ module.exports = {
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -555,6 +586,7 @@ module.exports = {
                 Defender.AttackPower = Defender.AttackPower - Power
 
                 skillEmbed
+                    .setThumbnail(RedCross)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & decreases ${Defender.Player} **${Defender.Name}'s Attack** to **${Power.toLocaleString()}**` },
                     ),   
@@ -575,6 +607,7 @@ module.exports = {
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -594,11 +627,11 @@ module.exports = {
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
             console.log(Power.toLocaleString())
-            console.log(Defender.AttackPower.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
             return
@@ -613,6 +646,7 @@ module.exports = {
                 Power = Attacker.AttackPower * .25
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -634,6 +668,7 @@ module.exports = {
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
+                    .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
@@ -663,6 +698,7 @@ module.exports = {
             console.log(DH)
 
             skillEmbed
+                .setThumbnail(RedCross)
                     .addFields(
                         { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
                     )   
@@ -682,6 +718,7 @@ if (Defender.OfficerSkill === 'Caring Angel') {
         } else return console.log(`Health Error`)
 
         skillEmbed
+                .setThumbnail(RedCross)
                 .addFields(
                     { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
                 )  
@@ -699,6 +736,7 @@ if (Defender.OfficerSkill === `The Soldier's Soldier`) {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -717,6 +755,7 @@ if (Defender.OfficerSkill === 'Undaunted') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -736,6 +775,7 @@ if (Defender.OfficerSkill === 'Who Dares Wins') {
         } else return console.log(`Health Error`)
 
         skillEmbed
+                .setThumbnail(RedCross)
                 .addFields(
                     { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & decreases ${Attacker.Player} **${Attacker.Name}'s Health** by **${damage.toLocaleString()}**` },
                 )  
@@ -753,6 +793,7 @@ if (Defender.OfficerSkill === 'Guardian Angel') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -771,6 +812,7 @@ if (Defender.OfficerSkill === 'Hand of Destruction') {
         Power = Defender.AttackPower * 0.4
         Defender.AttackPower = Defender.AttackPower + Power
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -789,7 +831,8 @@ if (Defender.OfficerSkill === 'Frontline Fire') {
         Power = Defender.AttackPower * 0.08
         Defender.AttackPower = Defender.AttackPower + Power
 
-        skillEmbed
+        skillEmbed  
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -811,6 +854,7 @@ if (Defender.OfficerSkill === 'Vengeance') {
             Defender.AttackPower = Defender.AttackPower + Special
         }
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Special.toLocaleString() || Power.toLocaleString()}**` },
             ),   
@@ -830,6 +874,7 @@ if (Defender.OfficerSkill === 'The Motherland') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -852,12 +897,14 @@ if (Defender.OfficerSkill === 'Mine Detonator') {
             DH = DH - Damage
 
             skillEmbed
+            .setImage(RedCross)
             .addFields(
                 { name: `${Defender.OfficerSkill}`, value: `**${Defender.Officer}** & reduces ${Attacker.Player} **${Attacker.Name}'s Heal** by **${Damage.toLocaleString()}**` },
             ) 
         }
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -877,6 +924,7 @@ if (Defender.OfficerSkill === 'Flamestorm') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -899,6 +947,7 @@ if (Defender.OfficerSkill === 'Inpenetrable') {
         } else return console.log(`Health Error`)
 
         skillEmbed
+                .setThumbnail(RedCross)
                 .addFields(
                     { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
                 )   
@@ -919,12 +968,14 @@ if (Defender.OfficerSkill === 'Breaching Charge') {
             Defender.AttackPower = Defender.AttackPower - Special
 
             skillEmbed
+            .setImage(RedCross)
             .addFields(
                 { name: `${Defender.OfficerSkill}`, value: `**${Defender.Officer}** & reduces ${Attacker.Player} **${Attacker.Name}'s Heal** by **${Special.toLocaleString()}**` },
             ) 
         }
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -944,6 +995,7 @@ if (Defender.OfficerSkill === 'Flaming Meteors') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -963,6 +1015,7 @@ if (Defender.OfficerSkill === 'Master of War') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -982,6 +1035,7 @@ if (Defender.OfficerSkill === 'Phantom Power') {
 
         
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -1000,6 +1054,7 @@ if (Defender.OfficerSkill === 'Blinding Flash') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -1019,6 +1074,7 @@ if (Defender.OfficerSkill === 'Rain of Blades') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -1039,6 +1095,7 @@ if (Defender.OfficerSkill === 'Devastation') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -1061,6 +1118,8 @@ if (Defender.OfficerSkill === 'Beauty Worth Preserving') {
         Attacker.AttackPower = Attacker.AttackPower - damage
 
         skillEmbed
+            .setImage(Boom)
+            .setThumbnail(RedCross)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
                 { name: `${Defender.OfficerSkill}`, value: `**${Defender.Officer}** & decreases ${Attacker.Player} **${Attacker.Name}'s Health** by **${health.toLocaleString()}**` },
@@ -1080,6 +1139,7 @@ if (Defender.OfficerSkill === 'Forlorn Hope') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -1099,6 +1159,7 @@ if (Defender.OfficerSkill === 'Sky Dancer') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -1118,6 +1179,7 @@ if (Defender.OfficerSkill === 'Untouchable') {
         Attacker.AttackPower = 0
 
         skillEmbed
+            .setThumbnail(RedCross)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & decreases ${Attacker.Player} **${Attacker.Name}'s Attack** to **${Power.toLocaleString()}**` },
             ),   
@@ -1139,6 +1201,7 @@ if (Defender.OfficerSkill === 'Heavenly Rays') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** to **${Power.toLocaleString()}**` },
             ),   
@@ -1159,6 +1222,7 @@ if (Defender.OfficerSkill === 'Twin Fangs') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -1178,6 +1242,7 @@ if (Defender.OfficerSkill === 'Night Evader') {
         Attacker.AttackPower = Attacker.AttackPower - Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & decreases ${Attacker.Player} **${Attacker.Name}'s Attack** to **${Power.toLocaleString()}**` },
             ),   
@@ -1197,6 +1262,7 @@ if (Defender.OfficerSkill === 'Unleashed Justice') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -1216,6 +1282,7 @@ if (Defender.OfficerSkill === 'Sticky Situation') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -1235,6 +1302,7 @@ if (Defender.OfficerSkill === 'Desperate Counterattack') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
@@ -1255,6 +1323,7 @@ if (Defender.OfficerSkill === 'Last Gasp') {
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
+            .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   

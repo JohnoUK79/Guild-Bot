@@ -140,6 +140,7 @@ if (Attacker.Speed < Defender.Speed) {
         console.log(Defender.ImageFile)
     
         embed
+            .setThumbnail(`attachment://${Attacker.ImageFile}`)
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
             .setImage(`attachment://${Defender.ImageFile}`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
@@ -156,6 +157,7 @@ if (Attacker.Speed < Defender.Speed) {
         console.log(Attacker.ImageFile)
 
         embed
+            .setThumbnail(`attachment://${Defender.ImageFile}`)
             .setImage(`attachment://${Attacker.ImageFile}`)
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
@@ -180,6 +182,7 @@ if (Attacker.Speed < Defender.Speed) {
         console.log(Attacker.ImageFile)
 
         embed
+            .setThumbnail(`attachment://${Defender.ImageFile}`)
             .setImage(`attachment://${Attacker.ImageFile}`)
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
@@ -195,6 +198,7 @@ if (Attacker.Speed < Defender.Speed) {
         officerSkills(interaction, Attacker, Defender, AH, DH)
         campSelection(Attacker, Defender) 
         embed
+            .setThumbnail(`attachment://${Attacker.ImageFile}`)
             .setImage(`attachment://${Defender.ImageFile}`)
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
@@ -216,6 +220,7 @@ if (DH < 0) {
         const newWallet = parseInt(wallet + winnings)
 
         embed 
+            .setThumbnail(`attachment://${Defender.ImageFile}`)
             .setImage(`attachment://${Attacker.ImageFile}`)
             .addFields(
                 { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
@@ -238,6 +243,7 @@ if (AH < 0) {
         const newWallet = wallet + winnings
     
         embed
+            .setThumbnail(`attachment://${Attacker.ImageFile}`)
             .setImage(`attachment://${Defender.ImageFile}`)
             .addFields(
                 { name: `Defenders War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${defender}` },

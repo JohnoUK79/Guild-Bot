@@ -112,7 +112,6 @@ module.exports = {
 		} catch (err) {console.log(err)}
 		}
 		if (interaction.customId === 'camp1') {
-		interaction.deferReply
 		try {
 		campaignMode(interaction)
 		} catch (err) {console.log(err)}

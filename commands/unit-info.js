@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder , AttachmentBuilder} = require('discord.js');
 const sql = require("../config/Database");
 const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
@@ -34,7 +34,7 @@ module.exports = {
     async execute(interaction) {
         const camp = interaction.options.getString('camp');
         const troop = interaction.options.getString('troop');
-
+        
         await interaction.guild.members.fetch()
         guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
@@ -45,16 +45,18 @@ module.exports = {
         } else {
             let image = unitInfo[0].Camp
         }
+        const unitImage = new AttachmentBuilder(`./img/${unitInfo[0].Image}`)
+        const campImage = new AttachmentBuilder(`./img/${unitInfo[0].Camp}.png`)
+
         console.log(image)
         const unitInfoEmbed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`Troop Information`)
             .setURL('http://www.phfamily.co.uk/invites.php')
-            .setThumbnail(interaction.user.displayAvatarURL())
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**${unitInfo[0].Camp} ${unitInfo[0].Unit_Type}**`)
-            .setThumbnail(guildIcon)
-            .setImage(`http://phfamily.co.uk/img/Warpath/${unitInfo[0].Camp}.png`)
+            .setThumbnail(`attachment://${unitInfo[0].Image}`)
+            .setImage(`attachment://${unitInfo[0].Image}`)
             .setTimestamp()
             .setFooter({ text: `${unitInfo[0].Camp} - ${unitInfo[0].Unit_Type}.`, iconURL: `${guildIcon}` });
             
@@ -66,6 +68,7 @@ module.exports = {
         await interaction.reply({
             ephemeral: false,
             embeds: [unitInfoEmbed],
+            files: [unitImage]
         });
 
     },

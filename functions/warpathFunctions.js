@@ -1236,76 +1236,76 @@ console.log(officerSelection)
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp1")
-                    .setLabel('Professor Pain (20)')
+                    .setLabel('Professor Pain (50)')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp2")
-                    .setLabel('The Witcher (40)')
+                    .setLabel('The Witcher (100)')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp3")
-                    .setLabel('Percy (60)')
+                    .setLabel('Percy (150)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp4")
-                    .setLabel('Argent Flamce (80)')
+                    .setLabel('Argent Flamce (200)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp5")
-                    .setLabel('The Erupter (100)')
+                    .setLabel('The Erupter (250)')
                     .setStyle(ButtonStyle.Danger),
             )
             const campaignButtons2 = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp6")
-                    .setLabel('El Cartero (120)')
+                    .setLabel('El Cartero (300)')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp7")
-                    .setLabel('Thorn Countess (140)')
+                    .setLabel('Thorn Countess (350)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp8")
-                    .setLabel('Steel Fighter (160)')
+                    .setLabel('Steel Fighter (400)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp9")
-                    .setLabel('Valkrie (180)')
+                    .setLabel('Valkrie (450)')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("camp10")
-                    .setLabel('Saber of The Nation (200)')
+                    .setLabel('Saber of The Nation (500)')
                     .setStyle(ButtonStyle.Danger),
             )
             const campaignButtons3 = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp11")
-                    .setLabel('Berserker Bear (220)')
+                    .setLabel('Berserker Bear (550)')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp12")
-                    .setLabel('War Machine (240)')
+                    .setLabel('War Machine (600)')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp13")
-                    .setLabel('Guardian of Truth (260)')
+                    .setLabel('Guardian of Truth (650)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp14")
-                    .setLabel('Iron Bastion (280)')
+                    .setLabel('Iron Bastion (700)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp15")
-                    .setLabel('Angel of Light (300)')
+                    .setLabel('Angel of Light (750)')
                     .setStyle(ButtonStyle.Danger),
             )
             const campaignButtons4 = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp16")
-                    .setLabel('Sergeant Spanner (320)')
+                    .setLabel('Sergeant Spanner (800)')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("profile")

@@ -1330,10 +1330,10 @@ console.log(officerSelection)
             .setTimestamp()
             .setDescription(`Pick your Enemy`)
             .setTitle(`Select your opponent!`)
-        const embed = campaignEmbed
-        const buttons = campaignButtons2
+        const campaignSelectionEmbed = campaignEmbed
+        const buttons = campaignButtons
         interaction.update({
-            embeds: [embed],
+            embeds: [campaignSelectionEmbed],
             components: [buttons, campaignButtonsMenu] //, campaignButtons2, campaignButtons3, campaignButtons4, campaignButtons5]
         })
     },

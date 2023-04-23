@@ -234,6 +234,12 @@ if (DH < 0) {
         .setDescription(`${campaignOfficer}'s **${Defender.Name}** has been killed by ${interaction.member}'s **${Attacker.Name} & ${Attacker.Officer} using ${Attacker.OfficerSkill}**.`)
 
     interaction.editReply({ embeds: [embed], files: [attackImage] });
+    if (interaction.customId === 'camp5')
+    interaction.update({
+        embeds: [embed],
+        //components: [buttons, campaignButtonsMenu] //, campaignButtons2, campaignButtons3, campaignButtons4, campaignButtons5]
+    })
+
 const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
 console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${campaignOfficer}`)
 } else

@@ -375,7 +375,7 @@ module.exports = {
                 console.log(`Phantom Power`)            
                 Power = Attacker.AttackPower * 0.10
                 Attacker.AttackPower = Attacker.AttackPower + Power
-                Damage = DH * 0.2
+                Damage = DH * 0.02
                 DH = DH - Damage
 
                 skillEmbed
@@ -1032,12 +1032,16 @@ if (Defender.OfficerSkill === 'Phantom Power') {
         console.log(`Phantom Power`)            
         Power = Defender.AttackPower * 0.10
         Defender.AttackPower = Defender.AttackPower + Power
+        Damage = AH * 0.02
+        AH = AH - Damage
 
         
         skillEmbed
             .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.OfficerSkill}`, value: `**${Defender.Officer}** decreases ${Attacker.Player} **${Attacker.Name}'s Health** by **${Damage.toLocaleString()}**` },
+
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'

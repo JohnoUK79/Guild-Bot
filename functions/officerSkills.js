@@ -196,16 +196,22 @@ module.exports = {
             console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
                 console.log(`Vengeance`)            
-                Attacker.AttackPower * 0.3
+                Power = Attacker.AttackPower * 0.3
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 if (Attacker.UnitType === 'Infantry') {
                     Special = Attacker.AttackPower + Attacker.AttackPower * 0.25 
                     Attacker.AttackPower = Attacker.AttackPower + Special
+                skillEmbed
+                    .setImage(Boom)
+                    .addFields(
+                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Special.toLocaleString() || Power.toLocaleString()}**` },
+                    )  
+
                 }
                 skillEmbed
                     .setThumbnail(Boom)
                     .addFields(
-                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Special.toLocaleString() || Power.toLocaleString()}**` },
+                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString() || Power.toLocaleString()}**` },
                     ),   
             console.log(Special.toLocaleString() || Power.toLocaleString())
             Attacker.SkillUsed = 'Attack'
@@ -379,7 +385,7 @@ module.exports = {
                 AH = AH + health
 
                 skillEmbed
-                    .setThumbnail(RedCross)
+                    .setImage(RedCross)
                     .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
@@ -1037,6 +1043,7 @@ if (Defender.OfficerSkill === 'Phantom Power') {
 
         
         skillEmbed
+            .setImage(RedCross)
             .setThumbnail(Boom)
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },

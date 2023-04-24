@@ -1245,22 +1245,22 @@ console.log(officerSelection)
                 new ButtonBuilder()
                     .setCustomId("camp3")
                     .setLabel('Percy (150)')
-                    .setStyle(ButtonStyle.Primary),
+                    .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp4")
                     .setLabel('Argent Flamce (200)')
-                    .setStyle(ButtonStyle.Primary),
+                    .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp5")
                     .setLabel('The Erupter (250)')
-                    .setStyle(ButtonStyle.Danger),
+                    .setStyle(ButtonStyle.Success),
             )
             const campaignButtons2 = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp6")
                     .setLabel('El Cartero (300)')
-                    .setStyle(ButtonStyle.Success),
+                    .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp7")
                     .setLabel('Thorn Countess (350)')
@@ -1272,30 +1272,30 @@ console.log(officerSelection)
                 new ButtonBuilder()
                     .setCustomId("camp9")
                     .setLabel('Valkrie (450)')
-                    .setStyle(ButtonStyle.Danger),
+                    .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp10")
                     .setLabel('Saber of The Nation (500)')
-                    .setStyle(ButtonStyle.Danger),
+                    .setStyle(ButtonStyle.Primary),
             )
             const campaignButtons3 = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp11")
                     .setLabel('Berserker Bear (550)')
-                    .setStyle(ButtonStyle.Success),
+                    .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("camp12")
                     .setLabel('War Machine (600)')
-                    .setStyle(ButtonStyle.Success),
+                    .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("camp13")
                     .setLabel('Guardian of Truth (650)')
-                    .setStyle(ButtonStyle.Primary),
+                    .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("camp14")
                     .setLabel('Iron Bastion (700)')
-                    .setStyle(ButtonStyle.Primary),
+                    .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("camp15")
                     .setLabel('Angel of Light (750)')

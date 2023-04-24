@@ -2,13 +2,14 @@ const ms = require('ms-prettify').default
 const { campSelection, campaignSelection, attackSelection } = require('../functions/warpathFunctions');
 const { officerSkills } = require('../functions/officerSkills');
 const sql = require("../config/Database");
-const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
+const { EmbedBuilder, AttachmentBuilder , ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 module.exports = {
 campaignMode: async function (interaction) {
     await interaction.deferReply({
         fetchReply: true,
         empheral: false
     });
+    
     const guildIcon = interaction.member.guild.iconURL();
     const guildName = interaction.member.guild.name
 	const { commandCooldowns } = require('../bot');
@@ -36,6 +37,7 @@ campaignMode: async function (interaction) {
         if (interaction.customId === 'camp14') {campaign = 13}
         if (interaction.customId === 'camp15') {campaign = 14}
         if (interaction.customId === 'camp16') {campaign = 15}
+
         campaignSelection(campaign)
         console.log(t)
         console.log(Date.now() - t)
@@ -119,12 +121,12 @@ campaignMode: async function (interaction) {
                 OfficerSkill: defendOfficer[0].Skill,
                 OfficerType: defendOfficer[0].Officer_Type,
                 Multiplier: 1,
-                Image: `http://phfamily.co.uk/img/${campaignUnitCamp}.png`,
+                Image: `http://phfamily.co.uk/img/${DefenderUnit[0].Image}`,
                 ImageFile: `${campaignUnitCamp}.png`
             }
-            if (Attacker.Prestige > 0 ) {
+            if (Attacker.Prestige > 1 ) {
                 console.log(`Defender Buff`, Attacker.Prestige)
-                Defender.Multiplier = Attacker.Prestige
+                Defender.Multiplier = Attacker.Prestige / 2
             }
             if (defendOfficer[0].Image) {
                 Defender.Image = `http://phfamily.co.uk/img/${defendOfficer[0].Image}`
@@ -234,11 +236,6 @@ if (DH < 0) {
         .setDescription(`${campaignOfficer}'s **${Defender.Name}** has been killed by ${interaction.member}'s **${Attacker.Name} & ${Attacker.Officer} using ${Attacker.OfficerSkill}**.`)
 
     interaction.editReply({ embeds: [embed], files: [attackImage] });
-    if (interaction.customId === 'camp5')
-    interaction.update({
-        embeds: [embed],
-        //components: [buttons, campaignButtonsMenu] //, campaignButtons2, campaignButtons3, campaignButtons4, campaignButtons5]
-    })
 
 const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
 console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${campaignOfficer}`)

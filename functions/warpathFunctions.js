@@ -1315,6 +1315,18 @@ console.log(officerSelection)
             const campaignButtonsMenu = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
+                    .setCustomId("easy")
+                    .setLabel('Easy')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("normal")
+                    .setLabel('Normal')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("hard")
+                    .setLabel('Hard')
+                    .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
                     .setCustomId("cancel")
                     .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
@@ -1330,10 +1342,16 @@ console.log(officerSelection)
             .setTimestamp()
             .setDescription(`Pick your Enemy`)
             .setTitle(`Select your opponent!`)
-        const campaignSelectionEmbed = campaignEmbed
-        const buttons = campaignButtons
+        buttons = campaignButtons
+        if (interaction.customId === 'normal') { 
+        buttons = campaignButtons2
+    }
+    if (interaction.customId === 'hard') { 
+        campaignSelectionEmbed = campaignEmbed
+        buttons = campaignButtons3
+    }
         interaction.update({
-            embeds: [campaignSelectionEmbed],
+            embeds: [campaignEmbed],
             components: [buttons, campaignButtonsMenu] //, campaignButtons2, campaignButtons3, campaignButtons4, campaignButtons5]
         })
     },

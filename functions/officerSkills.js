@@ -1126,7 +1126,7 @@ if (Defender.OfficerSkill === 'Beauty Worth Preserving') {
         Defender.AttackPower = Defender.AttackPower + Power
         
         health = Attacker.AttackPower * .1
-        Attacker.AttackPower = Attacker.AttackPower - damage
+        Attacker.AttackPower = Attacker.AttackPower - health
 
         skillEmbed
             .setImage(Boom)

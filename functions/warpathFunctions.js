@@ -727,7 +727,7 @@ console.log(officerSelection)
                 { name: `Speed:`, value: `${unitSelection.Speed}`, inline: true },
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-
+        console.log(unitSelection.Image)
         const saveUnit = await sql.Execute(`INSERT INTO playerunits (discord_id, camp, unit_type, unit_level, unit_id) VALUES ('${interaction.member.id}', '${unitSelection.Camp}', '${unitSelection.Unit_Type}', '${unitSelection.Unit_Level}', '${unitSelection.Unit_ID}')`)
         console.log(saveUnit.info)
         const updateOfficer = await sql.Execute(`UPDATE levels SET Unit_Camp = '${unitSelection.Camp}', Unit_Type = '${unitSelection.Unit_Type}', Unit_Level = '${unitSelection.Unit_Level}' WHERE discord_id = '${interaction.member.id}'`)
@@ -871,6 +871,9 @@ console.log(officerSelection)
         const newHP = newUnit[0].HP
         const newSpeed = newUnit[0].Speed
         const newID = newUnit[0].Unit_ID
+        const newImage = newUnit[0].Unit_Type
+        const newEmoji = newImage.replace('.png', '')
+        console.log(newEmoji)
 
 
         upgradeUnitEmbed
@@ -892,7 +895,7 @@ console.log(officerSelection)
 
         const unitUpgrade = await sql.Execute(`UPDATE levels SET War_Coins = ${newWallet}, Unit_Level = '${newLevel}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Levels Unit Update${unitUpgrade.info}`)
-        const updateUnit = await sql.Execute(`UPDATE playerunits SET unit_level = '${newLevel}', unit_id = '${newID}' WHERE discord_id = '${interaction.member.id}' AND camp = '${Level[0].unit_camp}' AND unit_type = '${Level[0].unit_type}'`)
+        const updateUnit = await sql.Execute(`UPDATE playerunits SET emoji = ${newEmoji}, unit_level = '${newLevel}', unit_id = '${newID}' WHERE discord_id = '${interaction.member.id}' AND camp = '${Level[0].unit_camp}' AND unit_type = '${Level[0].unit_type}'`)
         console.log(`Player Unit Update ${updateUnit.info}`)
         return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeButtons] })
     },
@@ -1070,13 +1073,12 @@ console.log(officerSelection)
             const level = playerUnits[entry].unit_level
             const playerEmoji = playerUnits[entry].emoji || 'Guardian_of_the_Truth'
             const image = await interaction.member.guild.emojis.cache.find(emoji => emoji.name == playerEmoji)
-            console.log(image)
 
             unitChoices.push({
                 label: type,
                 description: `${camp} - ${type} - ${level}`,
                 value: type.toString(),
-                //emoji: image.toString()
+                emoji: image.toString()
             })
         }
         const unitMenu = new ActionRowBuilder()

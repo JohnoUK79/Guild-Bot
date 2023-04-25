@@ -1080,7 +1080,7 @@ console.log(officerSelection)
                 label: type,
                 description: `${camp} - ${type} - ${level}`,
                 value: type.toString(),
-                emoji: image.toString()
+                //emoji: image.toString()
             })
         }
         const unitMenu = new ActionRowBuilder()

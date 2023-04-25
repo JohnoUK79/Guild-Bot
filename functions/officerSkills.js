@@ -985,7 +985,7 @@ if (Defender.OfficerSkill === 'Breaching Charge') {
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
-    console.log(Special.toLocaleString() || Power.toLocaleString())
+    console.log(Power.toLocaleString() || Special.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
     return

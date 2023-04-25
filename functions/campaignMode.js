@@ -125,7 +125,7 @@ campaignMode: async function (interaction) {
                 ImageFile: `${campaignUnitCamp}.png`
             }
             if (Attacker.Prestige > 1 ) {
-                console.log(`Defender Buff`, Attacker.Prestige)
+                console.log(`Defender Buff`, Attacker.Prestige / 2)
                 Defender.Multiplier = Attacker.Prestige / 2
             }
             if (defendOfficer[0].Image) {
@@ -150,11 +150,11 @@ while (DH >= 0 && AH >= 0) {
     attackSelection(Attacker, Defender)
     officerSkills(interaction, Attacker, Defender, AH, DH)
     campSelection(Attacker, Defender) 
+    await sleep(1000)         
     Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
     const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
     Defender.AttackPower = (defendPower * Defender.Multiplier)
     console.log('Defend Multiplier', Defender.Multiplier )
-    await sleep(800)
     AH = AH - Defender.AttackPower
 
     embed
@@ -164,7 +164,6 @@ while (DH >= 0 && AH >= 0) {
         .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [defendImage] });
     console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)     
-    await sleep(950)         
     const  attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
     Attacker.AttackPower = (attackPower * Attacker.Multiplier)
     console.log('Attack Multiplier', Attacker.Multiplier )
@@ -184,6 +183,7 @@ while (DH >= 0 && AH >= 0) {
 attackSelection(Attacker, Defender)
 officerSkills(interaction, Attacker, Defender, AH, DH)
 campSelection(Attacker, Defender) 
+await sleep(1000)      
 Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
 const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
 Attacker.AttackPower = (attackPower * Attacker.Multiplier)
@@ -196,7 +196,6 @@ DH = DH - Attacker.AttackPower
         .setDescription(`${campaignOfficer}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [attackImage] });
 console.log(`Attacker hit for ${Attacker.AttackPower.toLocaleString()}`)    
-await sleep(950)      
 const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
 Defender.AttackPower = (defendPower * Defender.Multiplier)
 console.log('Defend Multiplier', Defender.Multiplier )
@@ -209,7 +208,6 @@ AH = AH - Defender.AttackPower
         .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [defendImage] });
 console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)
-await sleep(950)      
 }
 }
 
@@ -241,7 +239,7 @@ const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war
 console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${campaignOfficer}`)
 } else
 if (AH < 0) {
-    await sleep(950)      
+    await sleep(1000)      
     console.log(Defender.ImageFile)
     const losses = AttackerDB[0].battle_losses
     const newLosses = parseInt(losses + 1)

@@ -115,8 +115,25 @@ module.exports = {
                     Defender.ImageFile = DefenderUnit[0].Image
                     console.log(`Defender: ${Defender.Image}\n${Defender.ImageFile}`)
                 }
-                embed
-					.setDescription(`${interaction.member} your **${Attacker.Name}** sucessfully Battled ${defender}'s **${Defender.Name}**!`)
+
+                if (Attacker.UnitCamp === 'Vanguard') {
+                    Attacker.Color = '#99aab5'
+                }
+                if (Attacker.UnitCamp === 'Liberty') {
+                    Attacker.Color = '#007fff'
+                }
+                if (Attacker.UnitCamp === 'MartyrsW') {
+                    Attacker.Color = '#ee2e31'
+                }
+                if (Defender.UnitCamp === 'Vanguard') {
+                    Defender.Color = '#99aab5'
+                }
+                if (Defender.UnitCamp === 'Liberty') {
+                    Defender.Color = '#007fff'
+                }
+                if (Defender.UnitCamp === 'MartyrsW') {
+                    Defender.Color = '#ee2e31'
+                }
 
 const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)
 const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)
@@ -133,16 +150,16 @@ if (Attacker.Speed < Defender.Speed) {
         Defender.AttackPower = (defendPower * Defender.Multiplier)
         console.log('Defend Multiplier', Defender.Multiplier )
         AH = AH - Defender.AttackPower
-        console.log(Defender.ImageFile)
     
         embed
+            .setColor(Defender.Color)
             .setThumbnail(`attachment://${Defender.ImageFile}`)
             .setImage(`attachment://${Defender.ImageFile}`)
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
         console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)  
-        await sleep(950)      
+        await sleep(1800)      
         const  attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
         Attacker.AttackPower = (attackPower * Attacker.Multiplier)
         console.log('Attack Multiplier', Attacker.Multiplier )
@@ -153,6 +170,7 @@ if (Attacker.Speed < Defender.Speed) {
         console.log(Attacker.ImageFile)
 
         embed
+            .setColor(Attacker.Color)
             .setThumbnail(`attachment://${Attacker.ImageFile}`)
             .setImage(`attachment://${Attacker.ImageFile}`)
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
@@ -178,13 +196,14 @@ if (Attacker.Speed < Defender.Speed) {
         console.log(Attacker.ImageFile)
 
         embed
+            .setColor(Attacker.Color)
             .setThumbnail(`attachment://${Attacker.ImageFile}`)
             .setImage(`attachment://${Attacker.ImageFile}`)
             .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${defender}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
             .setDescription(`${defender}'s **${Defender.Name}** has **${DH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
     console.log(`Attacker hit for ${Attacker.AttackPower.toLocaleString()}`)   
-    await sleep(950)       
+    await sleep(1800)       
     const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
     Defender.AttackPower = (defendPower * Defender.Multiplier)
     console.log('Defend Multiplier', Defender.Multiplier )
@@ -194,13 +213,14 @@ if (Attacker.Speed < Defender.Speed) {
         officerSkills(interaction, Attacker, Defender, AH, DH)
         campSelection(Attacker, Defender) 
         embed
+            .setColor(Defender.Color)
             .setThumbnail(`attachment://${Defender.ImageFile}`)
             .setImage(`attachment://${Defender.ImageFile}`)
             .setTitle(`${defender}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${AH.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
     console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)
-    await sleep(950)      
+    await sleep(1800)      
     }
 }
 
@@ -216,13 +236,14 @@ if (DH < 0) {
         const newWallet = parseInt(wallet + winnings)
 
         embed 
+            .setColor(Attacker.Color)
             .setThumbnail(`attachment://${Attacker.ImageFile}`)
             .setImage(`attachment://${Attacker.ImageFile}`)
             .addFields(
                 { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
             )        
             .setDescription(`${defender}'s **${Defender.Name}** has been killed by ${interaction.member}'s **${Attacker.Name} & ${Attacker.Officer} using ${Attacker.OfficerSkill}**.`)
-        await sleep(950)      
+        await sleep(1800)      
         interaction.editReply({ embeds: [embed], files: [attackImage] });
     const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
     const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${defender.id}`)
@@ -239,13 +260,14 @@ if (AH < 0) {
         const newWallet = wallet + winnings
     
         embed
+            .setColor(Defender.Color)
             .setThumbnail(`attachment://${Defender.ImageFile}`)
             .setImage(`attachment://${Defender.ImageFile}`)
             .addFields(
                 { name: `Defenders War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${defender}` },
             )     
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by ${defender}'s **${Defender.Name} & ${Defender.Officer} using ${Defender.OfficerSkill}**.`)
-        await sleep(950)      
+        await sleep(1800)      
         interaction.editReply({ embeds: [embed], files: [defendImage] });
         const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${defender.id}`)
         const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)

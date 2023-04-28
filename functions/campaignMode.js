@@ -136,8 +136,24 @@ campaignMode: async function (interaction) {
                 Defender.Image = `http://phfamily.co.uk/img/${DefenderUnit[0].Image}`
                 Defender.ImageFile = DefenderUnit[0].Image
             }
-            embed
-                .setDescription(`${interaction.member} your **${Attacker.Name}** sucessfully Battled ${campaignOfficer}'s **${Defender.Name}**!`)
+            if (Attacker.UnitCamp === 'Vanguard') {
+                Attacker.Color = '#99aab5'
+            }
+            if (Attacker.UnitCamp === 'Liberty') {
+                Attacker.Color = '#007fff'
+            }
+            if (Attacker.UnitCamp === 'MartyrsW') {
+                Attacker.Color = '#ee2e31'
+            }
+            if (Defender.UnitCamp === 'Vanguard') {
+                Defender.Color = '#99aab5'
+            }
+            if (Defender.UnitCamp === 'Liberty') {
+                Defender.Color = '#007fff'
+            }
+            if (Defender.UnitCamp === 'MartyrsW') {
+                Defender.Color = '#ee2e31'
+            }
 
 const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)
 const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)
@@ -150,7 +166,7 @@ while (DH >= 0 && AH >= 0) {
     attackSelection(Attacker, Defender)
     officerSkills(interaction, Attacker, Defender, AH, DH)
     campSelection(Attacker, Defender) 
-    await sleep(1000)         
+    await sleep(1800)         
     Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
     const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
     Defender.AttackPower = (defendPower * Defender.Multiplier)
@@ -158,6 +174,7 @@ while (DH >= 0 && AH >= 0) {
     AH = AH - Defender.AttackPower
 
     embed
+        .setColor(Defender.Color)
         .setTitle(`${campaignOfficer}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
         .setThumbnail(`attachment://${Defender.ImageFile}`)
         .setImage(`attachment://${Defender.ImageFile}`)
@@ -170,6 +187,7 @@ while (DH >= 0 && AH >= 0) {
     DH = DH - Attacker.AttackPower
 
     embed
+        .setColor(Attacker.Color)
         .setThumbnail(`attachment://${Attacker.ImageFile}`)
         .setImage(`attachment://${Attacker.ImageFile}`)
         .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${campaignOfficer}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
@@ -183,13 +201,14 @@ while (DH >= 0 && AH >= 0) {
 attackSelection(Attacker, Defender)
 officerSkills(interaction, Attacker, Defender, AH, DH)
 campSelection(Attacker, Defender) 
-await sleep(1000)      
+await sleep(1800)      
 Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
 const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
 Attacker.AttackPower = (attackPower * Attacker.Multiplier)
 console.log('Attack Multiplier', Attacker.Multiplier )
 DH = DH - Attacker.AttackPower
     embed
+        .setColor(Attacker.Color)
         .setThumbnail(`attachment://${Attacker.ImageFile}`)
         .setImage(`attachment://${Attacker.ImageFile}`)
         .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${campaignOfficer}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
@@ -202,6 +221,7 @@ console.log('Defend Multiplier', Defender.Multiplier )
 AH = AH - Defender.AttackPower
 
     embed
+        .setColor(Defender.Color)
         .setThumbnail(`attachment://${Defender.ImageFile}`)
         .setImage(`attachment://${Defender.ImageFile}`)
         .setTitle(`${campaignOfficer}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
@@ -212,7 +232,7 @@ console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)
 }
 
 if (DH < 0) {
-    await sleep(950)      
+    await sleep(1800)      
     const winnings = AttackerDB[0].officer_level * 10000 * campaignOfficerLevel / 10
     chest = AttackerDB[0].war_chest
     const wallet = AttackerDB[0].war_coins
@@ -225,6 +245,7 @@ if (DH < 0) {
     // }
 
     embed 
+        .setColor(Attacker.Color)
         .setThumbnail(`attachment://${Attacker.ImageFile}`)
         .setImage(`attachment://${Attacker.ImageFile}`)
         .addFields(
@@ -239,12 +260,13 @@ const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war
 console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${campaignOfficer}`)
 } else
 if (AH < 0) {
-    await sleep(1000)      
+    await sleep(1800)      
     console.log(Defender.ImageFile)
     const losses = AttackerDB[0].battle_losses
     const newLosses = parseInt(losses + 1)
 
     embed
+        .setColor(Defender.Color)
         .setThumbnail(`attachment://${Defender.ImageFile}`)
         .setImage(`attachment://${Defender.ImageFile}`)
         .addFields(

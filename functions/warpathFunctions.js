@@ -938,11 +938,23 @@ console.log(officerSelection)
         const officerCamp = officerDetails[0].Officer_Camp || 'No Officer Chosen'
         const officerSkill = officerDetails[0].Skill || 'No Officer Chosen'
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`
+        console.log(link)
+        let Color = '#ffc759'
+        if (officerCamp === 'Vanguard') {
+            let Color = '#99aab5'
+        }
+        if (officerCamp === 'Liberty') {
+            let Color = '#007fff'
+        }
+        if (officerCamp === 'MartyrsW') {
+            let Color = '#ee2e31'
+        }
 
         profileEmbed
-
-            .setColor('#ff5b05')
-            .setThumbnail(guildIcon)
+            .setThumbnail(link)
+            .setColor(Color)
             .setTimestamp()
             .setDescription(`**${interaction.member}'s Profile**`)
             .addFields(

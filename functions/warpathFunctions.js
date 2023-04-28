@@ -953,6 +953,7 @@ console.log(officerSelection)
         }
 
         profileEmbed
+            .setImage(link)
             .setThumbnail(link)
             .setColor(Color)
             .setTimestamp()

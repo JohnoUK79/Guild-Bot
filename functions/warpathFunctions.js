@@ -1263,7 +1263,7 @@ module.exports = {
 
     },
     selectofficer: async function (interaction) {
-        const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' ORDER BY Skill_Level ASC`)
+        const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
         console.log(playerOfficers)
         const officerChoices = [];
         for (const entry in playerOfficers) {

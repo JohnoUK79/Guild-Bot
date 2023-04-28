@@ -1135,12 +1135,15 @@ console.log(officerSelection)
                 .setCustomId("cancel")
                 .setLabel('Upgrade')
                 .setStyle(ButtonStyle.Success),
-        )
-        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("selectunit")
+                .setLabel('Select Unit')
+                .setStyle(ButtonStyle.Primary),
             new ButtonBuilder()
                 .setCustomId("profile")
                 .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
+
         )
         const selectedUnitEmbed = new EmbedBuilder()
             .setTitle(`${selected} chosen`)
@@ -1221,8 +1224,10 @@ console.log(officerSelection)
                 .setCustomId("cancel")
                 .setLabel('Upgrade')
                 .setStyle(ButtonStyle.Success),
-        )
-        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("selectofficer")
+                .setLabel('Select Officer')
+                .setStyle(ButtonStyle.Primary),
             new ButtonBuilder()
                 .setCustomId("profile")
                 .setLabel('Profile')
@@ -1360,11 +1365,10 @@ console.log(officerSelection)
             .setDescription(`Pick your Enemy`)
             .setTitle(`Select your opponent!`)
         buttons = campaignButtons
-        if (interaction.customId === 'normal') { 
+    if (interaction.customId === 'normal') { 
         buttons = campaignButtons2
     }
     if (interaction.customId === 'hard') { 
-        campaignSelectionEmbed = campaignEmbed
         buttons = campaignButtons3
     }
         interaction.update({

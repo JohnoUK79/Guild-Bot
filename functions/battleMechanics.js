@@ -3,6 +3,7 @@ const sql = require("../config/Database");
 const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 const { officerSkills } = require("./officerSkills");
 const { attackSelection, campSelection } = require("./warpathFunctions");
+const { Colours } = require('../data/colours')
 
 module.exports = {
     battle: async function (interaction) {
@@ -17,7 +18,7 @@ module.exports = {
 		const Battle = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
 		const embed = new EmbedBuilder();
 			embed
-				.setColor('#ff5b05')
+				.setColor(Colours.Green)
 				.setThumbnail(guildIcon)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
@@ -117,22 +118,22 @@ module.exports = {
                 }
 
                 if (Attacker.UnitCamp === 'Vanguard') {
-                    Attacker.Color = '#99aab5'
+                    Attacker.Color = Colours.Vanguard
                 }
                 if (Attacker.UnitCamp === 'Liberty') {
-                    Attacker.Color = '#007fff'
+                    Attacker.Color = Colours.Liberty
                 }
                 if (Attacker.UnitCamp === 'MartyrsW') {
-                    Attacker.Color = '#ee2e31'
+                    Attacker.Color = Colours.MartyrsW
                 }
                 if (Defender.UnitCamp === 'Vanguard') {
-                    Defender.Color = '#99aab5'
+                    Defender.Color = Colours.Vanguard
                 }
                 if (Defender.UnitCamp === 'Liberty') {
-                    Defender.Color = '#007fff'
+                    Defender.Color = Colours.Liberty
                 }
                 if (Defender.UnitCamp === 'MartyrsW') {
-                    Defender.Color = '#ee2e31'
+                    Defender.Color = Colours.MartyrsW
                 }
 
 const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)

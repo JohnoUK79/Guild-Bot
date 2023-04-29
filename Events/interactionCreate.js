@@ -146,6 +146,11 @@ module.exports = {
 		campaign(interaction)
 		} catch (err) {console.log(err)}
 		}
+		if (interaction.customId === 'extreme') {
+		try {
+		campaign(interaction)
+		} catch (err) {console.log(err)}
+		}
 		if (interaction.customId === 'camp5') {
 		try {
 		campaignMode(interaction)

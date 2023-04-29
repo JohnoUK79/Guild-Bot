@@ -1,5 +1,6 @@
 const ms = require('ms-prettify').default
 const { campSelection, campaignSelection, attackSelection } = require('../functions/warpathFunctions');
+const { Colours } = require('../data/colours')
 const { officerSkills } = require('../functions/officerSkills');
 const sql = require("../config/Database");
 const { EmbedBuilder, AttachmentBuilder , ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
@@ -37,6 +38,11 @@ campaignMode: async function (interaction) {
         if (interaction.customId === 'camp14') {campaign = 13}
         if (interaction.customId === 'camp15') {campaign = 14}
         if (interaction.customId === 'camp16') {campaign = 15}
+        if (interaction.customId === 'camp17') {campaign = 16}
+        if (interaction.customId === 'camp18') {campaign = 17}
+        if (interaction.customId === 'camp19') {campaign = 18}
+        if (interaction.customId === 'camp20') {campaign = 19}
+        if (interaction.customId === 'camp21') {campaign = 20}
 
         campaignSelection(campaign)
         console.log(t)
@@ -137,22 +143,22 @@ campaignMode: async function (interaction) {
                 Defender.ImageFile = DefenderUnit[0].Image
             }
             if (Attacker.UnitCamp === 'Vanguard') {
-                Attacker.Color = '#99aab5'
+                Attacker.Color = Colours.Vanguard
             }
             if (Attacker.UnitCamp === 'Liberty') {
-                Attacker.Color = '#007fff'
+                Attacker.Color = Colours.Liberty
             }
             if (Attacker.UnitCamp === 'MartyrsW') {
-                Attacker.Color = '#ee2e31'
+                Attacker.Color = Colours.MartyrsW
             }
             if (Defender.UnitCamp === 'Vanguard') {
-                Defender.Color = '#99aab5'
+                Defender.Color = Colours.Vanguard
             }
             if (Defender.UnitCamp === 'Liberty') {
-                Defender.Color = '#007fff'
+                Defender.Color = Colours.Liberty
             }
             if (Defender.UnitCamp === 'MartyrsW') {
-                Defender.Color = '#ee2e31'
+                Defender.Color = Colours.MartyrsW
             }
 
 const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)

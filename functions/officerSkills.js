@@ -1,5 +1,7 @@
 const sql = require("../config/Database");
 const { EmbedBuilder } = require('discord.js');
+const { Colours } = require('../data/colours')
+const { chance5, chance10, chance15, chance20, chance25, chance30, chance35, chance40, chance45, chance50, chance55, chance60, chance65, chance70, chance75, chance80 } = require('../data/chance')
 async function sleep(ms) {
     return new Promise(
       resolve => setTimeout(resolve, ms)
@@ -16,37 +18,67 @@ module.exports = {
             Attacker.OfficerLevel = 1
             console.log(`Officer Not Levelled Up`)
         }
+
         if (Attacker.UnitCamp === 'Vanguard') {
-            Attacker.SkillColor = '#99aab5'
+            Attacker.SkillColor = Colours.Vanguard
         }
         if (Attacker.UnitCamp === 'Liberty') {
-            Attacker.SkillColor = '#007fff'
+            Attacker.SkillColor = Colours.Liberty
         }
         if (Attacker.UnitCamp === 'MartyrsW') {
-            Attacker.SkillColor = '#ee2e31'
-        }
-        if (Defender.UnitCamp === 'Vanguard') {
-            Defender.SkillColor = '#99aab5'
-        }
-        if (Defender.UnitCamp === 'Liberty') {
-            Defender.SkillColor = '#007fff'
-        }
-        if (Defender.UnitCamp === 'MartyrsW') {
-            Defender.SkillColor = '#ee2e31'
+            Attacker.SkillColor = Colours.MartyrsW
         }
 
-        const chance = [
-            'Yes',
-            'No',
-            'No',
-            'No',
-            'No',
-            'Yes',
-            'No',
-            'No',
-            'No',
-            'Yes',
-        ]
+        chance = chance5
+        if (Attacker.SkillLevel === 0) {
+            chance = chance5
+        }
+        if (Attacker.SkillLevel === 1) {
+            chance = chance10
+        }
+        if (Attacker.SkillLevel === 2) {
+            chance = chance15
+        }
+        if (Attacker.SkillLevel === 3) {
+            chance = chance20
+        }
+        if (Attacker.SkillLevel === 4) {
+            chance = chance25
+        }
+        if (Attacker.SkillLevel === 5) {
+            chance = chance30
+        }
+        if (Attacker.SkillLevel === 6) {
+            chance = chance35
+        }
+        if (Attacker.SkillLevel === 7) {
+            chance = chance40
+        }
+        if (Attacker.SkillLevel === 8) {
+            chance = chance45
+        }
+        if (Attacker.SkillLevel === 9) {
+            chance = chance50
+        }
+        if (Attacker.SkillLevel === 10) {
+            chance = chance55
+        }
+        if (Attacker.SkillLevel === 11) {
+            chance = chance60
+        }
+        if (Attacker.SkillLevel === 12) {
+            chance = chance65
+        }
+        if (Attacker.SkillLevel === 13) {
+            chance = chance70
+        }
+        if (Attacker.SkillLevel === 14) {
+            chance = chance75
+        }
+        if (Attacker.SkillLevel === 15) {
+            chance = chance80
+        }
+
         const skillEmbed = new EmbedBuilder();
             skillEmbed 
                     .setColor('#ff5b05')
@@ -740,6 +772,65 @@ module.exports = {
         }
 
     //Defender Skills
+    if (Defender.UnitCamp === 'Vanguard') {
+        Defender.SkillColor = Colours.Vanguard
+    }
+    if (Defender.UnitCamp === 'Liberty') {
+        Defender.SkillColor = Colours.Liberty
+    }
+    if (Defender.UnitCamp === 'MartyrsW') {
+        Defender.SkillColor = Colours.MartyrsW
+    }
+    chance = chance80
+    if (Defender.SkillLevel === 0) {
+        chance = chance5
+    }
+    if (Defender.SkillLevel === 1) {
+        chance = chance10
+    }
+    if (Defender.SkillLevel === 2) {
+        chance = chance15
+    }
+    if (Defender.SkillLevel === 3) {
+        chance = chance20
+    }
+    if (Defender.SkillLevel === 4) {
+        chance = chance25
+    }
+    if (Defender.SkillLevel === 5) {
+        chance = chance30
+    }
+    if (Defender.SkillLevel === 6) {
+        chance = chance35
+    }
+    if (Defender.SkillLevel === 7) {
+        chance = chance40
+    }
+    if (Defender.SkillLevel === 8) {
+        chance = chance45
+    }
+    if (Defender.SkillLevel === 9) {
+        chance = chance50
+    }
+    if (Defender.SkillLevel === 10) {
+        chance = chance55
+    }
+    if (Defender.SkillLevel === 11) {
+        chance = chance60
+    }
+    if (Defender.SkillLevel === 12) {
+        chance = chance65
+    }
+    if (Defender.SkillLevel === 13) {
+        chance = chance70
+    }
+    if (Defender.SkillLevel === 14) {
+        chance = chance75
+    }
+    if (Defender.SkillLevel === 15) {
+        chance = chance80
+    }
+
     skillEmbed 
         .setAuthor({ name: Defender.Player.username || Defender.Name, iconURL: Defender.Image })
 

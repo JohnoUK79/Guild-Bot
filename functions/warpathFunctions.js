@@ -54,6 +54,10 @@ module.exports = {
                     .setCustomId("cancel")
                     .setLabel('Cancel')
                     .setStyle(ButtonStyle.Danger),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
             )
         const upgradeEmbed = new EmbedBuilder();
         upgradeEmbed
@@ -116,6 +120,10 @@ module.exports = {
                     .setCustomId("cancel")
                     .setLabel('Cancel')
                     .setStyle(ButtonStyle.Danger),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
@@ -225,6 +233,10 @@ module.exports = {
                     .setCustomId("cancel")
                     .setLabel('Cancel')
                     .setStyle(ButtonStyle.Danger),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
@@ -334,6 +346,10 @@ module.exports = {
                     .setCustomId("cancel")
                     .setLabel('Cancel')
                     .setStyle(ButtonStyle.Danger),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
@@ -487,6 +503,10 @@ module.exports = {
                     .setCustomId("cancel")
                     .setLabel('Cancel')
                     .setStyle(ButtonStyle.Danger),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
             )
 
         const upgradeChestEmbed = new EmbedBuilder();
@@ -575,6 +595,10 @@ module.exports = {
                     .setCustomId("cancel")
                     .setLabel('Cancel')
                     .setStyle(ButtonStyle.Danger),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
             )
         const chooseOfficerButtons = new ActionRowBuilder()
             .addComponents(
@@ -586,6 +610,10 @@ module.exports = {
                     .setCustomId("cancel")
                     .setLabel('Cancel')
                     .setStyle(ButtonStyle.Danger),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
             )
         const upgradeButtons = new ActionRowBuilder()
             .addComponents(
@@ -693,6 +721,10 @@ module.exports = {
                     .setCustomId("cancel")
                     .setLabel('Cancel')
                     .setStyle(ButtonStyle.Danger),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
             )
         const chooseUnitButtons = new ActionRowBuilder()
             .addComponents(
@@ -704,6 +736,10 @@ module.exports = {
                     .setCustomId("cancel")
                     .setLabel('Cancel')
                     .setStyle(ButtonStyle.Danger),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
             )
         const upgradeButtons = new ActionRowBuilder()
             .addComponents(
@@ -894,6 +930,10 @@ module.exports = {
                     .setCustomId("cancel")
                     .setLabel('Cancel')
                     .setStyle(ButtonStyle.Danger),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
@@ -1221,6 +1261,10 @@ module.exports = {
                     .setCustomId("cancel")
                     .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
             )
         const selectUnitEmbed = new EmbedBuilder()
             .setColor(Colours.Green)
@@ -1322,6 +1366,10 @@ module.exports = {
                     .setCustomId("cancel")
                     .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Profile')
+                .setStyle(ButtonStyle.Secondary),
             )
         const selectOfficerEmbed = new EmbedBuilder()
             .setColor(CampColour)
@@ -1459,23 +1507,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp16")
-                    .setLabel('Sergeant Spanner (800)')
+                    .setLabel('TBC (800)')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
                     .setCustomId("camp17")
-                    .setLabel('Sergeant Spanner (800)')
+                    .setLabel('TBC (850)')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
                     .setCustomId("camp18")
-                    .setLabel('Sergeant Spanner (800)')
+                    .setLabel('TBC (900)')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
                     .setCustomId("camp19")
-                    .setLabel('Sergeant Spanner (800)')
+                    .setLabel('TBC (950)')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
                     .setCustomId("camp20")
-                    .setLabel('Profile')
+                    .setLabel('TBC (1000)')
                     .setStyle(ButtonStyle.Secondary),
             )
             const campaignButtonsMenu = new ActionRowBuilder()
@@ -1640,22 +1688,27 @@ module.exports = {
         return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons] })
     },
     campaignSelection: async function (campaign) { //Medium is Starter Troop
-        if (campaign === 0) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Professor Pain', campaignOfficerLevel = 50, campaignBaseLevel = 50
-        if (campaign === 1) return campaignUnitLevel = '9.2', campaignUnitType = 'Fighters', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'The Witcher', campaignOfficerLevel = 100, campaignBaseLevel = 100
-        if (campaign === 2) return campaignUnitLevel = '9.2', campaignUnitType = 'Infantry', campaignUnitCamp = 'Liberty', campaignOfficer = 'Percy', campaignOfficerLevel = 150, campaignBaseLevel = 150
-        if (campaign === 3) return campaignUnitLevel = '9.2', campaignUnitType = 'SuperHeavyTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Argent Flamce', campaignOfficerLevel = 200, campaignBaseLevel = 200
-        if (campaign === 4) return campaignUnitLevel = '9.2', campaignUnitType = 'Howitzers', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'The Erupter', campaignOfficerLevel = 250, campaignBaseLevel = 250
-        if (campaign === 5) return campaignUnitLevel = '9.2', campaignUnitType = 'Bombers', campaignUnitCamp = 'Liberty', campaignOfficer = 'El Cartero', campaignOfficerLevel = 300, campaignBaseLevel = 300
-        if (campaign === 6) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Thorn Countess', campaignOfficerLevel = 350, campaignBaseLevel = 350
-        if (campaign === 7) return campaignUnitLevel = '9.2', campaignUnitType = 'RocketLaunchers', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Steel Fighter', campaignOfficerLevel = 400, campaignBaseLevel = 400
-        if (campaign === 8) return campaignUnitLevel = '9.2', campaignUnitType = 'LightTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Valkrie', campaignOfficerLevel = 450, campaignBaseLevel = 450
-        if (campaign === 9) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Saber of the Nation', campaignOfficerLevel = 500, campaignBaseLevel = 500
-        if (campaign === 10) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Berserker Bear', campaignOfficerLevel = 550, campaignBaseLevel = 550
-        if (campaign === 11) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'War Machine', campaignOfficerLevel = 600, campaignBaseLevel = 600
-        if (campaign === 12) return campaignUnitLevel = '9.2', campaignUnitType = 'AntiTankGuns', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Guardian of Truth', campaignOfficerLevel = 650, campaignBaseLevel = 650
-        if (campaign === 13) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Iron Bastion', campaignOfficerLevel = 700, campaignBaseLevel = 700
-        if (campaign === 14) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Angel of Light', campaignOfficerLevel = 750, campaignBaseLevel = 750
-        if (campaign === 15) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Liberty', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 800, campaignBaseLevel = 800
+        if (campaign === 0) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 25, campaignBaseLevel = 25, skillLevel = 0
+        if (campaign === 1) return campaignUnitLevel = '9.2', campaignUnitType = 'Fighters', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'The Witcher', campaignOfficerLevel = 50, campaignBaseLevel = 50, skillLevel = 0
+        if (campaign === 2) return campaignUnitLevel = '9.2', campaignUnitType = 'Infantry', campaignUnitCamp = 'Liberty', campaignOfficer = 'Percy', campaignOfficerLevel = 100, campaignBaseLevel = 100, skillLevel = 1
+        if (campaign === 3) return campaignUnitLevel = '9.2', campaignUnitType = 'SuperHeavyTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Argent Flamce', campaignOfficerLevel = 150, campaignBaseLevel = 150, skillLevel = 1
+        if (campaign === 4) return campaignUnitLevel = '9.2', campaignUnitType = 'Howitzers', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'The Erupter', campaignOfficerLevel = 200, campaignBaseLevel = 200, skillLevel = 2
+        if (campaign === 5) return campaignUnitLevel = '9.2', campaignUnitType = 'Bombers', campaignUnitCamp = 'Liberty', campaignOfficer = 'El Cartero', campaignOfficerLevel = 250, campaignBaseLevel = 250, skillLevel = 2
+        if (campaign === 6) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Thorn Countess', campaignOfficerLevel = 300, campaignBaseLevel = 300, skillLevel = 3
+        if (campaign === 7) return campaignUnitLevel = '9.2', campaignUnitType = 'RocketLaunchers', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Steel Fighter', campaignOfficerLevel = 350, campaignBaseLevel = 350, skillLevel = 4
+        if (campaign === 8) return campaignUnitLevel = '9.2', campaignUnitType = 'LightTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Valkrie', campaignOfficerLevel = 400, campaignBaseLevel = 400, skillLevel = 5
+        if (campaign === 9) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Saber of the Nation', campaignOfficerLevel = 450, campaignBaseLevel = 450, skillLevel = 6
+        if (campaign === 10) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Berserker Bear', campaignOfficerLevel = 500, campaignBaseLevel = 500, skillLevel = 7
+        if (campaign === 11) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'War Machine', campaignOfficerLevel = 550, campaignBaseLevel = 550, skillLevel = 8
+        if (campaign === 12) return campaignUnitLevel = '9.2', campaignUnitType = 'AntiTankGuns', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Guardian of Truth', campaignOfficerLevel = 600, campaignBaseLevel = 600, skillLevel = 9
+        if (campaign === 13) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Iron Bastion', campaignOfficerLevel = 650, campaignBaseLevel = 650, skillLevel = 10
+        if (campaign === 14) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Angel of Light', campaignOfficerLevel = 700, campaignBaseLevel = 700, skillLevel = 11
+        if (campaign === 15) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Liberty', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 750, campaignBaseLevel = 750, skillLevel = 12
+        if (campaign === 16) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Liberty', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 800, campaignBaseLevel = 800, skillLevel = 13
+        if (campaign === 17) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Liberty', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 850, campaignBaseLevel = 850, skillLevel = 13
+        if (campaign === 18) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Liberty', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 900, campaignBaseLevel = 900, skillLevel = 14
+        if (campaign === 19) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Liberty', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 950, campaignBaseLevel = 950, skillLevel = 14
+        if (campaign === 20) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Liberty', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 1000, campaignBaseLevel = 1000, skillLevel = 15
         module.exports = {
             campaignUnitLevel: campaignUnitLevel,
             campaignUnitType: campaignUnitType,

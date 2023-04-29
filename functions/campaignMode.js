@@ -21,28 +21,27 @@ campaignMode: async function (interaction) {
         );
       }
         
-        let campaign = 0
-        if (interaction.customId === 'camp1') {campaign = 0}
-        if (interaction.customId === 'camp2') {campaign = 1}
-        if (interaction.customId === 'camp3') {campaign = 2}
-        if (interaction.customId === 'camp4') {campaign = 3}
-        if (interaction.customId === 'camp5') {campaign = 4}
-        if (interaction.customId === 'camp6') {campaign = 5}
-        if (interaction.customId === 'camp7') {campaign = 6}
-        if (interaction.customId === 'camp8') {campaign = 7}
-        if (interaction.customId === 'camp9') {campaign = 8}
-        if (interaction.customId === 'camp10') {campaign = 9}
-        if (interaction.customId === 'camp11') {campaign = 10}
-        if (interaction.customId === 'camp12') {campaign = 11}
-        if (interaction.customId === 'camp13') {campaign = 12}
-        if (interaction.customId === 'camp14') {campaign = 13}
-        if (interaction.customId === 'camp15') {campaign = 14}
-        if (interaction.customId === 'camp16') {campaign = 15}
-        if (interaction.customId === 'camp17') {campaign = 16}
-        if (interaction.customId === 'camp18') {campaign = 17}
-        if (interaction.customId === 'camp19') {campaign = 18}
-        if (interaction.customId === 'camp20') {campaign = 19}
-        if (interaction.customId === 'camp21') {campaign = 20}
+        campaign = 0
+        if (interaction.customId === 'camp1') {campaign = 1}
+        if (interaction.customId === 'camp2') {campaign = 2}
+        if (interaction.customId === 'camp3') {campaign = 3}
+        if (interaction.customId === 'camp4') {campaign = 4}
+        if (interaction.customId === 'camp5') {campaign = 5}
+        if (interaction.customId === 'camp6') {campaign = 6}
+        if (interaction.customId === 'camp7') {campaign = 7}
+        if (interaction.customId === 'camp8') {campaign = 8}
+        if (interaction.customId === 'camp9') {campaign = 9}
+        if (interaction.customId === 'camp10') {campaign = 10}
+        if (interaction.customId === 'camp11') {campaign = 11}
+        if (interaction.customId === 'camp12') {campaign = 12}
+        if (interaction.customId === 'camp13') {campaign = 13}
+        if (interaction.customId === 'camp14') {campaign = 14}
+        if (interaction.customId === 'camp15') {campaign = 15}
+        if (interaction.customId === 'camp16') {campaign = 16}
+        if (interaction.customId === 'camp17') {campaign = 17}
+        if (interaction.customId === 'camp18') {campaign = 18}
+        if (interaction.customId === 'camp19') {campaign = 19}
+        if (interaction.customId === 'camp20') {campaign = 20}
 
         campaignSelection(campaign)
         console.log(t)

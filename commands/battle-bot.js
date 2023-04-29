@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { Colours } = require('../data/colours')
 const sql = require("../config/Database");
 
 module.exports = {
@@ -52,9 +53,19 @@ module.exports = {
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
 		Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
+		CampColour = Colours.Green
+		if (Economy[0].unit_camp === 'Vanguard') {
+			CampColour = Colours.Vanguard
+		}
+		if (Economy[0].unit_camp === 'Liberty') {
+			CampColour = Colours.Liberty
+		}
+		if (Economy[0].unit_camp === 'MartyrsW') {
+			CampColour = Colours.MartyrsW
+		}
 		const embed = new EmbedBuilder();
 			embed
-				.setColor('#ff5b05')
+				.setColor(CampColour)
 				.setThumbnail(guildIcon)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})

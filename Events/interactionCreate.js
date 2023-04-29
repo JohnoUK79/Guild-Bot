@@ -9,9 +9,7 @@ const { campaignMode } = require('../functions/campaignMode');
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
-		//console.log('InteractionCreate', interaction)
 		guildIcon = interaction.member.guild.iconURL();
-		//const setDate = time.default()
 		guildName = interaction.guild.name
 		console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} in ${guildName} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
 
@@ -111,26 +109,6 @@ module.exports = {
 		campaign(interaction)
 		} catch (err) {console.log(err)}
 		}
-		if (interaction.customId === 'camp1') {
-		try {
-		campaignMode(interaction)
-		} catch (err) {console.log(err)}
-		}
-		if (interaction.customId === 'camp2') {
-		try {
-		campaignMode(interaction)
-		} catch (err) {console.log(err)}
-		}
-		if (interaction.customId === 'camp3') {
-		try {
-		campaignMode(interaction)
-		} catch (err) {console.log(err)}
-		}
-		if (interaction.customId === 'camp4') {
-		try {
-		campaignMode(interaction)
-		} catch (err) {console.log(err)}
-		}
 		if (interaction.customId === 'easy') {
 		try {
 		campaign(interaction)
@@ -149,6 +127,26 @@ module.exports = {
 		if (interaction.customId === 'extreme') {
 		try {
 		campaign(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp1') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp2') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp3') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp4') {
+		try {
+		campaignMode(interaction)
 		} catch (err) {console.log(err)}
 		}
 		if (interaction.customId === 'camp5') {
@@ -207,6 +205,26 @@ module.exports = {
 		} catch (err) {console.log(err)}
 		}
 		if (interaction.customId === 'camp16') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp17') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp18') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp19') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp20') {
 		try {
 		campaignMode(interaction)
 		} catch (err) {console.log(err)}

@@ -592,13 +592,17 @@ module.exports = {
                     .setLabel('New Officer')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
+                    .setCustomId("skillupgrade")
+                    .setLabel('Upgrade Skill')
+                    .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
                     .setCustomId("cancel")
                     .setLabel('Cancel')
                     .setStyle(ButtonStyle.Danger),
-            new ButtonBuilder()
-                .setCustomId("profile")
-                .setLabel('Profile')
-                .setStyle(ButtonStyle.Secondary),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Profile')
+                    .setStyle(ButtonStyle.Secondary),
             )
         const chooseOfficerButtons = new ActionRowBuilder()
             .addComponents(
@@ -610,11 +614,11 @@ module.exports = {
                     .setCustomId("cancel")
                     .setLabel('Cancel')
                     .setStyle(ButtonStyle.Danger),
-            new ButtonBuilder()
-                .setCustomId("profile")
-                .setLabel('Profile')
-                .setStyle(ButtonStyle.Secondary),
-            )
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Profile')
+                    .setStyle(ButtonStyle.Secondary),
+                )
         const upgradeButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
@@ -1719,6 +1723,106 @@ module.exports = {
             campaignBaseLevel: campaignBaseLevel,
             skillLevel: skillLevel
         }
+    },
+    skillupgrade: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        let CampColour = Colours.Green
+        if (Level[0].unit_camp === 'Vanguard') {
+            CampColour = Colours.Vanguard
+        }
+        if (Level[0].unit_camp === 'Liberty') {
+            CampColour = Colours.Liberty
+        }
+        if (Level[0].unit_camp === 'MartyrsW') {
+            CampColour = Colours.MartyrsW
+        }
+        const skillUpgradeEmbed = new EmbedBuilder();
+        const skillUpgradeButtons = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId("skillupgrade")
+                    .setLabel('Upgrade')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("cancel")
+                    .setLabel('Cancel')
+                    .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Profile')
+                    .setStyle(ButtonStyle.Secondary),
+            )
+        const guildIcon = interaction.member.guild.iconURL();
+        const guildName = interaction.member.guild.name
+        const wallet = Level[0].war_coins
+        const bank = Level[0].war_chest
+        const officerLevel = Level[0].officer_level
+        const skillLevel = Level[0].skill_level
+        const officerLevelRequired = (skillLevel + 1) * 100
+        const baseLevel = Level[0].base_level
+        const cost = (skillLevel + 1) * 1000000 * (Level[0].prestige + 1)
+        console.log(cost.toLocaleString(), officerLevel, officerLevelRequired)
+
+        if (officerLevelRequired > officerLevel) {
+            console.log(`Officer Upgrade Needed`),
+            skillUpgradeEmbed
+                    .setColor(CampColour)
+                    .setThumbnail(guildIcon)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
+                    .setDescription(`${interaction.member}, You need to upgrade your **Officer** to apply this **Skill** Upgrade.`)
+                    .addFields(
+                        { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true },
+                        { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
+                        { name: `Officer Level:`, value: `${officerLevel}`, inline: true },
+                        { name: `Officer Level Required:`, value: `${officerLevelRequired}`, inline: true },
+
+                    )
+                    .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
+            return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons] })
+        }
+
+
+        if (cost > wallet) {
+            console.log(`No Money`),
+                difference = cost - wallet
+            skillUpgradeEmbed
+                .setColor(CampColour)
+                .setThumbnail(guildIcon)
+                .setTimestamp()
+                .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
+                .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
+                .addFields(
+                    { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true },
+                    { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
+                    { name: `Base Level:`, value: `${baseLevel}`, inline: true },
+                    { name: `Officer Level:`, value: `${officerLevel}`, inline: true },
+                    { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
+                )
+                .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
+            return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons] })
+        }
+        const newWallet = wallet - cost
+        const newSkillLevel = skillLevel + 1
+        skillUpgradeEmbed
+            .setColor(CampColour)
+            .setThumbnail(guildIcon)
+            .setTimestamp()
+            .setDescription(`**${interaction.member}, Officer Skill Upgrade Successful**`)
+            .addFields(
+                { name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true },
+                { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
+                { name: `New Level:`, value: `${newSkillLevel}`, inline: true },
+            )
+            .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
+
+            const playerOfficerUpgrade = await sql.Execute(`UPDATE playerofficers SET Skill_Level = '${newSkillLevel}' WHERE Discord_ID = '${interaction.member.id}' AND Officer_Name = '${Level[0].officer_name}'`)
+            const officerUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, skill_level = '${newSkillLevel}' WHERE discord_id = '${interaction.member.id}'`)
+            console.log(`Update Player Officer: ${playerOfficerUpgrade.info}`)
+            console.log(`Officer Upgrade: ${officerUpgrade.info}`)
+
+        return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons] })
+
     },
 
 }

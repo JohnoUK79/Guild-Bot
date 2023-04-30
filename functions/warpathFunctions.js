@@ -1089,12 +1089,13 @@ module.exports = {
         const officerType = officerDetails[0].Officer_Type || 'No Officer Chosen'
         const officerCamp = officerDetails[0].Officer_Camp || 'No Officer Chosen'
         const officerSkill = officerDetails[0].Skill || 'No Officer Chosen'
-        const skillLevel = Level[0].skill_level || 'No Officer Chosen'
+        const skillLevel = Level[0].skill_level 
 
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = unitDetails[0].Image
         const link = `http://phfamily.co.uk/img/${image}`
-
+        const triggerRate = 5 + (skillLevel * 5)
+        
         profileEmbed
             .setImage(link)
             .setThumbnail(link)
@@ -1112,7 +1113,7 @@ module.exports = {
                 { name: `Officer Camp:`, value: `${officerCamp}`, inline: false },
                 { name: `Officer Skill:`, value: `${officerSkill}`, inline: false },
                 { name: `Skill Level:`, value: `${skillLevel}`, inline: false },
-                { name: `Skill Trigger Rate:`, value: `${skillLevel * 5 + 5}%`, inline: false },
+                { name: `Skill Trigger Rate:`, value: `${triggerRate}%`, inline: false },
                 { name: `Unit Type:`, value: `${unitType}`, inline: false },
                 { name: `Unit Level:`, value: `${unitLevel}`, inline: false },
                 { name: `Attack Type:`, value: `${unitDetails[0].Attack_Type}`, inline: false },

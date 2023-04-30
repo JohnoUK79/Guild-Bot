@@ -1,7 +1,8 @@
 const sql = require("../config/Database");
 const { EmbedBuilder } = require('discord.js');
 const { Colours } = require('../data/colours')
-const { chance5, chance10, chance15, chance20, chance25, chance30, chance35, chance40, chance45, chance50, chance55, chance60, chance65, chance70, chance75, chance80 } = require('../data/chance')
+const { chance5, chance10, chance15, chance20, chance25, chance30, chance35, chance40, chance45, chance50, chance55, chance60, chance65, chance70, chance75, chance80 } = require('../data/chance');
+const chance = require("../data/chance");
 async function sleep(ms) {
     return new Promise(
       resolve => setTimeout(resolve, ms)
@@ -89,7 +90,7 @@ module.exports = {
     
         if (Attacker.OfficerSkill === 'Indomitable') {
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-                console.log(skillSuccess)
+                console.log(skillSuccess,chance)
                 if (skillSuccess === 'Yes') {
                     console.log(`Indomitable`) 
                     health = AH * 0.3
@@ -133,7 +134,7 @@ module.exports = {
             }
         if (Attacker.OfficerSkill === `The Soldier's Soldier`) {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
+            console.log(skillSuccess,chance)
             if (skillSuccess === 'Yes') {
                 console.log(`The Soldier's Soldier`)  
                 Power = Attacker.AttackPower * 0.125
@@ -152,7 +153,7 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Undaunted') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
+            console.log(skillSuccess,chance)
             if (skillSuccess === 'Yes') {
                 console.log(`Undaunted`)  
                 Power = Attacker.AttackPower * 0.5
@@ -190,9 +191,8 @@ module.exports = {
             }         }        
         if (Attacker.OfficerSkill === 'Guardian Angel') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
-            console.log(skillSuccess)
+                console.log(skillSuccess,chance)
                 console.log(`Guardian Angel`)  
                 Power = Attacker.AttackPower * 0.2
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -211,8 +211,8 @@ module.exports = {
         if (Attacker.OfficerSkill === 'Hand of Destruction') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-                console.log(skillSuccess)
                 if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Hand of Destruction`)
                 Power = Attacker.AttackPower * 0.4
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -231,8 +231,8 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Frontline Fire') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Frontline Fire`)            
                 Power = Attacker.AttackPower * 0.08
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -252,9 +252,9 @@ module.exports = {
         if (Attacker.OfficerSkill === 'Vengeance') {
 
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
-                console.log(`Vengeance`)            
+                console.log(`Vengeance`)   
+                console.log(skillSuccess,chance)         
                 Power = Attacker.AttackPower * 0.3
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 if (Attacker.UnitType === 'Infantry') {
@@ -283,8 +283,8 @@ module.exports = {
         if (Attacker.OfficerSkill === 'The Motherland') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-                console.log(skillSuccess)
                 if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`The Motherland`)
                 damage = Attacker.AttackPower * 0.5
                 Attacker.AttackPower = Attacker.AttackPower + damage
@@ -303,8 +303,8 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Mine Detonator') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Mine Detonator`)            
                 Power = Attacker.AttackPower * 0.135
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -334,8 +334,8 @@ module.exports = {
         if (Attacker.OfficerSkill === 'Flamestorm') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-                console.log(skillSuccess)
                 if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Flamestorm`)
                 Power = Attacker.AttackPower * 0.1
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -354,8 +354,8 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Inpenetrable') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Inpenetrable`) 
                 health = AH * 0.5
                 AH = AH + health
@@ -376,8 +376,8 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Breaching Charge') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Breaching Charge`)            
                 Power = Attacker.AttackPower * 0.13
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -407,8 +407,8 @@ module.exports = {
         if (Attacker.OfficerSkill === 'Flaming Meteors') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-                console.log(skillSuccess)
                 if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Flaming Meteors`)
                 Power = Attacker.AttackPower * 0.3
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -427,8 +427,8 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Master of War') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Master of War`)            
                 Power = Attacker.AttackPower * 0.10
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -446,8 +446,8 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Phantom Power') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Phantom Power`)            
                 Power = Attacker.AttackPower * 0.10
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -470,8 +470,8 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Blinding Flash') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Blinding Flash`)            
                 Power = Attacker.AttackPower * 0.10
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -491,8 +491,8 @@ module.exports = {
         if (Attacker.OfficerSkill === 'Rain of Blades') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-                console.log(skillSuccess)
                 if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Rain of Blades`)
                 Power = Attacker.AttackPower * 0.1
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -513,8 +513,8 @@ module.exports = {
         if (Attacker.OfficerSkill === 'Devastation') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-                console.log(skillSuccess)
                 if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Devastation`)
                 Power = Attacker.AttackPower * 0.25
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -533,8 +533,8 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Beauty Worth Preserving') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Beauty Worth Preserving`)            
                 Power = Attacker.AttackPower * 0.15
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -557,8 +557,8 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Forlorn Hope') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Forlorn Hope`)            
                 Power = Attacker.AttackPower * 0.25
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -578,8 +578,8 @@ module.exports = {
         if (Attacker.OfficerSkill === 'Sky Dancer') {
             if (Attacker.UnitType === 'Bombers' || 'Fighters'){
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-                console.log(skillSuccess)
                 if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Sky Dancer`)
                 Power = Attacker.AttackPower * 0.15
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -598,8 +598,8 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Untouchable') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Untouchable`)   
                 Defend = Defender.AttackPower
                 Defender.AttackPower = 0
@@ -622,8 +622,8 @@ module.exports = {
         if (Attacker.OfficerSkill === 'Heavenly Rays') {
             if (Attacker.UnitType === 'Fighters' && Attacker.UnitType === 'Fighters'){
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-                console.log(skillSuccess)
                 if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Heavenly Rays`)    
                 Power = Attacker.AttackPower * 0.15
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -644,8 +644,8 @@ module.exports = {
         if (Attacker.OfficerSkill === 'Twin Fangs') {
             if (Attacker.UnitType === 'Bombers' || 'Fighters'){
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-                console.log(skillSuccess)
                 if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Twin Fangs`)            
                 Power = Attacker.AttackPower * 0.25
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -665,8 +665,8 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Night Evader') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Night Evader`)            
                 Power = Defender.AttackPower * .2
                 Defender.AttackPower = Defender.AttackPower - Power
@@ -687,8 +687,8 @@ module.exports = {
         if (Attacker.OfficerSkill === 'Unleashed Justice') {
             if (Attacker.UnitType === 'Bombers'){
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-                console.log(skillSuccess)
                 if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Unleashed Justice`)            
                 Power = Attacker.AttackPower * 2
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -708,8 +708,8 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Sticky Situation') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Sticky Situation`)            
                 Power = Attacker.AttackPower * .2
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -728,8 +728,8 @@ module.exports = {
         }        
         if (Attacker.OfficerSkill === 'Desperate Counterattack') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            console.log(skillSuccess)
             if (skillSuccess === 'Yes') {
+            console.log(skillSuccess,chance)
             if (Attacker.UnitType === 'Fighter') {
                 console.log(`Desperate Counterattack`)        
                 Power = Attacker.AttackPower * .25
@@ -751,8 +751,8 @@ module.exports = {
         if (Attacker.OfficerSkill === 'Last Gasp') {
             if (Attacker.UnitType === 'Bombers'){
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-                console.log(skillSuccess)
                 if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Last Gasp`)            
                 Power = Attacker.AttackPower * 2
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -781,7 +781,9 @@ module.exports = {
     if (Defender.UnitCamp === 'MartyrsW') {
         Defender.SkillColor = Colours.MartyrsW
     }
-    chance = chance80
+
+    chance = chance5
+
     if (Defender.SkillLevel === 0) {
         chance = chance5
     }
@@ -837,8 +839,8 @@ module.exports = {
     if (Defender.OfficerSkill === 'Indomitable') {
     console.log(`Indomitable`) 
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-        console.log(skillSuccess)
         if (skillSuccess === 'Yes') {
+            console.log(skillSuccess,chance)
             console.log(`Indomitable`) 
             health = DH * 0.3
             DH = DH + health
@@ -881,8 +883,8 @@ if (Defender.OfficerSkill === 'Caring Angel') {
     }
 if (Defender.OfficerSkill === `The Soldier's Soldier`) {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`The Soldier's Soldier`)  
         Power = Defender.AttackPower * 0.125
         Defender.AttackPower = Defender.AttackPower + Power
@@ -901,8 +903,8 @@ if (Defender.OfficerSkill === `The Soldier's Soldier`) {
 }        
 if (Defender.OfficerSkill === 'Undaunted') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Undaunted`)  
         Power = Defender.AttackPower * 0.5
         Defender.AttackPower = Defender.AttackPower + Power
@@ -940,9 +942,8 @@ if (Defender.OfficerSkill === 'Who Dares Wins') {
     }         }        
 if (Defender.OfficerSkill === 'Guardian Angel') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
-    console.log(skillSuccess)
+        console.log(skillSuccess,chance)
         console.log(`Guardian Angel`)  
         Power = Defender.AttackPower * 0.2
         Defender.AttackPower = Defender.AttackPower + Power
@@ -962,8 +963,8 @@ if (Defender.OfficerSkill === 'Guardian Angel') {
 if (Defender.OfficerSkill === 'Hand of Destruction') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-        console.log(skillSuccess)
         if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Hand of Destruction`)
         Power = Defender.AttackPower * 0.4
         Defender.AttackPower = Defender.AttackPower + Power
@@ -982,8 +983,8 @@ if (Defender.OfficerSkill === 'Hand of Destruction') {
 }        
 if (Defender.OfficerSkill === 'Frontline Fire') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Frontline Fire`)            
         Power = Defender.AttackPower * 0.08
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1002,8 +1003,8 @@ if (Defender.OfficerSkill === 'Frontline Fire') {
 }        
 if (Defender.OfficerSkill === 'Vengeance') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Vengeance`)            
         Power = Defender.AttackPower * 0.3
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1026,8 +1027,8 @@ if (Defender.OfficerSkill === 'Vengeance') {
 if (Defender.OfficerSkill === 'The Motherland') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-        console.log(skillSuccess)
         if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`The Motherland`)
         Power = Defender.AttackPower * 0.5
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1047,8 +1048,8 @@ if (Defender.OfficerSkill === 'The Motherland') {
 }        
 if (Defender.OfficerSkill === 'Mine Detonator') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Mine Detonator`)            
         Power = Defender.AttackPower * 0.135
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1078,8 +1079,8 @@ if (Defender.OfficerSkill === 'Mine Detonator') {
 if (Defender.OfficerSkill === 'Flamestorm') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-        console.log(skillSuccess)
         if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Flamestorm`)
         Power =Defender.AttackPower * 0.1
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1099,8 +1100,8 @@ if (Defender.OfficerSkill === 'Flamestorm') {
 }        
 if (Defender.OfficerSkill === 'Inpenetrable') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Inpenetrable`) 
         health = DH * 0.5
         DH = DH + health
@@ -1121,8 +1122,8 @@ if (Defender.OfficerSkill === 'Inpenetrable') {
 }        
 if (Defender.OfficerSkill === 'Breaching Charge') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Breaching Charge`)            
         Power = Defender.AttackPower * 0.13
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1153,8 +1154,8 @@ if (Defender.OfficerSkill === 'Breaching Charge') {
 if (Defender.OfficerSkill === 'Flaming Meteors') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-        console.log(skillSuccess)
         if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Flaming Meteors`)
         Power = Defender.AttackPower * 0.3
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1174,8 +1175,8 @@ if (Defender.OfficerSkill === 'Flaming Meteors') {
 }        
 if (Defender.OfficerSkill === 'Master of War') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Master of War`)            
         Power = Defender.AttackPower * 0.10
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1194,8 +1195,8 @@ if (Defender.OfficerSkill === 'Master of War') {
 }        
 if (Defender.OfficerSkill === 'Phantom Power') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Phantom Power`)            
         Power = Defender.AttackPower * 0.10
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1220,8 +1221,8 @@ if (Defender.OfficerSkill === 'Phantom Power') {
 }        
 if (Defender.OfficerSkill === 'Blinding Flash') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Blinding Flash`)            
         Power = Defender.AttackPower * 0.10
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1241,8 +1242,8 @@ if (Defender.OfficerSkill === 'Blinding Flash') {
 if (Defender.OfficerSkill === 'Rain of Blades') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-        console.log(skillSuccess)
         if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Rain of Blades`)
         Power = Defender.AttackPower * 0.1
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1263,8 +1264,8 @@ if (Defender.OfficerSkill === 'Rain of Blades') {
 if (Defender.OfficerSkill === 'Devastation') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-        console.log(skillSuccess)
         if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Devastation`)
         Power = Defender.AttackPower * 0.25
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1284,8 +1285,8 @@ if (Defender.OfficerSkill === 'Devastation') {
 }        
 if (Defender.OfficerSkill === 'Beauty Worth Preserving') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Beauty Worth Preserving`)            
         Power = Defender.AttackPower * 0.15
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1309,8 +1310,8 @@ if (Defender.OfficerSkill === 'Beauty Worth Preserving') {
 }        
 if (Defender.OfficerSkill === 'Forlorn Hope') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Forlorn Hope`)            
         Power = Defender.AttackPower * 0.25
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1332,6 +1333,7 @@ if (Defender.OfficerSkill === 'Sky Dancer') {
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
         console.log(skillSuccess)
         if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Sky Dancer`)
         Power = Defender.AttackPower * 0.15
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1351,8 +1353,8 @@ if (Defender.OfficerSkill === 'Sky Dancer') {
 }        
 if (Defender.OfficerSkill === 'Untouchable') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Untouchable`)            
         Power = Attacker.AttackPower
         Attacker.AttackPower = 0
@@ -1374,8 +1376,8 @@ if (Defender.OfficerSkill === 'Untouchable') {
 if (Defender.OfficerSkill === 'Heavenly Rays') {
     if (Attacker.UnitType === 'Fighters' && Defender.UnitType === 'Fighters'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-        console.log(skillSuccess)
         if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Heavenly Rays`)    
         Power = Defender.AttackPower * 0.15
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1396,8 +1398,8 @@ if (Defender.OfficerSkill === 'Heavenly Rays') {
 if (Defender.OfficerSkill === 'Twin Fangs') {
     if (Defender.UnitType === 'Bombers' || 'Fighters'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-        console.log(skillSuccess)
         if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Twin Fangs`)            
         Power = Defender.AttackPower * 0.25
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1417,8 +1419,8 @@ if (Defender.OfficerSkill === 'Twin Fangs') {
 }        
 if (Defender.OfficerSkill === 'Night Evader') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Night Evader`)            
         Power = Attacker.AttackPower * .2
         Attacker.AttackPower = Attacker.AttackPower - Power
@@ -1438,8 +1440,8 @@ if (Defender.OfficerSkill === 'Night Evader') {
 if (Defender.OfficerSkill === 'Unleashed Justice') {
     if (Defender.UnitType === 'Bombers'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-        console.log(skillSuccess)
         if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Unleashed Justice`)            
         Power = Defender.AttackPower * 2
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1459,8 +1461,8 @@ if (Defender.OfficerSkill === 'Unleashed Justice') {
 }        
 if (Defender.OfficerSkill === 'Sticky Situation') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Sticky Situation`)            
         Power = Defender.AttackPower * .2
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1481,6 +1483,7 @@ if (Defender.OfficerSkill === 'Desperate Counterattack') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
+    console.log(skillSuccess,chance)
     if (Defender.UnitType === 'Fighter') {
         console.log(`Desperate Counterattack`)        
         Power = Defender.AttackPower * .25
@@ -1502,8 +1505,8 @@ if (Defender.OfficerSkill === 'Desperate Counterattack') {
 if (Defender.OfficerSkill === 'Last Gasp') {
     if (Defender.UnitType === 'Bombers'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-        console.log(skillSuccess)
         if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Last Gasp`)            
         Power = Defender.AttackPower * 2
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1522,5 +1525,4 @@ if (Defender.OfficerSkill === 'Last Gasp') {
 } 
 }
 }
-
 }

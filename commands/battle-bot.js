@@ -50,9 +50,13 @@ module.exports = {
 			fetchReply: true,
 			ephemeral: true,
 		})
-		guildIcon = interaction.member.guild.iconURL();
-		guildName = interaction.member.guild.name
-		Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
+		const guildIcon = interaction.member.guild.iconURL();
+		const guildName = interaction.member.guild.name
+		const Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
+		const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Economy[0].unit_camp}' AND Unit_type = '${Economy[0].unit_type}' AND Unit_Level = '${Economy[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`
+		console.log(link)
 		CampColour = Colours.Green
 		if (Economy[0].unit_camp === 'Vanguard') {
 			CampColour = Colours.Vanguard
@@ -66,7 +70,8 @@ module.exports = {
 		const embed = new EmbedBuilder();
 			embed
 				.setColor(CampColour)
-				.setThumbnail(guildIcon)
+				.setImage(link)
+				.setThumbnail(link)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 

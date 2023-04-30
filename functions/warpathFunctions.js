@@ -6,6 +6,8 @@ module.exports = {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const warbase = `http://phfamily.co.uk/img/war-base.jpg`
+        console.log(warbase)
         const wallet = Level[0].war_coins
         const bank = Level[0].war_chest
         const bankLevel = Level[0].chest_level
@@ -62,7 +64,8 @@ module.exports = {
         const upgradeEmbed = new EmbedBuilder();
         upgradeEmbed
             .setColor(CampColour)
-            .setThumbnail(guildIcon)
+            .setThumbnail(warbase)
+            .setImage(warbase)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
             .addFields(
@@ -189,6 +192,9 @@ module.exports = {
     },
     buyBase: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const warbase = `http://phfamily.co.uk/img/war-base.jpg`
+        console.log(warbase)
+
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.Vanguard
@@ -249,7 +255,8 @@ module.exports = {
             console.log(`Chest Upgrade Needed`),
                 upgradeBaseEmbed
                     .setColor(CampColour)
-                    .setThumbnail(guildIcon)
+                    .setThumbnail(warbase)
+                    .setImage(warbase)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **War-Chest** for this upgrade.`)
@@ -269,7 +276,8 @@ module.exports = {
                 difference = cost - wallet
             upgradeBaseEmbed
                 .setColor(CampColour)
-                .setThumbnail(guildIcon)
+                .setThumbnail(warbase)
+                .setImage(warbase)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins short**!\nTry withdrawing from your **War-Chest**!`)
@@ -286,7 +294,8 @@ module.exports = {
         const newBase = baseLevel + 1
         upgradeBaseEmbed
             .setColor(CampColour)
-            .setThumbnail(guildIcon)
+            .setThumbnail(warbase)
+            .setImage(warbase)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Base Upgrade Successful**`)
             .addFields(
@@ -421,6 +430,9 @@ module.exports = {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.Vanguard
@@ -460,7 +472,8 @@ module.exports = {
         const upgradeEmbed = new EmbedBuilder();
         upgradeEmbed
             .setColor(CampColour)
-            .setThumbnail(guildIcon)
+            .setThumbnail(link)
+            .setImage(link)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
             .setDescription(`**${interaction.member}, What would you like to upgrade**?`)
@@ -474,8 +487,9 @@ module.exports = {
     },
     chestUpgrade: async function (interaction) {
         const guildIcon = interaction.member.guild.iconURL();
-        const setDate = time.default()
         const guildName = interaction.guild.name
+        const warchest = `http://phfamily.co.uk/img/war-chest.jpg`
+
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
@@ -512,7 +526,8 @@ module.exports = {
         const upgradeChestEmbed = new EmbedBuilder();
         upgradeChestEmbed
             .setColor(CampColour)
-            .setThumbnail(guildIcon)
+            .setThumbnail(warchest)
+            .setImage(warchest)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
             .setDescription(`**${interaction.member}, Confirm the upgrade your War-Chest**?`)

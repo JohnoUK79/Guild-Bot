@@ -2,7 +2,6 @@ const sql = require("../config/Database");
 const { EmbedBuilder } = require('discord.js');
 const { Colours } = require('../data/colours')
 const { chance5, chance10, chance15, chance20, chance25, chance30, chance35, chance40, chance45, chance50, chance55, chance60, chance65, chance70, chance75, chance80 } = require('../data/chance');
-const chance = require("../data/chance");
 async function sleep(ms) {
     return new Promise(
       resolve => setTimeout(resolve, ms)

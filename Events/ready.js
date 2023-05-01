@@ -20,7 +20,7 @@ module.exports = {
             .catch(console.error);
         console.log(`================ Warpath BOT Ready! ================`);  
         const serverTimeChannelIDs = [
-            //'1099378914503184384',//Test Server
+            '1099378914503184384',//Test Server
             '1099379616961015809',//FIRE
             '1099445994048999454',//PHU
         ]
@@ -29,8 +29,7 @@ module.exports = {
             let serverTimeChannelID = serverTimeChannelIDs[i];
             try {  
                 const timeChannel = client.channels.cache.get(serverTimeChannelID)
-                timeChannel
-                    .setName(`UTC-TIME-${timestamp.UTChours()}${timestamp.UTCminutes()}`)            }
+                timeChannel.setName(`UTC-TIME-${timestamp.UTChours()}:${timestamp.UTCminutes()}`)            }
             catch (e) {
                 console.log(e);
                 console.log(serverTimeChannelID);

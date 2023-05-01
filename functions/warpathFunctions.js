@@ -7,7 +7,6 @@ module.exports = {
         const guildName = interaction.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const warbase = `http://phfamily.co.uk/img/war-base.jpg`
-        console.log(warbase)
         const wallet = Level[0].war_coins
         const bank = Level[0].war_chest
         const bankLevel = Level[0].chest_level
@@ -79,6 +78,7 @@ module.exports = {
     },
     buyBank: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const warchest = `http://phfamily.co.uk/img/war-chest.jpg`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.Vanguard
@@ -139,7 +139,8 @@ module.exports = {
             console.log(`Base Upgrade Needed`),
                 upgradeBankEmbed
                     .setColor(CampColour)
-                    .setThumbnail(guildIcon)
+                    .setThumbnail(warchest)
+                    .setImage(warchest)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **War-Base** for this upgrade.`)
@@ -158,7 +159,8 @@ module.exports = {
                 difference = cost - wallet
             upgradeBankEmbed
                 .setColor(CampColour)
-                .setThumbnail(guildIcon)
+                .setThumbnail(warchest)
+                .setImage(warchest)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins short**!\nTry withdrawing from your **War-Chest**!`)
@@ -176,7 +178,8 @@ module.exports = {
         const newBank = bankLevel + 1
         upgradeBankEmbed
             .setColor(CampColour)
-            .setThumbnail(guildIcon)
+            .setThumbnail(warchest)
+            .setImage(warchest)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
             .setDescription(`**${interaction.member}, War-Chest Upgrade Successful**`)
@@ -310,6 +313,7 @@ module.exports = {
 
     },
     buyOfficer: async function (interaction) {
+        const GOT = `http://phfamily.co.uk/img/Guardian_of_the_Truth.png`
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
@@ -372,7 +376,8 @@ module.exports = {
             console.log(`Base Upgrade Needed`),
                 upgradeOfficerEmbed
                     .setColor(CampColour)
-                    .setThumbnail(guildIcon)
+                    .setThumbnail(GOT)
+                    .setImage(GOT)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **War-Base** for this upgrade.`)
@@ -391,7 +396,8 @@ module.exports = {
                 difference = cost - wallet
             upgradeOfficerEmbed
                 .setColor(CampColour)
-                .setThumbnail(guildIcon)
+                .setThumbnail(GOT)
+                .setImage(GOT)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
@@ -408,7 +414,8 @@ module.exports = {
         const newOfficer = officerLevel + 1
         upgradeOfficerEmbed
             .setColor(CampColour)
-            .setThumbnail(guildIcon)
+            .setImage(GOT)
+            .setThumbnail(GOT)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Officer Upgrade Successful**`)
             .addFields(
@@ -489,7 +496,6 @@ module.exports = {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.guild.name
         const warchest = `http://phfamily.co.uk/img/war-chest.jpg`
-
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
@@ -543,7 +549,9 @@ module.exports = {
     },
     officerSelect: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`
         const selectOfficerEmbed = new EmbedBuilder();
         const selectOfficerButtons = new ActionRowBuilder()
             .addComponents(
@@ -558,7 +566,8 @@ module.exports = {
         const officerSelection = Officer[Math.floor(Math.random() * Officer.length)]
         selectOfficerEmbed
             .setColor(CampColour)
-            .setThumbnail(guildIcon)
+            .setThumbnail(link)
+            .setImage(link)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Officer Selection Successful**`)
             .addFields(
@@ -580,6 +589,9 @@ module.exports = {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.Vanguard
@@ -661,7 +673,8 @@ module.exports = {
         if (baseLevel < 1) {
             upgradeOfficerEmbed
                 .setColor(CampColour)
-                .setThumbnail(guildIcon)
+                .setThumbnail(link)
+                .setImage(link)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You need to upgrade your **Base** to Select your **Officer**?`)
@@ -679,7 +692,8 @@ module.exports = {
 
             upgradeOfficerEmbed
                 .setColor(CampColour)
-                .setThumbnail(guildIcon)
+                .setThumbnail(link)
+                .setImage(link)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`**${interaction.member}**, First you need to select your **Officer**!`)
@@ -693,7 +707,8 @@ module.exports = {
         } else
             upgradeOfficerEmbed
                 .setColor(CampColour)
-                .setThumbnail(guildIcon)
+                .setThumbnail(link)
+                .setImage(link)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`**${interaction.member}, Confirm the upgrade your Officer**?`)
@@ -712,6 +727,9 @@ module.exports = {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.Vanguard
@@ -787,7 +805,8 @@ module.exports = {
         if (officerLevel < 1) {
             upgradeUnitEmbed
                 .setColor(CampColour)
-                .setThumbnail(guildIcon)
+                .setThumbnail(link)
+                .setImage(link)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You need to upgrade your **Officer** to Select your **Unit**?`)
@@ -804,7 +823,8 @@ module.exports = {
 
                 upgradeUnitEmbed
                     .setColor(CampColour)
-                    .setThumbnail(guildIcon)
+                    .setImage(link)
+                    .setThumbnail(link)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`**${interaction.member}**, First you need to select your **Unit**!`)
@@ -819,7 +839,8 @@ module.exports = {
             } else
                 upgradeUnitEmbed
                     .setColor(CampColour)
-                    .setThumbnail(guildIcon)
+                    .setImage(link)
+                    .setThumbnail(link)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`**${interaction.member}, Confirm the upgrade your Unit**?`)
@@ -834,6 +855,9 @@ module.exports = {
     },
     unitSelect: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.Vanguard
@@ -859,7 +883,8 @@ module.exports = {
 
         selectUnitEmbed
             .setColor(CampColour)
-            .setThumbnail(guildIcon)
+            .setImage(link)
+            .setThumbnail(link)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Unit Selection Successful**`)
             .addFields(
@@ -880,6 +905,9 @@ module.exports = {
     },
     buyUnit: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`
         const camp = Level[0].unit_camp
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
@@ -969,7 +997,8 @@ module.exports = {
 
                 upgradeUnitEmbed
                     .setColor(CampColour)
-                    .setThumbnail(guildIcon)
+                    .setImage(link)
+                    .setThumbnail(link)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You have already **Maxed** your **${unitType}**.\nUpgrade your **Officer** to increase your **Battle Rewards**!\nUpgrade your **War-Base** to increase your **Unit Strength**!\nSelect **New Unit** below to receive your next **Unit**`)
@@ -987,7 +1016,8 @@ module.exports = {
             console.log(`Officer Upgrade Needed`),
                 upgradeUnitEmbed
                     .setColor(CampColour)
-                    .setThumbnail(guildIcon)
+                    .setImage(link)
+                    .setThumbnail(link)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **Officer** for this upgrade.`)
@@ -1008,7 +1038,8 @@ module.exports = {
                     difference = cost - wallet
                 upgradeUnitEmbed
                     .setColor(CampColour)
-                    .setThumbnail(guildIcon)
+                    .setImage(link)
+                    .setThumbnail(link)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
@@ -1036,7 +1067,8 @@ module.exports = {
 
         upgradeUnitEmbed
             .setColor(CampColour)
-            .setThumbnail(guildIcon)
+            .setImage(link)
+            .setThumbnail(link)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Unit Upgrade Successful**`)
             .addFields(
@@ -1142,6 +1174,9 @@ module.exports = {
     },
     newUnit: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.Vanguard
@@ -1191,7 +1226,8 @@ module.exports = {
             console.log(`Officer Upgrade Required`)
             newUnitEmbed
                 .setColor(CampColour)
-                .setThumbnail(guildIcon)
+                .setImage(link)
+                .setThumbnail(link)
                 .setTimestamp()
                 .addFields(
                     { name: `Required Level: ${presigeRequired}`, value: `Current Level: ${Level[0].officer_level}` },
@@ -1206,7 +1242,8 @@ module.exports = {
 
         newUnitEmbed
             .setColor(CampColour)
-            .setThumbnail(guildIcon)
+            .setImage(link)
+            .setThumbnail(link)
             .setTimestamp()
             .setDescription(`**${interaction.member}, New Unit Selection Successful**`)
             .addFields(
@@ -1231,9 +1268,8 @@ module.exports = {
         return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons] })
     },
     attackSelection: async function (Attacker, Defender) {
-        if (Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier * 1.5
-        if (Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier * 1.5
-        console.log(Defender)
+        if (Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier * 1.5, console.log(`Unit Attack Buff:${Attacker.Multiplier}`)
+        if (Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier * 1.5, console.log(`Unit Defend Buff:${Defender.Multiplier}`)
     },
     newUnitSelection: async function (prestige) { //Medium is Starter Troop
         if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters'
@@ -1250,12 +1286,16 @@ module.exports = {
         module.exports.newUnitType = newUnitType
     },
     campSelection: async function (Attacker, Defender) {
-        if (Attacker.UnitCamp === Attacker.OfficerCamp) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier
-        if (Defender.UnitCamp === Defender.OfficerCamp) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
-        if (Attacker.UnitCamp === Attacker.OfficerCamp && Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier + Attacker.Multiplier + Attacker.Multiplier
-        if (Defender.UnitCamp === Defender.OfficerCamp && Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier + Defender.Multiplier + Defender.Multiplier
+        if (Attacker.UnitCamp === Attacker.OfficerCamp) return Attacker.Multiplier = Attacker.Multiplier * 2, console.log(`Camp Attack Buff: ${Attacker.Multiplier}`)
+        if (Defender.UnitCamp === Defender.OfficerCamp) return Defender.Multiplier = Defender.Multiplier  * 2, console.log(`Camp Defend Buff: ${Defender.Multiplier}`)
+        if (Attacker.UnitCamp === Attacker.OfficerCamp && Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier * 4, console.log(`Camp Attack Buff: ${Attacker.Multiplier}`)
+        if (Defender.UnitCamp === Defender.OfficerCamp && Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier * 4, console.log(`Camp Defend Buff: ${Defender.Multiplier}`)
     },
     selectunit: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`
         const playerUnits = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}'`)
         const unitChoices = [];
         for (const entry in playerUnits) {
@@ -1292,7 +1332,8 @@ module.exports = {
             )
         const selectUnitEmbed = new EmbedBuilder()
             .setColor(Colours.Green)
-            .setThumbnail(guildIcon)
+            .setImage(link)
+            .setThumbnail(link)
             .setTimestamp()
             .setTitle(`Select Your Unit!`)
         interaction.update({
@@ -1358,6 +1399,10 @@ module.exports = {
 
     },
     selectofficer: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`
         const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
         const officerChoices = [];
         for (const entry in playerOfficers) {
@@ -1397,7 +1442,8 @@ module.exports = {
             )
         const selectOfficerEmbed = new EmbedBuilder()
             .setColor(CampColour)
-            .setThumbnail(guildIcon)
+            .setImage(link)
+            .setThumbnail(link)
             .setTimestamp()
             .setTitle(`Select Your Officer!`)
         interaction.update({
@@ -1406,10 +1452,13 @@ module.exports = {
         })
     },
     selectofficermenu: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`
         const selected = interaction.values[0]
         const selectedOfficer = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' AND Officer_Name = '${selected}'`)
-        const playerProfile = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const officerImage = `http://phfamily.co.uk/img/${selectedOfficer[0].Image}`
+        const officerImage = `http://phfamily.co.uk/img/${selectedOfficer[0].Image}` || link
         const updateOfficer = await sql.Execute(`UPDATE levels SET officer_name = '${selectedOfficer[0].Officer_Name}', officer_level = '${selectedOfficer[0].Officer_Level}', skill_level = '${selectedOfficer[0].Skill_Level}' WHERE discord_id = '${interaction.member.id}'`)
         let CampColour = Colours.Green
         if (selectedOfficer[0].Unit_Camp === 'Vanguard') {
@@ -1458,6 +1507,10 @@ module.exports = {
 
     },
     campaign: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`
         const campaignButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
@@ -1600,7 +1653,8 @@ module.exports = {
 
         const campaignEmbed = new EmbedBuilder()
             .setColor(Colours.Green)
-            .setThumbnail(guildIcon)
+            .setImage(link)
+            .setThumbnail(link)
             .setTimestamp()
             .setDescription(`Pick your Enemy`)
             .setTitle(`Select your opponent!`)
@@ -1658,7 +1712,10 @@ module.exports = {
     newOfficer: async function (interaction) {
         const Officers = await sql.Execute(`SELECT * FROM officers WHERE Officer_ID NOT IN (SELECT Officer_ID FROM playerofficers WHERE Discord_ID = '${interaction.member.id}');`)            
         const currentOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}'`)
-        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)        
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)  
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`      
         const newOfficerEmbed = new EmbedBuilder();
         const newOfficerButtons = new ActionRowBuilder()
             .addComponents(
@@ -1678,7 +1735,8 @@ module.exports = {
             console.log(`Officer Upgrade Required`)
             newOfficerEmbed
                 .setColor('#ff5b05')
-                .setThumbnail(guildIcon)
+                .setImage(link)
+                .setThumbnail(link)
                 .setTimestamp()
                 .addFields(
                     { name: `Required Level: ${presigeRequired}`, value: `Current Level: ${Level[0].officer_level}` },
@@ -1692,7 +1750,8 @@ module.exports = {
 
         newOfficerEmbed
             .setColor('#ff5b05')
-            .setThumbnail(guildIcon)
+            .setImage(link)
+            .setThumbnail(link)
             .setTimestamp()
             .setDescription(`**${interaction.member}, New Officer Selection Successful**`)
             .addFields(
@@ -1746,6 +1805,9 @@ module.exports = {
     },
     skillupgrade: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const image = unitDetails[0].Image
+        const link = `http://phfamily.co.uk/img/${image}`  
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.Vanguard
@@ -1787,7 +1849,8 @@ module.exports = {
             console.log(`Officer Upgrade Needed`),
             skillUpgradeEmbed
                     .setColor(CampColour)
-                    .setThumbnail(guildIcon)
+                    .setImage(link)
+                    .setThumbnail(link)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **Officer** to apply this **Skill** Upgrade.`)
@@ -1808,7 +1871,8 @@ module.exports = {
                 difference = cost - wallet
             skillUpgradeEmbed
                 .setColor(CampColour)
-                .setThumbnail(guildIcon)
+                .setImage(link)
+                .setThumbnail(link)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
@@ -1826,7 +1890,8 @@ module.exports = {
         const newSkillLevel = skillLevel + 1
         skillUpgradeEmbed
             .setColor(CampColour)
-            .setThumbnail(guildIcon)
+            .setImage(link)
+            .setThumbnail(link)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Officer Skill Upgrade Successful**`)
             .addFields(

@@ -1302,7 +1302,7 @@ module.exports = {
                 label: type,
                 description: `${camp} - ${type} - ${level}`,
                 value: type.toString(),
-                emoji: image.toString()
+                //emoji: image.toString()
             })
         }
         const unitMenu = new ActionRowBuilder()
@@ -1414,7 +1414,7 @@ module.exports = {
                 label: name,
                 description: `${level} - ${camp} - ${type} - ${skill} - ${skill_level}`,
                 value: name.toString(),
-                emoji: image.toString()
+                //emoji: image.toString()
             })
         }
         let CampColour = Colours.Green

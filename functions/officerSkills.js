@@ -1389,6 +1389,7 @@ if (Defender.OfficerSkill === 'Untouchable') {
         console.log(`Untouchable`)            
         Power = Attacker.AttackPower
         Attacker.AttackPower = 0
+        Powerless = Attacker.AttackPower
 
         skillEmbed
             .setColor(Defender.SkillColor)
@@ -1396,7 +1397,7 @@ if (Defender.OfficerSkill === 'Untouchable') {
             .addFields(
                 { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & decreases ${Attacker.Player} **${Attacker.Name}'s Attack** to **${Power.toLocaleString()}**` },
             ),   
-    console.log(Power.toLocaleString())
+    console.log(Powerless.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
     sleep(1000)

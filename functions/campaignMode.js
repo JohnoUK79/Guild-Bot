@@ -42,11 +42,11 @@ campaignMode: async function (interaction) {
         if (interaction.customId === 'camp18') {campaign = 18}
         if (interaction.customId === 'camp19') {campaign = 19}
         if (interaction.customId === 'camp20') {campaign = 20}
-        if (interaction.customId === 'camp20') {campaign = 21}
-        if (interaction.customId === 'camp20') {campaign = 22}
-        if (interaction.customId === 'camp20') {campaign = 23}
-        if (interaction.customId === 'camp20') {campaign = 24}
-        if (interaction.customId === 'camp20') {campaign = 25}
+        if (interaction.customId === 'camp21') {campaign = 21}
+        if (interaction.customId === 'camp22') {campaign = 22}
+        if (interaction.customId === 'camp23') {campaign = 23}
+        if (interaction.customId === 'camp24') {campaign = 24}
+        if (interaction.customId === 'camp25') {campaign = 25}
 
         campaignSelection(campaign)
         if (Date.now() - t < 0) {

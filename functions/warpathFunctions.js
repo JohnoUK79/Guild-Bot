@@ -1297,12 +1297,12 @@ module.exports = {
             const level = playerUnits[entry].unit_level
             const playerEmoji = camp + type
             const image = await interaction.member.guild.emojis.cache.find(emoji => emoji.name == playerEmoji)
-
+            console.log(playerEmoji)
             unitChoices.push({
                 label: type,
                 description: `${camp} - ${type} - ${level}`,
                 value: type.toString(),
-                //emoji: image.toString()
+                emoji: image.toString()
             })
         }
         const unitMenu = new ActionRowBuilder()

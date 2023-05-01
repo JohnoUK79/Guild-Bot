@@ -46,9 +46,7 @@ module.exports = {
             let image = unitInfo[0].Camp
         }
         const unitImage = new AttachmentBuilder(`./img/${unitInfo[0].Image}`)
-        const campImage = new AttachmentBuilder(`./img/${unitInfo[0].Camp}.png`)
 
-        console.log(image)
         const unitInfoEmbed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`Troop Information`)

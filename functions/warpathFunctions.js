@@ -196,8 +196,6 @@ module.exports = {
     buyBase: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const warbase = `http://phfamily.co.uk/img/war-base.jpg`
-        console.log(warbase)
-
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.Vanguard
@@ -898,9 +896,9 @@ module.exports = {
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
         const saveUnit = await sql.Execute(`INSERT INTO playerunits (discord_id, camp, unit_type, unit_level, unit_id) VALUES ('${interaction.member.id}', '${unitSelection.Camp}', '${unitSelection.Unit_Type}', '${unitSelection.Unit_Level}', '${unitSelection.Unit_ID}')`)
-        console.log(saveUnit.info)
+        console.log(`Save Unit:${saveUnit.info}`)
         const updateOfficer = await sql.Execute(`UPDATE levels SET Unit_Camp = '${unitSelection.Camp}', Unit_Type = '${unitSelection.Unit_Type}', Unit_Level = '${unitSelection.Unit_Level}' WHERE discord_id = '${interaction.member.id}'`)
-        console.log(updateOfficer.info)
+        console.log(`Update Officer:${updateOfficer.info}`)
         return interaction.update({ embeds: [selectUnitEmbed], components: [selectUnitButtons] })
     },
     buyUnit: async function (interaction) {
@@ -1062,8 +1060,6 @@ module.exports = {
         const newID = newUnit[0].Unit_ID
         const newImage = newUnit[0].Unit_Type
         const newEmoji = newImage.replace('.jpg', '')
-        console.log(newEmoji)
-
 
         upgradeUnitEmbed
             .setColor(CampColour)
@@ -1257,19 +1253,22 @@ module.exports = {
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
         const emoji = unitSelection.Image.replace('.jpg', '')
-        console.log(emoji)
         const updateUnit = await sql.Execute(`UPDATE playerunits SET emoji = '${emoji}', unit_level = '${Level[0].unit_level}', Unit_ID = '${unitSelection.Unit_ID}' WHERE discord_id = '${interaction.member.id}' AND camp = '${Level[0].unit_camp}' AND unit_type = '${Level[0].unit_type}'`)
         const saveNewUnit = await sql.Execute(`INSERT INTO playerunits (discord_id, camp, unit_type, unit_level, unit_id) VALUES ('${interaction.member.id}', '${unitSelection.Camp}', '${unitSelection.Unit_Type}', '${unitSelection.Unit_Level}', '${unitSelection.Unit_ID}')`)
         const updateNewUnit = await sql.Execute(`UPDATE levels SET Unit_Camp = '${unitSelection.Camp}', Unit_Type = '${unitSelection.Unit_Type}', Unit_Level = '${unitSelection.Unit_Level}', prestige = '${newPrestige}' WHERE discord_id = '${interaction.member.id}'`)
-        console.log(updateUnit.info)
-        console.log(updateNewUnit.info)
-        console.log(saveNewUnit.info)
+        console.log(`Update Unit:${updateUnit.info}`)
+        console.log(`Update New Unit:${updateNewUnit.info}`)
+        console.log(`Save New Unit:${saveNewUnit.info}`)
 
         return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons] })
     },
     attackSelection: async function (Attacker, Defender) {
-        if (Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier * 1.5, console.log(`Unit Attack Buff:${Attacker.Multiplier}`)
-        if (Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier * 1.5, console.log(`Unit Defend Buff:${Defender.Multiplier}`)
+        if (Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier, console.log(`Attacker Unit Buff:${Attacker.Multiplier}`)
+        if (Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier, console.log(`DefenderUnit Buff:${Defender.Multiplier}`)
+    },
+    campSelection: async function (Attacker, Defender) {
+        if (Attacker.UnitCamp === Attacker.OfficerCamp) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier, console.log(`Attacker Camp Buff: ${Attacker.Multiplier}`)
+        if (Defender.UnitCamp === Defender.OfficerCamp) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier, console.log(`Defender Camp Buff: ${Defender.Multiplier}`)
     },
     newUnitSelection: async function (prestige) { //Medium is Starter Troop
         if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters'
@@ -1285,12 +1284,6 @@ module.exports = {
         module.exports.newUnitLevel = newUnitLevel
         module.exports.newUnitType = newUnitType
     },
-    campSelection: async function (Attacker, Defender) {
-        if (Attacker.UnitCamp === Attacker.OfficerCamp) return Attacker.Multiplier = Attacker.Multiplier * 2, console.log(`Camp Attack Buff: ${Attacker.Multiplier}`)
-        if (Defender.UnitCamp === Defender.OfficerCamp) return Defender.Multiplier = Defender.Multiplier  * 2, console.log(`Camp Defend Buff: ${Defender.Multiplier}`)
-        if (Attacker.UnitCamp === Attacker.OfficerCamp && Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier * 4, console.log(`Camp Attack Buff: ${Attacker.Multiplier}`)
-        if (Defender.UnitCamp === Defender.OfficerCamp && Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier * 4, console.log(`Camp Defend Buff: ${Defender.Multiplier}`)
-    },
     selectunit: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
@@ -1304,7 +1297,7 @@ module.exports = {
             const level = playerUnits[entry].unit_level
             const playerEmoji = playerUnits[entry].emoji || 'Guardian_of_the_Truth'
             const image = await interaction.member.guild.emojis.cache.find(emoji => emoji.name == playerEmoji)
-
+            console.log(test)
             unitChoices.push({
                 label: type,
                 description: `${camp} - ${type} - ${level}`,
@@ -1350,6 +1343,7 @@ module.exports = {
         const HP = newUnitSelect[0].HP * playerProfile[0].base_level * 10
         const unitImage = `http://phfamily.co.uk/img/${newUnitSelect[0].Image}`
         const updateUnit = await sql.Execute(`UPDATE levels SET unit_level = '${selectedUnit[0].unit_level}', unit_camp = '${selectedUnit[0].camp}', unit_type = '${selectedUnit[0].unit_type}' WHERE discord_id = '${interaction.member.id}'`)
+        console.log(`Updated Unit:${updateUnit.info}`)
         let CampColour = Colours.Green
         if (selectedUnit[0].camp === 'Vanguard') {
             CampColour = Colours.Vanguard
@@ -1765,8 +1759,8 @@ module.exports = {
         const saveNewOfficer = await sql.Execute(`INSERT INTO playerofficers (Discord_ID, Officer_ID, Officer_Type, Officer_Name, Officer_Camp, Skill, Image) 
         VALUES ('${interaction.member.id}', '${officerSelection.Officer_ID}', '${officerSelection.Officer_Type}', '${officerSelection.Officer_Name}', '${officerSelection.Officer_Camp}', '${officerSelection.Skill}', '${officerSelection.Image}')`)
         const updateNewOfficer = await sql.Execute(`UPDATE levels SET officer_name = '${officerSelection.Officer_Name}', officer_level = '0', skill_level = '0' WHERE discord_id = '${interaction.member.id}'`)
-        console.log(updateNewOfficer.info)
-        console.log(saveNewOfficer.info)
+        console.log(`Update New Officer:${updateNewOfficer.info}`)
+        console.log(`Save New Officer:${saveNewOfficer.info}`)
 
         return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons] })
     },

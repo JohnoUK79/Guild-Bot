@@ -1295,14 +1295,14 @@ module.exports = {
             const camp = playerUnits[entry].camp
             const type = playerUnits[entry].unit_type
             const level = playerUnits[entry].unit_level
-            const playerEmoji = playerUnits[entry].emoji || 'Guardian_of_the_Truth'
+            const playerEmoji = camp + type
             const image = await interaction.member.guild.emojis.cache.find(emoji => emoji.name == playerEmoji)
-            console.log(test)
+
             unitChoices.push({
                 label: type,
                 description: `${camp} - ${type} - ${level}`,
                 value: type.toString(),
-                //emoji: image.toString()
+                emoji: image.toString()
             })
         }
         const unitMenu = new ActionRowBuilder()
@@ -1406,12 +1406,15 @@ module.exports = {
             const skill = playerOfficers[entry].Skill
             const level = playerOfficers[entry].Officer_Level
             const skill_level = playerOfficers[entry].Skill_Level
+            const image = await interaction.member.guild.emojis.cache.find(emoji => emoji.name == camp)
+
 
 
             officerChoices.push({
                 label: name,
                 description: `${level} - ${camp} - ${type} - ${skill} - ${skill_level}`,
-                value: name.toString()
+                value: name.toString(),
+                emoji: image.toString()
             })
         }
         let CampColour = Colours.Green

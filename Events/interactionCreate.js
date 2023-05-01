@@ -134,6 +134,11 @@ module.exports = {
 		campaign(interaction)
 		} catch (err) {console.log(err)}
 		}
+		if (interaction.customId === 'ultra') {
+		try {
+		campaign(interaction)
+		} catch (err) {console.log(err)}
+		}
 		if (interaction.customId === 'camp1') {
 		try {
 		campaignMode(interaction)
@@ -230,6 +235,31 @@ module.exports = {
 		} catch (err) {console.log(err)}
 		}
 		if (interaction.customId === 'camp20') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp21') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp22') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp23') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp24') {
+		try {
+		campaignMode(interaction)
+		} catch (err) {console.log(err)}
+		}
+		if (interaction.customId === 'camp25') {
 		try {
 		campaignMode(interaction)
 		} catch (err) {console.log(err)}

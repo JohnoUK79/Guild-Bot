@@ -41,9 +41,9 @@ module.exports = {
         let image = ''
         const unitInfo = await sql.Execute(`SELECT * FROM units WHERE CAMP = '${camp}' AND Unit_Type = '${troop}' ORDER BY Unit_Level DESC`)
         if (!unitInfo[0]){
-            let image = 'NotFound'
+            image = 'NotFound'
         } else {
-            let image = unitInfo[0].Camp
+            image = unitInfo[0].Camp
         }
         const unitImage = new AttachmentBuilder(`./img/${unitInfo[0].Image}`)
 

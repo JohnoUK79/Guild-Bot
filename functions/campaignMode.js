@@ -171,7 +171,7 @@ while (DH >= 0 && AH >= 0) {
     attackSelection(Attacker, Defender)
     campSelection(Attacker, Defender) 
     officerSkills(interaction, Attacker, Defender, AH, DH)
-    await sleep(1100)         
+    await sleep(950)         
     Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
     const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
     Defender.AttackPower = (defendPower * Defender.Multiplier)
@@ -204,7 +204,7 @@ console.log(`Defender Speed: ${Defender.Speed} Attacker Speed: ${Attacker.Speed}
     attackSelection(Attacker, Defender)
     campSelection(Attacker, Defender) 
     officerSkills(interaction, Attacker, Defender, AH, DH)
-    await sleep(1100)       
+    await sleep(950)       
 Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
 const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
 Attacker.AttackPower = (attackPower * Attacker.Multiplier)
@@ -233,7 +233,7 @@ console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)
 }
 
 if (DH < 0) {
-    await sleep(1200)      
+    await sleep(800)      
     const winnings = AttackerDB[0].officer_level * 10000 * campaignOfficerLevel / 10
     const wallet = AttackerDB[0].war_coins
     const wins = AttackerDB[0].battle_wins
@@ -260,7 +260,7 @@ const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war
 console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${campaignOfficer}`)
 } else
 if (AH < 0) {
-    await sleep(1200)      
+    await sleep(800)      
     const losses = AttackerDB[0].battle_losses
     const newLosses = parseInt(losses + 1)
 

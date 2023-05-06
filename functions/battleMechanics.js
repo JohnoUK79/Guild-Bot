@@ -145,7 +145,7 @@ if (Attacker.Speed < Defender.Speed) {
     console.log(`Attacker Speed: ${Attacker.Speed} Defender Speed: ${Defender.Speed}`)
     while (Defender.BattleHealth >= 0 && Attacker.BattleHealth >= 0) {
         console.count('Round:')
-        await sleep(950)      
+        await sleep(1100)      
         attackSelection(Attacker, Defender)
         officerSkills(interaction, Attacker, Defender)
         campSelection(Attacker, Defender) 
@@ -184,7 +184,7 @@ if (Attacker.Speed < Defender.Speed) {
     console.log(`Defender Speed: ${Defender.Speed} Attacker Speed: ${Attacker.Speed}`)
     while (Defender.BattleHealth >= 0 && Attacker.BattleHealth >= 0) {
     console.count('Round:')
-    await sleep(950)
+    await sleep(1100)
     attackSelection(Attacker, Defender)
     officerSkills(interaction, Attacker, Defender)
     campSelection(Attacker, Defender) 
@@ -225,7 +225,7 @@ if (Attacker.Speed < Defender.Speed) {
 }
 
 if (Defender.BattleHealth < 0) {
-        await sleep(800)
+        await sleep(1200)
         console.log(Attacker.ImageFile)
         const winnings = Attacker.OfficerLevel * 10000
         chest = AttackerDB[0].war_chest
@@ -250,7 +250,7 @@ if (Defender.BattleHealth < 0) {
     console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${defender.username}`, loss.info)
     } else
 if (Attacker.BattleHealth < 0) {
-        await sleep(800)
+        await sleep(1200)
         const winnings = DefenderDB[0].officer_level * 10000
         chest = DefenderDB[0].war_chest
         const wallet = DefenderDB[0].war_coins

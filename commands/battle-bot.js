@@ -54,8 +54,10 @@ module.exports = {
 		const guildName = interaction.member.guild.name
 		const Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
 		const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Economy[0].unit_camp}' AND Unit_type = '${Economy[0].unit_type}' AND Unit_Level = '${Economy[0].unit_level}'`)
-        const image = unitDetails[0].Image
-        const link = `http://phfamily.co.uk/img/${image}`
+        const image = Economy[0].unit_image || 'Guardian_of_the_Truth.png'
+		console.log(unitDetails)
+		console.log(image)
+        const link = `http://phfamily.co.uk/img/${image}` 
 		console.log(link)
 		CampColour = Colours.Green
 		if (Economy[0].unit_camp === 'Vanguard') {

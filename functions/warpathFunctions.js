@@ -435,8 +435,7 @@ module.exports = {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
@@ -547,8 +546,7 @@ module.exports = {
     },
     officerSelect: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`
         const selectOfficerEmbed = new EmbedBuilder();
         const selectOfficerButtons = new ActionRowBuilder()
@@ -587,8 +585,7 @@ module.exports = {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
@@ -725,8 +722,7 @@ module.exports = {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
@@ -854,7 +850,7 @@ module.exports = {
     unitSelect: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
@@ -897,14 +893,14 @@ module.exports = {
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
         const saveUnit = await sql.Execute(`INSERT INTO playerunits (discord_id, camp, unit_type, unit_level, unit_id) VALUES ('${interaction.member.id}', '${unitSelection.Camp}', '${unitSelection.Unit_Type}', '${unitSelection.Unit_Level}', '${unitSelection.Unit_ID}')`)
         console.log(`Save Unit:${saveUnit.info}`)
-        const updateOfficer = await sql.Execute(`UPDATE levels SET Unit_Camp = '${unitSelection.Camp}', Unit_Type = '${unitSelection.Unit_Type}', Unit_Level = '${unitSelection.Unit_Level}' WHERE discord_id = '${interaction.member.id}'`)
+        const updateOfficer = await sql.Execute(`UPDATE levels SET unit_camp = '${unitSelection.Camp}', unit_type = '${unitSelection.Unit_Type}', unit_level = '${unitSelection.Unit_Level}', unit_image = '${unitSelection.Image}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Update Officer:${updateOfficer.info}`)
         return interaction.update({ embeds: [selectUnitEmbed], components: [selectUnitButtons] })
     },
     buyUnit: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = unitDetails[0].Image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`
         const camp = Level[0].unit_camp
         let CampColour = Colours.Green
@@ -1060,6 +1056,8 @@ module.exports = {
         const newID = newUnit[0].Unit_ID
         const newImage = newUnit[0].Unit_Type
         const newEmoji = newImage.replace('.jpg', '')
+        const unitImage = newUnit[0].Image
+
 
         upgradeUnitEmbed
             .setColor(CampColour)
@@ -1079,7 +1077,7 @@ module.exports = {
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-        const unitUpgrade = await sql.Execute(`UPDATE levels SET War_Coins = ${newWallet}, Unit_Level = '${newLevel}' WHERE discord_id = '${interaction.member.id}'`)
+        const unitUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, unit_level = '${newLevel}', unit_image = '${unitImage}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Levels Unit Update${unitUpgrade.info}`)
         const updateUnit = await sql.Execute(`UPDATE playerunits SET emoji = '${newEmoji}', unit_level = '${newLevel}', unit_id = '${newID}' WHERE discord_id = '${interaction.member.id}' AND camp = '${Level[0].unit_camp}' AND unit_type = '${Level[0].unit_type}'`)
         console.log(`Player Unit Update ${updateUnit.info}`)
@@ -1135,7 +1133,7 @@ module.exports = {
         const skillLevel = Level[0].skill_level 
 
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`
         const triggerRate = 5 + (skillLevel * 5)
         
@@ -1171,7 +1169,7 @@ module.exports = {
     newUnit: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
@@ -1289,7 +1287,7 @@ module.exports = {
     selectunit: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`
         const playerUnits = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}'`)
         const unitChoices = [];
@@ -1304,7 +1302,7 @@ module.exports = {
                 label: type,
                 description: `${camp} - ${type} - ${level}`,
                 value: type.toString(),
-                emoji: image.toString()
+                emoji: image.toString(),
             })
         }
         const unitMenu = new ActionRowBuilder()
@@ -1343,8 +1341,9 @@ module.exports = {
         const playerProfile = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const firepower = newUnitSelect[0].Firepower * (playerProfile[0].officer_level / 10)
         const HP = newUnitSelect[0].HP * playerProfile[0].base_level * 10
-        const unitImage = `http://phfamily.co.uk/img/${newUnitSelect[0].Image}`
-        const updateUnit = await sql.Execute(`UPDATE levels SET unit_level = '${selectedUnit[0].unit_level}', unit_camp = '${selectedUnit[0].camp}', unit_type = '${selectedUnit[0].unit_type}' WHERE discord_id = '${interaction.member.id}'`)
+        const unitImage = `${newUnitSelect[0].Image}`
+        const link = 'http://phfamily.co.uk/img/' + unitImage
+        const updateUnit = await sql.Execute(`UPDATE levels SET unit_level = '${selectedUnit[0].unit_level}', unit_camp = '${selectedUnit[0].camp}', unit_type = '${selectedUnit[0].unit_type}', unit_image = '${unitImage}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Updated Unit:${updateUnit.info}`)
         let CampColour = Colours.Green
         if (selectedUnit[0].camp === 'Vanguard') {
@@ -1375,8 +1374,8 @@ module.exports = {
         const selectedUnitEmbed = new EmbedBuilder()
             .setTitle(`${selected} chosen`)
             .setColor(CampColour)
-            .setImage(unitImage)
-            .setThumbnail(unitImage)
+            .setImage(link)
+            .setThumbnail(link)
             .setTimestamp()
             .addFields(
                 { name: `Unit Name:`, value: `${newUnitSelect[0].Unit_Name.toLocaleString()}`, inline: true },
@@ -1397,7 +1396,7 @@ module.exports = {
     selectofficer: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`
         const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
         const officerChoices = [];
@@ -1452,8 +1451,7 @@ module.exports = {
     },
     selectofficermenu: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`
         const selected = interaction.values[0]
         const selectedOfficer = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' AND Officer_Name = '${selected}'`)
@@ -1508,7 +1506,7 @@ module.exports = {
     campaign: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`
         const campaignButtons = new ActionRowBuilder()
             .addComponents(
@@ -1768,7 +1766,7 @@ module.exports = {
         const currentOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}'`)
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)  
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`      
         const newOfficerEmbed = new EmbedBuilder();
         const newOfficerButtons = new ActionRowBuilder()
@@ -1864,7 +1862,7 @@ module.exports = {
     skillupgrade: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image
+        const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`  
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {

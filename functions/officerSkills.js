@@ -200,7 +200,7 @@ module.exports = {
                         .setColor(Attacker.SkillColor)
                         .setThumbnail(RedCross)
                         .addFields(
-                            { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & decreases ${Defender.Player} **${Defender.Name}'s Health** by **${health.toLocaleString()}**` },
+                            { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & decreases **${Defender.Player}** **${Defender.Name}'s Health** by **${health.toLocaleString()}**` },
                         )  
                 interaction.followUp({embeds: [skillEmbed]})
                 Attacker.SkillUsed = 'Health'
@@ -332,7 +332,7 @@ module.exports = {
                         .setColor(Attacker.SkillColor)
                         .setImage(RedCross)
                         .addFields(
-                            { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** & reduces ${Defender.Player} **${Defender.Name}'s Heal** by **${health.toLocaleString()}**` },
+                            { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** & reduces **${Defender.Player}** **${Defender.Name}'s Heal** by **${health.toLocaleString()}**` },
                     ) 
                 }
 
@@ -405,7 +405,7 @@ module.exports = {
                         .setColor(Attacker.SkillColor)
                         .setImage(Boom)
                         .addFields(
-                            { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** & reduces ${Defender.Player} **${Defender.Name}'s Health** by **${Special.toLocaleString()}**` },
+                            { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** & reduces **${Defender.Player}** **${Defender.Name}'s Health** by **${Special.toLocaleString()}**` },
                     ) 
                 }
 
@@ -477,7 +477,7 @@ module.exports = {
                     .setThumbnail(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
-                        { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** decreases ${Defender.Player} **${Defender.Name}'s Attack** by **${health.toLocaleString()}**` },
+                        { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** decreases **${Defender.Player}** **${Defender.Name}'s Attack** by **${health.toLocaleString()}**` },
                     ),   
             console.log(health.toLocaleString() || Power.toLocaleString())
             Attacker.SkillUsed = 'Attack'
@@ -564,7 +564,7 @@ module.exports = {
                     .setImage(Boom)
                     .addFields(
                         { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
-                        { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** & decreases ${Defender.Player} **${Defender.Name}'s Health** by **${Special.toLocaleString()}**` },
+                        { name: `${Attacker.OfficerSkill}`, value: `**${Attacker.Officer}** & decreases **${Defender.Player}** **${Defender.Name}'s Health** by **${Special.toLocaleString()}**` },
                     ),   
             console.log(Power.toLocaleString(), Special.toLocaleString())
             Attacker.SkillUsed = 'Attack'
@@ -625,7 +625,7 @@ module.exports = {
                     .setColor(Attacker.SkillColor)
                     .setThumbnail(RedCross)
                     .addFields(
-                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & decreases ${Defender.Player} **${Defender.Name}'s Attack** to **${Defender.AttackPower.toLocaleString()}**` },
+                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & decreases **${Defender.Player}** **${Defender.Name}'s Attack** to **${Defender.AttackPower.toLocaleString()}**` },
                     ),   
             console.log(Attacker.AttackPower.toLocaleString())
             console.log(Defender.AttackPower.toLocaleString())
@@ -692,9 +692,8 @@ module.exports = {
                     .setColor(Attacker.SkillColor)
                     .setThumbnail(RedCross)
                     .addFields(
-                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & decreases ${Defender.Player} **${Defender.Name}'s Attack** to **${Power.toLocaleString()}**` },
+                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & decreases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
                     ),   
-            console.log(Attacker.AttackPower.toLocaleString())
             console.log(Power.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]})
@@ -884,7 +883,7 @@ module.exports = {
                 .setColor(Defender.SkillColor)
                 .setThumbnail(RedCross)
                     .addFields(
-                        { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
+                        { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
                     )   
         Defender.SkillUsed = 'Health'
         interaction.followUp({embeds: [skillEmbed]})
@@ -905,7 +904,7 @@ if (Defender.OfficerSkill === 'Caring Angel') {
                 .setColor(Defender.SkillColor)
                 .setThumbnail(RedCross)
                 .addFields(
-                    { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
+                    { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
                 )  
         interaction.followUp({embeds: [skillEmbed]})
         Defender.SkillUsed = 'Health'
@@ -924,7 +923,7 @@ if (Defender.OfficerSkill === `The Soldier's Soldier`) {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -944,7 +943,7 @@ if (Defender.OfficerSkill === 'Undaunted') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -983,7 +982,7 @@ if (Defender.OfficerSkill === 'Guardian Angel') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1003,7 +1002,7 @@ if (Defender.OfficerSkill === 'Hand of Destruction') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1024,7 +1023,7 @@ if (Defender.OfficerSkill === 'Frontline Fire') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1047,7 +1046,7 @@ if (Defender.OfficerSkill === 'Vengeance') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Special.toLocaleString() || Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Special.toLocaleString() || Power.toLocaleString()}**` },
             ),   
     console.log(Special.toLocaleString() || Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1068,7 +1067,7 @@ if (Defender.OfficerSkill === 'The Motherland') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1099,7 +1098,7 @@ if (Defender.OfficerSkill === 'Mine Detonator') {
         skillEmbed
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Damage.toLocaleString() || Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1120,7 +1119,7 @@ if (Defender.OfficerSkill === 'Flamestorm') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1144,7 +1143,7 @@ if (Defender.OfficerSkill === 'Inpenetrable') {
                 .setColor(Defender.SkillColor)
                 .setThumbnail(RedCross)
                 .addFields(
-                    { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
+                    { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
                 )   
     Defender.SkillUsed = 'Health'
     interaction.followUp({embeds: [skillEmbed]})
@@ -1174,7 +1173,7 @@ if (Defender.OfficerSkill === 'Breaching Charge') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString() || Special.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1195,7 +1194,7 @@ if (Defender.OfficerSkill === 'Flaming Meteors') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1216,7 +1215,7 @@ if (Defender.OfficerSkill === 'Master of War') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1240,7 +1239,7 @@ if (Defender.OfficerSkill === 'Phantom Power') {
             .setImage(RedCross)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
                 { name: `${Defender.OfficerSkill}`, value: `**${Defender.Officer}** decreases ${Attacker.Player} **${Attacker.Name}'s Attack** by **${health.toLocaleString()}**` },
 
             ),   
@@ -1262,7 +1261,7 @@ if (Defender.OfficerSkill === 'Blinding Flash') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1283,7 +1282,7 @@ if (Defender.OfficerSkill === 'Rain of Blades') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1305,7 +1304,7 @@ if (Defender.OfficerSkill === 'Devastation') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1330,7 +1329,7 @@ if (Defender.OfficerSkill === 'Beauty Worth Preserving') {
             .setImage(Boom)
             .setThumbnail(RedCross)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Defender.AttackPower.toLocaleString()}**` },
                 { name: `${Defender.OfficerSkill}`, value: `**${Defender.Officer}** & decreases ${Attacker.Player} **${Attacker.Name}'s Health** by **${health.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
@@ -1351,7 +1350,7 @@ if (Defender.OfficerSkill === 'Forlorn Hope') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1373,7 +1372,7 @@ if (Defender.OfficerSkill === 'Sky Dancer') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Defender.AttackPower.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1418,7 +1417,7 @@ if (Defender.OfficerSkill === 'Heavenly Rays') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** to **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** to **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1440,7 +1439,7 @@ if (Defender.OfficerSkill === 'Twin Fangs') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1482,7 +1481,7 @@ if (Defender.OfficerSkill === 'Unleashed Justice') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1503,7 +1502,7 @@ if (Defender.OfficerSkill === 'Sticky Situation') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1525,7 +1524,7 @@ if (Defender.OfficerSkill === 'Desperate Counterattack') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
@@ -1547,7 +1546,7 @@ if (Defender.OfficerSkill === 'Last Gasp') {
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
             ),   
     console.log(Power.toLocaleString())
     Defender.SkillUsed = 'Attack'

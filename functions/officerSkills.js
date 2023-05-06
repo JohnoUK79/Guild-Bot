@@ -8,7 +8,7 @@ async function sleep(ms) {
     );
     }
 module.exports = {
-    officerSkills: async function (interaction, Attacker, Defender, AH, DH) {
+    officerSkills: async function (interaction, Attacker, Defender) {
         const Boom = 'http://phfamily.co.uk/img/Boom.jpg'
         const RedCross = 'http://phfamily.co.uk/img/RedCross.png'
         const guildIcon = interaction.member.guild.iconURL();
@@ -93,9 +93,6 @@ module.exports = {
         if (Attacker.SkillLevel === 20) {
             chance = chance100
         }
-        if (Attacker.SkillLevel > 20) {
-            chance = chance100
-        }
 
         const skillEmbed = new EmbedBuilder();
             skillEmbed 
@@ -104,15 +101,20 @@ module.exports = {
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
                     .setFooter({ text: `${guildName} - Battles`, iconURL: `${guildIcon}`});
-    
-        if (Attacker.OfficerSkill === 'Indomitable') {
+                    
+        if (Attacker.SkillLevel === 0) {
+        Attacker.SkillLevel = 1
+        }   
+
+        //Sergeant Spanner
+        if (Attacker.OfficerSkill === 'Indomitable') { //Awoken Skill
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
                 console.log(skillSuccess,chance)
                 if (skillSuccess === 'Yes') {
-                    console.log(`Indomitable`) 
-                    health = AH * 0.3
-                    AH = AH + health
-                    if (AH > 0) {
+                    console.log(`Indomitable`)
+                    const health = (Attacker.BattleHealth * 0.3) * Attacker.SkillLevel
+                    if (Attacker.BattleHealth > 0) {
+                        Attacker.BattleHealth = Attacker.BattleHealth + health
                         console.log(`Health Increased`, health)
                     } else return console.log(`Health Error`)
                     console.log(health)
@@ -132,9 +134,9 @@ module.exports = {
         if (Attacker.OfficerSkill === 'Caring Angel') {
             if (Defender.SkillUsed === 'Attack') {
                 console.log(`Caring Angel`)   
-                health = AH * 0.35
-                AH = AH + health
-                if (AH > 0) {
+                const health = (Attacker.BattleHealth * 0.35) * Attacker.SkillLevel
+                if (Attacker.BattleHealth > 0) {
+                    Attacker.BattleHealth = Attacker.BattleHealth + health
                     console.log(`Health Increased`, health)
                 } else return console.log(`Health Error`)
     
@@ -154,7 +156,7 @@ module.exports = {
             console.log(skillSuccess,chance)
             if (skillSuccess === 'Yes') {
                 console.log(`The Soldier's Soldier`)  
-                Power = Attacker.AttackPower * 0.125
+                const Power = (Attacker.AttackPower * 0.125) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -173,7 +175,7 @@ module.exports = {
             console.log(skillSuccess,chance)
             if (skillSuccess === 'Yes') {
                 console.log(`Undaunted`)  
-                Power = Attacker.AttackPower * 0.5
+                const Power = (Attacker.AttackPower * 0.5) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -190,9 +192,9 @@ module.exports = {
         if (Attacker.OfficerSkill === 'Who Dares Wins') {
             if (Defender.AttackType === 'Ground') {
                 console.log(`Who Dares Wins`)   
-                const health = DH * 0.2
-                DH - health
-                if (DH > 0) {
+                const health = (Defender.BattleHealth * 0.2) * Attacker.SkillLevel
+                if (Defender.BattleHealth > 0) {
+                    Defender.BattleHealth - health
                     console.log(`Health Decreased`, health)
                 } else return console.log(`Health Error`)
     
@@ -211,7 +213,7 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Guardian Angel`)  
-                Power = Attacker.AttackPower * 0.2
+                const Power = (Attacker.AttackPower * 0.2) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -231,7 +233,7 @@ module.exports = {
                 if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Hand of Destruction`)
-                Power = Attacker.AttackPower * 0.4
+                const Power = (Attacker.AttackPower * 0.4) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -251,7 +253,7 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Frontline Fire`)            
-                Power = Attacker.AttackPower * 0.08
+                Power = (Attacker.AttackPower * 0.18) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
@@ -272,10 +274,10 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(`Vengeance`)   
                 console.log(skillSuccess,chance)         
-                Power = Attacker.AttackPower * 0.3
+                const Power = (Attacker.AttackPower * 0.3) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 if (Attacker.UnitType === 'Infantry') {
-                    Special = Attacker.AttackPower + Attacker.AttackPower * 0.25 
+                    Special = (Attacker.AttackPower * 0.25) * Attacker.SkillLevel 
                     Attacker.AttackPower = Attacker.AttackPower + Special
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -303,7 +305,7 @@ module.exports = {
                 if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`The Motherland`)
-                damage = Attacker.AttackPower * 0.5
+                const damage = (Attacker.AttackPower * 0.5) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + damage
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -323,11 +325,11 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Mine Detonator`)            
-                Power = Attacker.AttackPower * 0.135
+                const Power = (Attacker.AttackPower * 0.135) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 if (Defender.UnitType === 'Infantry') {
-                    health = DH * .05
-                    DH = DH - health
+                    const health = (Defender.BattleHealth * .5) * Attacker.SkillLevel
+                    Defender.BattleHealth = Defender.BattleHealth - health
                     skillEmbed
                         .setColor(Attacker.SkillColor)
                         .setImage(RedCross)
@@ -354,7 +356,7 @@ module.exports = {
                 if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Flamestorm`)
-                Power = Attacker.AttackPower * 0.1
+                const Power = (Attacker.AttackPower * 0.1) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -374,9 +376,9 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Inpenetrable`) 
-                health = AH * 0.5
-                AH = AH + health
-                if (AH > 0) {
+                const health = (Attacker.BattleHealth * 0.5) * Attacker.SkillLevel
+                Attacker.BattleHealth = Attacker.BattleHealth + health
+                if (Attacker.BattleHealth > 0) {
                     console.log(`Health Increased`, health)
                 } else return console.log(`Health Error`)
 
@@ -396,10 +398,10 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Breaching Charge`)            
-                Power = Attacker.AttackPower * 0.13
+                const Power = (Attacker.AttackPower * 0.3) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 if (Defender.UnitType === 'Infantry') {
-                    Special = Attacker.AttackPower * .5
+                    const Special = (Attacker.AttackPower * .5) * Attacker.SkillLevel
                     Attacker.AttackPower = Attacker.AttackPower + Special
                     skillEmbed
                         .setColor(Attacker.SkillColor)
@@ -427,7 +429,7 @@ module.exports = {
                 if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Flaming Meteors`)
-                Power = Attacker.AttackPower * 0.3
+                const Power = (Attacker.AttackPower * 0.3) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed  
                     .setColor(Attacker.SkillColor)
@@ -447,7 +449,7 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Master of War`)            
-                Power = Attacker.AttackPower * 0.10
+                const Power = (Attacker.AttackPower * 0.1) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -466,10 +468,10 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Phantom Power`)            
-                Power = Attacker.AttackPower * 0.10
+                const Power = (Attacker.AttackPower * 0.1) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
-                health = AH * 0.2
-                AH = AH + health
+                const health = (Attacker.BattleHealth * 0.2) * Attacker.SkillLevel
+                Attacker.BattleHealth = Attacker.BattleHealth + health
 
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -490,7 +492,7 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Blinding Flash`)            
-                Power = Attacker.AttackPower * 0.10
+                const Power = (Attacker.AttackPower * 0.1) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
@@ -511,7 +513,7 @@ module.exports = {
                 if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Rain of Blades`)
-                Power = Attacker.AttackPower * 0.1
+                const Power = (Attacker.AttackPower * 0.1) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed  
@@ -533,7 +535,7 @@ module.exports = {
                 if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Devastation`)
-                Power = Attacker.AttackPower * 0.25
+                const Power = (Attacker.AttackPower * 0.25) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -553,9 +555,9 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Beauty Worth Preserving`)            
-                Power = Attacker.AttackPower * 0.15
+                const Power = (Attacker.AttackPower * 0.15) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
-                Special = Math.round(Defender.AttackPower = Defender.AttackPower * .1)
+                const Special = Math.round(Defender.AttackPower * .1)
                 Defender.AttackPower = Defender.AttackPower - Special
 
                 skillEmbed
@@ -577,7 +579,7 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Forlorn Hope`)            
-                Power = Attacker.AttackPower * 0.25
+                const Power = (Attacker.AttackPower * 0.25) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
@@ -598,7 +600,7 @@ module.exports = {
                 if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Sky Dancer`)
-                Power = Attacker.AttackPower * 0.15
+                const Power = (Attacker.AttackPower * 0.15) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -618,7 +620,7 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Untouchable`)   
-                Defend = Defender.AttackPower
+                const Defend = Defender.AttackPower
                 Defender.AttackPower = 0
 
                 skillEmbed
@@ -642,7 +644,7 @@ module.exports = {
                 if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Heavenly Rays`)    
-                Power = Attacker.AttackPower * 0.15
+                const Power = (Attacker.AttackPower * 0.15) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
@@ -664,7 +666,7 @@ module.exports = {
                 if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Twin Fangs`)            
-                Power = Attacker.AttackPower * 0.25
+                const Power = (Attacker.AttackPower * 0.25) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
@@ -685,7 +687,7 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Night Evader`)            
-                Power = Defender.AttackPower * .2
+                const Power = (Defender.AttackPower * .2) * Attacker.SkillLevel
                 Defender.AttackPower = Defender.AttackPower - Power
 
                 skillEmbed
@@ -706,7 +708,7 @@ module.exports = {
                 if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Unleashed Justice`)            
-                Power = Attacker.AttackPower * 2
+                const Power = (Attacker.AttackPower * .2) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
@@ -727,7 +729,7 @@ module.exports = {
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Sticky Situation`)            
-                Power = Attacker.AttackPower * .2
+                const Power = (Attacker.AttackPower * .2) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
@@ -748,7 +750,7 @@ module.exports = {
             console.log(skillSuccess,chance)
             if (Attacker.UnitType === 'Fighter') {
                 console.log(`Desperate Counterattack`)        
-                Power = Attacker.AttackPower * .25
+                const Power = (Attacker.AttackPower * .25) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -770,7 +772,7 @@ module.exports = {
                 if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Last Gasp`)            
-                Power = Attacker.AttackPower * 2
+                const Power = (Attacker.AttackPower * .2) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
 
                 skillEmbed
@@ -862,7 +864,9 @@ module.exports = {
     if (Defender.SkillLevel === 20) {
         chance = chance100
     }
-
+    if (Defender.SkillLevel === 0) {
+        Defender.SkillLevel = 1
+        } 
     skillEmbed 
         .setAuthor({ name: Defender.Player.username || Defender.Name, iconURL: Defender.Image })
 
@@ -872,12 +876,11 @@ module.exports = {
         if (skillSuccess === 'Yes') {
             console.log(skillSuccess,chance)
             console.log(`Indomitable`) 
-            health = DH * 0.3
-            DH = DH + health
-            if (DH > 0) {
+            const health = (Defender.BattleHealth * 0.3) * Defender.SkillLevel
+            if (Defender.BattleHealth > 0) {
+                Defender.BattleHealth = Defender.BattleHealth + health
                 console.log(`Health Increased`, health)
             } else return console.log(`Health Error`)
-            console.log(DH)
 
             skillEmbed
                 .setColor(Defender.SkillColor)
@@ -894,9 +897,9 @@ module.exports = {
 if (Defender.OfficerSkill === 'Caring Angel') {
     if (Attacker.SkillUsed === 'Attack') {
         console.log(`Caring Angel`)   
-        health = DH * 0.35
-        DH = DH + health
-        if (DH > 0) {
+        const health = (Defender.BattleHealth * 0.35) * Defender.SkillLevel
+        Defender.BattleHealth = Defender.BattleHealth + health
+        if (Defender.BattleHealth > 0) {
             console.log(`Health Increased`, health)
         } else return console.log(`Health Error`)
 
@@ -916,7 +919,7 @@ if (Defender.OfficerSkill === `The Soldier's Soldier`) {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`The Soldier's Soldier`)  
-        Power = Defender.AttackPower * 0.125
+        const Power = (Defender.AttackPower * 0.125) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -936,7 +939,7 @@ if (Defender.OfficerSkill === 'Undaunted') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Undaunted`)  
-        Power = Defender.AttackPower * 0.5
+        const Power = (Defender.AttackPower * 0.5) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -954,9 +957,9 @@ if (Defender.OfficerSkill === 'Undaunted') {
 if (Defender.OfficerSkill === 'Who Dares Wins') {
     if (Defender.AttackType === 'Ground') {
         console.log(`Who Dares Wins`)   
-        damage = DH * 0.2
-        DH = DH - damage
-        if (DH > 0) {
+        const damage = (Defender.BattleHealth * 0.2) * Defender.SkillLevel
+        if (Defender.BattleHealth > 0) {
+            Defender.BattleHealth = Defender.BattleHealth - damage
             console.log(`Health Decreased`, damage)
         } else return console.log(`Health Error`)
 
@@ -975,7 +978,7 @@ if (Defender.OfficerSkill === 'Guardian Angel') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Guardian Angel`)  
-        Power = Defender.AttackPower * 0.2
+        const Power = (Defender.AttackPower * 0.2) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -996,7 +999,7 @@ if (Defender.OfficerSkill === 'Hand of Destruction') {
         if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Hand of Destruction`)
-        Power = Defender.AttackPower * 0.4
+        Power = (Defender.AttackPower * 0.4) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
         skillEmbed
             .setColor(Defender.SkillColor)
@@ -1016,7 +1019,7 @@ if (Defender.OfficerSkill === 'Frontline Fire') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Frontline Fire`)            
-        Power = Defender.AttackPower * 0.08
+        const Power = (Defender.AttackPower * 0.08) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1036,10 +1039,10 @@ if (Defender.OfficerSkill === 'Vengeance') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Vengeance`)            
-        Power = Defender.AttackPower * 0.3
+        const Power = (Defender.AttackPower * 0.3) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
         if (Defender.UnitType === 'Infantry') {
-            Special = Defender.AttackPower * 0.25
+            const Special = (Defender.AttackPower * 0.25) * Defender.SkillLevel
             Defender.AttackPower = Defender.AttackPower + Special
         }
         skillEmbed
@@ -1060,7 +1063,7 @@ if (Defender.OfficerSkill === 'The Motherland') {
         if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`The Motherland`)
-        Power = Defender.AttackPower * 0.5
+        const Power = (Defender.AttackPower * 0.5) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1081,11 +1084,11 @@ if (Defender.OfficerSkill === 'Mine Detonator') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Mine Detonator`)            
-        Power = Defender.AttackPower * 0.135
+        const Power = (Defender.AttackPower * 0.135) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
         if (Defender.UnitType === 'Infantry') {
-            Damage = DH * .05
-            DH = DH - Damage
+            const Damage = (Defender.BattleHealth * .05) * Defender.SkillLevel
+            Defender.BattleHealth = Defender.BattleHealth - Damage
 
             skillEmbed
             .setColor(Defender.SkillColor)
@@ -1112,7 +1115,7 @@ if (Defender.OfficerSkill === 'Flamestorm') {
         if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Flamestorm`)
-        Power =Defender.AttackPower * 0.1
+        const Power = (Defender.AttackPower * 0.1) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1133,9 +1136,9 @@ if (Defender.OfficerSkill === 'Inpenetrable') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Inpenetrable`) 
-        health = DH * 0.5
-        DH = DH + health
-        if (DH > 0) {
+        const health = (Defender.BattleHealth * 0.5) * Defender.SkillLevel
+        if (Defender.BattleHealth > 0) {
+            Defender.BattleHealth = Defender.BattleHealth + health
             console.log(`Health Increased`, health)
         } else return console.log(`Health Error`)
 
@@ -1155,10 +1158,10 @@ if (Defender.OfficerSkill === 'Breaching Charge') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Breaching Charge`)            
-        Power = Defender.AttackPower * 0.13
+        const Power = (Defender.AttackPower * 0.13) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
         if (Attacker.UnitType === 'Infantry') {
-            Special = Defender.AttackPower * .5
+            const Special = (Defender.AttackPower * .5) * Defender.SkillLevel
             Defender.AttackPower = Defender.AttackPower - Special
 
             skillEmbed
@@ -1187,7 +1190,7 @@ if (Defender.OfficerSkill === 'Flaming Meteors') {
         if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Flaming Meteors`)
-        Power = Defender.AttackPower * 0.3
+        const Power = (Defender.AttackPower * 0.3) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1208,7 +1211,7 @@ if (Defender.OfficerSkill === 'Master of War') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Master of War`)            
-        Power = Defender.AttackPower * 0.10
+        const Power = (Defender.AttackPower * 0.10) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1228,10 +1231,10 @@ if (Defender.OfficerSkill === 'Phantom Power') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Phantom Power`)            
-        Power = Defender.AttackPower * 0.10
+        const Power = (Defender.AttackPower * 0.10) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
-        health = DH * 0.2
-        DH = DH + health
+        const health = (Defender.BattleHealth * 0.2) * Defender.SkillLevel
+        Defender.BattleHealth = Defender.BattleHealth + health
 
         
         skillEmbed
@@ -1254,7 +1257,7 @@ if (Defender.OfficerSkill === 'Blinding Flash') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Blinding Flash`)            
-        Power = Defender.AttackPower * 0.10
+        const Power = (Defender.AttackPower * 0.10) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1275,7 +1278,7 @@ if (Defender.OfficerSkill === 'Rain of Blades') {
         if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Rain of Blades`)
-        Power = Defender.AttackPower * 0.1
+        const Power = (Defender.AttackPower * 0.1) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1297,7 +1300,7 @@ if (Defender.OfficerSkill === 'Devastation') {
         if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Devastation`)
-        Power = Defender.AttackPower * 0.25
+        const Power = (Defender.AttackPower * 0.25) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1318,10 +1321,9 @@ if (Defender.OfficerSkill === 'Beauty Worth Preserving') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Beauty Worth Preserving`)            
-        Power = Defender.AttackPower * 0.15
+        const Power = (Defender.AttackPower * 0.15) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
-        
-        health = Attacker.AttackPower * .1
+        const health = (Attacker.AttackPower * .1) * Defender.SkillLevel
         Attacker.AttackPower = Attacker.AttackPower - health
 
         skillEmbed
@@ -1343,7 +1345,7 @@ if (Defender.OfficerSkill === 'Forlorn Hope') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Forlorn Hope`)            
-        Power = Defender.AttackPower * 0.25
+        const Power = (Defender.AttackPower * 0.25) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1365,7 +1367,7 @@ if (Defender.OfficerSkill === 'Sky Dancer') {
         if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Sky Dancer`)
-        Power = Defender.AttackPower * 0.15
+        const Power = (Defender.AttackPower * 0.15) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1386,9 +1388,9 @@ if (Defender.OfficerSkill === 'Untouchable') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Untouchable`)            
-        Power = Attacker.AttackPower
+        const Power = Attacker.AttackPower
         Attacker.AttackPower = 0
-        Powerless = Attacker.AttackPower
+        const Powerless = Attacker.AttackPower
 
         skillEmbed
             .setColor(Defender.SkillColor)
@@ -1410,7 +1412,7 @@ if (Defender.OfficerSkill === 'Heavenly Rays') {
         if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Heavenly Rays`)    
-        Power = Defender.AttackPower * 0.15
+        const Power = (Defender.AttackPower * 0.15) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1432,7 +1434,7 @@ if (Defender.OfficerSkill === 'Twin Fangs') {
         if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Twin Fangs`)            
-        Power = Defender.AttackPower * 0.25
+        const Power = (Defender.AttackPower * 0.25) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1453,7 +1455,7 @@ if (Defender.OfficerSkill === 'Night Evader') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Night Evader`)            
-        Power = Attacker.AttackPower * .2
+        const Power = (Attacker.AttackPower * .2) * Defender.SkillLevel
         Attacker.AttackPower = Attacker.AttackPower - Power
 
         skillEmbed
@@ -1474,7 +1476,7 @@ if (Defender.OfficerSkill === 'Unleashed Justice') {
         if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Unleashed Justice`)            
-        Power = Defender.AttackPower * 2
+        const Power = (Defender.AttackPower * 2) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1495,7 +1497,7 @@ if (Defender.OfficerSkill === 'Sticky Situation') {
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Sticky Situation`)            
-        Power = Defender.AttackPower * .2
+        const Power = (Defender.AttackPower * .2) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1517,7 +1519,7 @@ if (Defender.OfficerSkill === 'Desperate Counterattack') {
     console.log(skillSuccess,chance)
     if (Defender.UnitType === 'Fighter') {
         console.log(`Desperate Counterattack`)        
-        Power = Defender.AttackPower * .25
+        const Power = (Defender.AttackPower * .25) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1539,7 +1541,7 @@ if (Defender.OfficerSkill === 'Last Gasp') {
         if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Last Gasp`)            
-        Power = Defender.AttackPower * 2
+        const Power = (Defender.AttackPower * 2) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed

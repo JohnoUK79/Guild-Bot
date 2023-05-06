@@ -18,10 +18,6 @@ module.exports = {
         const { client } = require('../bot')
         const guildIcon = interaction.member.guild.iconURL();
 		const guildName = interaction.member.guild.name
-
-        // const playerOfficers = await sql.Execute(`SELECT * FROM levels WHERE officer_name NOT LIKE ''`) //level_up_channel_id = '1000526899124117535'
-        // console.log(playerOfficers)
-
         
         const cleanupEmbed = new EmbedBuilder()
             .setColor('#4ec9b0')

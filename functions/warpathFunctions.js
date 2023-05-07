@@ -1,4 +1,5 @@
 const sql = require("../config/Database");
+const { GUILD_ID } = require('../config.json')
 const { Colours } = require('../data/colours')
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, Collection, embedLength } = require('discord.js');
 module.exports = {
@@ -1297,7 +1298,6 @@ module.exports = {
             const level = playerUnits[entry].unit_level
             const playerEmoji = camp + type
             const image = await interaction.member.guild.emojis.cache.find(emoji => emoji.name == playerEmoji)
-            console.log(playerEmoji)
             unitChoices.push({
                 label: type,
                 description: `${camp} - ${type} - ${level}`,
@@ -1395,7 +1395,6 @@ module.exports = {
     },
     selectofficer: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'Guardian_of_the_Truth.png'
         const link = `http://phfamily.co.uk/img/${image}`
         const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
@@ -1899,7 +1898,6 @@ module.exports = {
         const officerLevelRequired = (skillLevel + 1) * 50
         const baseLevel = Level[0].base_level
         const cost = (skillLevel + 1) * 1000000 * (Level[0].prestige + 1)
-        console.log(cost.toLocaleString(), officerLevel, officerLevelRequired)
 
         if (officerLevelRequired > officerLevel) {
             console.log(`Officer Upgrade Needed`),

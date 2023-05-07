@@ -28,19 +28,23 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: `Clean Up Database.`, iconURL: `http://phfamily.co.uk/img/gifs/Influencer.gif` });
 
-        const units = await sql.Execute(`SELECT * FROM units WHERE 1`)
-        interaction.deferReply();
-        for (let i = 0; i < units.length; i++) {
-                console.log(units[i])
-                let ID = units[i].Unit_ID
-                let type = units[i].Unit_Type
-                let camp = units[i].Camp
-                const image = camp + type + '.jpg'
-                const images = await sql.Execute(`UPDATE units SET Image = '${image}' WHERE Unit_ID = '${ID}'`)
-                console.log(images)
-            }
-            await interaction.editReply({
+        await interaction.deferReply({
             ephemeral: true,
+            fetchReply: true
+        });
+        camp = 'Vanguard'
+        console.log(interaction.client.emojis.cache.find(emoji => emoji.name == camp))
+
+        // for (let i = 0; i < units.length; i++) {
+        //         console.log(units[i])
+        //         let ID = units[i].Unit_ID
+        //         let type = units[i].Unit_Type
+        //         let camp = units[i].Camp
+        //         const image = camp + type + '.jpg'
+        //         const images = await sql.Execute(`UPDATE units SET Image = '${image}' WHERE Unit_ID = '${ID}'`)
+        //         console.log(images)
+        //     }
+            await interaction.editReply({
             embeds: [cleanupEmbed],
         });
 

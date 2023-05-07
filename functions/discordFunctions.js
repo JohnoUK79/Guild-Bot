@@ -2,6 +2,11 @@ const time = require('../config/timestamp')
 const sql = require("../config/Database");
 const { TextInputStyle, ModalBuilder, EmbedBuilder, TextInputBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 module.exports = {
+	sleep: async function (ms) {
+		return new Promise(
+		  resolve => setTimeout(resolve, ms)
+		);
+		},
     top10: async function(interaction) {
 		const guildIcon = interaction.member.guild.iconURL();
 		const setDate = time.default()

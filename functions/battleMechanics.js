@@ -3,6 +3,7 @@ const sql = require("../config/Database");
 const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 const { officerSkills } = require("./officerSkills");
 const { attackSelection, campSelection } = require("./warpathFunctions");
+const { sleep } = require('../functions/discordFunctions')
 const { Colours } = require('../data/colours')
 
 module.exports = {
@@ -10,11 +11,6 @@ module.exports = {
         const { commandCooldowns } = require('../bot');
         const guildIcon = interaction.member.guild.iconURL();
 		const guildName = interaction.member.guild.name
-        async function sleep(ms) {
-            return new Promise(
-              resolve => setTimeout(resolve, ms)
-            );
-          }
 		const Battle = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
 		const embed = new EmbedBuilder();
 			embed
@@ -145,7 +141,7 @@ if (Attacker.Speed < Defender.Speed) {
     console.log(`Attacker Speed: ${Attacker.Speed} Defender Speed: ${Defender.Speed}`)
     while (Defender.BattleHealth >= 0 && Attacker.BattleHealth >= 0) {
         console.count('Round:')
-        await sleep(1100)      
+        await sleep(1600)      
         attackSelection(Attacker, Defender)
         officerSkills(interaction, Attacker, Defender)
         campSelection(Attacker, Defender) 
@@ -184,7 +180,7 @@ if (Attacker.Speed < Defender.Speed) {
     console.log(`Defender Speed: ${Defender.Speed} Attacker Speed: ${Attacker.Speed}`)
     while (Defender.BattleHealth >= 0 && Attacker.BattleHealth >= 0) {
     console.count('Round:')
-    await sleep(1100)
+    await sleep(1600)
     attackSelection(Attacker, Defender)
     officerSkills(interaction, Attacker, Defender)
     campSelection(Attacker, Defender) 
@@ -225,7 +221,7 @@ if (Attacker.Speed < Defender.Speed) {
 }
 
 if (Defender.BattleHealth < 0) {
-        await sleep(1200)
+        await sleep(1800)
         console.log(Attacker.ImageFile)
         const winnings = Attacker.OfficerLevel * 10000
         chest = AttackerDB[0].war_chest
@@ -250,7 +246,7 @@ if (Defender.BattleHealth < 0) {
     console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${defender.username}`, loss.info)
     } else
 if (Attacker.BattleHealth < 0) {
-        await sleep(1200)
+        await sleep(1800)
         const winnings = DefenderDB[0].officer_level * 10000
         chest = DefenderDB[0].war_chest
         const wallet = DefenderDB[0].war_coins
@@ -268,7 +264,6 @@ if (Attacker.BattleHealth < 0) {
                 { name: `Defenders War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${defender}` },
             )     
             .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by ${defender}'s **${Defender.Name} & ${Defender.Officer} using ${Defender.OfficerSkill}**.`)
-        await sleep(1800)      
         interaction.editReply({ embeds: [embed], files: [defendImage] });
         const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${defender.id}`)
         const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)

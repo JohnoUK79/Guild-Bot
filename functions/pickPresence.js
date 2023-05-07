@@ -20,7 +20,12 @@ module.exports = {
         },
         {
             type: ActivityType.Competing,
-            text: `Campaigns with ${myMembers.toLocaleString()} Warriors across the Globe with /battle-bot-profile!`,
+            text: `Campaigns with ${myMembers.toLocaleString()} Warriors with /battle-bot-profile!`,
+            status: 'Online'
+        },
+        {
+            type: ActivityType.Playing,
+            text: `of Battles with ${myMembers.toLocaleString()} Warriors with /battle!`,
             status: 'Online'
         }
     ]

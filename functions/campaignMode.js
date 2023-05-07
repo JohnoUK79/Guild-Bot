@@ -99,16 +99,8 @@ campaignMode: async function (interaction) {
                 OfficerType: attackOfficer[0].Officer_Type,
                 Multiplier: 1,
                 Prestige: AttackerDB[0].prestige,
-                Image: `http://phfamily.co.uk/img/${AttackerDB[0].unit_camp}.png`,
+                Image: `http://phfamily.co.uk/img/${AttackerDB[0].unit_camp}`,
                 ImageFile: `${AttackerDB[0].unit_camp}`
-            }
-            if (attackOfficer[0].Image) {
-                Attacker.Image = `http://phfamily.co.uk/img/${attackOfficer[0].Image}`
-                Attacker.ImageFile = attackOfficer[0].Image
-            } 
-            if (AttackerUnit[0].Image) {
-                Attacker.Image = `http://phfamily.co.uk/img/${AttackerUnit[0].Image}`
-                Attacker.ImageFile = AttackerUnit[0].Image
             }
 
             const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${campaignOfficer}'`)
@@ -133,14 +125,6 @@ campaignMode: async function (interaction) {
             if (Attacker.Prestige > 1 ) {
                 console.log(`Campiagn Prestige Buff`, Attacker.Prestige)
                 Defender.Multiplier = Attacker.Prestige
-            }
-            if (defendOfficer[0].Image) {
-                Defender.Image = `http://phfamily.co.uk/img/${defendOfficer[0].Image}`
-                Defender.ImageFile = defendOfficer[0].Image
-            } 
-            if (DefenderUnit[0].Image) {
-                Defender.Image = `http://phfamily.co.uk/img/${DefenderUnit[0].Image}`
-                Defender.ImageFile = DefenderUnit[0].Image
             }
             if (Attacker.UnitCamp === 'Vanguard') {
                 Attacker.Color = Colours.Vanguard

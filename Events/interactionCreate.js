@@ -13,7 +13,6 @@ module.exports = {
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.guild.name
 		console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} in ${guildName} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
-		updatePresence(interaction)
 
 		// WarPath Functions
 		if (interaction.customId === 'bank') {

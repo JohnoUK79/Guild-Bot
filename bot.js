@@ -15,8 +15,8 @@ const client = new Client({
 
     makeCache: Options.cacheWithLimits({
 		MessageManager: 200,
-		PresenceManager: 200,
-        UserManager: 200,
+		PresenceManager: 1000,
+        UserManager: 1000,
         ReactionUserManager: 200,
         GuildInviteManager: 200,
         GuildBanManager: 200,

@@ -2,15 +2,15 @@ const { REST, Routes, Collection, EmbedBuilder, time } = require('discord.js');
 const { token, CLIENT_ID, GUILD_ID } = require('../config.json');
 const nodeCron = require("node-cron");
 const timestamp = require('../config/timestamp');
-setDate = timestamp.UTCdefault()
 const sql = require("../config/Database");
 const inviteCache = new Collection();
 
 module.exports = {
     name: 'ready',
     once: true,
-    async execute(client, commands) {    
-        //console.log('Ready', client, commands) 
+    async execute(client, commands) {  
+        const supportMail = client.users.fetch('322100798651760640')
+        setDate = timestamp.UTCdefault()
         console.log(`${setDate} - Logged in as - ${client.user.tag}`);
         const rest = new REST({ version: '10' }).setToken(token);
         await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands }) //Global Commands
@@ -36,26 +36,15 @@ module.exports = {
             }
             }
         })
+        //Presence Updates
         const myMembers = client.users.cache.size
         client.user.setPresence({ activities: [{ name: `Battle-Bot with ${myMembers.toLocaleString()} Warriors!` }], status: 'Online' });
 
-        //Presence Update
-        // client.guilds.cache.forEach(async (guild) => {
-        //     guild.members.fetch({ withPresences: true }).then(fetchedMembers => {
-        //         // Now you have a collection with all online member objects in the totalOnline variable
-        //         console.log(`There are currently ${fetchedMembers.size} members using the Bot!`);
-        //         client.user.setPresence({ activities: [{ name: `Battle-Bot with ${fetchedMembers.size.toLocaleString()} Warriors!` }], status: 'Online' });
-        //     });
-        // })    
-        const memberRefresh = nodeCron.schedule("0,15,30,45 * * * *", () => {
-        client.guilds.cache.forEach(async (guild) => {
-        guild.members.fetch({ withPresences: true }).then(fetchedMembers => {
-            // Now you have a collection with all online member objects in the totalOnline variable
-            console.log(`There are currently ${fetchedMembers.size} members in the BOT cache!`);
-            client.user.setPresence({ activities: [{ name: `Battle-Bot with ${fetchedMembers.size.toLocaleString()} Warriors!` }], status: 'Online' });
-        });
-        });
+        const mymMemberRefresh = nodeCron.schedule("0,15,30,45 * * * *", () => {
+            const myMembers = client.users.cache.size
+            client.user.setPresence({ activities: [{ name: `Battle-Bot with ${myMembers.toLocaleString()} Warriors!` }], status: 'Online' });    
         })
+
         //Create Invite Cache
         const invites = new Collection();
         // Loop over all the guilds

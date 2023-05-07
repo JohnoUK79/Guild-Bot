@@ -15,7 +15,8 @@ module.exports = {
                     small_image: SmallImage,
                     small_text: SmallImageText,
                 },
-                buttons: [{
+                buttons: [
+                {
                     label: Button1,
                     url: Url1
                 },

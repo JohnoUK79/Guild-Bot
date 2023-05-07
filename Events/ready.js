@@ -3,6 +3,7 @@ const { token, CLIENT_ID, GUILD_ID } = require('../config.json');
 const nodeCron = require("node-cron");
 const timestamp = require('../config/timestamp');
 const sql = require("../config/Database");
+const { updatePresence } = require('../functions/pickPresence');
 const inviteCache = new Collection();
 
 module.exports = {
@@ -37,12 +38,14 @@ module.exports = {
             }
         })
         //Presence Updates
-        const myMembers = client.users.cache.size
-        client.user.setPresence({ activities: [{ name: `Battle-Bot with ${myMembers.toLocaleString()} Warriors!` }], status: 'Online' });
+        updatePresence(client)
+
+        //client.user.setPresence({ activities: [{ name: `Battle-Bot with ${myMembers.toLocaleString()} Warriors!` }], status: 'Online' });
 
         const mymMemberRefresh = nodeCron.schedule("0,15,30,45 * * * *", () => {
             const myMembers = client.users.cache.size
-            client.user.setPresence({ activities: [{ name: `Battle-Bot with ${myMembers.toLocaleString()} Warriors!` }], status: 'Online' });    
+            updatePresence(client)
+            //client.user.setPresence({ activities: [{ name: `Battle-Bot with ${myMembers.toLocaleString()} Warriors!` }], status: 'Online' });    
         })
 
         //Create Invite Cache

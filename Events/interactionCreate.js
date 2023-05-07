@@ -6,12 +6,14 @@ const { buyBank, buyBase, chestUpgrade, baseUpgrade, cancel, buyOfficer, officer
 const { selfUpdateModal, playerUpdateModal, selfUpdateResponses, playerUpdateResponses } = require('../functions/playerDatabaseFunctions');
 const { top10, top20, top30, top40, top50 } = require('../functions/discordFunctions');
 const { campaignMode } = require('../functions/campaignMode');
+const { updatePresence } = require('../functions/pickPresence');
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction) {
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.guild.name
 		console.log(`${setDate} - ${interaction.user.tag} in #${interaction.channel.name} in ${guildName} triggered the ${interaction.commandName} command or ${interaction.customId} interaction.`);
+		updatePresence(interaction)
 
 		// WarPath Functions
 		if (interaction.customId === 'bank') {

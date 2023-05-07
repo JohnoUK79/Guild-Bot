@@ -99,8 +99,8 @@ campaignMode: async function (interaction) {
                 OfficerType: attackOfficer[0].Officer_Type,
                 Multiplier: 1,
                 Prestige: AttackerDB[0].prestige,
-                Image: `http://phfamily.co.uk/img/${AttackerDB[0].unit_camp}`,
-                ImageFile: `${AttackerDB[0].unit_camp}`
+                Image: `http://phfamily.co.uk/img/${AttackerDB[0].unit_image}`,
+                ImageFile: `${AttackerDB[0].unit_image}`
             }
 
             const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${campaignOfficer}'`)
@@ -120,7 +120,7 @@ campaignMode: async function (interaction) {
                 OfficerType: defendOfficer[0].Officer_Type,
                 Multiplier: 1,
                 Image: `http://phfamily.co.uk/img/${DefenderUnit[0].Image}`,
-                ImageFile: `${campaignUnitCamp}.png`
+                ImageFile: `${DefenderUnit[0].Image}`
             }
             if (Attacker.Prestige > 1 ) {
                 console.log(`Campiagn Prestige Buff`, Attacker.Prestige)

@@ -75,14 +75,9 @@ module.exports = {
                     OfficerSkill: attackOfficer[0].Skill,
                     OfficerType: attackOfficer[0].Officer_Type,
                     Multiplier: 1,
-                    Image: `http://phfamily.co.uk/img/${AttackerUnit[0].Image}`,
-                    ImageFile: `${AttackerUnit[0].Image}`
+                    Image: `http://phfamily.co.uk/img/${AttackerDB[0].unit_image}`,
+                    ImageFile: `${AttackerDB[0].unit_image}`
                 }
-                if (attackOfficer[0].Image) {
-                    Attacker.Image = `http://phfamily.co.uk/img/${attackOfficer[0].Image}`
-                    Attacker.ImageFile = attackOfficer[0].Image
-                    console.log(`Attacker OFficer: ${Attacker.Image}\n${Attacker.ImageFile}`)
-                } 
 
                 const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)
 
@@ -99,18 +94,8 @@ module.exports = {
                     OfficerSkill: defendOfficer[0].Skill,
                     OfficerType: defendOfficer[0].Officer_Type,
                     Multiplier: 1,
-                    Image: `http://phfamily.co.uk/img/${DefenderDB[0].unit_camp}.png`,
-                    ImageFile: `${DefenderDB[0].unit_camp}.png`
-                }
-                if (defendOfficer[0].Image) {
-                    Defender.Image = `http://phfamily.co.uk/img/${defendOfficer[0].Image}`
-                    Defender.ImageFile = defendOfficer[0].Image
-                    console.log(`Defender: ${Defender.Image}\n${Defender.ImageFile}`)
-                } 
-                if (DefenderUnit[0].Image) {
-                    Defender.Image = `http://phfamily.co.uk/img/${DefenderUnit[0].Image}`
-                    Defender.ImageFile = DefenderUnit[0].Image
-                    console.log(`Defender: ${Defender.Image}\n${Defender.ImageFile}`)
+                    Image: `http://phfamily.co.uk/img/${DefenderDB[0].unit_image}`,
+                    ImageFile: `${DefenderDB[0].unit_image}`
                 }
 
                 if (Attacker.UnitCamp === 'Vanguard') {

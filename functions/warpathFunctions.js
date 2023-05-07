@@ -1297,7 +1297,7 @@ module.exports = {
             const type = playerUnits[entry].unit_type
             const level = playerUnits[entry].unit_level
             const playerEmoji = camp + type
-            const image = await interaction.member.guild.emojis.cache.find(emoji => emoji.name == playerEmoji)
+            const image = await interaction.client.emojis.cache.find(emoji => emoji.name == playerEmoji)
             unitChoices.push({
                 label: type,
                 description: `${camp} - ${type} - ${level}`,

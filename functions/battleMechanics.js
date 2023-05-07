@@ -107,6 +107,18 @@ module.exports = {
                 if (Attacker.UnitCamp === 'MartyrsW') {
                     Attacker.Color = Colours.MartyrsW
                 }
+                if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Vanguard') {
+                    Attacker.Color = Colours.VanguardBoost
+                    Attacker.Multiplier = 2
+                }
+                if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Liberty') {
+                    Attacker.Color = Colours.LibertyBoost
+                    Attacker.Multiplier = 2
+                }
+                if (Attacker.UnitCamp && Attacker.OfficerCamp === 'MartyrsW') {
+                    Attacker.Color = Colours.MartyrsWBoost
+                    Attacker.Multiplier = 2
+                }
                 if (Defender.UnitCamp === 'Vanguard') {
                     Defender.Color = Colours.Vanguard
                 }
@@ -115,6 +127,18 @@ module.exports = {
                 }
                 if (Defender.UnitCamp === 'MartyrsW') {
                     Defender.Color = Colours.MartyrsW
+                }
+                if (Defender.UnitCamp && Defender.OfficerCamp === 'Vanguard') {
+                    Defender.Color = Colours.VanguardBoost
+                    Defender.Multiplier = 2
+                }
+                if (Defender.UnitCamp && Defender.OfficerCamp  === 'Liberty') {
+                    Defender.Color = Colours.LibertyBoost
+                    Defender.Multiplier = 2
+                }
+                if (Defender.UnitCamp && Defender.OfficerCamp === 'MartyrsW') {
+                    Defender.Color = Colours.MartyrsWBoost
+                    Defender.Multiplier = 2
                 }
 
 const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)

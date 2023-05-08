@@ -1,5 +1,5 @@
 const { REST, Routes, Collection, EmbedBuilder, time } = require('discord.js');
-const { token, CLIENT_ID, GUILD_ID } = require('../config.json');
+const { token, CLIENT_ID, OWNER } = require('../config.json');
 const nodeCron = require("node-cron");
 const timestamp = require('../config/timestamp');
 const sql = require("../config/Database");
@@ -10,7 +10,7 @@ module.exports = {
     name: 'ready',
     once: true,
     async execute(client, commands) {  
-        const supportMail = client.users.fetch('322100798651760640')
+        const supportMail = client.users.fetch(OWNER)
         setDate = timestamp.UTCdefault()
         console.log(`${setDate} - Logged in as - ${client.user.tag}`);
         const rest = new REST({ version: '10' }).setToken(token);

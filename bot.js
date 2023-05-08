@@ -72,9 +72,9 @@ const client = new Client({
       ]
     });
 
-try {
-ImageCache()
-} catch (err) {console.log(err)}
+// try {
+// ImageCache()
+// } catch (err) {console.log(err)}
 const commandCooldowns = new Collection();
 
 //Discord Player Setup

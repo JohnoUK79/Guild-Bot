@@ -32,9 +32,6 @@ module.exports = {
                 timeChannel.setName(`UTC-TIME-${timestamp.UTChours()}:${timestamp.UTCminutes()}`)            }
             catch (e) {
                 console.log(e);
-                supportMail.send({
-                    content: `${e}`
-                })
                 console.log(serverTimeChannelID);
             }
             }
@@ -42,10 +39,8 @@ module.exports = {
         //Presence Updates
         updatePresence(client)
         const mymMemberRefresh = nodeCron.schedule("0,15,30,45 * * * *", () => {
-            const myMembers = client.users.cache.size
             updatePresence(client)
         })
-
         //Create Invite Cache
         const invites = new Collection();
         // Loop over all the guilds
@@ -76,11 +71,8 @@ module.exports = {
                         invitesUpdate = sql.Execute(`INSERT INTO invites (code, guildId, guildName, invitedBy, uses, maxUses, maxAge, temporary, channel, lastupdated) VALUES ('${code}', '${id}', '${name}', '${inviter}', '${uses}', '${maxUses}', '${maxAge}', '${temporary}', '${channel}', '${setDate}') ON DUPLICATE KEY UPDATE uses = '${uses}', maxUses = '${maxUses}', maxAge = '${maxAge}', temporary = '${temporary}', channel = '${channel}', lastupdated = '${setDate}'`)
                         codeUses.set(inv.code, inv.uses)
                     });
-    })
+                })
                 .catch(err => {
-                    supportMail.send({
-                        content: `${err}`
-                    })
                     console.log("Invite Cache Error:", err)
                 })
         })  
@@ -105,108 +97,49 @@ module.exports = {
                         invitesUpdate = sql.Execute(`INSERT INTO invites (code, guildId, guildName, invitedBy, uses, maxUses, maxAge, temporary, channel, lastupdated) VALUES ('${code}', '${id}', '${name}', '${inviter}', '${uses}', '${maxUses}', '${maxAge}', '${temporary}', '${channel}', '${setDate}') ON DUPLICATE KEY UPDATE uses = '${uses}', maxUses = '${maxUses}', maxAge = '${maxAge}', temporary = '${temporary}', channel = '${channel}', lastupdated = '${setDate}'`)
                         codeUses.set(inv.code, inv.uses)
                     });
-    })
+                })
                 .catch(err => {
                     supportMail.send({
                         content: `${err}`
                     })
                     console.log("Invite Cache Error:", err)
                 })
-        })   
+                })   
                
         })
 
-        const battleBoardRewards = nodeCron.schedule("0 0 * * TUESDAY", async () => {
+        const battleBoardRewards = nodeCron.schedule("0 0 * * MONDAY", async () => {
         console.log("Battle Board Rewards")
         const Board = await sql.Execute(`SELECT * FROM levels WHERE battle_wins > 0 ORDER BY battle_wins DESC, battle_losses ASC`)
         const levelUpChannels = await sql.Execute(`SELECT * FROM settings WHERE 1`)
-        const firstPlace = 50000 * Board[0].officer_level
-        const secondPlace = 25000 * Board[1].officer_level
-        const thirdPlace = 12500 * Board[2].officer_level
-        try {  
-            const firstPlaceEmbed = new EmbedBuilder();
-                firstPlaceEmbed
-                    .setColor('#00FF80')
-                    .setTitle(`You have placed 1st in this Week's Battle Rewards`)
-                    .setDescription(`Your **Rewards** have been added to your **Wallet**!`)
-                    .setURL('http://www.phfamily.co.uk')
-                    .addFields(
-                        { name: `Rank 1:`, value: `<@${Board[0].discord_id}> **Wins:** ${Board[0].battle_wins}`, inline: true },
-                        { name: `Winnings:`, value: `$${firstPlace.toLocaleString()}`, inline: true },
-                    )
-                    .setTimestamp()
-                    .setFooter({ text: `Battle Rewards.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
-            const sendfirst = client.users.cache.get(`${Board[0].discord_id}`)                
-            console.log(Board[0].discord_id);
-            sendfirst.send({ embeds: [firstPlaceEmbed]})
+        const weeklyRewardsEmbed = new EmbedBuilder();
+        weeklyRewardsEmbed
+            .setColor('#00FF80')
+            .setURL('http://www.phfamily.co.uk')
+            .setTimestamp()
+        for (let i = 0; i < 2 && Board[i]; i++) {
+            try {
+                const rewards = 50000 / (i + 1) * Board[i].officer_level
+                const winnings = Board[i].war_coins + rewards
+                const sendDM = await client.users.cache.get(`${Board[i].discord_id}`)   
+                weeklyRewardsEmbed
+                    .setTitle(`You have placed ${i + 1} in this Week's Battle Rewards`)
+                    .setDescription(`Congratulations ${sendDM}, Your **${rewards.toLocaleString()} Rewards** have been added to your **War-Chest**!`)
+                    .setFooter({ text: `Battle Rewards - Wins ${Board[i].battle_wins} Losses ${Board[i].battle_losses} `, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });    
+                const updateWinnings = await sql.Execute(`UPDATE levels SET war_coins = '${winnings}' WHERE discord_id = ${Board[i].discord_id}`)
+                sendDM.send({ embeds: [weeklyRewardsEmbed]})
+            }
+            catch (e) {
+                console.log(e);
+                console.log(Board[i].discord_id);
+            }
         }
-        catch (e) {
-            console.log(e);
-            supportMail.send({
-                content: `${e}`
-            })
-            console.log(Board[0].discord_id);
-        }
-        try {  
-            const secondPlaceEmbed = new EmbedBuilder();
-                secondPlaceEmbed
-                    .setColor('#00FF80')
-                    .setTitle(`You have placed 2nd in this Week's Battle Rewards`)
-                    .setDescription(`Your **Rewards** have been added to your **Wallet**!`)
-                    .setURL('http://www.phfamily.co.uk')
-                    .addFields(
-                        { name: `Rank 2:`, value: `<@${Board[1].discord_id}> **Wins:** ${Board[1].battle_wins}`, inline: true },
-                        { name: `Winnings:`, value: `$${secondPlace.toLocaleString()}`, inline: true },
-                    )
-                    .setTimestamp()
-                    .setFooter({ text: `Battle Rewards.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
-            const sendSecond = client.users.cache.get(`${Board[1].discord_id}`)                
-            console.log(Board[1].discord_id);
-            sendSecond.send({ embeds: [secondPlaceEmbed]})
-        }
-        catch (e) {
-            console.log(e);
-            supportMail.send({
-                content: `${e}`
-            })
-            console.log(Board[1].discord_id);
-        }
-        try {  
-            const thirdPlaceEmbed = new EmbedBuilder();
-                thirdPlaceEmbed
-                    .setColor('#00FF80')
-                    .setTitle(`You have placed 3rd in this Week's Battle Rewards`)
-                    .setDescription(`Your **Rewards** have been added to your **Wallet**!`)
-                    .setURL('http://www.phfamily.co.uk')
-                    .addFields(
-                        { name: `Rank 3:`, value: `<@${Board[2].discord_id}> **Wins:** ${Board[2].battle_wins}`, inline: true },
-                        { name: `Winnings:`, value: `$${thirdPlace.toLocaleString()}`, inline: true },
-                    )
-                    .setTimestamp()
-                    .setFooter({ text: `Battle Rewards.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
-            const sendThird = client.users.cache.get(`${Board[2].discord_id}`)                
-            console.log(Board[2].discord_id);
-            sendThird.send({ embeds: [thirdPlaceEmbed]})
-        }
-        catch (e) {
-            console.log(e);
-            supportMail.send({
-                content: `${e}`
-            })
-            console.log(Board[2].discord_id);
-        }
-        const firstWallet = Board[0].war_coins + firstPlace
-        const secondWallet = Board[1].war_coins + secondPlace
-        const thirdWallet = Board[2].war_coins + thirdPlace
-
-        const updateFirstWallet = await sql.Execute(`UPDATE levels SET war_coins = '${firstWallet}' WHERE discord_id = ${Board[0].discord_id}`)
-        const updateSecondWallet = await sql.Execute(`UPDATE levels SET war_coins = '${secondWallet}' WHERE discord_id = ${Board[1].discord_id}`)
-        const updateThirdWallet = await sql.Execute(`UPDATE levels SET war_coins = '${thirdWallet}' WHERE discord_id = ${Board[2].discord_id}`)
+        
         const clearBattleBoard = await sql.Execute(`UPDATE levels SET battle_wins = '0', battle_losses = '0' WHERE 1`)
         console.log(`1st: ${updateFirstWallet.info}\n2nd: ${updateSecondWallet.info}\n3rd: ${updateThirdWallet.info}\nCleared: ${clearBattleBoard.info}`)
 
-        const winningEmbed = new EmbedBuilder();
-            winningEmbed
+        const winnersEmbed = new EmbedBuilder();
+        winnersEmbed
             .setColor('#00FF80')
             .setTitle(`Battle Rewards`)
             .setDescription(`This Week's **Battle Reward Winners** Are:`)
@@ -222,21 +155,15 @@ module.exports = {
 
         for (let i = 0; i < levelUpChannels.length; i++) {
             let levelUpChannel = levelUpChannels[i].level_up_channel_id;
-            
             try {  
                 let sendChannel = client.channels.cache.get(levelUpChannel)                
                 console.log(levelUpChannel);
-                sendChannel.send({ content: '**Congratulations**', embeds: [winningEmbed]})
-
+                sendChannel.send({ content: '**Congratulations**', embeds: [winnersEmbed]})
             }
             catch (e) {
                 console.log(e);
-                supportMail.send({
-                    content: `${e}`
-                })
                 console.log(levelUpChannel);
             }
-        
         }   
         })
 
@@ -264,7 +191,7 @@ module.exports = {
                 const dayOfWeeek = (new Date()).getDay();
 
             console.log(new Date().toLocaleString(), "Jurisdiction Event Starting");
-            const { EmbedBuilder, Client } = require('discord.js');
+            const { EmbedBuilder } = require('discord.js');
                     
                     if( (hourUTC % 4) !== 0) return console.log('Jurisdiction Already Running!');
 
@@ -306,12 +233,9 @@ module.exports = {
                     }
                     catch (e) {
                         console.log(e);
-                        supportMail.send({
-                            content: `${e}`
-                        })
                         console.log(jurisdictionsChannelID);
                     }
-}
+                    }
                   });
     },
 

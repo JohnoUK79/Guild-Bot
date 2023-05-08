@@ -21,7 +21,6 @@ module.exports = {
             .catch(console.error);
         console.log(`================ Warpath BOT Ready! ================`);  
         const serverTimeChannelIDs = [
-            '1099378914503184384',//Test Server
             '1099379616961015809',//FIRE
             '1099445994048999454',//PHU
         ]

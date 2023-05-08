@@ -21,7 +21,7 @@ module.exports = {
             .catch(console.error);
         console.log(`================ Warpath BOT Ready! ================`);  
         const serverTimeChannelIDs = [
-            '1099379616961015809',//FIRE
+            '1099378914503184384',//FIRE
             '1099445994048999454',//PHU
         ]
         const servertimeupdate = nodeCron.schedule("4,9,14,19,24,29,34,39,44,49,54,59 * * * *", () => {   
@@ -32,19 +32,18 @@ module.exports = {
                 timeChannel.setName(`UTC-TIME-${timestamp.UTChours()}:${timestamp.UTCminutes()}`)            }
             catch (e) {
                 console.log(e);
+                supportMail.send({
+                    content: `${e}`
+                })
                 console.log(serverTimeChannelID);
             }
             }
         })
         //Presence Updates
         updatePresence(client)
-
-        //client.user.setPresence({ activities: [{ name: `Battle-Bot with ${myMembers.toLocaleString()} Warriors!` }], status: 'Online' });
-
         const mymMemberRefresh = nodeCron.schedule("0,15,30,45 * * * *", () => {
             const myMembers = client.users.cache.size
             updatePresence(client)
-            //client.user.setPresence({ activities: [{ name: `Battle-Bot with ${myMembers.toLocaleString()} Warriors!` }], status: 'Online' });    
         })
 
         //Create Invite Cache
@@ -79,6 +78,9 @@ module.exports = {
                     });
     })
                 .catch(err => {
+                    supportMail.send({
+                        content: `${err}`
+                    })
                     console.log("Invite Cache Error:", err)
                 })
         })  
@@ -105,6 +107,9 @@ module.exports = {
                     });
     })
                 .catch(err => {
+                    supportMail.send({
+                        content: `${err}`
+                    })
                     console.log("Invite Cache Error:", err)
                 })
         })   
@@ -137,6 +142,9 @@ module.exports = {
         }
         catch (e) {
             console.log(e);
+            supportMail.send({
+                content: `${e}`
+            })
             console.log(Board[0].discord_id);
         }
         try {  
@@ -158,6 +166,9 @@ module.exports = {
         }
         catch (e) {
             console.log(e);
+            supportMail.send({
+                content: `${e}`
+            })
             console.log(Board[1].discord_id);
         }
         try {  
@@ -179,6 +190,9 @@ module.exports = {
         }
         catch (e) {
             console.log(e);
+            supportMail.send({
+                content: `${e}`
+            })
             console.log(Board[2].discord_id);
         }
         const firstWallet = Board[0].war_coins + firstPlace
@@ -217,6 +231,9 @@ module.exports = {
             }
             catch (e) {
                 console.log(e);
+                supportMail.send({
+                    content: `${e}`
+                })
                 console.log(levelUpChannel);
             }
         
@@ -289,6 +306,9 @@ module.exports = {
                     }
                     catch (e) {
                         console.log(e);
+                        supportMail.send({
+                            content: `${e}`
+                        })
                         console.log(jurisdictionsChannelID);
                     }
 }

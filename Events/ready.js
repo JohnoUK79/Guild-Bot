@@ -112,13 +112,13 @@ module.exports = {
                
         })
 
-        const battleBoardRewards = nodeCron.schedule("0 0 * * MONDAY", async () => {
+        const battleBoardRewards = nodeCron.schedule("0 0 * * TUESDAY", async () => {
         console.log("Battle Board Rewards")
         const Board = await sql.Execute(`SELECT * FROM levels WHERE battle_wins > 0 ORDER BY battle_wins DESC, battle_losses ASC`)
         const levelUpChannels = await sql.Execute(`SELECT * FROM settings WHERE 1`)
-        const firstPlace = 500000 * Board[0].officer_level
-        const secondPlace = 250000 * Board[1].officer_level
-        const thirdPlace = 125000 * Board[2].officer_level
+        const firstPlace = 50000 * Board[0].officer_level
+        const secondPlace = 25000 * Board[1].officer_level
+        const thirdPlace = 12500 * Board[2].officer_level
         try {  
             const firstPlaceEmbed = new EmbedBuilder();
                 firstPlaceEmbed

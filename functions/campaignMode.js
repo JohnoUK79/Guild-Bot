@@ -4,7 +4,7 @@ const { sleep } = require('../functions/discordFunctions')
 const { Colours } = require('../data/colours')
 const { officerSkills } = require('../functions/officerSkills');
 const sql = require("../config/Database");
-const { EmbedBuilder, AttachmentBuilder , ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 module.exports = {
 campaignMode: async function (interaction) {
     await interaction.deferReply({
@@ -219,15 +219,12 @@ console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)
 
 if (Defender.BattleHealth < 0) {
     await sleep(1800)      
-    const winnings = AttackerDB[0].officer_level * 10000 * campaignOfficerLevel / 10
+    const winnings = (AttackerDB[0].officer_level * 10000) * (campaignOfficerLevel / 10)
     const wallet = AttackerDB[0].war_coins
     const wins = AttackerDB[0].battle_wins
     const newWins = parseInt(wins + 1)
     const newWallet = parseInt(wallet + winnings)
     commandCooldowns.set(`${interaction.member.id}_${interaction.customId}`, Date.now() + 60 * 60 * 1000 * 12)
-    // if (interaction.guild.id === '964496256057630720') {
-    //     commandCooldowns.set(`${interaction.user.id}_${interaction.customId}`, 0)
-    // }
 
     embed 
         .setColor(Attacker.Color)

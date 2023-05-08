@@ -99,8 +99,8 @@ module.exports = {
                     OfficerSkill: defendOfficer[0].Skill,
                     OfficerType: defendOfficer[0].Officer_Type,
                     Multiplier: 1,
-                    Image: `http://phfamily.co.uk/img/${DefenderDB[0].unit_camp}`,
-                    ImageFile: `${DefenderDB[0].unit_camp}`
+                    Image: `http://phfamily.co.uk/img/${DefenderDB[0].unit_image}`,
+                    ImageFile: `${DefenderDB[0].unit_image}`
                 }
 
                 if (Attacker.UnitCamp === 'Vanguard') {

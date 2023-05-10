@@ -67,6 +67,7 @@ module.exports = {
                     Power: AttackerUnit[0].Firepower * (OfficerLevel / 10),
                     Health: AttackerUnit[0].HP * AttackerDB[0].base_level * 10,
                     UnitCamp: AttackerDB[0].unit_camp,
+                    UnitType: AttackerDB[0].unit_type,
                     Speed: AttackerUnit[0].Speed,
                     AttackType: AttackerUnit[0].Attack_Type,
                     Officer: attackOfficer[0].Officer_Name,
@@ -92,6 +93,7 @@ module.exports = {
                     Power: DefenderUnit[0].Firepower * (DefenderDB[0].officer_level / 10),
                     Health: DefenderUnit[0].HP * DefenderDB[0].base_level * 10,
                     UnitCamp: DefenderDB[0].unit_camp,
+                    UnitType: DefenderDB[0].unit_type,
                     Speed: DefenderUnit[0].Speed,
                     AttackType: DefenderUnit[0].Attack_Type,
                     Officer: defendOfficer[0].Officer_Name,
@@ -112,6 +114,15 @@ module.exports = {
                 if (Attacker.UnitCamp === 'MartyrsW') {
                     Attacker.Color = Colours.MartyrsW
                 }
+                if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Vanguard') {
+                    Attacker.Color = Colours.VanguardBoost
+                }
+                if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Liberty') {
+                    Attacker.Color = Colours.LibertyBoost
+                }
+                if (Attacker.UnitCamp && Attacker.OfficerCamp === 'MartyrsW') {
+                    Attacker.Color = Colours.MartyrsWBoost
+                }
                 if (Defender.UnitCamp === 'Vanguard') {
                     Defender.Color = Colours.Vanguard
                 }
@@ -120,6 +131,15 @@ module.exports = {
                 }
                 if (Defender.UnitCamp === 'MartyrsW') {
                     Defender.Color = Colours.MartyrsW
+                }
+                if (Defender.UnitCamp && Defender.OfficerCamp === 'Vanguard') {
+                    Defender.Color = Colours.VanguardBoost
+                }
+                if (Defender.UnitCamp && Defender.OfficerCamp === 'Liberty') {
+                    Defender.Color = Colours.LibertyBoost
+                }
+                if (Defender.UnitCamp && Defender.OfficerCamp === 'MartyrsW') {
+                    Defender.Color = Colours.MartyrsWBoost
                 }
 
 const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)

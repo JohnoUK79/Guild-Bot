@@ -1128,6 +1128,7 @@ module.exports = {
         const unitLevel = Level[0].unit_level || 'No Unit Trained'
         const unitCamp = Level[0].unit_camp || 'No Unit Trained'
         const officerDetails = await sql.Execute(`SELECT * from officers WHERE Officer_Name = '${officer}'`)
+        console.log(officerDetails)
         const officerType = officerDetails[0].Officer_Type || 'No Officer Chosen'
         const officerCamp = officerDetails[0].Officer_Camp || 'No Officer Chosen'
         const officerSkill = officerDetails[0].Skill || 'No Officer Chosen'
@@ -1777,7 +1778,7 @@ module.exports = {
             )
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
-        let presigeRequired = currentOfficers.length * 20 + 1
+        let presigeRequired = currentOfficers.length * 50
         if (currentOfficers.length < 2 ) {
             console.log(`Less than 2`)
             presigeRequired = 1
@@ -1790,7 +1791,7 @@ module.exports = {
                 .setThumbnail(link)
                 .setTimestamp()
                 .addFields(
-                    { name: `Required Level: ${presigeRequired}`, value: `Current Level: ${Level[0].officer_level}` },
+                    { name: `Required Level: ${presigeRequired + 1}`, value: `Current Level: ${Level[0].officer_level}` },
                 )  
                 .setDescription(`**${interaction.member}, Officer Upgrade Required**`)
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });

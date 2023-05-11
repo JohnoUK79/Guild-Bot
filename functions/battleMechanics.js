@@ -59,20 +59,27 @@ module.exports = {
                 }
                 const attackOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${AttackerDB[0].officer_name}'`)
                 if (AttackerDB[0].officer_level === 0) {
-                    OfficerLevel = 1
-                } else OfficerLevel = AttackerDB[0].officer_level
+                    AttackOfficerLevel = 1
+                } else AttackOfficerLevel = AttackerDB[0].officer_level
+                
+                if (AttackerDB[0].skill_level === 0) {
+                    AttackSkillMultiplier = 1
+                } else AttackSkillMultiplier = AttackerDB[0].skill_level
+
                 const Attacker = {
                     Player: interaction.member,
                     Name: AttackerUnit[0].Unit_Name,
-                    Power: AttackerUnit[0].Firepower * (OfficerLevel / 10),
+                    Power: AttackerUnit[0].Firepower * (AttackOfficerLevel / 10),
                     Health: AttackerUnit[0].HP * AttackerDB[0].base_level * 10,
                     UnitCamp: AttackerDB[0].unit_camp,
                     Speed: AttackerUnit[0].Speed,
                     AttackType: AttackerUnit[0].Attack_Type,
                     Officer: attackOfficer[0].Officer_Name,
-                    OfficerLevel: OfficerLevel,
+                    OfficerLevel: AttackOfficerLevel,
                     OfficerCamp: attackOfficer[0].Officer_Camp,
                     OfficerSkill: attackOfficer[0].Skill,
+                    SKillLevel: AttackerDB[0].skill_level,
+                    SkillMultiplier: AttackSkillMultiplier,
                     OfficerType: attackOfficer[0].Officer_Type,
                     Multiplier: 1,
                     Image: `http://phfamily.co.uk/img/${AttackerDB[0].unit_image}`,
@@ -80,20 +87,29 @@ module.exports = {
                 }
 
                 const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)
+                if (DefenderDB[0].officer_level === 0) {
+                    DefendOfficerLevel = 1
+                } else DefendOfficerLevel = DefenderDB[0].officer_level
+                if (DefenderDB[0].skill_level === 0) {
+                    DefendSkillMultiplier = 1
+                } else DefendSkillMultiplier = DefenderDB[0].skill_level
 
                 const Defender = {
                     Player: defender, 
                     Name: DefenderUnit[0].Unit_Name,
-                    Power: DefenderUnit[0].Firepower * (DefenderDB[0].officer_level / 10),
+                    Power: DefenderUnit[0].Firepower * (DefendOfficerLevel / 10),
                     Health: DefenderUnit[0].HP * DefenderDB[0].base_level * 10,
                     UnitCamp: DefenderDB[0].unit_camp,
                     Speed: DefenderUnit[0].Speed,
                     AttackType: DefenderUnit[0].Attack_Type,
                     Officer: defendOfficer[0].Officer_Name,
+                    OfficerLevel: DefendOfficerLevel,
                     OfficerCamp: defendOfficer[0].Officer_Camp,
                     OfficerSkill: defendOfficer[0].Skill,
+                    SKillLevel: DefenderDB[0].skill_level,
+                    SkillMultiplier: 1,
                     OfficerType: defendOfficer[0].Officer_Type,
-                    Multiplier: 1,
+                    Multiplier: DefendSkillMultiplier,
                     Image: `http://phfamily.co.uk/img/${DefenderDB[0].unit_image}`,
                     ImageFile: `${DefenderDB[0].unit_image}`
                 }
@@ -136,13 +152,13 @@ module.exports = {
                 }
 const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)
 const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)
-console.log(Attacker, Defender)
 Attacker.BattleHealth = Attacker.Health, Defender.BattleHealth = Defender.Health
+console.log(Attacker, Defender)
 
 if (Attacker.Speed < Defender.Speed) {
     console.log(`Attacker Speed: ${Attacker.Speed} Defender Speed: ${Defender.Speed}`)
     while (Defender.BattleHealth >= 0 && Attacker.BattleHealth >= 0) {
-        console.count('Round:')
+        console.count(`Battle ID: ${interaction.id} Round`)
         await sleep(1600)      
         attackSelection(Attacker, Defender)
         officerSkills(interaction, Attacker, Defender)
@@ -181,7 +197,7 @@ if (Attacker.Speed < Defender.Speed) {
 } else {
     console.log(`Defender Speed: ${Defender.Speed} Attacker Speed: ${Attacker.Speed}`)
     while (Defender.BattleHealth >= 0 && Attacker.BattleHealth >= 0) {
-    console.count('Round:')
+    console.count(`Battle ID: ${interaction.id} Round`)
     await sleep(1600)
     attackSelection(Attacker, Defender)
     officerSkills(interaction, Attacker, Defender)

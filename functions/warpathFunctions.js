@@ -1261,14 +1261,14 @@ module.exports = {
         return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons] })
     },
     attackSelection: async function (Attacker, Defender) {
-        if (Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier, console.log(`Attacker Unit Buff:${Attacker.Multiplier}`)
-        if (Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier, console.log(`Defender Unit Buff:${Defender.Multiplier}`)
-        if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Ground') return Attacker.Multiplier = Attacker.Multiplier * 2, Defender.Multiplier = Defender.Multiplier / 2, Defender.Power = Defender.Power / 2, console.log(`Attacker Air Buff:${Attacker.Multiplier}\nDefender Ground Debuff:${Defender.Multiplier}:${Defender.Power}`)
-        if (Defender.AttackType === 'Air' && Attacker.AttackType === 'Ground') return Defender.Multiplier = Defender.Multiplier * 2, Attacker.Multiplier = Attacker.Multiplier / 2, Attacker.Power = Attacker.Power / 2, console.log(`Defender Air Buff:${Defender.Multiplier}\nDefender Ground Debuff:${Attacker.Multiplier}:${Attacker.Power}`)
+        if (Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier, console.log(`Attacker Unit Buff:`, Attacker.Multiplier)
+        if (Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier, console.log(`Defender Unit Buff:`, Defender.Multiplier)
+        if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Ground') return Attacker.Multiplier = Attacker.Multiplier * 2, Defender.Multiplier = Defender.Multiplier / 2, Defender.Power = Defender.Power / 2, console.log(`Attacker Air Buff:`, Attacker.Multiplier + `\nDefender Ground Debuff:`, Defender.Multiplier, Defender.Power)
+        if (Defender.AttackType === 'Air' && Attacker.AttackType === 'Ground') return Defender.Multiplier = Defender.Multiplier * 2, Attacker.Multiplier = Attacker.Multiplier / 2, Attacker.Power = Attacker.Power / 2, console.log(`Defender Air Buff:`, Defender.Multiplier, `\nDefender Ground Debuff:`, Attacker.Multiplier, Attacker.Power)
     },
     campSelection: async function (Attacker, Defender) {
-        if (Attacker.UnitCamp === Attacker.OfficerCamp) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier, console.log(`Attacker Camp Buff: ${Attacker.Multiplier}`)
-        if (Defender.UnitCamp === Defender.OfficerCamp) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier, console.log(`Defender Camp Buff: ${Defender.Multiplier}`)
+        if (Attacker.UnitCamp === Attacker.OfficerCamp) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier, console.log(`Attacker Camp Buff:`, Attacker.Multiplier)
+        if (Defender.UnitCamp === Defender.OfficerCamp) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier, console.log(`Defender Camp Buff:`, Defender.Multiplier)
     },
     newUnitSelection: async function (prestige) { //Medium is Starter Troop
         if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters'

@@ -81,6 +81,9 @@ campaignMode: async function (interaction) {
             if (AttackerDB[0].officer_level === 0) {
                 OfficerLevel = 1
             } else OfficerLevel = AttackerDB[0].officer_level
+            if (AttackerDB[0].skill_level === 0) {
+                AttackSkillMultiplier = 1
+            } else AttackSkillMultiplier = AttackerDB[0].skill_level
 
             const Attacker = {
                 Player: interaction.member,
@@ -96,6 +99,7 @@ campaignMode: async function (interaction) {
                 OfficerCamp: attackOfficer[0].Officer_Camp,
                 OfficerSkill: attackOfficer[0].Skill,
                 SkillLevel: AttackerDB[0].skill_level,
+                SkillMultiplier: AttackSkillMultiplier,
                 OfficerType: attackOfficer[0].Officer_Type,
                 Multiplier: 1,
                 Prestige: AttackerDB[0].prestige,
@@ -117,6 +121,7 @@ campaignMode: async function (interaction) {
                 OfficerCamp: defendOfficer[0].Officer_Camp,
                 OfficerSkill: defendOfficer[0].Skill,
                 SkillLevel: skillLevel,
+                SkillMultiplier: skillLevel,
                 OfficerType: defendOfficer[0].Officer_Type,
                 Multiplier: 1,
                 Image: `http://phfamily.co.uk/img/${DefenderUnit[0].Image}`,
@@ -174,7 +179,8 @@ while (Defender.BattleHealth >= 0 && Attacker.BattleHealth >= 0) {
     attackSelection(Attacker, Defender)
     campSelection(Attacker, Defender) 
     officerSkills(interaction, Attacker, Defender)
-    await sleep(1600)         
+    console.count(`Battle ID: ${interaction.id} Round`)
+    await sleep(1600)      
     Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
     const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
     Defender.AttackPower = (defendPower * Defender.Multiplier)
@@ -207,37 +213,41 @@ console.log(`Defender Speed: ${Defender.Speed} Attacker Speed: ${Attacker.Speed}
     attackSelection(Attacker, Defender)
     campSelection(Attacker, Defender) 
     officerSkills(interaction, Attacker, Defender)
-    await sleep(1600)       
-Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
-const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
-Attacker.AttackPower = (attackPower * Attacker.Multiplier)
-Defender.BattleHealth = Defender.BattleHealth - Attacker.AttackPower
-    embed
-        .setColor(Attacker.Color)
-        .setThumbnail(`attachment://${Attacker.ImageFile}`)
-        .setImage(`attachment://${Attacker.ImageFile}`)
-        .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${campaignOfficer}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
-        .setDescription(`${campaignOfficer}'s **${Defender.Name}** has **${Defender.BattleHealth.toLocaleString()}** health remaining!`)
-    interaction.editReply({ embeds: [embed], files: [attackImage] });
-console.log(`Attacker hit for ${Attacker.AttackPower.toLocaleString()}`)    
-const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
-Defender.AttackPower = (defendPower * Defender.Multiplier)
-Attacker.BattleHealth = Attacker.BattleHealth - Defender.AttackPower
+    console.count(`Battle ID: ${interaction.id} Round`)
+    await sleep(1600)      
+    Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
+    const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
+    Attacker.AttackPower = (attackPower * Attacker.Multiplier)
+    Defender.BattleHealth = Defender.BattleHealth - Attacker.AttackPower
+        embed
+            .setColor(Attacker.Color)
+            .setThumbnail(`attachment://${Attacker.ImageFile}`)
+            .setImage(`attachment://${Attacker.ImageFile}`)
+            .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${campaignOfficer}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
+            .setDescription(`${campaignOfficer}'s **${Defender.Name}** has **${Defender.BattleHealth.toLocaleString()}** health remaining!`)
+        interaction.editReply({ embeds: [embed], files: [attackImage] });
+    console.log(`Attacker hit for ${Attacker.AttackPower.toLocaleString()}`)    
+    const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
+    Defender.AttackPower = (defendPower * Defender.Multiplier)
+    Attacker.BattleHealth = Attacker.BattleHealth - Defender.AttackPower
 
-    embed
-        .setColor(Defender.Color)
-        .setThumbnail(`attachment://${Defender.ImageFile}`)
-        .setImage(`attachment://${Defender.ImageFile}`)
-        .setTitle(`${campaignOfficer}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
-        .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${Attacker.BattleHealth.toLocaleString()}** health remaining!`)
-    interaction.editReply({ embeds: [embed], files: [defendImage] });
-console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)
+        embed
+            .setColor(Defender.Color)
+            .setThumbnail(`attachment://${Defender.ImageFile}`)
+            .setImage(`attachment://${Defender.ImageFile}`)
+            .setTitle(`${campaignOfficer}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
+            .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${Attacker.BattleHealth.toLocaleString()}** health remaining!`)
+        interaction.editReply({ embeds: [embed], files: [defendImage] });
+    console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)
+    }
 }
-}
-
 if (Defender.BattleHealth < 0) {
-    await sleep(1800)      
-    const winnings = (AttackerDB[0].officer_level * 10000) * (campaignOfficerLevel / 10)
+    await sleep(2000)      
+    console.count(`Battle ID: ${interaction.id} Round`)
+    if (AttackerDB[0].officer_level === 0) {
+        attackOfficerLevel = 1
+    } else attackOfficerLevel = AttackerDB[0].officer_level
+    const winnings = (attackOfficerLevel * 10000) * (campaignOfficerLevel / 10)
     const wallet = AttackerDB[0].war_coins
     const wins = AttackerDB[0].battle_wins
     const newWins = parseInt(wins + 1)
@@ -260,7 +270,8 @@ const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war
 console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${campaignOfficer}`)
 } else
 if (Attacker.BattleHealth < 0) {
-    await sleep(1800)      
+    await sleep(2000)      
+    console.count(`Battle ID: ${interaction.id} Round`)
     const losses = AttackerDB[0].battle_losses
     const newLosses = parseInt(losses + 1)
 

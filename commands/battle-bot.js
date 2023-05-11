@@ -96,7 +96,10 @@ module.exports = {
 			const wallet = Economy[0].war_coins
 			const bank = Economy[0].war_chest
 			const bankLevel = Economy[0].chest_level
-			const bankMax = bankLevel * 10000
+			if (Economy[0].officer_level === 0) {
+				officerLevel = 1
+			} else officerLevel = Economy[0].officer_level
+			const bankMax = bankLevel * 10000 * officerLevel
 
 			if (amount <= 0) {
 			embed

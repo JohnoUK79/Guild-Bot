@@ -1,7 +1,7 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, AttachmentBuilder } = require('discord.js');
 const sql = require("../config/Database");
 const { levelUp } = require('../functions/levelUp');
-const { dmReceived, translate } = require('../functions/messageFunctions');
+const { dmReceived, translate, rankCheck } = require('../functions/messageFunctions');
 time = require('../config/timestamp')
 setDate = time.UTCdefault()
 
@@ -30,4 +30,7 @@ module.exports = {
 		try {
 		levelUp(message)
 		} catch (err) {console.log(err)}
+		// try {
+		// rankCheck(message)
+		// } catch (err) {console.log(err)}
 	}}

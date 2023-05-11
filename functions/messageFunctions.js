@@ -5,8 +5,8 @@ module.exports = {
     dmReceived: async function(message) {
         const setDate = time.UTCdefault()
 			if (message.content === '') {
-				embedContent = 'No Message Content'				
-			} else embedContent = message.content		
+				var embedContent = 'No Message Content'				
+			} else var embedContent = message.content		
 
 			const dmReceived = new EmbedBuilder()
 			.setColor('#0099ff')
@@ -20,7 +20,7 @@ module.exports = {
 				{ name: `Sent By:`, value: `<@${message.author.id}>` },
 				)
 			.setTimestamp()
-			.setFooter({ text: 'Message Received!.', iconURL: 'http://phfamily.co.uk/img/GeneralDeath.png' });
+			.setFooter({ text: 'Message Received!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
 
 			//970409125227950110 PH Family Bot Messages
 			//1033492139964895302 SE17 Bot Messages
@@ -29,7 +29,7 @@ module.exports = {
 				embeds: [dmReceived],
 			})
 			dmReceived.setDescription('Your messaged will be reviewed by our BOT Team and we will come back to you if we need further information!')
-			dmReceived.setFooter({ text: 'Message Sent!.', iconURL: 'http://phfamily.co.uk/img/gifs/GeneralDeath.png' })
+			dmReceived.setFooter({ text: 'Message Sent!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' })
 			dmReceived.setTitle('Your Message Has Been Sent!')
 
 			await message.reply ({
@@ -44,7 +44,7 @@ module.exports = {
 				.setAuthor({ name: `${message.author.username}#${message.author.discriminator}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
 				.setDescription(`Attachment Received By the Bot!`)
 				.setTimestamp()
-				.setFooter({ text: 'Attachment Received!.', iconURL: 'http://phfamily.co.uk/img/gifs/GeneralDeath.png' });
+				.setFooter({ text: 'Attachment Received!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
 
 			let attachments = message.attachments
 			for (const attachment of attachments) {

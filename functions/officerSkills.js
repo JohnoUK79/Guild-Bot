@@ -24,15 +24,6 @@ module.exports = {
         if (Attacker.UnitCamp === 'MartyrsW') {
             Attacker.SkillColor = Colours.MartyrsW
         }
-        if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Vanguard') {
-            Attacker.SkillColor = Colours.VanguardBoost
-        }
-        if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Liberty') {
-            Attacker.SkillColor = Colours.LibertyBoost
-        }
-        if (Attacker.UnitCamp && Attacker.OfficerCamp === 'MartyrsW') {
-            Attacker.SkillColor = Colours.MartyrsWBoost
-        }
 
         let chance = chance0
         if (Attacker.SkillLevel === 0) {
@@ -98,9 +89,6 @@ module.exports = {
         if (Attacker.SkillLevel === 20) {
             chance = chance100
         }
-        if (Attacker.SkillLevel > 20) {
-            chance = chance100
-        }
 
         const skillEmbed = new EmbedBuilder();
             skillEmbed 
@@ -115,20 +103,15 @@ module.exports = {
         }   
 
         //Sergeant Spanner
-        if (Attacker.OfficerSkill === 'Indomitable') { //Awoken Skill 5
-            if (Attacker.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }
+        if (Attacker.OfficerSkill === 'Indomitable') { //Awoken Skill
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
                 console.log(skillSuccess,chance)
                 if (skillSuccess === 'Yes') {
                     console.log(`Indomitable`)
-                    const Health = (Attacker.BattleHealth * 0.3) * Attacker.SkillLevel
+                    const health = (Attacker.BattleHealth * 0.3) * Attacker.SkillLevel
                     if (Attacker.BattleHealth > 0) {
-                        Attacker.BattleHealth = Attacker.BattleHealth + Health
-                        console.log(`Health Increased`, Health)
+                        Attacker.BattleHealth = Attacker.BattleHealth + health
+                        console.log(`Health Increased`, health)
                     } else return console.log(`Health Error`)
                     console.log(health)
     
@@ -143,44 +126,33 @@ module.exports = {
                 return
                 } 
         }            
-        //Angel of Light
-        if (Attacker.OfficerSkill === 'Caring Angel') { // Awoken Skill 5
-            if (Attacker.UnitType = 'Infantry') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1)
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }   
+            
+        if (Attacker.OfficerSkill === 'Caring Angel') {
             if (Defender.SkillUsed === 'Attack') {
-                console.log(`Caring Angel`)
-                const Health = Attacker.SkillLevel * (Attacker.BattleHealth * 0.35) 
+                console.log(`Caring Angel`)   
+                const health = (Attacker.BattleHealth * 0.35) * Attacker.SkillLevel
                 if (Attacker.BattleHealth > 0) {
-                    Attacker.BattleHealth = Attacker.BattleHealth + Health
-                    console.log(`Health Increased`, Health)
+                    Attacker.BattleHealth = Attacker.BattleHealth + health
+                    console.log(`Health Increased`, health)
                 } else return console.log(`Health Error`)
     
                 skillEmbed
                         .setColor(Attacker.SkillColor)
                         .setThumbnail(RedCross)
                         .addFields(
-                            { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Health** to **${Health.toLocaleString()}**` },
+                            { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Health** to **${health.toLocaleString()}**` },
                         )  
                 interaction.followUp({embeds: [skillEmbed]})
                 Attacker.SkillUsed = 'Health'
                 return
             } 
             }
-        //War Machine
-        if (Attacker.OfficerSkill === `The Soldier's Soldier`) { // Awoken Skill 5
-            if (Attacker.AttackType = 'Ground') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }   
+        if (Attacker.OfficerSkill === `The Soldier's Soldier`) {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess,chance)
             if (skillSuccess === 'Yes') {
                 console.log(`The Soldier's Soldier`)  
-                const Power = Attacker.SkillLevel * (Attacker.AttackPower * 0.125) 
+                const Power = (Attacker.AttackPower * 0.125) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -194,18 +166,12 @@ module.exports = {
             return
             } 
         }        
-        //Tip of the Spear 
-        if (Attacker.OfficerSkill === 'Undaunted') { // Awoken Skill 5
-            if (Attacker.AttackType = 'Ground') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }   
+        if (Attacker.OfficerSkill === 'Undaunted') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             console.log(skillSuccess,chance)
             if (skillSuccess === 'Yes') {
                 console.log(`Undaunted`)  
-                const Power = Attacker.SkillLevel * (Attacker.AttackPower * 0.5) 
+                const Power = (Attacker.AttackPower * 0.5) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -219,16 +185,10 @@ module.exports = {
             return
             } 
         }        
-        //Valkyrie
-        if (Attacker.OfficerSkill === 'Who Dares Wins') { // Awoken Skill 5
-            if (Attacker.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }
+        if (Attacker.OfficerSkill === 'Who Dares Wins') {
             if (Defender.AttackType === 'Ground') {
                 console.log(`Who Dares Wins`)   
-                const health = Attacker.SkillLevel * (Defender.BattleHealth * 0.2) 
+                const health = (Defender.BattleHealth * 0.2) * Attacker.SkillLevel
                 if (Defender.BattleHealth > 0) {
                     Defender.BattleHealth - health
                     console.log(`Health Decreased`, health)
@@ -243,20 +203,13 @@ module.exports = {
                 interaction.followUp({embeds: [skillEmbed]})
                 Attacker.SkillUsed = 'Health'
                 return
-            }         
-        }
-        //Lady Justice        
-        if (Attacker.OfficerSkill === 'Guardian Angel') { // Awoken Skill 5
-            if (Attacker.AttackType = 'Ground') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }  
+            }         }        
+        if (Attacker.OfficerSkill === 'Guardian Angel') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
                 console.log(`Guardian Angel`)  
-                const Power = Attacker.SkillLevel * (Attacker.AttackPower * 0.2) 
+                const Power = (Attacker.AttackPower * 0.2) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
                 skillEmbed
                     .setColor(Attacker.SkillColor)
@@ -270,17 +223,11 @@ module.exports = {
             return
             } 
         }        
-        // Eye of Providence 
-        if (Attacker.OfficerSkill === 'Hand of Destruction') { // Awoken Skill 5 
-            if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }  
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
+        if (Attacker.OfficerSkill === 'Hand of Destruction') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
+                const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+                if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Hand of Destruction`)
                 const Power = (Attacker.AttackPower * 0.4) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -297,13 +244,7 @@ module.exports = {
         }
             } 
         }        
-        // Percy
-        if (Attacker.OfficerSkill === 'Frontline Fire') { // Awoken Skill 5
-            if (Attacker.AttackType = 'Ground') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }              
+        if (Attacker.OfficerSkill === 'Frontline Fire') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
@@ -323,13 +264,8 @@ module.exports = {
             return
             } 
         }        
-        // White Wolf
-        if (Attacker.OfficerSkill === 'Vengeance') { // Awoken Skill 5 
-            if (Attacker.UnitType === 'Infantry') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }  
+        if (Attacker.OfficerSkill === 'Vengeance') {
+
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(`Vengeance`)   
@@ -359,40 +295,28 @@ module.exports = {
             return
             } 
         }        
-        // Antonina Shevchenko
-        if (Attacker.OfficerSkill === 'The Motherland') { // Awoken Skill 5
-            if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }  
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
+        if (Attacker.OfficerSkill === 'The Motherland') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
+                const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+                if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`The Motherland`)
-                const Damage = (Attacker.AttackPower * 0.5) * Attacker.SkillLevel
-                Attacker.AttackPower = Attacker.AttackPower + Damage
+                const damage = (Attacker.AttackPower * 0.5) * Attacker.SkillLevel
+                Attacker.AttackPower = Attacker.AttackPower + damage
                 skillEmbed
                     .setColor(Attacker.SkillColor)
                     .setThumbnail(Boom)
                     .addFields(
-                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Damage.toLocaleString()}**` },
+                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${damage.toLocaleString()}**` },
                     ),   
-            console.log(Damage.toLocaleString())
+            console.log(damage.toLocaleString())
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
             return
         }
             } 
         }        
-        // Winter Huntsman
-        if (Attacker.OfficerSkill === 'Mine Detonator') { // Awoken Skill 5
-            if (Attacker.AttackType === 'Ground') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }  
+        if (Attacker.OfficerSkill === 'Mine Detonator') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
@@ -421,18 +345,12 @@ module.exports = {
             interaction.followUp({embeds: [skillEmbed]})
             return
             } 
-        }      
-        // The Eruptor  
+        }        
         if (Attacker.OfficerSkill === 'Flamestorm') {
-            if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }  
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
+                const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+                if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Flamestorm`)
                 const Power = (Attacker.AttackPower * 0.1) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -449,13 +367,7 @@ module.exports = {
         }
             } 
         }        
-        // Steel Fighter
-        if (Attacker.OfficerSkill === 'Inpenetrable') { // Awoken Skill 5 
-            if (Attacker.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }
+        if (Attacker.OfficerSkill === 'Inpenetrable') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
@@ -477,13 +389,7 @@ module.exports = {
             return
             }         
         }        
-        // Iron Bastion
-        if (Attacker.OfficerSkill === 'Breaching Charge') { // Awoken Skill 5 
-            if (Attacker.UnitType === 'Infantry') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }  
+        if (Attacker.OfficerSkill === 'Breaching Charge') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
@@ -513,13 +419,7 @@ module.exports = {
             return
             } 
         }        
-        // Berserker Bear
         if (Attacker.OfficerSkill === 'Flaming Meteors') {
-            if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }  
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
                 if (skillSuccess === 'Yes') {
@@ -540,13 +440,7 @@ module.exports = {
         }
             } 
         }        
-        // Guardian of Truth
-        if (Attacker.OfficerSkill === 'Master of War') { // Awoken Skill 5
-            if (Attacker.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }
+        if (Attacker.OfficerSkill === 'Master of War') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
@@ -564,14 +458,8 @@ module.exports = {
             interaction.followUp({embeds: [skillEmbed]})
             return
             } 
-        }   
-        // Death Adder     
-        if (Attacker.OfficerSkill === 'Phantom Power') { // Awoken Skill 5
-            if (Attacker.AttackType === 'Ground') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }  
+        }        
+        if (Attacker.OfficerSkill === 'Phantom Power') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
@@ -595,13 +483,7 @@ module.exports = {
             return
             } 
         }        
-        // Bloody Mary
-        if (Attacker.OfficerSkill === 'Blinding Flash') { // Awoken Skill 5 
-            if (Attacker.AttackType === 'Ground') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }  
+        if (Attacker.OfficerSkill === 'Blinding Flash') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
@@ -621,17 +503,11 @@ module.exports = {
             return
             } 
         }        
-        // Saber of The Nation 
-        if (Attacker.OfficerSkill === 'Rain of Blades') { // Awoken Skill 5 
-            if (Attacker.AttackType === 'Howitzers' || 'AntiTankGuns'){
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }  
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
+        if (Attacker.OfficerSkill === 'Rain of Blades') {
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
+                const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+                if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Rain of Blades`)
                 const Power = (Attacker.AttackPower * 0.1) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -648,18 +524,12 @@ module.exports = {
             return
         }
             } 
-        }       
-        // Argent Flame 
+        }        
         if (Attacker.OfficerSkill === 'Devastation') {
-            if (Attacker.AttackType === 'Howitzers' || 'AntiTankGuns'){
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
             if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
+                const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+                if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Devastation`)
                 const Power = (Attacker.AttackPower * 0.25) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -673,14 +543,10 @@ module.exports = {
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
             return
-        }}}        
-        // Thorn Countess
-        if (Attacker.OfficerSkill === 'Beauty Worth Preserving') { // Awoken Skill 5
-            if (Attacker.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }
+        }
+            } 
+        }        
+        if (Attacker.OfficerSkill === 'Beauty Worth Preserving') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
@@ -704,13 +570,7 @@ module.exports = {
             return
             } 
         }        
-        // Professor Pain 
-        if (Attacker.OfficerSkill === 'Forlorn Hope') { // Awoken Skill 5
-            if (Attacker.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }
+        if (Attacker.OfficerSkill === 'Forlorn Hope') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
@@ -730,17 +590,11 @@ module.exports = {
             return
             } 
         }        
-        // Wings of Glory
-        if (Attacker.OfficerSkill === 'Sky Dancer') { // Awoken Skill 5 
-            if (Attacker.UnitType = 'Fighters') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
+        if (Attacker.OfficerSkill === 'Sky Dancer') {
             if (Attacker.UnitType === 'Bombers' || 'Fighters'){
+                const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+                if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Sky Dancer`)
                 const Power = (Attacker.AttackPower * 0.15) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -757,13 +611,7 @@ module.exports = {
         }
             } 
         }        
-        // Brisk Eagle
-        if (Attacker.UnitType = 'Fighters' || 'Bombers') {
-            const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-            Attacker.AttackPower = Attacker.AttackPower + Damage
-            console.log(`Attacker Skill Unit Buff`, Damage)
-        }
-        if (Attacker.OfficerSkill === 'Untouchable') { // Awoken Skill 5
+        if (Attacker.OfficerSkill === 'Untouchable') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
@@ -786,17 +634,11 @@ module.exports = {
             return
             } 
         }        
-        // Heavens Saviour
-        if (Attacker.OfficerSkill === 'Heavenly Rays') { // Awoken Skill 5 
-            if (Attacker.UnitType = 'Fighters') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
-            if (Attacker.UnitType === 'Fighters' && Defender.UnitType === 'Fighters'){
+        if (Attacker.OfficerSkill === 'Heavenly Rays') {
+            if (Attacker.UnitType === 'Fighters' && Attacker.UnitType === 'Fighters'){
+                const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+                if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Heavenly Rays`)    
                 const Power = (Attacker.AttackPower * 0.15) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -814,17 +656,11 @@ module.exports = {
         }
             } 
         }        
-        // Silver Comet
-        if (Attacker.OfficerSkill === 'Twin Fangs') { // Awoken Skill 5 
-            if (Attacker.UnitType = 'Fighters') { 
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
+        if (Attacker.OfficerSkill === 'Twin Fangs') {
             if (Attacker.UnitType === 'Bombers' || 'Fighters'){
+                const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+                if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Twin Fangs`)            
                 const Power = (Attacker.AttackPower * 0.25) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -842,13 +678,7 @@ module.exports = {
         }
             } 
         }        
-        // The Witcher
-        if (Attacker.OfficerSkill === 'Night Evader') { // Awoken Skill 5
-            if (Attacker.UnitType === 'Bombers' || 'Fighters'){
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            } 
+        if (Attacker.OfficerSkill === 'Night Evader') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
@@ -868,13 +698,7 @@ module.exports = {
             return
             } 
         }        
-        // Golden Pixie
-        if (Attacker.OfficerSkill === 'Unleashed Justice') { // Awoken Skill 5 
-            if (Attacker.UnitType === 'Bombers'){
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            } 
+        if (Attacker.OfficerSkill === 'Unleashed Justice') {
             if (Attacker.UnitType === 'Bombers'){
                 const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
                 if (skillSuccess === 'Yes') {
@@ -896,13 +720,7 @@ module.exports = {
         }
             } 
         }        
-        // El Cartero
-        if (Attacker.OfficerSkill === 'Sticky Situation') { // Awoken Skill 5 
-            if (Attacker.UnitType === 'Bombers'){
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            } 
+        if (Attacker.OfficerSkill === 'Sticky Situation') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
                 console.log(skillSuccess,chance)
@@ -922,13 +740,7 @@ module.exports = {
             return
             } 
         }        
-        // Polar Phantom
-        if (Attacker.OfficerSkill === 'Desperate Counterattack') { // Awoken Skill 5
-            if (Attacker.UnitType === 'Fighters'){
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            } 
+        if (Attacker.OfficerSkill === 'Desperate Counterattack') {
             const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
             if (skillSuccess === 'Yes') {
             console.log(skillSuccess,chance)
@@ -950,17 +762,11 @@ module.exports = {
         }
             } 
         }        
-        // Rictus Reaper
-        if (Attacker.OfficerSkill === 'Last Gasp') { // Awoken Skill 5
+        if (Attacker.OfficerSkill === 'Last Gasp') {
             if (Attacker.UnitType === 'Bombers'){
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            } 
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
-            if (Attacker.UnitType === 'Bombers'){
+                const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+                if (skillSuccess === 'Yes') {
+                console.log(skillSuccess,chance)
                 console.log(`Last Gasp`)            
                 const Power = (Attacker.AttackPower * .2) * Attacker.SkillLevel
                 Attacker.AttackPower = Attacker.AttackPower + Power
@@ -975,88 +781,10 @@ module.exports = {
             Attacker.SkillUsed = 'Attack'
             interaction.followUp({embeds: [skillEmbed]}) 
             return
-        }}}
-        // Bladewing
-        if (Attacker.OfficerSkill === 'Falling Star') { // Awoken Skill 5
-            if (Attacker.UnitType === 'Fighters'){
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            } 
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
-            if (Attacker.UnitType === 'Bombers' || 'Fighters'){
-                console.log(`Falling Star`)            
-                const Power = (Attacker.AttackPower * .25) * Attacker.SkillLevel
-                Attacker.AttackPower = Attacker.AttackPower + Power
+        }
+        } 
+        }
 
-                skillEmbed
-                    .setColor(Attacker.SkillColor)
-                    .setThumbnail(Boom)
-                    .addFields(
-                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
-                    ),   
-            console.log(Power.toLocaleString())
-            Attacker.SkillUsed = 'Attack'
-            interaction.followUp({embeds: [skillEmbed]}) 
-            return
-        }}}
-        // Vox Veritatis
-        if (Attacker.OfficerSkill === 'Winning Mentality') { // Awoken Skill 5
-            if (Attacker.AttackType = 'Ground') {
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            } 
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
-                console.log(`Winning Mentality`)            
-                const Health = Attacker.SkillLevel * (Attacker.BattleHealth * .30)
-                Attacker.BattleHealth = Attacker.BattleHealth + Health
-
-                skillEmbed
-                    .setColor(Attacker.SkillColor)
-                    .setThumbnail(Boom)
-                    .addFields(
-                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Health** by **${Health.toLocaleString()}**` },
-                    ),   
-            console.log(Power.toLocaleString())
-            Attacker.SkillUsed = 'Attack'
-            interaction.followUp({embeds: [skillEmbed]}) 
-            return
-        }}
-        // Lady Liberte 
-        if (Attacker.OfficerSkill === 'Art of War') {
-            if (Attacker.AttackType === 'Howitzers' || 'AntiTankGuns'){
-                const Damage = Attacker.SkillLevel * (Attacker.AttackPower * .1) 
-                Attacker.AttackPower = Attacker.AttackPower + Damage
-                console.log(`Attacker Skill Unit Buff`, Damage)
-            }
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
-            if (Attacker.UnitType === 'Howitzers' || 'AntiTankGuns'){
-                console.log(`Art of War`)
-                const Power = Attacker.SkillLevel * (Attacker.AttackPower * 0.15) 
-                Attacker.AttackPower = Attacker.AttackPower + Power
-                const Health = Attacker.SkillLevel * (Attacker.BattleHealth * 0.15) 
-                Attacker.BattleHealth = Attacker.BattleHealth + Health
-
-                skillEmbed
-                    .setColor(Attacker.SkillColor)
-                    .setThumbnail(Boom)
-                    .addFields(
-                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Attack** by **${Power.toLocaleString()}**` },
-                        { name: `${Attacker.Officer}`, value: `used the **${Attacker.OfficerSkill} Skill** & increases ${interaction.member} **${Attacker.Name}'s Health** by **${Health.toLocaleString()}**` },
-                    ),   
-                    console.log(Power.toLocaleString())
-                    console.log(Health.toLocaleString())
-                    Attacker.SkillUsed = 'Attack'
-            interaction.followUp({embeds: [skillEmbed]}) 
-            return
-        }}}
     //Defender Skills
     if (Defender.UnitCamp === 'Vanguard') {
         Defender.SkillColor = Colours.Vanguard
@@ -1066,15 +794,6 @@ module.exports = {
     }
     if (Defender.UnitCamp === 'MartyrsW') {
         Defender.SkillColor = Colours.MartyrsW
-    }
-    if (Defender.UnitCamp && Defender.OfficerCamp === 'Vanguard') {
-        Defender.SkillColor = Colours.VanguardBoost
-    }
-    if (Defender.UnitCamp && Defender.OfficerCamp === 'Liberty') {
-        Defender.SkillColor = Colours.LibertyBoost
-    }
-    if (Defender.UnitCamp && Defender.OfficerCamp === 'MartyrsW') {
-        Defender.SkillColor = Colours.MartyrsWBoost
     }
 
     chance = chance0
@@ -1141,80 +860,62 @@ module.exports = {
     if (Defender.SkillLevel === 20) {
         chance = chance100
     }
-    if (Defender.SkillLevel > 20) {
-        chance = chance100
-    }
     if (Defender.SkillLevel === 0) {
         Defender.SkillLevel = 1
         } 
     skillEmbed 
         .setAuthor({ name: Defender.Player.username || Defender.Name, iconURL: Defender.Image })
-    //Sergent Spanner
-    if (Defender.OfficerSkill === 'Indomitable') { //Awoken Skill 5
-        if (Defender.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
-            const Damage = (Defender.AttackPower * .1) * Defender.SkillLevel
-            Defender.AttackPower = Defender.AttackPower + Damage
-            console.log(`Defender Skill Unit Buff`, Damage)
-        }
+
+    if (Defender.OfficerSkill === 'Indomitable') {
+    console.log(`Indomitable`) 
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
         if (skillSuccess === 'Yes') {
             console.log(skillSuccess,chance)
             console.log(`Indomitable`) 
-            const Health = (Defender.BattleHealth * 0.3) * Defender.SkillLevel
+            const health = (Defender.BattleHealth * 0.3) * Defender.SkillLevel
             if (Defender.BattleHealth > 0) {
-                Defender.BattleHealth = Defender.BattleHealth + Health
-                console.log(`Health Increased`, Health)
+                Defender.BattleHealth = Defender.BattleHealth + health
+                console.log(`Health Increased`, health)
             } else return console.log(`Health Error`)
 
             skillEmbed
                 .setColor(Defender.SkillColor)
                 .setThumbnail(RedCross)
                     .addFields(
-                        { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Health** to **${Health.toLocaleString()}**` },
+                        { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
                     )   
         Defender.SkillUsed = 'Health'
         interaction.followUp({embeds: [skillEmbed]})
         return
         } 
                 }            
-//Angel of Light
-if (Defender.OfficerSkill === 'Caring Angel') { //Awoken Skill 5
-    if (Defender.UnitType = 'Infantry') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }   
+    
+if (Defender.OfficerSkill === 'Caring Angel') {
     if (Attacker.SkillUsed === 'Attack') {
         console.log(`Caring Angel`)   
-        const Health = Defender.SkillLevel * (Defender.BattleHealth * 0.35) 
-        Defender.BattleHealth = Defender.BattleHealth + Health
+        const health = (Defender.BattleHealth * 0.35) * Defender.SkillLevel
+        Defender.BattleHealth = Defender.BattleHealth + health
         if (Defender.BattleHealth > 0) {
-            console.log(`Health Increased`, Health)
+            console.log(`Health Increased`, health)
         } else return console.log(`Health Error`)
 
         skillEmbed
                 .setColor(Defender.SkillColor)
                 .setThumbnail(RedCross)
                 .addFields(
-                    { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Health** to **${Health.toLocaleString()}**` },
+                    { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Health** to **${health.toLocaleString()}**` },
                 )  
         interaction.followUp({embeds: [skillEmbed]})
         Defender.SkillUsed = 'Health'
         return
     } 
     }
-//War Machine
-if (Defender.OfficerSkill === `The Soldier's Soldier`) { //Awoken Skill 5
-    if (Defender.AttackType = 'Ground') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }    
+if (Defender.OfficerSkill === `The Soldier's Soldier`) {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
-        console.log(`The Soldier's Soldier`) 
-        const Power = Defender.SkillLevel * (Defender.AttackPower * 0.125) 
+        console.log(`The Soldier's Soldier`)  
+        const Power = (Defender.AttackPower * 0.125) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1229,18 +930,12 @@ if (Defender.OfficerSkill === `The Soldier's Soldier`) { //Awoken Skill 5
     return
     } 
 }        
-//Tip of The Spear 
-if (Defender.OfficerSkill === 'Undaunted') { //Awoken Skill 5
-    if (Defender.AttackType = 'Ground') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }    
+if (Defender.OfficerSkill === 'Undaunted') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Undaunted`)  
-        const Power = Defender.SkillLevel * (Defender.AttackPower * 0.5) 
+        const Power = (Defender.AttackPower * 0.5) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1255,16 +950,10 @@ if (Defender.OfficerSkill === 'Undaunted') { //Awoken Skill 5
     return
     } 
 }        
-//Valkrie
-if (Defender.OfficerSkill === 'Who Dares Wins') { //Awoken Skill 5
-    if (Defender.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }
+if (Defender.OfficerSkill === 'Who Dares Wins') {
     if (Defender.AttackType === 'Ground') {
         console.log(`Who Dares Wins`)   
-        const damage = Defender.SkillLevel * (Defender.BattleHealth * 0.2) 
+        const damage = (Defender.BattleHealth * 0.2) * Defender.SkillLevel
         if (Defender.BattleHealth > 0) {
             Defender.BattleHealth = Defender.BattleHealth - damage
             console.log(`Health Decreased`, damage)
@@ -1279,20 +968,13 @@ if (Defender.OfficerSkill === 'Who Dares Wins') { //Awoken Skill 5
         interaction.followUp({embeds: [skillEmbed]})
         Defender.SkillUsed = 'Health'
         return
-    }         
-}    
-//Lady Justice
-if (Defender.OfficerSkill === 'Guardian Angel') { // Awoken Skill 5
-    if (Defender.AttackType = 'Ground') {
-        console.log(`Defender Skill Unit Buff`)
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1)
-        Defender.AttackPower = Defender.AttackPower + Damage
-    }  
+    }         }        
+if (Defender.OfficerSkill === 'Guardian Angel') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Guardian Angel`)  
-        const Power = Defender.SkillLevel * (Defender.AttackPower * 0.2) 
+        const Power = (Defender.AttackPower * 0.2) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
 
         skillEmbed
@@ -1307,18 +989,11 @@ if (Defender.OfficerSkill === 'Guardian Angel') { // Awoken Skill 5
     return
     } 
 }        
-// Eye of Providence 
-if (Defender.OfficerSkill === 'Hand of Destruction') { // Awoken Skill 5 
-    if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-        
-    }
-    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    if (skillSuccess === 'Yes') {
-    console.log(skillSuccess,chance)
+if (Defender.OfficerSkill === 'Hand of Destruction') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Hand of Destruction`)
         Power = (Defender.AttackPower * 0.4) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1334,14 +1009,8 @@ if (Defender.OfficerSkill === 'Hand of Destruction') { // Awoken Skill 5
     return
 }
     } 
-}    
-// Percy    
-if (Defender.OfficerSkill === 'Frontline Fire') { // Awoken Skill 5
-    if (Defender.AttackType = 'Ground') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }  
+}        
+if (Defender.OfficerSkill === 'Frontline Fire') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
@@ -1361,57 +1030,34 @@ if (Defender.OfficerSkill === 'Frontline Fire') { // Awoken Skill 5
     return
     } 
 }        
-// White Wolf
 if (Defender.OfficerSkill === 'Vengeance') {
-    if (Defender.UnitType === 'Infantry') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }  
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
-        if (Defender.UnitType === 'Infantry') {
-            const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-            Defender.AttackPower = Defender.AttackPower + Damage
-            console.log(`Defender Unit Buff`, Damage)
-        }  
         console.log(skillSuccess,chance)
         console.log(`Vengeance`)            
         const Power = (Defender.AttackPower * 0.3) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
         if (Defender.UnitType === 'Infantry') {
             const Special = (Defender.AttackPower * 0.25) * Defender.SkillLevel
-            console.log(Special.toLocaleString())
-            skillEmbed
-                .addFields(
-                    { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Special.toLocaleString() || Power.toLocaleString()}**` },
-                ),   
-
             Defender.AttackPower = Defender.AttackPower + Special
         }
         skillEmbed
             .setColor(Defender.SkillColor)
             .setThumbnail(Boom)
             .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString() || Power.toLocaleString()}**` },
+                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Special.toLocaleString() || Power.toLocaleString()}**` },
             ),   
-    console.log(Power.toLocaleString())
+    console.log(Special.toLocaleString() || Power.toLocaleString())
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]})
     return
     } 
 }        
-// Antonina Shevchenko
-if (Defender.OfficerSkill === 'The Motherland') { // Awoken Skill 5
-    if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }  
-    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    if (skillSuccess === 'Yes') {
-    console.log(skillSuccess,chance)
+if (Defender.OfficerSkill === 'The Motherland') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`The Motherland`)
         const Power = (Defender.AttackPower * 0.5) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1429,13 +1075,7 @@ if (Defender.OfficerSkill === 'The Motherland') { // Awoken Skill 5
 }
     } 
 }        
-// Winter Huntsman
-if (Defender.OfficerSkill === 'Mine Detonator') { // Awoken Skill 5
-    if (Defender.AttackType === 'Ground') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }  
+if (Defender.OfficerSkill === 'Mine Detonator') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
@@ -1465,17 +1105,11 @@ if (Defender.OfficerSkill === 'Mine Detonator') { // Awoken Skill 5
     return
     } 
 }        
-// The Eruptor 
 if (Defender.OfficerSkill === 'Flamestorm') {
-    if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }  
-    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    if (skillSuccess === 'Yes') {
-    console.log(skillSuccess,chance)
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Flamestorm`)
         const Power = (Defender.AttackPower * 0.1) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1493,13 +1127,7 @@ if (Defender.OfficerSkill === 'Flamestorm') {
 }
     } 
 }        
-// Steel Fighter
-if (Defender.OfficerSkill === 'Inpenetrable') { // Awoken Skill 5 
-    if (Defender.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }
+if (Defender.OfficerSkill === 'Inpenetrable') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
@@ -1521,13 +1149,7 @@ if (Defender.OfficerSkill === 'Inpenetrable') { // Awoken Skill 5
     return
     }         
 }        
-// Iron Bastion 
-if (Defender.OfficerSkill === 'Breaching Charge') { // Awoken Skill 5 
-    if (Defender.UnitType === 'Infantry') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }  
+if (Defender.OfficerSkill === 'Breaching Charge') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
@@ -1558,17 +1180,11 @@ if (Defender.OfficerSkill === 'Breaching Charge') { // Awoken Skill 5
     return
     } 
 }        
-// Berserker Bear
-if (Defender.OfficerSkill === 'Flaming Meteors') { // Awoken Skill 5 
-        if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
-            const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-            Defender.AttackPower = Defender.AttackPower + Damage
-            console.log(`Defender Skill Unit Buff`, Damage)
-        }  
+if (Defender.OfficerSkill === 'Flaming Meteors') {
+    if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
         if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
-        if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
         console.log(`Flaming Meteors`)
         const Power = (Defender.AttackPower * 0.3) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1583,16 +1199,10 @@ if (Defender.OfficerSkill === 'Flaming Meteors') { // Awoken Skill 5
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]}) 
     return
-    }
+}
     } 
 }        
-// Guardian of Truth
-if (Defender.OfficerSkill === 'Master of War') { // Awoken Skill 5
-    if (Defender.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }
+if (Defender.OfficerSkill === 'Master of War') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
@@ -1612,13 +1222,7 @@ if (Defender.OfficerSkill === 'Master of War') { // Awoken Skill 5
     return
     } 
 }        
-// Death Adder
-if (Defender.OfficerSkill === 'Phantom Power') { // Awoken Skill 5
-    if (Defender.AttackType === 'Ground') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }  
+if (Defender.OfficerSkill === 'Phantom Power') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
@@ -1644,13 +1248,7 @@ if (Defender.OfficerSkill === 'Phantom Power') { // Awoken Skill 5
     return
     } 
 }        
-// Bloody Mary
-if (Defender.OfficerSkill === 'Blinding Flash') { // Awoken Skill 5 
-    if (Defender.AttackType === 'Ground') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }  
+if (Defender.OfficerSkill === 'Blinding Flash') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
@@ -1670,17 +1268,11 @@ if (Defender.OfficerSkill === 'Blinding Flash') { // Awoken Skill 5
     return
     } 
 }        
-// Saber of the Nation
 if (Defender.OfficerSkill === 'Rain of Blades') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }  
-    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    if (skillSuccess === 'Yes') {
-    console.log(skillSuccess,chance)
-    if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Rain of Blades`)
         const Power = (Defender.AttackPower * 0.1) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1698,17 +1290,11 @@ if (Defender.OfficerSkill === 'Rain of Blades') {
 }
     } 
 }        
-// Argent Flame
-if (Defender.OfficerSkill === 'Devastation') { // Awoken Skill 5 
+if (Defender.OfficerSkill === 'Devastation') {
     if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }
-    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    if (skillSuccess === 'Yes') {
-    console.log(skillSuccess,chance)
-    if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Devastation`)
         const Power = (Defender.AttackPower * 0.25) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1726,13 +1312,7 @@ if (Defender.OfficerSkill === 'Devastation') { // Awoken Skill 5
 }
     } 
 }        
-// Thorn Countess
-if (Defender.OfficerSkill === 'Beauty Worth Preserving') { // Awoken Skill 5
-    if (Defender.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }
+if (Defender.OfficerSkill === 'Beauty Worth Preserving') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
@@ -1756,13 +1336,7 @@ if (Defender.OfficerSkill === 'Beauty Worth Preserving') { // Awoken Skill 5
     return
     } 
 }        
-// Professor Pain
-if (Defender.OfficerSkill === 'Forlorn Hope') { // Awoken Skill 5
-    if (Defender.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }
+if (Defender.OfficerSkill === 'Forlorn Hope') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
@@ -1782,17 +1356,11 @@ if (Defender.OfficerSkill === 'Forlorn Hope') { // Awoken Skill 5
     return
     } 
 }        
-// Wings of Glory
-if (Defender.OfficerSkill === 'Sky Dancer') { // Awoken Skill 5
-    if (Defender.UnitType = 'Fighters') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }
-    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    console.log(skillSuccess)
-    if (skillSuccess === 'Yes') {
+if (Defender.OfficerSkill === 'Sky Dancer') {
     if (Defender.UnitType === 'Bombers' || 'Fighters'){
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        console.log(skillSuccess)
+        if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
         console.log(`Sky Dancer`)
         const Power = (Defender.AttackPower * 0.15) * Defender.SkillLevel
@@ -1811,13 +1379,7 @@ if (Defender.OfficerSkill === 'Sky Dancer') { // Awoken Skill 5
 }
     } 
 }        
-// Brisk Eagle
-if (Defender.OfficerSkill === 'Untouchable') { // Awoken Skill 5
-    if (Defender.UnitType = 'Fighters' || 'Bombers') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }
+if (Defender.OfficerSkill === 'Untouchable') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
@@ -1840,14 +1402,8 @@ if (Defender.OfficerSkill === 'Untouchable') { // Awoken Skill 5
     return
     } 
 }        
-// Heavens Savious
 if (Defender.OfficerSkill === 'Heavenly Rays') {
-    if (Defender.UnitType = 'Fighters') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }
-    if (Defender.UnitType === 'Fighters' && Attacker.UnitType === 'Fighters'){
+    if (Attacker.UnitType === 'Fighters' && Defender.UnitType === 'Fighters'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
         if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
@@ -1868,17 +1424,11 @@ if (Defender.OfficerSkill === 'Heavenly Rays') {
 }
     } 
 }        
-// Silver Comet
-if (Defender.OfficerSkill === 'Twin Fangs') { // Awoken Skill 5
-    if (Defender.UnitType = 'Fighters') {
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }
-    const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-    if (skillSuccess === 'Yes') {
-    console.log(skillSuccess,chance)
+if (Defender.OfficerSkill === 'Twin Fangs') {
     if (Defender.UnitType === 'Bombers' || 'Fighters'){
+        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
+        if (skillSuccess === 'Yes') {
+        console.log(skillSuccess,chance)
         console.log(`Twin Fangs`)            
         const Power = (Defender.AttackPower * 0.25) * Defender.SkillLevel
         Defender.AttackPower = Defender.AttackPower + Power
@@ -1896,13 +1446,7 @@ if (Defender.OfficerSkill === 'Twin Fangs') { // Awoken Skill 5
 }
     } 
 }        
-// The Witcher
-if (Defender.OfficerSkill === 'Night Evader') { // Awoken Skill 5
-    if (Defender.UnitType === 'Bombers' || 'Fighters'){
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    }  
+if (Defender.OfficerSkill === 'Night Evader') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
@@ -1922,13 +1466,7 @@ if (Defender.OfficerSkill === 'Night Evader') { // Awoken Skill 5
     return
     } 
 }        
-// Golden Pixie 
-if (Defender.OfficerSkill === 'Unleashed Justice') { // Awoken Skill 5 
-    if (Defender.UnitType === 'Bombers'){
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    } 
+if (Defender.OfficerSkill === 'Unleashed Justice') {
     if (Defender.UnitType === 'Bombers'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
         if (skillSuccess === 'Yes') {
@@ -1950,13 +1488,7 @@ if (Defender.OfficerSkill === 'Unleashed Justice') { // Awoken Skill 5
 }
     } 
 }        
-// El Cartro 
 if (Defender.OfficerSkill === 'Sticky Situation') {
-    if (Defender.UnitType === 'Bombers'){
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Unit Buff`, Damage)
-    } 
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     if (skillSuccess === 'Yes') {
         console.log(skillSuccess,chance)
@@ -1976,13 +1508,7 @@ if (Defender.OfficerSkill === 'Sticky Situation') {
     return
     } 
 }
-// Polar Phantom
-if (Defender.OfficerSkill === 'Desperate Counterattack') { // Awoken Skill 5
-    if (Defender.UnitType === 'Fighters'){
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    } 
+if (Defender.OfficerSkill === 'Desperate Counterattack') {
     const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
     console.log(skillSuccess)
     if (skillSuccess === 'Yes') {
@@ -2005,13 +1531,7 @@ if (Defender.OfficerSkill === 'Desperate Counterattack') { // Awoken Skill 5
 }
     } 
 }        
-// Rictus Reaper
-if (Defender.OfficerSkill === 'Last Gasp') { // Awoken Skill 5 
-    if (Defender.UnitType === 'Bombers'){
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    } 
+if (Defender.OfficerSkill === 'Last Gasp') {
     if (Defender.UnitType === 'Bombers'){
         const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
         if (skillSuccess === 'Yes') {
@@ -2030,87 +1550,8 @@ if (Defender.OfficerSkill === 'Last Gasp') { // Awoken Skill 5
     Defender.SkillUsed = 'Attack'
     interaction.followUp({embeds: [skillEmbed]}) 
     return
-}}}
-// Bladewing
-if (Defender.OfficerSkill === 'Falling Star') { // Awoken Skill 5 
-    if (Defender.UnitType === 'Fighters'){
-        const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-        Defender.AttackPower = Defender.AttackPower + Damage
-        console.log(`Defender Skill Unit Buff`, Damage)
-    } 
-    if (Defender.UnitType === 'Bombers' || 'Fighters'){
-        const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-        if (skillSuccess === 'Yes') {
-        console.log(skillSuccess,chance)
-        console.log(`Falling Star`)            
-        const Power = (Defender.AttackPower * 25) * Defender.SkillLevel
-        Defender.AttackPower = Defender.AttackPower + Power
-
-        skillEmbed
-            .setColor(Defender.SkillColor)
-            .setThumbnail(Boom)
-            .addFields(
-                { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases **${Defender.Player}** **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
-            ),   
-    console.log(Power.toLocaleString())
-    Defender.SkillUsed = 'Attack'
-    interaction.followUp({embeds: [skillEmbed]}) 
-    return
-}}}
-        // Vox Veritatis
-        if (Defender.OfficerSkill === 'Winning Mentality') { // Awoken Skill 5
-            if (Defender.AttackType = 'Ground') {
-                const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-                Defender.AttackPower = Defender.AttackPower + Damage
-                console.log(`Defender Skill Unit Buff`, Damage)
-            } 
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
-                console.log(`Winning Mentality`)            
-                const Health = Defender.SkillLevel * (Defender.BattleHealth * .30)
-                Defender.BattleHealth = Defender.BattleHealth + Health
-
-                skillEmbed
-                    .setColor(Defender.SkillColor)
-                    .setThumbnail(Boom)
-                    .addFields(
-                        { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Health** by **${Health.toLocaleString()}**` },
-                    ),   
-            console.log(Power.toLocaleString())
-            Attacker.SkillUsed = 'Attack'
-            interaction.followUp({embeds: [skillEmbed]}) 
-            return
-        }}
-        // Lady Liberte 
-        if (Defender.OfficerSkill === 'Art of War') {
-            if (Defender.AttackType === 'Howitzers' || 'AntiTankGuns'){
-                const Damage = Defender.SkillLevel * (Defender.AttackPower * .1) 
-                Defender.AttackPower = Defender.AttackPower + Damage
-                console.log(`Defender Skill Unit Buff`, Damage)
-            }
-            const skillSuccess = chance[Math.floor(Math.random() * chance.length)]
-            if (skillSuccess === 'Yes') {
-            console.log(skillSuccess,chance)
-            if (Defender.UnitType === 'Howitzers' || 'AntiTankGuns'){
-                console.log(`Art of War`)
-                const Power = Defender.SkillLevel * (Defender.AttackPower * 0.15) 
-                Defender.AttackPower = Defender.AttackPower + Power
-                const Health = Defender.SkillLevel * (Defender.BattleHealth * 0.15) 
-                Defender.BattleHealth = Defender.BattleHealth + Health
-
-                skillEmbed
-                    .setColor(Defender.SkillColor)
-                    .setThumbnail(Boom)
-                    .addFields(
-                        { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Attack** by **${Power.toLocaleString()}**` },
-                        { name: `${Defender.Officer}`, value: `used the **${Defender.OfficerSkill} Skill** & increases ${Defender.Player} **${Defender.Name}'s Health** by **${Health.toLocaleString()}**` },
-                    ),   
-                    console.log(Power.toLocaleString())
-                    console.log(Health.toLocaleString())
-                    Defender.SkillUsed = 'Attack'
-            interaction.followUp({embeds: [skillEmbed]}) 
-            return
-        }}}
-}}
-
+}
+} 
+}
+}
+}

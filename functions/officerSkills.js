@@ -24,7 +24,15 @@ module.exports = {
         if (Attacker.UnitCamp === 'MartyrsW') {
             Attacker.SkillColor = Colours.MartyrsW
         }
-
+        if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Vanguard') {
+            Attacker.SkillColor = Colours.VanguardBoost
+        }
+        if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Liberty') {
+            Attacker.SkillColor = Colours.LibertyBoost
+        }
+        if (Attacker.UnitCamp && Attacker.OfficerCamp === 'MartyrsW') {
+            Attacker.SkillColor = Colours.MartyrsWBoost
+        }
         let chance = chance0
         if (Attacker.SkillLevel === 0) {
             chance = chance0

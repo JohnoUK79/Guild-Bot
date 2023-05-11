@@ -53,9 +53,12 @@ module.exports = {
 		const guildIcon = interaction.member.guild.iconURL();
 		const guildName = interaction.member.guild.name
 		const Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
+		const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Economy[0].unit_camp}' AND Unit_type = '${Economy[0].unit_type}' AND Unit_Level = '${Economy[0].unit_level}'`)
         const image = Economy[0].unit_image || 'Guardian_of_the_Truth.png'
+		console.log(unitDetails)
+		console.log(image)
         const link = `http://phfamily.co.uk/img/${image}` 
-
+		console.log(link)
 		CampColour = Colours.Green
 		if (Economy[0].unit_camp === 'Vanguard') {
 			CampColour = Colours.Vanguard
@@ -90,14 +93,10 @@ module.exports = {
 		else if (interaction.options.getSubcommand() === 'deposit')
 		{
 			const amount = interaction.options.getInteger('dep_amount');
-			if (Economy[0].officer_level === 0) {
-				officerLevel = 1
-			} else officerLevel = Economy[0].officer_level
 			const wallet = Economy[0].war_coins
 			const bank = Economy[0].war_chest
 			const bankLevel = Economy[0].chest_level
-			const bankMax = (bankLevel * 10000) * (officerLevel / 10)
-			console.log(bankMax)
+			const bankMax = bankLevel * 10000
 
 			if (amount <= 0) {
 			embed

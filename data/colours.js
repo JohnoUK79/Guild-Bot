@@ -1,10 +1,12 @@
 const Colours = {
-    Vanguard:'#6c757d',
-    VanguardBoost: '#463f3a',
-    Liberty: '#0096c7',
-    LibertyBoost: '#03045e',
-    MartyrsW: '#d90429',
-    MartyrsWBoost: '#d00000',
-    Green: '#2b9348'
+    Vanguard:'#269900',
+    VanguardBoost: '#66ff33',
+    Liberty: '#000080',
+    LibertyBoost: '#0000ff',
+    MartyrsW: '#ff4d4d',
+    MartyrsWBoost: '#ff0000',
+    Green: '#66ff33',
+    Blue: '#0000ff',
+    Red: '#ff3300'
 }
 module.exports.Colours = Colours

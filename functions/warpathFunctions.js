@@ -10,7 +10,6 @@ module.exports = {
         const warbase = `http://phfamily.co.uk/img/war-base.jpg`
         const wallet = Level[0].war_coins
         const bank = Level[0].war_chest
-        const bankLevel = Level[0].chest_level
         const baseLevel = Level[0].base_level
         const cost = (baseLevel + 1) * 25000
         let CampColour = Colours.Green
@@ -82,13 +81,13 @@ module.exports = {
         const warchest = `http://phfamily.co.uk/img/war-chest.jpg`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (Level[0].unit_camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (Level[0].unit_camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         const upgradeBankEmbed = new EmbedBuilder();
         const upgradeButtons = new ActionRowBuilder()
@@ -199,13 +198,13 @@ module.exports = {
         const warbase = `http://phfamily.co.uk/img/war-base.jpg`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (Level[0].unit_camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (Level[0].unit_camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         const upgradeBaseEmbed = new EmbedBuilder();
         const upgradeButtons = new ActionRowBuilder()
@@ -316,13 +315,13 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (Level[0].unit_camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (Level[0].unit_camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         const upgradeOfficerEmbed = new EmbedBuilder();
         const upgradeButtons = new ActionRowBuilder()
@@ -440,13 +439,13 @@ module.exports = {
         const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (Level[0].unit_camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (Level[0].unit_camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         const wallet = Level[0].war_coins
         const bank = Level[0].war_chest
@@ -497,13 +496,13 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (Level[0].unit_camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (Level[0].unit_camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         const wallet = Level[0].war_coins
         const bank = Level[0].war_chest
@@ -590,13 +589,13 @@ module.exports = {
         const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (Level[0].unit_camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (Level[0].unit_camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         const wallet = Level[0].war_coins
         const bank = Level[0].war_chest
@@ -727,13 +726,13 @@ module.exports = {
         const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (Level[0].unit_camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (Level[0].unit_camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         const wallet = Level[0].war_coins
         const bank = Level[0].war_chest
@@ -855,13 +854,13 @@ module.exports = {
         const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (Level[0].unit_camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (Level[0].unit_camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         const selectUnitEmbed = new EmbedBuilder();
         const selectUnitButtons = new ActionRowBuilder()
@@ -906,13 +905,13 @@ module.exports = {
         const camp = Level[0].unit_camp
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (Level[0].unit_camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (Level[0].unit_camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         const upgradeUnitEmbed = new EmbedBuilder();
         const upgradeButtons = new ActionRowBuilder()
@@ -1088,13 +1087,13 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (Level[0].unit_camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (Level[0].unit_camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         const profileEmbed = new EmbedBuilder();
         const profileButtons = new ActionRowBuilder()
@@ -1174,13 +1173,13 @@ module.exports = {
         const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (Level[0].unit_camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (Level[0].unit_camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         const prestige = Level[0].prestige
         const newPrestige = prestige + 1
@@ -1347,13 +1346,13 @@ module.exports = {
         console.log(`Updated Unit:${updateUnit.info}`)
         let CampColour = Colours.Green
         if (selectedUnit[0].camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (selectedUnit[0].camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (selectedUnit[0].camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         const selectUnitMenuButtons = new ActionRowBuilder()
         .addComponents(
@@ -1458,13 +1457,13 @@ module.exports = {
         const updateOfficer = await sql.Execute(`UPDATE levels SET officer_name = '${selectedOfficer[0].Officer_Name}', officer_level = '${selectedOfficer[0].Officer_Level}', skill_level = '${selectedOfficer[0].Skill_Level}' WHERE discord_id = '${interaction.member.id}'`)
         let CampColour = Colours.Green
         if (selectedOfficer[0].Unit_Camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (selectedOfficer[0].Unit_Camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (selectedOfficer[0].Unit_Camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         console.log(`Officer Selected: ${updateOfficer.info}`)
         const selectOfficerMenuButtons = new ActionRowBuilder()
@@ -1865,13 +1864,13 @@ module.exports = {
         const link = `http://phfamily.co.uk/img/${image}`  
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
-            CampColour = Colours.Vanguard
+            CampColour = Colours.VanguardBoost
         }
         if (Level[0].unit_camp === 'Liberty') {
-            CampColour = Colours.Liberty
+            CampColour = Colours.LibertyBoost
         }
         if (Level[0].unit_camp === 'MartyrsW') {
-            CampColour = Colours.MartyrsW
+            CampColour = Colours.MartyrsWBoost
         }
         const skillUpgradeEmbed = new EmbedBuilder();
         const skillUpgradeButtons = new ActionRowBuilder()

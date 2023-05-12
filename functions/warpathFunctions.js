@@ -1199,7 +1199,7 @@ module.exports = {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
 
-        newUnitSelection = async function (prestige) {
+        newUnitSelection = async function (prestige) { // Starter is Medium 
         if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters'
         if (prestige === 1) return newUnitLevel = '4.0', newUnitType = 'Infantry'
         if (prestige === 2) return newUnitLevel = '5.0', newUnitType = 'SuperHeavy'

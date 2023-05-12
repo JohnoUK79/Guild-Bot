@@ -1063,7 +1063,15 @@ module.exports = {
     if (Defender.UnitCamp === 'MartyrsW') {
         Defender.SkillColor = Colours.MartyrsW
     }
-
+    if (Defender.UnitCamp && Defender.OfficerCamp === 'Vanguard') {
+        Defender.SkillColor = Colours.VanguardBoost
+    }
+    if (Defender.UnitCamp && Defender.OfficerCamp === 'Liberty') {
+        Defender.SkillColor = Colours.LibertyBoost
+    }
+    if (Defender.UnitCamp && Defender.OfficerCamp === 'MartyrsW') {
+        Defender.SkillColor = Colours.MartyrsWBoost
+    }
     chance = chance0
     if (Defender.SkillLevel === 0) {
         chance = chance0

@@ -12,7 +12,6 @@
     "@discord-player/extractor": "^4.1.2",
     "@discordjs/voice": "^0.13.0",
     "@google-cloud/translate": "^7.0.5",
-    "canvas": "^2.11.2",
     "discord-player": "^6.1.1",
     "discord-rpc": "^4.0.1",
     "discord.js": "^14.11.0",

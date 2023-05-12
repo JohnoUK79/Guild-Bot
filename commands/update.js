@@ -1,7 +1,6 @@
 const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder , AttachmentBuilder} = require('discord.js');
 const sql = require("../config/Database");
-//const Canvas = require('@napi-rs/canvas');
-
+const Canvas = require('canvas')
 module.exports = {
     data: new SlashCommandBuilder()
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
@@ -41,15 +40,14 @@ module.exports = {
         //     }
         // }
 
-        const canvas = Canvas.createCanvas(250, 250);
-		const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage('./img/GeneralDeath.png');
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'GeneralDeath.png' });
+const canvas = Canvas.createCanvas(250, 250);
+const ctx = canvas.getContext('2d')
+const background = await Canvas.loadImage('./img/GeneralDeath.png')
+ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+const attachment = new AttachmentBuilder(canvas.toBuffer(), 'welcome-image.png')
 
 
-
-            await interaction.reply({
+        await interaction.reply({
             ephemeral: true,
             embeds: [updateEmbed],
             files: [attachment]

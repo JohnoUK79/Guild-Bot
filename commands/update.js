@@ -41,14 +41,14 @@ module.exports = {
         //     }
         // }
 
-        const canvas = Canvas.createCanvas(1200, 600);
-		const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage('./img/GeneralDeath.png');
-        // This uses the canvas dimensions to stretch the image onto the entire canvas
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+const canvas = Canvas.createCanvas(1200, 600);
+const context = canvas.getContext('2d');
+const background = await Canvas.loadImage('./img/LibertyTankHunters.jpg');
+// This uses the canvas dimensions to stretch the image onto the entire canvas
+context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
-        // Use the helpful Attachment class structure to process the file for you
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'GeneralDeath.png' });
+// Use the helpful Attachment class structure to process the file for you
+const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'LibertyTankHunters.jpg' });
 
 
 

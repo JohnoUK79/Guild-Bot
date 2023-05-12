@@ -1,6 +1,6 @@
 const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder , AttachmentBuilder} = require('discord.js');
 const sql = require("../config/Database");
-//const Canvas = require('@napi-rs/canvas');
+const Canvas = require('@napi-rs/canvas');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -41,13 +41,10 @@ module.exports = {
         //     }
         // }
 
-        const canvas = Canvas.createCanvas(1200, 600);
+        const canvas = Canvas.createCanvas(250, 250);
 		const context = canvas.getContext('2d');
         const background = await Canvas.loadImage('./img/GeneralDeath.png');
-        // This uses the canvas dimensions to stretch the image onto the entire canvas
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
-
-        // Use the helpful Attachment class structure to process the file for you
         const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'GeneralDeath.png' });
 
 

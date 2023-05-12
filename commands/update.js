@@ -1,5 +1,6 @@
 const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder , AttachmentBuilder} = require('discord.js');
 const sql = require("../config/Database");
+const Canvas = require("discord-canvas")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -39,7 +40,28 @@ module.exports = {
         //         console.log(guildID);
         //     }
         // }
-
+        let image = await new Canvas.RankCard()
+            .setAddon("xp", false)
+            .setAddon("rank", false)
+            .setAvatar(interaction.member.avatarURL)
+            .setLevel(7)
+            .setReputation(450)
+            .setRankName("professional")
+            .setUsername(interaction.member)
+            .setBadge(1, "gold")
+            .setBadge(2, "gold")
+            .setBadge(3, "diamond")
+            .setBadge(4, "diamond")
+            .setBadge(5, "silver")
+            .setBadge(6, "silver")
+            .setBadge(7, "bronze")
+            .setBadge(8, "bronze")
+            .setBadge(9, "diamond")
+            .setBackground("http://www.phfamily.co.uk/img/GeneralDeath.png")
+            .toAttachment();
+        
+        const attachment = new AttachmentBuilder(image.toBuffer(), "rank-card.png");
+        
         await interaction.reply({
             ephemeral: true,
             embeds: [updateEmbed],

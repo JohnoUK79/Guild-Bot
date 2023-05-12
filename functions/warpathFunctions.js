@@ -1,22 +1,12 @@
 const sql = require("../config/Database");
 const { GUILD_ID } = require('../config.json')
 const { Colours } = require('../data/colours')
-const Canvas = require('@napi-rs/canvas');
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, AttachmentBuilder } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, Collection, embedLength } = require('discord.js');
 module.exports = {
     baseUpgrade: async function (interaction) {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage('./img/war-base.jpg');
-        // This uses the canvas dimensions to stretch the image onto the entire canvas
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        // Use the helpful Attachment class structure to process the file for you
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'war-base.jpg' });
-
         const warbase = `http://phfamily.co.uk/img/war-base.jpg`
         const wallet = Level[0].war_coins
         const bank = Level[0].war_chest
@@ -74,6 +64,7 @@ module.exports = {
         upgradeEmbed
             .setColor(CampColour)
             .setThumbnail(warbase)
+            .setImage(warbase)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
             .addFields(
@@ -83,18 +74,11 @@ module.exports = {
                 { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-        return interaction.update({ embeds: [upgradeEmbed], components: [upgradeBase], files: [attachment] })
+        return interaction.update({ embeds: [upgradeEmbed], components: [upgradeBase] })
     },
     buyBank: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const warchest = `http://phfamily.co.uk/img/war-chest.jpg`
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage('./img/war-chest.jpg');
-        // This uses the canvas dimensions to stretch the image onto the entire canvas
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        // Use the helpful Attachment class structure to process the file for you
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'war-chest.jpg' });
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
@@ -156,6 +140,7 @@ module.exports = {
                 upgradeBankEmbed
                     .setColor(CampColour)
                     .setThumbnail(warchest)
+                    .setImage(warchest)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **War-Base** for this upgrade.`)
@@ -167,7 +152,7 @@ module.exports = {
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-            return interaction.update({ embeds: [upgradeBankEmbed], components: [upgradeButtons], files: [attachment] })
+            return interaction.update({ embeds: [upgradeBankEmbed], components: [upgradeButtons] })
         }
         if (cost > wallet) {
             console.log(`No Money`),
@@ -175,6 +160,7 @@ module.exports = {
             upgradeBankEmbed
                 .setColor(CampColour)
                 .setThumbnail(warchest)
+                .setImage(warchest)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins short**!\nTry withdrawing from your **War-Chest**!`)
@@ -186,13 +172,14 @@ module.exports = {
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-            return interaction.update({ embeds: [upgradeBankEmbed], components: [upgradeBankButtons], files: [attachment] })
+            return interaction.update({ embeds: [upgradeBankEmbed], components: [upgradeBankButtons] })
         }
         const newWallet = wallet - cost
         const newBank = bankLevel + 1
         upgradeBankEmbed
             .setColor(CampColour)
             .setThumbnail(warchest)
+            .setImage(warchest)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
             .setDescription(`**${interaction.member}, War-Chest Upgrade Successful**`)
@@ -204,16 +191,11 @@ module.exports = {
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
         const bankUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, chest_level = '${newBank}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Bank: ${bankUpgrade.info}`)
-        return interaction.update({ embeds: [upgradeBankEmbed], components: [upgradeButtons], files: [attachment] })
+        return interaction.update({ embeds: [upgradeBankEmbed], components: [upgradeButtons] })
     },
     buyBase: async function (interaction) {
-        const warbase = `http://phfamily.co.uk/img/war-base.jpg`
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage('./img/war-base.jpg');
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'war-base.jpg' });
+        const warbase = `http://phfamily.co.uk/img/war-base.jpg`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
@@ -275,6 +257,7 @@ module.exports = {
                 upgradeBaseEmbed
                     .setColor(CampColour)
                     .setThumbnail(warbase)
+                    .setImage(warbase)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **War-Chest** for this upgrade.`)
@@ -285,7 +268,7 @@ module.exports = {
                         { name: `Bank Level:`, value: `${bankLevel}`, inline: true },
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [upgradeBaseEmbed], components: [upgradeButtons], files: [attachment] })
+            return interaction.update({ embeds: [upgradeBaseEmbed], components: [upgradeButtons] })
         }
 
 
@@ -295,6 +278,7 @@ module.exports = {
             upgradeBaseEmbed
                 .setColor(CampColour)
                 .setThumbnail(warbase)
+                .setImage(warbase)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins short**!\nTry withdrawing from your **War-Chest**!`)
@@ -305,13 +289,14 @@ module.exports = {
                     { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [upgradeBaseEmbed], components: [upgradeBaseButtons], files: [attachment] })
+            return interaction.update({ embeds: [upgradeBaseEmbed], components: [upgradeBaseButtons] })
         }
         const newWallet = wallet - cost
         const newBase = baseLevel + 1
         upgradeBaseEmbed
             .setColor(CampColour)
             .setThumbnail(warbase)
+            .setImage(warbase)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Base Upgrade Successful**`)
             .addFields(
@@ -322,18 +307,12 @@ module.exports = {
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
         const baseUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, base_level = '${newBase}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Base ${baseUpgrade.info}`)
-        return interaction.update({ embeds: [upgradeBaseEmbed], components: [upgradeButtons], files: [attachment] })
+        return interaction.update({ embeds: [upgradeBaseEmbed], components: [upgradeButtons] })
 
     },
     buyOfficer: async function (interaction) {
         const GOT = `http://phfamily.co.uk/img/GeneralDeath.png`
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage('./img/GeneralDeath.png');
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'GeneralDeath.png' });
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
@@ -396,6 +375,7 @@ module.exports = {
                 upgradeOfficerEmbed
                     .setColor(CampColour)
                     .setThumbnail(GOT)
+                    .setImage(GOT)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **War-Base** for this upgrade.`)
@@ -405,7 +385,7 @@ module.exports = {
                         { name: `Base Level:`, value: `${baseLevel}`, inline: true },
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons], files: [attachment] })
+            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons] })
         }
 
 
@@ -415,6 +395,7 @@ module.exports = {
             upgradeOfficerEmbed
                 .setColor(CampColour)
                 .setThumbnail(GOT)
+                .setImage(GOT)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
@@ -425,12 +406,13 @@ module.exports = {
                     { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeOfficerButtons], files: [attachment] })
+            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeOfficerButtons] })
         }
         const newWallet = wallet - cost
         const newOfficer = officerLevel + 1
         upgradeOfficerEmbed
             .setColor(CampColour)
+            .setImage(GOT)
             .setThumbnail(GOT)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Officer Upgrade Successful**`)
@@ -446,7 +428,7 @@ module.exports = {
             console.log(`Update Player Officer: ${playerOfficerUpgrade.info}`)
             console.log(`Officer Upgrade: ${officerUpgrade.info}`)
 
-        return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons], files: [attachment] })
+        return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons] })
 
     },
     cancel: async function (interaction) {
@@ -454,13 +436,6 @@ module.exports = {
         const guildName = interaction.member.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
-
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
-
         const link = `http://phfamily.co.uk/img/${image}`
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
@@ -502,6 +477,7 @@ module.exports = {
         upgradeEmbed
             .setColor(CampColour)
             .setThumbnail(link)
+            .setImage(link)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
             .setDescription(`**${interaction.member}, What would you like to upgrade**?`)
@@ -510,17 +486,12 @@ module.exports = {
                 { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-        return interaction.update({ embeds: [upgradeEmbed], components: [upgradeButtons], files: [attachment] })
+        return interaction.update({ embeds: [upgradeEmbed], components: [upgradeButtons] })
 
     },
     chestUpgrade: async function (interaction) {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.guild.name
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage('./img/war-chest.jpg');
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'war-chest.jpg' });
         const warchest = `http://phfamily.co.uk/img/war-chest.jpg`
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         let CampColour = Colours.Green
@@ -559,6 +530,7 @@ module.exports = {
         upgradeChestEmbed
             .setColor(CampColour)
             .setThumbnail(warchest)
+            .setImage(warchest)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
             .setDescription(`**${interaction.member}, Confirm the upgrade your War-Chest**?`)
@@ -570,17 +542,11 @@ module.exports = {
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-        return interaction.update({ embeds: [upgradeChestEmbed], components: [upgradeChestButtons], files: [attachment] })
+        return interaction.update({ embeds: [upgradeChestEmbed], components: [upgradeChestButtons] })
     },
     officerSelect: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
-        const warchest = `http://phfamily.co.uk/img/war-chest.jpg`
         const link = `http://phfamily.co.uk/img/${image}`
         const selectOfficerEmbed = new EmbedBuilder();
         const selectOfficerButtons = new ActionRowBuilder()
@@ -597,6 +563,7 @@ module.exports = {
         selectOfficerEmbed
             .setColor(CampColour)
             .setThumbnail(link)
+            .setImage(link)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Officer Selection Successful**`)
             .addFields(
@@ -610,7 +577,7 @@ module.exports = {
         const updateOfficer = await sql.Execute(`UPDATE levels SET officer_name	= '${officerSelection.Officer_Name}', officer_level = '1' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Add Officer: ${addOfficer.info}`)
         console.log(`Officer Select: ${updateOfficer.info}`)
-        return interaction.update({ embeds: [selectOfficerEmbed], components: [selectOfficerButtons], files: [attachment] })
+        return interaction.update({ embeds: [selectOfficerEmbed], components: [selectOfficerButtons] })
 
     },
     officerUpgrade: async function (interaction) {
@@ -620,11 +587,6 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
         const link = `http://phfamily.co.uk/img/${image}`
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
@@ -707,6 +669,7 @@ module.exports = {
             upgradeOfficerEmbed
                 .setColor(CampColour)
                 .setThumbnail(link)
+                .setImage(link)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You need to upgrade your **Base** to Select your **Officer**?`)
@@ -716,7 +679,7 @@ module.exports = {
                     { name: `Base Level:`, value: `${baseLevel}`, inline: true },
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons], files: [attachment] })
+            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons] })
         }
         const officer = Level[0].officer_name
 
@@ -725,6 +688,7 @@ module.exports = {
             upgradeOfficerEmbed
                 .setColor(CampColour)
                 .setThumbnail(link)
+                .setImage(link)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`**${interaction.member}**, First you need to select your **Officer**!`)
@@ -733,12 +697,13 @@ module.exports = {
                     { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [chooseOfficerButtons], files: [attachment] })
+            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [chooseOfficerButtons] })
 
         } else
             upgradeOfficerEmbed
                 .setColor(CampColour)
                 .setThumbnail(link)
+                .setImage(link)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`**${interaction.member}, Confirm the upgrade your Officer**?`)
@@ -750,7 +715,7 @@ module.exports = {
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-        return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeOfficerButtons], files: [attachment] })
+        return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeOfficerButtons] })
     },
     unitUpgrade: async function (interaction) {
         const upgradeUnitEmbed = new EmbedBuilder();
@@ -759,11 +724,6 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
         const link = `http://phfamily.co.uk/img/${image}`
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
@@ -840,6 +800,7 @@ module.exports = {
             upgradeUnitEmbed
                 .setColor(CampColour)
                 .setThumbnail(link)
+                .setImage(link)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You need to upgrade your **Officer** to Select your **Unit**?`)
@@ -850,12 +811,13 @@ module.exports = {
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-            return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeButtons], files: [attachment] })
+            return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeButtons] })
         } else
             if (unitLevel === '0.0') {
 
                 upgradeUnitEmbed
                     .setColor(CampColour)
+                    .setImage(link)
                     .setThumbnail(link)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
@@ -866,11 +828,12 @@ module.exports = {
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-                return interaction.update({ embeds: [upgradeUnitEmbed], components: [chooseUnitButtons], files: [attachment] })
+                return interaction.update({ embeds: [upgradeUnitEmbed], components: [chooseUnitButtons] })
 
             } else
                 upgradeUnitEmbed
                     .setColor(CampColour)
+                    .setImage(link)
                     .setThumbnail(link)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
@@ -882,18 +845,13 @@ module.exports = {
                         { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-        return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeUnitButtons], files: [attachment] })
+        return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeUnitButtons] })
     },
     unitSelect: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
         const link = `http://phfamily.co.uk/img/${image}`
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
@@ -919,6 +877,7 @@ module.exports = {
 
         selectUnitEmbed
             .setColor(CampColour)
+            .setImage(link)
             .setThumbnail(link)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Unit Selection Successful**`)
@@ -936,18 +895,13 @@ module.exports = {
         console.log(`Save Unit:${saveUnit.info}`)
         const updateOfficer = await sql.Execute(`UPDATE levels SET unit_camp = '${unitSelection.Camp}', unit_type = '${unitSelection.Unit_Type}', unit_level = '${unitSelection.Unit_Level}', unit_image = '${unitSelection.Image}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Update Officer:${updateOfficer.info}`)
-        return interaction.update({ embeds: [selectUnitEmbed], components: [selectUnitButtons], files: [attachment] })
+        return interaction.update({ embeds: [selectUnitEmbed], components: [selectUnitButtons] })
     },
     buyUnit: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = unitDetails[0].Image || 'GeneralDeath.png'
         const link = `http://phfamily.co.uk/img/${image}`
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
         const camp = Level[0].unit_camp
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
@@ -1037,6 +991,7 @@ module.exports = {
 
                 upgradeUnitEmbed
                     .setColor(CampColour)
+                    .setImage(link)
                     .setThumbnail(link)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
@@ -1048,13 +1003,14 @@ module.exports = {
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-            return interaction.update({ embeds: [upgradeUnitEmbed], components: [newUnitButtons], files: [attachment] })
+            return interaction.update({ embeds: [upgradeUnitEmbed], components: [newUnitButtons] })
         }
 
         if (unitLevel > officerLevel) {
             console.log(`Officer Upgrade Needed`),
                 upgradeUnitEmbed
                     .setColor(CampColour)
+                    .setImage(link)
                     .setThumbnail(link)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
@@ -1067,7 +1023,7 @@ module.exports = {
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-            return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeButtons], files: [attachment] })
+            return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeButtons] })
         } else
 
 
@@ -1076,6 +1032,7 @@ module.exports = {
                     difference = cost - wallet
                 upgradeUnitEmbed
                     .setColor(CampColour)
+                    .setImage(link)
                     .setThumbnail(link)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
@@ -1087,7 +1044,7 @@ module.exports = {
                         { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-                return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeUnitButtons], files: [attachment] })
+                return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeUnitButtons] })
             }
         const newWallet = (wallet - cost)
         const newUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${camp}' AND Unit_Type = '${unitType}' AND Unit_Level > '${unitLevel}'`)
@@ -1104,6 +1061,7 @@ module.exports = {
 
         upgradeUnitEmbed
             .setColor(CampColour)
+            .setImage(link)
             .setThumbnail(link)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Unit Upgrade Successful**`)
@@ -1123,7 +1081,7 @@ module.exports = {
         console.log(`Levels Unit Update${unitUpgrade.info}`)
         const updateUnit = await sql.Execute(`UPDATE playerunits SET emoji = '${newEmoji}', unit_level = '${newLevel}', unit_id = '${newID}' WHERE discord_id = '${interaction.member.id}' AND camp = '${Level[0].unit_camp}' AND unit_type = '${Level[0].unit_type}'`)
         console.log(`Player Unit Update ${updateUnit.info}`)
-        return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeButtons], files: [attachment] })
+        return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeButtons] })
     },
     profile: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
@@ -1176,15 +1134,11 @@ module.exports = {
 
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
         const link = `http://phfamily.co.uk/img/${image}`
-        const triggerRate = skillLevel * 5
+        const triggerRate = 5 + (skillLevel * 5)
         
         profileEmbed
+            .setImage(link)
             .setThumbnail(link)
             .setColor(CampColour)
             .setTimestamp()
@@ -1209,7 +1163,7 @@ module.exports = {
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
 
-        return interaction.update({ empheral: true, embeds: [profileEmbed], components: [profileButtons], files: [attachment] })
+        return interaction.update({ empheral: true, embeds: [profileEmbed], components: [profileButtons] })
 
     },
     newUnit: async function (interaction) {
@@ -1217,11 +1171,6 @@ module.exports = {
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
         const link = `http://phfamily.co.uk/img/${image}`
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
@@ -1271,6 +1220,7 @@ module.exports = {
             console.log(`Officer Upgrade Required`)
             newUnitEmbed
                 .setColor(CampColour)
+                .setImage(link)
                 .setThumbnail(link)
                 .setTimestamp()
                 .addFields(
@@ -1278,7 +1228,7 @@ module.exports = {
                 )  
                 .setDescription(`**${interaction.member}, Officer Upgrade Required**`)
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons], files: [attachment] })
+            return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons] })
         } else console.log(`No Officer Upgrade Required`)
 
         const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '${newUnitLevel}' AND Unit_Type LIKE '%${newUnitType}%'`)
@@ -1286,6 +1236,7 @@ module.exports = {
 
         newUnitEmbed
             .setColor(CampColour)
+            .setImage(link)
             .setThumbnail(link)
             .setTimestamp()
             .setDescription(`**${interaction.member}, New Unit Selection Successful**`)
@@ -1307,7 +1258,7 @@ module.exports = {
         console.log(`Update New Unit:${updateNewUnit.info}`)
         console.log(`Save New Unit:${saveNewUnit.info}`)
 
-        return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons], files: [attachment] })
+        return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons] })
     },
     attackSelection: async function (Attacker, Defender) {
         if (Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier, console.log(`Attacker Unit Buff:`, Attacker.Multiplier)
@@ -1338,11 +1289,6 @@ module.exports = {
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
         const link = `http://phfamily.co.uk/img/${image}`
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
         const playerUnits = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}'`)
         const unitChoices = [];
         for (const entry in playerUnits) {
@@ -1378,13 +1324,13 @@ module.exports = {
             )
         const selectUnitEmbed = new EmbedBuilder()
             .setColor(Colours.Green)
+            .setImage(link)
             .setThumbnail(link)
             .setTimestamp()
             .setTitle(`Select Your Unit!`)
         interaction.update({
             embeds: [selectUnitEmbed],
-            components: [unitMenu],
-            files: [attachment]
+            components: [unitMenu]
         })
     },
     selectunitmenu: async function (interaction) {
@@ -1395,11 +1341,6 @@ module.exports = {
         const firepower = newUnitSelect[0].Firepower * (playerProfile[0].officer_level / 10)
         const HP = newUnitSelect[0].HP * playerProfile[0].base_level * 10
         const unitImage = `${newUnitSelect[0].Image}`
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${unitImage}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${unitImage}` });
         const link = 'http://phfamily.co.uk/img/' + unitImage
         const updateUnit = await sql.Execute(`UPDATE levels SET unit_level = '${selectedUnit[0].unit_level}', unit_camp = '${selectedUnit[0].camp}', unit_type = '${selectedUnit[0].unit_type}', unit_image = '${unitImage}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Updated Unit:${updateUnit.info}`)
@@ -1432,6 +1373,7 @@ module.exports = {
         const selectedUnitEmbed = new EmbedBuilder()
             .setTitle(`${selected} chosen`)
             .setColor(CampColour)
+            .setImage(link)
             .setThumbnail(link)
             .setTimestamp()
             .addFields(
@@ -1446,8 +1388,7 @@ module.exports = {
         
         interaction.update({
             embeds: [selectedUnitEmbed],
-            components: [selectUnitMenuButtons],
-            files: [attachment]
+            components: [selectUnitMenuButtons]
         })
 
     },
@@ -1455,11 +1396,6 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
         const link = `http://phfamily.co.uk/img/${image}`
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
         const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
         const officerChoices = [];
         for (const entry in playerOfficers) {
@@ -1502,26 +1438,22 @@ module.exports = {
             )
         const selectOfficerEmbed = new EmbedBuilder()
             .setColor(CampColour)
+            .setImage(link)
             .setThumbnail(link)
             .setTimestamp()
             .setTitle(`Select Your Officer!`)
         interaction.update({
             embeds: [selectOfficerEmbed],
-            components: [officerMenu],
-            files: [attachment]
+            components: [officerMenu]
         })
     },
     selectofficermenu: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
         const link = `http://phfamily.co.uk/img/${image}`
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
         const selected = interaction.values[0]
         const selectedOfficer = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' AND Officer_Name = '${selected}'`)
+        const officerImage = `http://phfamily.co.uk/img/${selectedOfficer[0].Image}` || link
         const updateOfficer = await sql.Execute(`UPDATE levels SET officer_name = '${selectedOfficer[0].Officer_Name}', officer_level = '${selectedOfficer[0].Officer_Level}', skill_level = '${selectedOfficer[0].Skill_Level}' WHERE discord_id = '${interaction.member.id}'`)
         let CampColour = Colours.Green
         if (selectedOfficer[0].Unit_Camp === 'Vanguard') {
@@ -1552,6 +1484,7 @@ module.exports = {
         const selectedOfficerEmbed = new EmbedBuilder()
             .setTitle(`${selected} chosen`)
             .setColor(CampColour)
+            .setImage(officerImage)
             .setTimestamp()
             .addFields(
                 { name: `Officer Name:`, value: `${selectedOfficer[0].Officer_Name}`, inline: true },
@@ -1564,8 +1497,7 @@ module.exports = {
         
         interaction.update({
             embeds: [selectedOfficerEmbed],
-            components: [selectOfficerMenuButtons],
-            files: [attachment]
+            components: [selectOfficerMenuButtons]
         })
 
     },
@@ -1574,11 +1506,6 @@ module.exports = {
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
         const link = `http://phfamily.co.uk/img/${image}`
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
         const campaignButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
@@ -1770,6 +1697,7 @@ module.exports = {
 
         const campaignEmbed = new EmbedBuilder()
             .setColor(Colours.Green)
+            .setImage(link)
             .setThumbnail(link)
             .setTimestamp()
             .setDescription(`Pick your Enemy`)
@@ -1808,8 +1736,7 @@ module.exports = {
     }
         interaction.update({
             embeds: [campaignEmbed],
-            components: [buttons, menu],
-            files: [attachment]
+            components: [buttons, menu]
         })
     },
     challenge: async function (interaction) {
@@ -1839,11 +1766,6 @@ module.exports = {
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
         const link = `http://phfamily.co.uk/img/${image}`      
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
         const newOfficerEmbed = new EmbedBuilder();
         const newOfficerButtons = new ActionRowBuilder()
             .addComponents(
@@ -1863,6 +1785,7 @@ module.exports = {
             console.log(`Officer Upgrade Required`)
             newOfficerEmbed
                 .setColor('#ff5b05')
+                .setImage(link)
                 .setThumbnail(link)
                 .setTimestamp()
                 .addFields(
@@ -1870,13 +1793,14 @@ module.exports = {
                 )  
                 .setDescription(`**${interaction.member}, Officer Upgrade Required**`)
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons], files: [attachment] })
+            return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons] })
         } else console.log(`No Officer Upgrade Required`)
 
         const officerSelection = Officers[Math.floor(Math.random() * Officers.length)]
 
         newOfficerEmbed
             .setColor('#ff5b05')
+            .setImage(link)
             .setThumbnail(link)
             .setTimestamp()
             .setDescription(`**${interaction.member}, New Officer Selection Successful**`)
@@ -1894,7 +1818,7 @@ module.exports = {
         console.log(`Update New Officer:${updateNewOfficer.info}`)
         console.log(`Save New Officer:${saveNewOfficer.info}`)
 
-        return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons], files: [attachment] })
+        return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons] })
     },
     campaignSelection: async function (campaign) { //Medium is Starter Troop
         //if (campaign === 0) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 1500, campaignBaseLevel = 1500, skillLevel = 15
@@ -1938,11 +1862,6 @@ module.exports = {
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
         const link = `http://phfamily.co.uk/img/${image}`  
-        const canvas = Canvas.createCanvas(1200, 600);
-        const context = canvas.getContext('2d');
-        const background = await Canvas.loadImage(`./img/${image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: `${image}` });
         let CampColour = Colours.Green
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
@@ -1983,6 +1902,7 @@ module.exports = {
             console.log(`Officer Upgrade Needed`),
             skillUpgradeEmbed
                     .setColor(CampColour)
+                    .setImage(link)
                     .setThumbnail(link)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
@@ -1995,7 +1915,7 @@ module.exports = {
 
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons], files: [attachment] })
+            return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons] })
         }
 
 
@@ -2004,6 +1924,7 @@ module.exports = {
                 difference = cost - wallet
             skillUpgradeEmbed
                 .setColor(CampColour)
+                .setImage(link)
                 .setThumbnail(link)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
@@ -2016,12 +1937,13 @@ module.exports = {
                     { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons], files: [attachment] })
+            return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons] })
         }
         const newWallet = wallet - cost
         const newSkillLevel = skillLevel + 1
         skillUpgradeEmbed
             .setColor(CampColour)
+            .setImage(link)
             .setThumbnail(link)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Officer Skill Upgrade Successful**`)
@@ -2037,7 +1959,7 @@ module.exports = {
             console.log(`Update Player Officer: ${playerOfficerUpgrade.info}`)
             console.log(`Officer Upgrade: ${officerUpgrade.info}`)
 
-        return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons], files: attachment })
+        return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons] })
 
     },
 

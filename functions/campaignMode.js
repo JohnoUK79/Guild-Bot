@@ -247,7 +247,7 @@ if (Defender.BattleHealth < 0) {
     if (AttackerDB[0].officer_level === 0) {
         attackOfficerLevel = 1
     } else attackOfficerLevel = AttackerDB[0].officer_level
-    const winnings = (attackOfficerLevel * 10000) * (campaignOfficerLevel / 10)
+    const winnings = (attackOfficerLevel * 1000) * (campaignOfficerLevel / 10)
     const wallet = AttackerDB[0].war_coins
     const wins = AttackerDB[0].battle_wins
     const newWins = parseInt(wins + 1)

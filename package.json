@@ -26,7 +26,7 @@
     "opusscript": "^0.0.8",
     "pm2": "^5.2.0"
   },
-  "description": "",
+  "description": "Battle Bot™ is a Fun and Engaging experience to bring to your Servers. Members can Build Up their Empire and Battle other Members or the Bot using any combination from the Selection of 24 Officers with 5 Unique Skills Each, 344 Unique Units across 3 different Camp Loyalties. Battle Bot™ gives weekly rewards to Top Battlers in each server and regular hosted competitions on the Bot's home server.\r # The Bot is under constant development right now so any issues will be temporary\r #\r # Dekes#1470 on discord for more info!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JohnoUK79/PH-Family-2.git"
@@ -34,5 +34,6 @@
   "bugs": {
     "url": "https://github.com/JohnoUK79/PH-Family-2/issues"
   },
-  "homepage": "https://github.com/JohnoUK79/PH-Family-2#readme"
+  "homepage": "https://github.com/JohnoUK79/PH-Family-2#readme",
+  "devDependencies": {}
 }

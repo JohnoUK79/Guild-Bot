@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
 const { Colours } = require('../data/colours')
 const sql = require("../config/Database");
 
@@ -54,11 +54,11 @@ module.exports = {
 		const guildName = interaction.member.guild.name
 		const Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
 		const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Economy[0].unit_camp}' AND Unit_type = '${Economy[0].unit_type}' AND Unit_Level = '${Economy[0].unit_level}'`)
-        const image = Economy[0].unit_image || 'Guardian_of_the_Truth.png'
-		console.log(unitDetails)
-		console.log(image)
-        const link = `http://phfamily.co.uk/img/${image}` 
-		console.log(link)
+        const image = Economy[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+
+		const link = `http://phfamily.co.uk/img/${image}` 
+
 		CampColour = Colours.Green
 		if (Economy[0].unit_camp === 'Vanguard') {
 			CampColour = Colours.Vanguard
@@ -72,7 +72,6 @@ module.exports = {
 		const embed = new EmbedBuilder();
 			embed
 				.setColor(CampColour)
-				.setImage(link)
 				.setThumbnail(link)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
@@ -105,7 +104,7 @@ module.exports = {
 			embed
 				.setDescription(`${interaction.member} are you **Broke**? Try adding some **War-Coins** to the **War-Chest**!`)
 				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
-			return interaction.editReply({ embeds: [embed] })
+			return interaction.editReply({ embeds: [embed], files: [playerImage] })
 			}
 			
 			if (amount + bank > bankMax) {
@@ -113,7 +112,7 @@ module.exports = {
 			embed
 				.setDescription(`${interaction.member} your **War-Chest** can't hold that many **War-Coins**, try upgrading your **War-Chest** to hold more!\nYou have space for **$${difference.toLocaleString()}** **War-Coins** in your **War-Chest**!`)
 				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
-			return interaction.editReply({ embeds: [embed] })
+			return interaction.editReply({ embeds: [embed], files: [playerImage] })
 			}
 
 			try {
@@ -121,7 +120,7 @@ module.exports = {
 				embed
 					.setDescription(`${interaction.member} You do not have enough **War-Coins** for that Deposit!\nYou have **$${wallet.toLocaleString()} War-Coins** available!`)
 					.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
-				return interaction.editReply({ embeds: [embed] });
+				return interaction.editReply({ embeds: [embed], files: [playerImage] });
 				} 
 
 				const newWallet = wallet - amount
@@ -209,10 +208,10 @@ module.exports = {
 				)
 				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
 				
-		return interaction.editReply({embeds: [embed], components: [upgradeButtons]})
+		return interaction.editReply({embeds: [embed], components: [upgradeButtons], files: [playerImage]})
 		}
 
-		await interaction.editReply({embeds: [embed] })
+		await interaction.editReply({embeds: [embed], files: [playerImage] })
 		return;
 	},
 };

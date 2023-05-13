@@ -12,16 +12,15 @@ module.exports = {
         const guildIcon = interaction.member.guild.iconURL();
 		const guildName = interaction.member.guild.name
 		const Battle = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
+        const defender = interaction.options.getUser('target');
+
 		const embed = new EmbedBuilder();
 			embed
 				.setColor(Colours.Green)
 				.setThumbnail(guildIcon)
-				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-				.setFooter({ text: `${guildName} - Battles`, iconURL: `${guildIcon}`});
 
 
-				const defender = interaction.options.getUser('target');
 				if (defender.bot === true) {
                     commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, 0)
 
@@ -58,13 +57,18 @@ module.exports = {
                         return interaction.editReply({ embeds: [embed] });
                 }
                 const attackOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${AttackerDB[0].officer_name}'`)
-                if (AttackerDB[0].officer_level === 0) {
-                    AttackOfficerLevel = 1
-                } else AttackOfficerLevel = AttackerDB[0].officer_level
                 
-                if (AttackerDB[0].skill_level === 0) {
-                    AttackSkillMultiplier = 1
-                } else AttackSkillMultiplier = AttackerDB[0].skill_level
+                AttackOfficerLevel = 1
+                if (AttackerDB[0].officer_level > 0) {
+                    AttackOfficerLevel = AttackerDB[0].officer_level
+                } 
+                console.log(`Attack Officer Multipler Level: ${AttackOfficerLevel}`)
+
+                AttackSkillMultiplier = 1
+                if (AttackerDB[0].skill_level > 0) {
+                    AttackSkillMultiplier = AttackerDB[0].skill_level
+                } 
+                console.log(`Attack Skill Multiplier Level: ${AttackSkillMultiplier}`)
 
                 const Attacker = {
                     Player: interaction.member,
@@ -87,17 +91,18 @@ module.exports = {
                 }
 
                 const defendOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${DefenderDB[0].officer_name}'`)
+                
                 DefendOfficerLevel = 1
                 if (DefenderDB[0].officer_level > 0) {
                     DefendOfficerLevel = DefenderDB[0].officer_level
                 } 
-                console.log(`Defend Officer: ${DefendOfficerLevel}`)
+                console.log(`Defend Officer Multiplier Level: ${DefendOfficerLevel}`)
 
-                DefendSkillMultiplier = 1
+                let DefendSkillMultiplier = 1
                 if (DefenderDB[0].skill_level > 0) {
                     DefendSkillMultiplier = DefenderDB[0].skill_level
                 } 
-                console.log(`Defend Skill: ${DefendSkillMultiplier}`)
+                console.log(`Defend Skill Multiplier Level: ${DefendSkillMultiplier}`)
 
                 const Defender = {
                     Player: defender, 
@@ -167,16 +172,17 @@ if (Attacker.Speed < Defender.Speed) {
     while (interaction.Defender.BattleHealth >= 0 && interaction.Attacker.BattleHealth >= 0) {
         console.count(`Battle ID: ${interaction.id} Round`)
         await sleep(1600)      
-        attackSelection(Attacker, Defender)
-        officerSkills(interaction, Attacker, Defender)
-        campSelection(Attacker, Defender) 
+        attackSelection(interaction)
+        officerSkills(interaction)
+        campSelection(interaction) 
         const defendPower = Math.floor(Math.random() * (interaction.Defender.Power - interaction.Defender.Power/2)) + interaction.Defender.Power/2
         interaction.Defender.AttackPower = (defendPower * interaction.Defender.Multiplier)
         console.log('Defend Multiplier', interaction.Defender.Multiplier )
         interaction.Attacker.BattleHealth = interaction.Attacker.BattleHealth - Defender.AttackPower
     
         embed
-            .setColor(Defender.Color)
+            .setColor(interaction.Defender.Color)
+            .setFooter({ text: `Battle ID:${interaction.id} - ${defender.username}`, iconURL: `${guildIcon}`})
             .setThumbnail(`attachment://${interaction.Defender.ImageFile}`)
             .setImage(`attachment://${interaction.Defender.ImageFile}`)
             .setTitle(`${defender}'s **${interaction.Defender.Name}** hit ${interaction.member}'s **${interaction.Attacker.Name}**! Dealing **${interaction.Defender.AttackPower.toLocaleString()}** damage!`)
@@ -186,8 +192,8 @@ if (Attacker.Speed < Defender.Speed) {
         const  attackPower = Math.floor(Math.random() * (interaction.Attacker.Power - interaction.Attacker.Power/2)) + interaction.Attacker.Power/2
         interaction.Attacker.AttackPower = (attackPower * interaction.Attacker.Multiplier)
         console.log('Attack Multiplier', interaction.Attacker.Multiplier )
-        attackSelection(Attacker, Defender)
-        officerSkills(interaction, Attacker, Defender)
+        attackSelection(interaction)
+        officerSkills(interaction)
         campSelection(Attacker, Defender) 
         interaction.Defender.BattleHealth = interaction.Defender.BattleHealth - interaction.Attacker.AttackPower
         console.log(interaction.Attacker.ImageFile)
@@ -206,20 +212,21 @@ if (Attacker.Speed < Defender.Speed) {
     while (interaction.Defender.BattleHealth >= 0 && interaction.Attacker.BattleHealth >= 0) {
     console.count(`Battle ID: ${interaction.id} Round`)
     await sleep(1600)
-    attackSelection(Attacker, Defender)
-    officerSkills(interaction, Attacker, Defender)
-    campSelection(Attacker, Defender) 
+    attackSelection(interaction)
+    officerSkills(interaction)
+    campSelection(interaction) 
     const attackPower = Math.floor(Math.random() * (interaction.Attacker.Power - interaction.Attacker.Power/2)) + interaction.Attacker.Power/2
     interaction.Attacker.AttackPower = (attackPower * interaction.Attacker.Multiplier)
     console.log('Attack Multiplier', interaction.Attacker.Multiplier )
-        attackSelection(Attacker, Defender)
-        officerSkills(interaction, Attacker, Defender)
-        campSelection(Attacker, Defender) 
+        attackSelection(interaction)
+        officerSkills(interaction)
+        campSelection(interaction) 
         interaction.Defender.BattleHealth = interaction.Defender.BattleHealth - interaction.Attacker.AttackPower
         console.log(interaction.Attacker.ImageFile)
 
         embed
             .setColor(interaction.Attacker.Color)
+            .setFooter({ text: `Battle ID:${interaction.id} - ${defender.username}`, iconURL: `${guildIcon}`})
             .setThumbnail(`attachment://${interaction.Attacker.ImageFile}`)
             .setImage(`attachment://${interaction.Attacker.ImageFile}`)
             .setTitle(`${interaction.member}'s **${interaction.Attacker.Name}** hit ${defender}'s **${interaction.Defender.Name}**! Dealing **${interaction.Attacker.AttackPower.toLocaleString()}** damage!`)
@@ -231,9 +238,9 @@ if (Attacker.Speed < Defender.Speed) {
     console.log('Defend Multiplier', interaction.Defender.Multiplier )
     interaction.Attacker.BattleHealth = interaction.Attacker.BattleHealth - interaction.Defender.AttackPower
         console.log(interaction.Defender.ImageFile)
-        attackSelection(Attacker, Defender)
-        officerSkills(interaction, Attacker, Defender)
-        campSelection(Attacker, Defender) 
+        attackSelection(interaction)
+        officerSkills(interaction)
+        campSelection(interaction) 
         embed
             .setColor(interaction.Defender.Color)
             .setThumbnail(`attachment://${interaction.Defender.ImageFile}`)
@@ -259,6 +266,7 @@ if (interaction.Defender.BattleHealth < 0) {
         embed 
             .setColor(interaction.Attacker.Color)
             .setThumbnail(`attachment://${interaction.Attacker.ImageFile}`)
+            .setFooter({ text: `Battle ID:${interaction.id} - ${defender.username}`, iconURL: `${guildIcon}`})
             .setImage(`attachment://${interaction.Attacker.ImageFile}`)
             .addFields(
                 { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
@@ -268,8 +276,7 @@ if (interaction.Defender.BattleHealth < 0) {
     const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
     const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${defender.id}`)
     console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${defender.username}`, loss.info)
-    console.log(interaction)
-    } else
+} else
 if (interaction.Attacker.BattleHealth < 0) {
         await sleep(1800)
         const winnings = DefenderDB[0].officer_level * 10000
@@ -283,6 +290,7 @@ if (interaction.Attacker.BattleHealth < 0) {
     
         embed
             .setColor(interaction.Defender.Color)
+            .setFooter({ text: `Battle ID:${interaction.id} - ${defender.username}`, iconURL: `${guildIcon}`})
             .setThumbnail(`attachment://${interaction.Defender.ImageFile}`)
             .setImage(`attachment://${interaction.Defender.ImageFile}`)
             .addFields(
@@ -293,7 +301,6 @@ if (interaction.Attacker.BattleHealth < 0) {
         const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${defender.id}`)
         const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)
         console.log(`Winner: ${defender.username}`, win.info,`\nLoser: ${interaction.member.displayName}`, loss.info)
-        console.log(interaction)
     }
 }
 }

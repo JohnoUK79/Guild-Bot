@@ -176,8 +176,6 @@ console.log(interaction)
 if (interaction.Attacker.Speed < interaction.Defender.Speed) {
 console.log(`Attacker Speed: ${interaction.Attacker.Speed} Defender Speed: ${interaction.Defender.Speed}`)
 while (interaction.Defender.BattleHealth >= 0 && interaction.Attacker.BattleHealth >= 0) {
-    let i = 1; i++
-    console.log(`Round:${i}`)
     attackSelection(interaction)
     campSelection(interaction) 
     officerSkills(interaction)
@@ -190,10 +188,9 @@ while (interaction.Defender.BattleHealth >= 0 && interaction.Attacker.BattleHeal
 
     embed
         .setColor(interaction.Defender.Color)
-        .setTitle(`${campaignOfficer}'s **${interaction.Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${interaction.Defender.AttackPower.toLocaleString()}** damage!`)
         .setThumbnail(`attachment://${interaction.Defender.ImageFile}`)
         .setImage(`attachment://${interaction.Defender.ImageFile}`)
-        .setDescription(`${interaction.member}'s **${interaction.Attacker.Name}** has **${interaction.Attacker.BattleHealth.toLocaleString()}** health remaining!`)
+        .setDescription(`${campaignOfficer}'s **${interaction.Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${interaction.Defender.AttackPower.toLocaleString()}** damage!\n${interaction.member}'s **${interaction.Attacker.Name}** has **${interaction.Attacker.BattleHealth.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [defendImage] });
     console.log(`Defender hit for ${interaction.Defender.AttackPower.toLocaleString()}`)     
     const  attackPower = Math.floor(Math.random() * (interaction.Attacker.Power - interaction.Attacker.Power/2)) + interaction.Attacker.Power/2
@@ -211,8 +208,6 @@ while (interaction.Defender.BattleHealth >= 0 && interaction.Attacker.BattleHeal
 } else {
     console.log(`Defender Speed: ${interaction.Defender.Speed} Attacker Speed: ${interaction.Attacker.Speed}`)
     while (interaction.Defender.BattleHealth >= 0 && interaction.Attacker.BattleHealth >= 0) {
-    let i = 1; i++
-    console.log(`Round:${i}`)
     attackSelection(interaction)
     campSelection(interaction) 
     officerSkills(interaction)
@@ -237,8 +232,7 @@ while (interaction.Defender.BattleHealth >= 0 && interaction.Attacker.BattleHeal
             .setColor(interaction.Defender.Color)
             .setThumbnail(`attachment://${interaction.Defender.ImageFile}`)
             .setImage(`attachment://${interaction.Defender.ImageFile}`)
-            .setTitle(`${campaignOfficer}'s **${interaction.Defender.Name}** hit ${interaction.member}'s **${interaction.Attacker.Name}**! Dealing **${interaction.Defender.AttackPower.toLocaleString()}** damage!`)
-            .setDescription(`${interaction.member}'s **${interaction.Attacker.Name}** has **${interaction.Attacker.BattleHealth.toLocaleString()}** health remaining!`)
+            .setDescription(`${campaignOfficer}'s **${interaction.Defender.Name}** hit ${interaction.member}'s **${interaction.Attacker.Name}**! Dealing **${interaction.Defender.AttackPower.toLocaleString()}** damage!\n${interaction.member}'s **${interaction.Attacker.Name}** has **${interaction.Attacker.BattleHealth.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
     console.log(`Defender hit for ${interaction.Defender.AttackPower.toLocaleString()}`)
     }

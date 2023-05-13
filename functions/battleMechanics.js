@@ -185,8 +185,7 @@ if (Attacker.Speed < Defender.Speed) {
             .setFooter({ text: `Battle ID:${interaction.id} - ${defender.username}`, iconURL: `${guildIcon}`})
             .setThumbnail(`attachment://${interaction.Defender.ImageFile}`)
             .setImage(`attachment://${interaction.Defender.ImageFile}`)
-            .setTitle(`${defender}'s **${interaction.Defender.Name}** hit ${interaction.member}'s **${interaction.Attacker.Name}**! Dealing **${interaction.Defender.AttackPower.toLocaleString()}** damage!`)
-            .setDescription(`${interaction.member}'s **${interaction.Attacker.Name}** has **${interaction.Attacker.BattleHealth.toLocaleString()}** health remaining!`)
+            .setDescription(`${defender}'s **${interaction.Defender.Name}** hit ${interaction.member}'s **${interaction.Attacker.Name}**! Dealing **${interaction.Defender.AttackPower.toLocaleString()}** damage!\n${interaction.member}'s **${interaction.Attacker.Name}** has **${interaction.Attacker.BattleHealth.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
         console.log(`Defender hit for ${interaction.Defender.AttackPower.toLocaleString()}`)  
         const  attackPower = Math.floor(Math.random() * (interaction.Attacker.Power - interaction.Attacker.Power/2)) + interaction.Attacker.Power/2
@@ -202,8 +201,7 @@ if (Attacker.Speed < Defender.Speed) {
             .setColor(interaction.Attacker.Color)
             .setThumbnail(`attachment://${interaction.Attacker.ImageFile}`)
             .setImage(`attachment://${interaction.Attacker.ImageFile}`)
-            .setTitle(`${interaction.member}'s **${interaction.Attacker.Name}** hit ${defender}'s **${interaction.Defender.Name}**! Dealing **${interaction.Attacker.AttackPower.toLocaleString()}** damage!`)
-            .setDescription(`${defender}'s **${interaction.Defender.Name}** has **${interaction.Defender.BattleHealth.toLocaleString()}** health remaining!`)
+            .setDescription(`${interaction.member}'s **${interaction.Attacker.Name}** hit ${defender}'s **${interaction.Defender.Name}**! Dealing **${interaction.Attacker.AttackPower.toLocaleString()}** damage!\n${defender}'s **${interaction.Defender.Name}** has **${interaction.Defender.BattleHealth.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
         console.log(`Attacker hit for ${interaction.Attacker.AttackPower.toLocaleString()}`)
     }
@@ -229,8 +227,7 @@ if (Attacker.Speed < Defender.Speed) {
             .setFooter({ text: `Battle ID:${interaction.id} - ${defender.username}`, iconURL: `${guildIcon}`})
             .setThumbnail(`attachment://${interaction.Attacker.ImageFile}`)
             .setImage(`attachment://${interaction.Attacker.ImageFile}`)
-            .setTitle(`${interaction.member}'s **${interaction.Attacker.Name}** hit ${defender}'s **${interaction.Defender.Name}**! Dealing **${interaction.Attacker.AttackPower.toLocaleString()}** damage!`)
-            .setDescription(`${defender}'s **${interaction.Defender.Name}** has **${interaction.Defender.BattleHealth.toLocaleString()}** health remaining!`)
+            .setDescription(`${interaction.member}'s **${interaction.Attacker.Name}** hit ${defender}'s **${interaction.Defender.Name}**! Dealing **${interaction.Attacker.AttackPower.toLocaleString()}** damage!\n${defender}'s **${interaction.Defender.Name}** has **${interaction.Defender.BattleHealth.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
     console.log(`Attacker hit for ${interaction.Attacker.AttackPower.toLocaleString()}`)   
     const defendPower = Math.floor(Math.random() * (interaction.Defender.Power - interaction.Defender.Power/2)) + interaction.Defender.Power/2
@@ -245,8 +242,7 @@ if (Attacker.Speed < Defender.Speed) {
             .setColor(interaction.Defender.Color)
             .setThumbnail(`attachment://${interaction.Defender.ImageFile}`)
             .setImage(`attachment://${interaction.Defender.ImageFile}`)
-            .setTitle(`${defender}'s **${interaction.Defender.Name}** hit ${interaction.member}'s **${interaction.Attacker.Name}**! Dealing **${interaction.Defender.AttackPower.toLocaleString()}** damage!`)
-            .setDescription(`${interaction.member}'s **${interaction.Attacker.Name}** has **${interaction.Attacker.BattleHealth.toLocaleString()}** health remaining!`)
+            .setDescription(`${defender}'s **${interaction.Defender.Name}** hit ${interaction.member}'s **${interaction.Attacker.Name}**! Dealing **${interaction.Defender.AttackPower.toLocaleString()}** damage!\n${interaction.member}'s **${interaction.Attacker.Name}** has **${interaction.Attacker.BattleHealth.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
     console.log(`Defender hit for ${interaction.Defender.AttackPower.toLocaleString()}`)
     }

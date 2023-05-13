@@ -1,6 +1,7 @@
 const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder , AttachmentBuilder} = require('discord.js');
 const sql = require("../config/Database");
-const Canvas = require("discord-canvas")
+const Canvas = require('@napi-rs/canvas');
+const { sleep } = require('../functions/discordFunctions');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -40,32 +41,33 @@ module.exports = {
         //         console.log(guildID);
         //     }
         // }
-        let image = await new Canvas.RankCard()
-            .setAddon("xp", false)
-            .setAddon("rank", false)
-            .setAvatar(interaction.member.avatarURL)
-            .setLevel(7)
-            .setReputation(450)
-            .setRankName("professional")
-            .setUsername(interaction.member)
-            .setBadge(1, "gold")
-            .setBadge(2, "gold")
-            .setBadge(3, "diamond")
-            .setBadge(4, "diamond")
-            .setBadge(5, "silver")
-            .setBadge(6, "silver")
-            .setBadge(7, "bronze")
-            .setBadge(8, "bronze")
-            .setBadge(9, "diamond")
-            .setBackground("http://www.phfamily.co.uk/img/GeneralDeath.png")
-            .toAttachment();
+
+        const maxUnits = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '9.2' AND Camp = 'Vanguard' ORDER BY Unit_Type DESC`)
+        const { promises } = require('fs')
+        const { join } = require('path')
+        const { createCanvas, loadImage } = require('@napi-rs/canvas')
         
-        const attachment = new AttachmentBuilder(image.toBuffer(), "rank-card.png");
-        
+        for (let i = 0; i < maxUnits.length; i++) {
+        const unit = maxUnits[i];
+        console.log(unit)
+        const canvas = createCanvas(300, 200)
+        const context = canvas.getContext('2d')
+        sleep(2000)
+        const background = await loadImage(`./img/${unit.Image}`);
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        const attachment = new AttachmentBuilder(await canvas.encode('jpeg'), { name: `New${unit.Image}` });
+
+        async function main() {
+          const jpgData = await canvas.encode('jpeg') // JPEG, AVIF and WebP are also supported
+          // encoding in libuv thread pool, non-blocking
+          await promises.writeFile(join(__dirname, `${unit.Image}`), jpgData)
+        }
+        main()
+        }
         await interaction.reply({
             ephemeral: true,
             embeds: [updateEmbed],
-            files: [attachment]
+            //files: [attachment]
         });
 
     },

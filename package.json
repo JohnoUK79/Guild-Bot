@@ -12,6 +12,7 @@
     "@discord-player/extractor": "^4.1.2",
     "@discordjs/voice": "^0.13.0",
     "@google-cloud/translate": "^7.0.5",
+    "@napi-rs/canvas": "^0.1.40",
     "discord-canvas": "^1.5.2",
     "discord-player": "^6.1.1",
     "discord-rpc": "^4.0.1",
@@ -34,6 +35,5 @@
   "bugs": {
     "url": "https://github.com/JohnoUK79/PH-Family-2/issues"
   },
-  "homepage": "https://github.com/JohnoUK79/PH-Family-2#readme",
-  "devDependencies": {}
+  "homepage": "https://github.com/JohnoUK79/PH-Family-2#readme"
 }

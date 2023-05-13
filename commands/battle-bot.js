@@ -179,23 +179,23 @@ module.exports = {
 			.addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-					.setLabel('War-Chest')
+					.setLabel('Upgrade War-Chest')
 					.setStyle(ButtonStyle.Primary),
 				new ButtonBuilder()
 					.setCustomId("base")
-					.setLabel('War-Base')
+					.setLabel('Upgrade War-Base')
 					.setStyle(ButtonStyle.Primary),
 				new ButtonBuilder()
 					.setCustomId("officer")
-					.setLabel('Officer')
+					.setLabel('Upgrade Officer')
 					.setStyle(ButtonStyle.Success),
 				new ButtonBuilder()
 					.setCustomId("troop")
-					.setLabel('Unit')
+					.setLabel('Upgrade Unit')
 					.setStyle(ButtonStyle.Success),
 				new ButtonBuilder()
 					.setCustomId("profile")
-					.setLabel('Profile')
+					.setLabel('Show Profile')
 					.setStyle(ButtonStyle.Secondary),
 				)
 		const wallet = Economy[0].war_coins

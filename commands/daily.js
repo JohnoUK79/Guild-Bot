@@ -25,7 +25,7 @@ module.exports = {
 			const bank = Economy[0].war_chest
 			let officer = Economy[0].officer_level
 			if (!officer) {officer = 1}
-			const dailyBonus = Math.floor(Math.random() * (100000 - 50000 + 1)) + 50000
+			const dailyBonus = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000
 			const daily = (dailyBonus * officer)
 
 			const newWallet = wallet + daily;

@@ -190,7 +190,7 @@ while (interaction.Defender.BattleHealth >= 0 && interaction.Attacker.BattleHeal
         .setColor(interaction.Defender.Color)
         .setThumbnail(`attachment://${interaction.Defender.ImageFile}`)
         .setImage(`attachment://${interaction.Defender.ImageFile}`)
-        .setDescription(`${campaignOfficer}'s **${interaction.Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${interaction.Defender.AttackPower.toLocaleString()}** damage!\n${interaction.member}'s **${interaction.Attacker.Name}** has **${interaction.Attacker.BattleHealth.toLocaleString()}** health remaining!`)
+        .setDescription(`**${campaignOfficer}**'s **${interaction.Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${interaction.Defender.AttackPower.toLocaleString()}** damage!\n${interaction.member}'s **${interaction.Attacker.Name}** has **${interaction.Attacker.BattleHealth.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [defendImage] });
     console.log(`Defender hit for ${interaction.Defender.AttackPower.toLocaleString()}`)     
     const  attackPower = Math.floor(Math.random() * (interaction.Attacker.Power - interaction.Attacker.Power/2)) + interaction.Attacker.Power/2
@@ -201,7 +201,7 @@ while (interaction.Defender.BattleHealth >= 0 && interaction.Attacker.BattleHeal
         .setColor(interaction.Attacker.Color)
         .setThumbnail(`attachment://${interaction.Attacker.ImageFile}`)
         .setImage(`attachment://${interaction.Attacker.ImageFile}`)
-        .setDescription(`${interaction.member}'s **${interaction.Attacker.Name}** hit ${campaignOfficer}'s **${interaction.Defender.Name}**! Dealing **${interaction.Attacker.AttackPower.toLocaleString()}** damage!\n**${campaignOfficer}**'s **${interaction.Defender.Name}** has **${interaction.Defender.BattleHealth.toLocaleString()}** health remaining!`)
+        .setDescription(`${interaction.member}'s **${interaction.Attacker.Name}** hit **${campaignOfficer}**'s **${interaction.Defender.Name}**! Dealing **${interaction.Attacker.AttackPower.toLocaleString()}** damage!\n**${campaignOfficer}**'s **${interaction.Defender.Name}** has **${interaction.Defender.BattleHealth.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [attackImage] });
     console.log(`Attacker hit for ${interaction.Attacker.AttackPower.toLocaleString()}`)
 }
@@ -232,7 +232,7 @@ while (interaction.Defender.BattleHealth >= 0 && interaction.Attacker.BattleHeal
             .setColor(interaction.Defender.Color)
             .setThumbnail(`attachment://${interaction.Defender.ImageFile}`)
             .setImage(`attachment://${interaction.Defender.ImageFile}`)
-            .setDescription(`${campaignOfficer}'s **${interaction.Defender.Name}** hit ${interaction.member}'s **${interaction.Attacker.Name}**! Dealing **${interaction.Defender.AttackPower.toLocaleString()}** damage!\n${interaction.member}'s **${interaction.Attacker.Name}** has **${interaction.Attacker.BattleHealth.toLocaleString()}** health remaining!`)
+            .setDescription(`**${campaignOfficer}**'s **${interaction.Defender.Name}** hit ${interaction.member}'s **${interaction.Attacker.Name}**! Dealing **${interaction.Defender.AttackPower.toLocaleString()}** damage!\n${interaction.member}'s **${interaction.Attacker.Name}** has **${interaction.Attacker.BattleHealth.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
     console.log(`Defender hit for ${interaction.Defender.AttackPower.toLocaleString()}`)
     }
@@ -258,7 +258,7 @@ if (interaction.Defender.BattleHealth < 0) {
             { name: `Congratulations`, value: `You have defeated **${campaignOfficer}**! You can now challenge the next campaign` },
             { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
         )        
-        .setDescription(`${campaignOfficer}'s **${interaction.Defender.Name}** has been killed by ${interaction.member}'s **${interaction.Attacker.Name} & ${interaction.Attacker.Officer} using ${interaction.Attacker.OfficerSkill}**.`)
+        .setDescription(`**${campaignOfficer}**'s **${interaction.Defender.Name}** has been killed by ${interaction.member}'s **${interaction.Attacker.Name} & ${interaction.Attacker.Officer} using ${interaction.Attacker.OfficerSkill}**.`)
 
     interaction.editReply({ embeds: [embed], files: [attackImage] });
 

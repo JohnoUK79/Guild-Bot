@@ -2,7 +2,7 @@ const ms = require('ms-prettify').default
 const sql = require("../config/Database");
 const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 const { officerSkills } = require("./officerSkills");
-const { attackSelection, campSelection } = require("./warpathFunctions");
+const { attackSelection, campSelection, skillColours } = require("./warpathFunctions");
 const { sleep } = require('../functions/discordFunctions')
 const { Colours } = require('../data/colours')
 
@@ -124,49 +124,13 @@ module.exports = {
                     ImageFile: `${DefenderDB[0].unit_image}`
                 }
 
-                if (Attacker.UnitCamp === 'Vanguard') {
-                    Attacker.Color = Colours.Vanguard
-                }
-                if (Attacker.UnitCamp === 'Liberty') {
-                    Attacker.Color = Colours.Liberty
-                }
-                if (Attacker.UnitCamp === 'MartyrsW') {
-                    Attacker.Color = Colours.MartyrsW
-                }
-                if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Vanguard') {
-                    Attacker.SkillColor = Colours.VanguardBoost
-                }
-                if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Liberty') {
-                    Attacker.SkillColor = Colours.LibertyBoost
-                }
-                if (Attacker.UnitCamp && Attacker.OfficerCamp === 'MartyrsW') {
-                    Attacker.SkillColor = Colours.MartyrsWBoost
-                }
-                if (Defender.UnitCamp === 'Vanguard') {
-                    Defender.Color = Colours.Vanguard
-                }
-                if (Defender.UnitCamp === 'Liberty') {
-                    Defender.Color = Colours.Liberty
-                }
-                if (Defender.UnitCamp === 'MartyrsW') {
-                    Defender.Color = Colours.MartyrsW
-                }
-                if (Defender.UnitCamp && Defender.OfficerCamp === 'Vanguard') {
-                    Defender.SkillColor = Colours.VanguardBoost
-                }
-                if (Defender.UnitCamp && Defender.OfficerCamp === 'Liberty') {
-                    Defender.SkillColor = Colours.LibertyBoost
-                }
-                if (Defender.UnitCamp && Defender.OfficerCamp === 'MartyrsW') {
-                    Defender.SkillColor = Colours.MartyrsWBoost
-                }
                 const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)
                 const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)
                 Attacker.Attachment = attackImage, Defender.Attachment = defendImage
                 Attacker.BattleHealth = Attacker.Health, Defender.BattleHealth = Defender.Health
                 interaction.Attacker = Attacker, interaction.Defender = Defender
                 console.log(interaction)
-
+                skillColours(interaction)
 if (Attacker.Speed < Defender.Speed) {
     console.log(`Attacker Speed: ${Attacker.Speed} Defender Speed: ${Defender.Speed}`)
     while (interaction.Defender.BattleHealth >= 0 && interaction.Attacker.BattleHealth >= 0) {

@@ -15,7 +15,7 @@ module.exports = {
         const bank = Level[0].war_chest
         const baseLevel = Level[0].base_level
         const cost = (baseLevel + 1) * 25000
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.Vanguard
         }
@@ -84,7 +84,7 @@ module.exports = {
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
 
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -201,7 +201,7 @@ module.exports = {
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
 
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -318,7 +318,7 @@ module.exports = {
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
 
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -441,7 +441,7 @@ module.exports = {
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
 
         const link = `http://phfamily.co.uk/img/${image}`
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -500,7 +500,7 @@ module.exports = {
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
 
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -513,7 +513,6 @@ module.exports = {
         const wallet = Level[0].war_coins
         const bank = Level[0].war_chest
         const bankLevel = Level[0].chest_level
-        const baseLevel = Level[0].base_level
         const cost = (bankLevel + 1) * 10000
 
         const upgradeChestButtons = new ActionRowBuilder()
@@ -597,7 +596,7 @@ module.exports = {
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -732,7 +731,7 @@ module.exports = {
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -857,7 +856,7 @@ module.exports = {
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
         const link = `http://phfamily.co.uk/img/${image}`
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -884,12 +883,12 @@ module.exports = {
         const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '4.0' AND Unit_Type = 'MediumTanks'`)
         const unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
 		const playerImage = new AttachmentBuilder(`./img/${unitSelection.Image}`)
-
+        const footer = ` - `
         selectUnitEmbed
             .setColor(CampColour)
             .setThumbnail(link)
             .setTimestamp()
-            .setFooter(`${unitSelection.Unit_Type} - ${unitSelection.Unit_Name} - ${unitSelection.Unit_Level} - `)
+            .setFooter({ text: `${unitSelection.Unit_Type} - ${unitSelection.Unit_Name} - ${unitSelection.Unit_Level}`, iconURL: `${guildIcon}`})
             .setDescription(`**${interaction.member}, Unit Selection Successful**`)
             .addFields(
                 { name: `Unit Name:`, value: `${unitSelection.Unit_Name}`, inline: true },
@@ -900,7 +899,6 @@ module.exports = {
                 { name: `HP:`, value: `${unitSelection.HP}`, inline: true },
                 { name: `Speed:`, value: `${unitSelection.Speed}`, inline: true },
             )
-            .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
         const saveUnit = await sql.Execute(`INSERT INTO playerunits (discord_id, camp, unit_type, unit_level, unit_id) VALUES ('${interaction.member.id}', '${unitSelection.Camp}', '${unitSelection.Unit_Type}', '${unitSelection.Unit_Level}', '${unitSelection.Unit_ID}')`)
         console.log(`Save Unit:${saveUnit.info}`)
         const updateOfficer = await sql.Execute(`UPDATE levels SET unit_camp = '${unitSelection.Camp}', unit_type = '${unitSelection.Unit_Type}', unit_level = '${unitSelection.Unit_Level}', unit_image = '${unitSelection.Image}' WHERE discord_id = '${interaction.member.id}'`)
@@ -914,7 +912,7 @@ module.exports = {
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`
         const camp = Level[0].unit_camp
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -1094,7 +1092,7 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -1136,15 +1134,23 @@ module.exports = {
         const unitLevel = Level[0].unit_level || 'No Unit Trained'
         const unitCamp = Level[0].unit_camp || 'No Unit Trained'
         const officerDetails = await sql.Execute(`SELECT * from officers WHERE Officer_Name = '${officer}'`)
-        console.log(officerDetails)
-        const officerType = officerDetails[0].Officer_Type || 'No Officer Chosen'
-        const officerCamp = officerDetails[0].Officer_Camp || 'No Officer Chosen'
-        const officerSkill = officerDetails[0].Skill || 'No Officer Chosen'
+        officerType = 'No Officer Chosen'
+        officerCamp = 'No Officer Chosen'
+        officerSkill = 'No Officer Chosen'    
+        if (officerDetails.length > 0) {
+            officerType = officerDetails[0].Officer_Type
+            officerCamp = officerDetails[0].Officer_Camp
+            officerSkill = officerDetails[0].Skill 
+        }
         const skillLevel = Level[0].skill_level 
 
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const link = `http://phfamily.co.uk/img/${image}`
-        const triggerRate = 5 + (skillLevel * 5)
+        const triggerRate = skillLevel * 5
+        attackType = 'No Unit Selected'
+        if (unitDetails.length > 0) {
+            attackType = unitDetails[0].Attack_Type
+        }
         
         profileEmbed
             .setThumbnail(link)
@@ -1165,7 +1171,7 @@ module.exports = {
                 { name: `Skill Trigger Rate:`, value: `${triggerRate}%`, inline: false },
                 { name: `Unit Type:`, value: `${unitType}`, inline: false },
                 { name: `Unit Level:`, value: `${unitLevel}`, inline: false },
-                { name: `Attack Type:`, value: `${unitDetails[0].Attack_Type}`, inline: false },
+                { name: `Attack Type:`, value: `${attackType}`, inline: false },
                 { name: `Unit Camp:`, value: `${unitCamp}`, inline: false },
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
@@ -1179,7 +1185,7 @@ module.exports = {
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -1296,8 +1302,41 @@ module.exports = {
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
-        const link = `http://phfamily.co.uk/img/${image}`
+        const selectUnitButtons = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId("cancel")
+                    .setLabel('Upgrade Menu')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("selectunit")
+                    .setLabel('Select Unit Menu')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("selectofficer")
+                    .setLabel('Select Officer Menu')
+                    .setStyle(ButtonStyle.Success),    
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Show Profile')
+                    .setStyle(ButtonStyle.Secondary),
+            )
+            const selectUnitEmbed = new EmbedBuilder()
+                .setColor(Colours.Black)
+                .setTimestamp()
+                .setTitle(`Select Your Unit!`)
+
         const playerUnits = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}'`)
+        if (playerUnits.length === 0 ) {
+            selectUnitEmbed
+                .setTitle(`No Unit Available!`)
+                .setDescription(`You have not selected your **Unit**.\nUpgrade your **War-Base** & **Officer** to get your **First Unit**!`)
+                return interaction.update({
+                embeds: [selectUnitEmbed],
+                components: [selectUnitButtons],
+                files: [playerImage]
+            })
+        }
         const unitChoices = [];
         for (const entry in playerUnits) {
             const camp = playerUnits[entry].camp
@@ -1319,30 +1358,7 @@ module.exports = {
                     .setPlaceholder('Select your Unit')
                     .addOptions(unitChoices),
             )
-        const selectUnitButtons = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                .setCustomId("cancel")
-                .setLabel('Upgrade Menu')
-                .setStyle(ButtonStyle.Success),
-            new ButtonBuilder()
-                .setCustomId("selectunit")
-                .setLabel('Select Unit Menu')
-                .setStyle(ButtonStyle.Success),
-            new ButtonBuilder()
-                .setCustomId("selectofficer")
-                .setLabel('Select Officer Menu')
-                .setStyle(ButtonStyle.Success),    
-            new ButtonBuilder()
-                .setCustomId("profile")
-                .setLabel('Show Profile')
-                .setStyle(ButtonStyle.Secondary),
-            )
-        const selectUnitEmbed = new EmbedBuilder()
-            .setColor(Colours.Green)
-            .setThumbnail(link)
-            .setTimestamp()
-            .setTitle(`Select Your Unit!`)
+
         interaction.update({
             embeds: [selectUnitEmbed],
             components: [unitMenu, selectUnitButtons],
@@ -1363,7 +1379,7 @@ module.exports = {
         const link = 'http://phfamily.co.uk/img/' + image
         const updateUnit = await sql.Execute(`UPDATE levels SET unit_level = '${selectedUnit[0].unit_level}', unit_camp = '${selectedUnit[0].camp}', unit_type = '${selectedUnit[0].unit_type}', unit_image = '${unitImage}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Updated Unit:${updateUnit.info}`)
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (selectedUnit[0].camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -1419,7 +1435,44 @@ module.exports = {
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`
+        let CampColour = Colours.Black
         const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
+        const selectOfficerButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("cancel")
+                .setLabel('Upgrade Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectunit")
+                .setLabel('Select Unit Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectofficer")
+                .setLabel('Select Officer Menu')
+                .setStyle(ButtonStyle.Success),    
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Show Profile')
+                .setStyle(ButtonStyle.Secondary),
+                )
+        const selectOfficerEmbed = new EmbedBuilder()
+                .setColor(CampColour)
+                .setThumbnail(link)
+                .setTimestamp()
+                .setTitle(`Select Your Officer!`)
+
+        if (playerOfficers.length === 0) {
+            selectOfficerEmbed
+                .setTitle(`No Officer Available!`)
+                .setDescription(`You have not selected your **Officer**.\nUpgrade your **War-Chest** & **War-Base** to get your **First Unit**!`)
+            return interaction.update({
+            embeds: [selectOfficerEmbed],
+            components: [selectOfficerButtons],
+            files: [playerImage]
+            })
+        }
+
         const officerChoices = [];
         for (const entry in playerOfficers) {
             const name = playerOfficers[entry].Officer_Name
@@ -1437,7 +1490,6 @@ module.exports = {
                 emoji: image.toString()
             })
         }
-        let CampColour = Colours.Green
 
         const officerMenu = new ActionRowBuilder()
             .addComponents(
@@ -1446,22 +1498,6 @@ module.exports = {
                     .setPlaceholder('Select your Officer')
                     .addOptions(officerChoices),
             )
-        const selectOfficerButtons = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
-                    .setStyle(ButtonStyle.Success),
-                new ButtonBuilder()
-                    .setCustomId("profile")
-                    .setLabel('Show Profile')
-                    .setStyle(ButtonStyle.Secondary),
-            )
-        const selectOfficerEmbed = new EmbedBuilder()
-            .setColor(CampColour)
-            .setThumbnail(link)
-            .setTimestamp()
-            .setTitle(`Select Your Officer!`)
         interaction.update({
             embeds: [selectOfficerEmbed],
             components: [officerMenu, selectOfficerButtons],
@@ -1751,13 +1787,13 @@ module.exports = {
         buttons = campaignButtons4
         menu = campaignButtonsMenu3
         campaignEmbed
-            .setColor(Colours.Vanguard)
+            .setColor(Colours.Grey)
     }
     if (interaction.customId === 'ultra') { 
         buttons = campaignButtons5
         menu = campaignButtonsMenu3
         campaignEmbed
-            .setColor(Colours.Vanguard)
+            .setColor(Colours.Liberty)
     }
         interaction.update({
             embeds: [campaignEmbed],
@@ -1815,7 +1851,7 @@ module.exports = {
         if (presigeRequired >= Level[0].officer_level) {
             console.log(`Officer Upgrade Required`)
             newOfficerEmbed
-                .setColor('#ff5b05')
+                .setColor(Colours.Black)
                 .setThumbnail(link)
                 .setTimestamp()
                 .addFields(
@@ -1829,7 +1865,7 @@ module.exports = {
         const officerSelection = Officers[Math.floor(Math.random() * Officers.length)]
 
         newOfficerEmbed
-            .setColor('#ff5b05')
+            .setColor(Colours.Black)
             .setThumbnail(link)
             .setTimestamp()
             .setDescription(`**${interaction.member}, New Officer Selection Successful**`)
@@ -1892,7 +1928,7 @@ module.exports = {
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`  
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -1987,4 +2023,21 @@ module.exports = {
             console.log(`Officer Upgrade: ${officerUpgrade.info}`)
         return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons], files: [playerImage] })
     },
+skillColours: async function (interaction) {    
+        if (interaction.Attacker.UnitCamp === 'Vanguard') {interaction.Attacker.Color = Colours.Vanguard}
+        if (interaction.Attacker.UnitCamp === 'Liberty') {interaction.Attacker.Color = Colours.Liberty}
+        if (interaction.Attacker.UnitCamp === 'MartyrsW') {interaction.Attacker.Color = Colours.MartyrsW}
+
+        if (interaction.Attacker.UnitCamp && interaction.Attacker.OfficerCamp === 'Vanguard') {interaction.Attacker.SkillColor = Colours.VanguardBoost}
+        if (interaction.Attacker.UnitCamp && interaction.Attacker.OfficerCamp === 'Liberty') {interaction.Attacker.SkillColor = Colours.LibertyBoost}
+        if (interaction.Attacker.UnitCamp && interaction.Attacker.OfficerCamp === 'MartyrsW') {interaction.Attacker.SkillColor = Colours.MartyrsWBoost}
+        
+        if (interaction.Defender.UnitCamp === 'Vanguard') {interaction.Defender.Color = Colours.Vanguard}
+        if (interaction.Defender.UnitCamp === 'Liberty') {interaction.Defender.Color = Colours.Liberty}
+        if (interaction.Defender.UnitCamp === 'MartyrsW') {interaction.Defender.Color = Colours.MartyrsW}
+
+        if (interaction.Defender.UnitCamp && interaction.Defender.OfficerCamp === 'Vanguard') {interaction.Defender.SkillColor = Colours.VanguardBoost}
+        if (interaction.Defender.UnitCamp && interaction.Defender.OfficerCamp === 'Liberty') {interaction.Defender.SkillColor = Colours.LibertyBoost}
+        if (interaction.Defender.UnitCamp && interaction.Defender.OfficerCamp === 'MartyrsW') {interaction.Defender.SkillColor = Colours.MartyrsWBoost}
+    }
 }

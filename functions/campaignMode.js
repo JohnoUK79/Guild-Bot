@@ -1,5 +1,5 @@
 const ms = require('ms-prettify').default
-const { campSelection, campaignSelection, attackSelection } = require('../functions/warpathFunctions');
+const { campSelection, campaignSelection, attackSelection, skillColours } = require('../functions/warpathFunctions');
 const { sleep } = require('../functions/discordFunctions')
 const { Colours } = require('../data/colours')
 const { officerSkills } = require('../functions/officerSkills');
@@ -48,7 +48,7 @@ campaignMode: async function (interaction) {
         if (Date.now() - t < 0) {
         const campaigncooldownEmbed = new EmbedBuilder()
             campaigncooldownEmbed
-                .setColor(Colours.Red)
+                .setColor(Colours.Black)
                 .setThumbnail(guildIcon)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
@@ -58,7 +58,7 @@ campaignMode: async function (interaction) {
         }
         const embed = new EmbedBuilder();
         embed
-            .setColor('#ff5b05')
+            .setColor(Colours.Black)
             .setThumbnail(guildIcon)
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
             .setFooter({ text: `Battle ID:${interaction.id} - ${campaignOfficer}`, iconURL: `${guildIcon}`});
@@ -130,48 +130,14 @@ campaignMode: async function (interaction) {
                 console.log(`Campiagn Prestige Buff`, Attacker.Prestige)
                 Defender.Multiplier = Attacker.Prestige
             }
-            if (Attacker.UnitCamp === 'Vanguard') {
-                Attacker.Color = Colours.Vanguard
-            }
-            if (Attacker.UnitCamp === 'Liberty') {
-                Attacker.Color = Colours.Liberty
-            }
-            if (Attacker.UnitCamp === 'MartyrsW') {
-                Attacker.Color = Colours.MartyrsW
-            }
-            if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Vanguard') {
-                Attacker.SkillColor = Colours.VanguardBoost
-            }
-            if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Liberty') {
-                Attacker.SkillColor = Colours.LibertyBoost
-            }
-            if (Attacker.UnitCamp && Attacker.OfficerCamp === 'MartyrsW') {
-                Attacker.SkillColor = Colours.MartyrsWBoost
-            }
-            if (Defender.UnitCamp === 'Vanguard') {
-                Defender.Color = Colours.Vanguard
-            }
-            if (Defender.UnitCamp === 'Liberty') {
-                Defender.Color = Colours.Liberty
-            }
-            if (Defender.UnitCamp === 'MartyrsW') {
-                Defender.Color = Colours.MartyrsW
-            }
-            if (Defender.UnitCamp && Defender.OfficerCamp === 'Vanguard') {
-                Defender.SkillColor = Colours.VanguardBoost
-            }
-            if (Defender.UnitCamp && Defender.OfficerCamp === 'Liberty') {
-                Defender.SkillColor = Colours.LibertyBoost
-            }
-            if (Defender.UnitCamp && Defender.OfficerCamp === 'MartyrsW') {
-                Defender.SkillColor = Colours.MartyrsWBoost
-            }
 
-const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)
-const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)
-Attacker.BattleHealth = Attacker.Health, Defender.BattleHealth = Defender.Health
-interaction.Attacker = Attacker, interaction.Defender = Defender
-console.log(interaction)
+            const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)
+            const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)
+            Attacker.BattleHealth = Attacker.Health, Defender.BattleHealth = Defender.Health
+            interaction.Attacker = Attacker, interaction.Defender = Defender
+            console.log(interaction)
+            skillColours(interaction)
+
 
 if (interaction.Attacker.Speed < interaction.Defender.Speed) {
 console.log(`Attacker Speed: ${interaction.Attacker.Speed} Defender Speed: ${interaction.Defender.Speed}`)

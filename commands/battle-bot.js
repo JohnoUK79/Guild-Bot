@@ -35,18 +35,28 @@ module.exports = {
 			)
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('shop')
-				.setDescription('Shop Coming Soon!')
+				.setName('help')
+				.setDescription('How to Play!')
 			)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('main')
 				.setDescription('Upgrade your Empire!')
+			)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('alliance')
+				.setDescription('Alliances Coming Soon!')
+			)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('shop')
+				.setDescription('Shop Coming Soon!')
 			),
-
 				
 	async execute(interaction) {
 		await interaction.deferReply({
+			content: 'Prepare for Battle!',
 			fetchReply: true,
 			ephemeral: true,
 		})
@@ -59,7 +69,7 @@ module.exports = {
 
 		const link = `http://phfamily.co.uk/img/${image}` 
 
-		CampColour = Colours.Green
+		CampColour = Colours.Black
 		if (Economy[0].unit_camp === 'Vanguard') {
 			CampColour = Colours.Vanguard
 		}
@@ -77,6 +87,18 @@ module.exports = {
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 
 		if (interaction.options.getSubcommand() === 'balance')
+		{
+			const balance = Economy[0].war_coins
+			const bank = Economy[0].war_chest
+			embed			
+				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`})
+				.addFields(
+					{ name: `War-Coins:`, value: `$${balance.toLocaleString()}`, inline: true }, 
+					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
+				);
+
+		}
+		if (interaction.options.getSubcommand() === 'help')
 		{
 			const balance = Economy[0].war_coins
 			const bank = Economy[0].war_chest

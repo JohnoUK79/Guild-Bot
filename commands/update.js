@@ -1,6 +1,6 @@
 const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder , AttachmentBuilder} = require('discord.js');
 const sql = require("../config/Database");
-const Canvas = require('@napi-rs/canvas');
+//const Canvas = require('@napi-rs/canvas');
 const { sleep } = require('../functions/discordFunctions');
 
 module.exports = {
@@ -42,28 +42,46 @@ module.exports = {
         //     }
         // }
 
-        const maxUnits = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '9.2' AND Camp = 'Vanguard' ORDER BY Unit_Type DESC`)
-        const { promises } = require('fs')
-        const { join } = require('path')
-        const { createCanvas, loadImage } = require('@napi-rs/canvas')
-        
-        for (let i = 0; i < maxUnits.length; i++) {
-        const unit = maxUnits[i];
-        console.log(unit)
-        const canvas = createCanvas(300, 200)
-        const context = canvas.getContext('2d')
-        sleep(2000)
-        const background = await loadImage(`./img/${unit.Image}`);
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-        const attachment = new AttachmentBuilder(await canvas.encode('jpeg'), { name: `New${unit.Image}` });
 
-        async function main() {
-          const jpgData = await canvas.encode('jpeg') // JPEG, AVIF and WebP are also supported
-          // encoding in libuv thread pool, non-blocking
-          await promises.writeFile(join(__dirname, `${unit.Image}`), jpgData)
-        }
-        main()
-        }
+        //Image Resizing 
+        // const maxUnits = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '9.2' AND Camp = 'Vanguard' ORDER BY Unit_Type DESC`)
+        // const { promises } = require('fs')
+        // const { join } = require('path')
+        // const { createCanvas, loadImage } = require('@napi-rs/canvas')
+        
+        // for (let i = 0; i < maxUnits.length; i++) {
+        // const unit = maxUnits[i];
+        // console.log(unit)
+        // const canvas = createCanvas(300, 200)
+        // const context = canvas.getContext('2d')
+        // sleep(2000)
+        // const background = await loadImage(`./img/${unit.Image}`);
+        // context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        // const attachment = new AttachmentBuilder(await canvas.encode('jpeg'), { name: `New${unit.Image}` });
+
+        // async function main() {
+        //   const jpgData = await canvas.encode('jpeg') // JPEG, AVIF and WebP are also supported
+        //   // encoding in libuv thread pool, non-blocking
+        //   await promises.writeFile(join(__dirname, `${unit.Image}`), jpgData)
+        // }
+        // main()
+        // }
+
+        // const Attacker = {
+        //     Name: 'Attacker',
+        //     Power: 10,
+        //     Health: 10
+        // }
+        // const Defender = {
+        //     Name: 'Defender',
+        //     Power: 10,
+        //     Health: 10
+        // }
+        const { Colours } = require('../data/colours')
+        updateEmbed
+                .setColor(Colours.LimeGreen)
+        console.log(interaction)
+
         await interaction.reply({
             ephemeral: true,
             embeds: [updateEmbed],

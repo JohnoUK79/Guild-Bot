@@ -122,10 +122,9 @@ module.exports = {
                 const rewards = 50000 / (i + 1) * Board[i].officer_level
                 const winnings = Board[i].war_chest + rewards
                 const sendDM = await client.users.cache.get(`${Board[i].discord_id}`)   
-                const sendSupport = await client.users.cache.get(OWNER)
                 weeklyRewardsEmbed
                     .setTitle(`You have placed ${i + 1} in this Week's Battle Rewards`)
-                    .setDescription(`Congratulations ${sendDM}, Your **${rewards.toLocaleString()} Rewards** have been added to your **War-Chest**!`)
+                    .setDescription(`Congratulations ${sendDM}, Your **$${rewards.toLocaleString()} Rewards** have been added to your **War-Chest**!`)
                     .setFooter({ text: `Battle Rewards - Wins ${Board[i].battle_wins} Losses ${Board[i].battle_losses} `, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });    
                 const updateWinnings = await sql.Execute(`UPDATE levels SET war_chest = '${winnings}' WHERE discord_id = ${Board[i].discord_id}`)
                 sendDM.send({ embeds: [weeklyRewardsEmbed]})

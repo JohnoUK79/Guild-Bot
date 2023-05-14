@@ -138,7 +138,7 @@ campaignMode: async function (interaction) {
             console.log(interaction)
             skillColours(interaction)
 
-
+const startTime = Date.now();
 if (interaction.Attacker.Speed < interaction.Defender.Speed) {
 console.log(`Attacker Speed: ${interaction.Attacker.Speed} Defender Speed: ${interaction.Defender.Speed}`)
 while (interaction.Defender.BattleHealth >= 0 && interaction.Attacker.BattleHealth >= 0) {
@@ -214,6 +214,10 @@ if (interaction.Defender.BattleHealth < 0) {
     const wins = AttackerDB[0].battle_wins
     const newWins = parseInt(wins + 1)
     const newWallet = parseInt(wallet + winnings)
+    const endTime = Date.now();
+    const duration = endTime - startTime
+    const battleLength = ms(duration)
+
     commandCooldowns.set(`${interaction.member.id}_${interaction.customId}`, Date.now() + 60 * 60 * 1000 * 12)
 
     embed 
@@ -223,6 +227,7 @@ if (interaction.Defender.BattleHealth < 0) {
         .addFields(
             { name: `Congratulations`, value: `You have defeated **${campaignOfficer}**! You can now challenge the next campaign` },
             { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
+            { name: `Battle Duration`, value: `||${battleLength}||` },
         )        
         .setDescription(`**${campaignOfficer}**'s **${interaction.Defender.Name}** has been killed by ${interaction.member}'s **${interaction.Attacker.Name} & ${interaction.Attacker.Officer} using ${interaction.Attacker.OfficerSkill}**.`)
 
@@ -236,6 +241,10 @@ if (interaction.Attacker.BattleHealth < 0) {
     console.count(`Battle ID: ${interaction.id} Round`)
     const losses = AttackerDB[0].battle_losses
     const newLosses = parseInt(losses + 1)
+    const endTime = Date.now();
+    const duration = endTime - startTime
+    const battleLength = ms(duration)
+
 
     embed
         .setColor(interaction.Defender.Color)
@@ -243,6 +252,7 @@ if (interaction.Attacker.BattleHealth < 0) {
         .setImage(`attachment://${interaction.Defender.ImageFile}`)
         .addFields(
             { name: `You Were Unsuccessful`, value: `**You Failed**! You were unable to defeat **${campaignOfficer}**` },
+            { name: `Battle Duration`, value: `||${battleLength}||` },
         )     
         .setDescription(`${interaction.member}'s **${interaction.Attacker.Name}** has been killed by **${campaignOfficer}**'s **${interaction.Defender.Name} & ${interaction.Defender.Officer} using ${interaction.Defender.OfficerSkill}**.`)
     interaction.editReply({ embeds: [embed], files: [defendImage] });

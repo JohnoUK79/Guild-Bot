@@ -131,6 +131,8 @@ module.exports = {
                 interaction.Attacker = Attacker, interaction.Defender = Defender
                 console.log(interaction)
                 skillColours(interaction)
+
+const startTime = Date.now();
 if (Attacker.Speed < Defender.Speed) {
     console.log(`Attacker Speed: ${Attacker.Speed} Defender Speed: ${Defender.Speed}`)
     while (interaction.Defender.BattleHealth >= 0 && interaction.Attacker.BattleHealth >= 0) {
@@ -220,6 +222,11 @@ if (interaction.Defender.BattleHealth < 0) {
         const losses = DefenderDB[0].battle_losses
         const newLosses = parseInt(losses + 1)
         const newWallet = parseInt(wallet + winnings)
+        const endTime = Date.now();
+        const duration = endTime - startTime
+        const battleLength = ms(duration)
+        
+
 
         embed 
             .setColor(interaction.Attacker.Color)
@@ -228,6 +235,7 @@ if (interaction.Defender.BattleHealth < 0) {
             .setImage(`attachment://${interaction.Attacker.ImageFile}`)
             .addFields(
                 { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
+                { name: `Battle Duration`, value: `**${battleLength}**` },
             )        
             .setDescription(`${defender}'s **${interaction.Defender.Name}** has been killed by ${interaction.member}'s **${interaction.Attacker.Name} & ${interaction.Attacker.Officer} using ${interaction.Attacker.OfficerSkill}**.`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
@@ -245,6 +253,9 @@ if (interaction.Attacker.BattleHealth < 0) {
         const losses = AttackerDB[0].battle_losses
         const newLosses = parseInt(losses + 1)
         const newWallet = wallet + winnings
+        const endTime = Date.now();
+        const duration = endTime - startTime
+        const battleLength = ms(duration)
     
         embed
             .setColor(interaction.Defender.Color)
@@ -253,6 +264,7 @@ if (interaction.Attacker.BattleHealth < 0) {
             .setImage(`attachment://${interaction.Defender.ImageFile}`)
             .addFields(
                 { name: `Defenders War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${defender}` },
+                { name: `Battle Duration`, value: `**${battleLength}**` },
             )     
             .setDescription(`${interaction.member}'s **${interaction.Attacker.Name}** has been killed by ${defender}'s **${interaction.Defender.Name} & ${interaction.Defender.Officer} using ${interaction.Defender.OfficerSkill}**.`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });

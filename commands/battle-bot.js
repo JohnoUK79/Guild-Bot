@@ -91,6 +91,7 @@ module.exports = {
 			const balance = Economy[0].war_coins
 			const bank = Economy[0].war_chest
 			embed			
+				.setColor(Colours.Blue)
 				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`})
 				.addFields(
 					{ name: `War-Coins:`, value: `$${balance.toLocaleString()}`, inline: true }, 
@@ -100,13 +101,19 @@ module.exports = {
 		}
 		if (interaction.options.getSubcommand() === 'help')
 		{
-			const balance = Economy[0].war_coins
+			console.log(Economy[0])
 			const bank = Economy[0].war_chest
 			embed			
+				.setColor(Colours.Black)
+				.setTitle(`Battle-Bot Help Menu`)
+				//.setDescription(`This is where details of what I can help with will `)
 				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`})
 				.addFields(
-					{ name: `War-Coins:`, value: `$${balance.toLocaleString()}`, inline: true }, 
+					{ name: `War-Coins:`, value: `**War-Coins** are the **Currency** of the **Battle-Bot**.\nNeeded for upgrading your **War-Chest** & **War_Base** to gain access to **Officers, Units & Skills**`, inline: true },
 					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
+					{ name: `Daily Reward:`, value: `$${bank.toLocaleString()}`, inline: true },
+					{ name: `Work:`, value: `$${bank.toLocaleString()}`, inline: true },
+					{ name: `Steal:`, value: `$${bank.toLocaleString()}`, inline: true },
 				);
 
 		}
@@ -124,6 +131,7 @@ module.exports = {
 
 			if (amount <= 0) {
 			embed
+				.setColor(Colours.Yellow)
 				.setDescription(`${interaction.member} are you **Broke**? Try adding some **War-Coins** to the **War-Chest**!`)
 				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
 			return interaction.editReply({ embeds: [embed], files: [playerImage] })
@@ -140,6 +148,8 @@ module.exports = {
 			try {
 				if (amount > wallet) {
 				embed
+					.setColor(Colours.Red)
+
 					.setDescription(`${interaction.member} You do not have enough **War-Coins** for that Deposit!\nYou have **$${wallet.toLocaleString()} War-Coins** available!`)
 					.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
 				return interaction.editReply({ embeds: [embed], files: [playerImage] });
@@ -149,6 +159,7 @@ module.exports = {
 				const newBank = bank + amount
 
 				embed
+					.setColor(Colours.Green)
 					.addFields(
 						{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
 						{ name: `War-Chest:`, value: `$${newBank.toLocaleString()}`, inline: true },
@@ -174,6 +185,7 @@ module.exports = {
 				const newWallet = wallet + amount
 				const newBank = bank - amount
 				embed
+					.setColor(Colours.Red)
 					.setDescription(`**Withdrawal Sucessful**!`)
 					.addFields(
 						{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
@@ -223,6 +235,7 @@ module.exports = {
 		const wallet = Economy[0].war_coins
 		const bank = Economy[0].war_chest
 			embed
+				.setColor(Colours.Blue)
 				.setDescription(`**What would you like to do today**?`)
 				.addFields(
 					{ name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 

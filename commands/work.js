@@ -21,16 +21,16 @@ module.exports = {
 		const work = Math.round(workBonus * officerlevel)
 
 		const Job = {
-			Job1: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1))}** hours **Cleaning Toilets** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
-			Job2: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1))}** hours **Waiting Tables** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
-			Job3: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1))}** hours **Stocking Shelves** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
-			Job4: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1))}** hours **Filling Gas** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
-			Job5: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1))}** hours **Delivering Groceries** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
-			Job6: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1))}** hours **Delivering Pizza** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
-			Job7: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1))}** hours on **Bar Duty** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
-			Job8: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1))}** hours on **The Checkout** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
-			Job9: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1))}** hours **Standing Guard** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
-			Job10: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1))}** hours **Doing Nothing** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
+			Job1: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1)) + 1}** hours **Cleaning Toilets** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
+			Job2: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1)) + 1}** hours **Waiting Tables** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
+			Job3: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1)) + 1}** hours **Stocking Shelves** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
+			Job4: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1)) + 1}** hours **Filling Gas** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
+			Job5: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1)) + 1}** hours **Delivering Groceries** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
+			Job6: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1)) + 1}** hours **Delivering Pizza** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
+			Job7: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1)) + 1}** hours on **Bar Duty** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
+			Job8: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1)) + 1}** hours on **The Checkout** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
+			Job9: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1)) + 1}** hours **Standing Guard** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
+			Job10: `${interaction.member} spent **${Math.floor(Math.random() * (12 - 1 + 1)) + 1}** hours **Doing Nothing** & **Earned $${work.toLocaleString()} War-Coins** from **Work**!`,
 		}
 		let jobsArray = Object.keys(Job);
 		let randomNumber = Math.random();

@@ -480,7 +480,7 @@ module.exports = {
         const upgradeEmbed = new EmbedBuilder();
         upgradeEmbed
             .setColor(CampColour)
-            .setThumbnail(link)
+            .setThumbnail(playerImage)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
             .setDescription(`**${interaction.member}, What would you like to upgrade**?`)
@@ -855,7 +855,7 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
-        const link = `http://phfamily.co.uk/img/${image}`
+
         let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
@@ -886,7 +886,7 @@ module.exports = {
         const footer = ` - `
         selectUnitEmbed
             .setColor(CampColour)
-            .setThumbnail(link)
+            .setThumbnail(playerImage)
             .setTimestamp()
             .setFooter({ text: `${unitSelection.Unit_Type} - ${unitSelection.Unit_Name} - ${unitSelection.Unit_Level}`, iconURL: `${guildIcon}`})
             .setDescription(`**${interaction.member}, Unit Selection Successful**`)
@@ -1274,32 +1274,31 @@ module.exports = {
         return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons], files: [newUnitImage] })
     },
     attackSelection: async function (interaction) {
-        if (interaction.Attacker.AttackType === interaction.Attacker.OfficerType) return interaction.Attacker.Multiplier = interaction.Attacker.Multiplier + interaction.Attacker.Multiplier, console.log(`Attacker Unit Buff:`, interaction.Attacker.Multiplier)
-        if (interaction.Defender.AttackType === interaction.Defender.OfficerType) return interaction.Defender.Multiplier = interaction.Defender.Multiplier + interaction.Defender.Multiplier, console.log(`Defender Unit Buff:`, interaction.Defender.Multiplier)
-        if (interaction.Attacker.AttackType === 'Air' && interaction.Defender.AttackType === 'Ground') return interaction.Attacker.Multiplier = interaction.Attacker.Multiplier * 2, interaction.Defender.Multiplier = interaction.Defender.Multiplier / 2, interaction.Defender.Power = interaction.Defender.Power / 2, console.log(`Attacker Air Buff:`, interaction.Attacker.Multiplier + `\nDefender Ground Debuff:`, interaction.Defender.Multiplier, interaction.Defender.Power)
-        if (interaction.Defender.AttackType === 'Air' && interaction.Attacker.AttackType === 'Ground') return interaction.Defender.Multiplier = interaction.Defender.Multiplier * 2, interaction.Attacker.Multiplier = interaction.Attacker.Multiplier / 2, interaction.Attacker.Power = interaction.Attacker.Power / 2, console.log(`Defender Air Buff:`, interaction.Defender.Multiplier, `\nDefender Ground Debuff:`, interaction.Attacker.Multiplier, interaction.Attacker.Power)
+        if (interaction.Attacker.AttackType === interaction.Attacker.OfficerType) return interaction.Attacker.Multiplier = interaction.Attacker.Multiplier + interaction.Attacker.Multiplier, console.log(`Attacker Unit Selection Buff:`, interaction.Attacker.Multiplier)
+        if (interaction.Defender.AttackType === interaction.Defender.OfficerType) return interaction.Defender.Multiplier = interaction.Defender.Multiplier + interaction.Defender.Multiplier, console.log(`Defender Unit Selection Buff:`, interaction.Defender.Multiplier)
+        if (interaction.Attacker.AttackType === 'Air' && interaction.Defender.AttackType === 'Ground') return interaction.Attacker.Multiplier = interaction.Attacker.Multiplier * 2, interaction.Defender.Multiplier = interaction.Defender.Multiplier / 2, interaction.Defender.Power = interaction.Defender.Power / 2, console.log(`Attacker Air Selection Buff:`, interaction.Attacker.Multiplier + `\nDefender Ground Debuff:`, interaction.Defender.Multiplier, interaction.Defender.Power)
+        if (interaction.Defender.AttackType === 'Air' && interaction.Attacker.AttackType === 'Ground') return interaction.Defender.Multiplier = interaction.Defender.Multiplier * 2, interaction.Attacker.Multiplier = interaction.Attacker.Multiplier / 2, interaction.Attacker.Power = interaction.Attacker.Power / 2, console.log(`Defender Air Selection Buff:`, interaction.Defender.Multiplier, `\nDefender Ground Debuff:`, interaction.Attacker.Multiplier, interaction.Attacker.Power)
     },
     campSelection: async function (interaction) {
         if (interaction.Attacker.UnitCamp === interaction.Attacker.OfficerCamp) return interaction.Attacker.Multiplier = interaction.Attacker.Multiplier + interaction.Attacker.Multiplier, console.log(`Attacker Camp Buff:`, interaction.Attacker.Multiplier)
         if (interaction.Defender.UnitCamp === interaction.Defender.OfficerCamp) return interaction.Defender.Multiplier = interaction.Defender.Multiplier + interaction.Defender.Multiplier, console.log(`Defender Camp Buff:`, interaction.Defender.Multiplier)
     },
     newUnitSelection: async function (prestige) { //Medium is Starter Troop
-        if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters'
-        if (prestige === 1) return newUnitLevel = '4.0', newUnitType = 'Infantry'
-        if (prestige === 2) return newUnitLevel = '5.0', newUnitType = 'SuperHeavy'
-        if (prestige === 3) return newUnitLevel = '4.0', newUnitType = 'Howitzers'
-        if (prestige === 4) return newUnitLevel = '5.0', newUnitType = 'Bombers'
-        if (prestige === 5) return newUnitLevel = '4.0', newUnitType = 'TankHunters'
-        if (prestige === 6) return newUnitLevel = '5.0', newUnitType = 'RocketLaunchers'
-        if (prestige === 7) return newUnitLevel = '4.0', newUnitType = 'LightTanks'
-        if (prestige === 8) return newUnitLevel = '4.0', newUnitType = 'HeavyTanks'
-        if (prestige === 9) return newUnitLevel = '4.0', newUnitType = 'AntiTankGuns'
+        if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters', console.log(`New Unit Fighters`)
+        if (prestige === 1) return newUnitLevel = '4.0', newUnitType = 'Infantry', console.log(`New Unit Infantry`)
+        if (prestige === 2) return newUnitLevel = '5.0', newUnitType = 'SuperHeavy', console.log(`New Unit SuperHeavy`)
+        if (prestige === 3) return newUnitLevel = '4.0', newUnitType = 'Howitzers', console.log(`New Unit Howitzers`)
+        if (prestige === 4) return newUnitLevel = '5.0', newUnitType = 'Bombers', console.log(`New Unit Bombers`)
+        if (prestige === 5) return newUnitLevel = '4.0', newUnitType = 'TankHunters', console.log(`New Unit TankHunters`)
+        if (prestige === 6) return newUnitLevel = '5.0', newUnitType = 'RocketLaunchers', console.log(`New Unit RocketLaunchers`)
+        if (prestige === 7) return newUnitLevel = '4.0', newUnitType = 'LightTanks', console.log(`New Unit LightTanks`)
+        if (prestige === 8) return newUnitLevel = '4.0', newUnitType = 'HeavyTanks', console.log(`New Unit HeavyTanks`)
+        if (prestige === 9) return newUnitLevel = '4.0', newUnitType = 'AntiTankGuns', console.log(`New Unit AntiTankGuns`)
         module.exports.newUnitLevel = newUnitLevel
         module.exports.newUnitType = newUnitType
     },
     selectunit: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const selectUnitButtons = new ActionRowBuilder()
@@ -1825,10 +1824,9 @@ module.exports = {
         const Officers = await sql.Execute(`SELECT * FROM officers WHERE Officer_ID NOT IN (SELECT Officer_ID FROM playerofficers WHERE Discord_ID = '${interaction.member.id}');`)            
         const currentOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}'`)
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)  
-        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
-        const link = `http://phfamily.co.uk/img/${image}`      
+
         const newOfficerEmbed = new EmbedBuilder();
         const newOfficerButtons = new ActionRowBuilder()
             .addComponents(
@@ -1852,7 +1850,7 @@ module.exports = {
             console.log(`Officer Upgrade Required`)
             newOfficerEmbed
                 .setColor(Colours.Black)
-                .setThumbnail(link)
+                .setThumbnail(playerImage)
                 .setTimestamp()
                 .addFields(
                     { name: `Required Level: ${presigeRequired}`, value: `Current Level: ${Level[0].officer_level}` },
@@ -1866,7 +1864,7 @@ module.exports = {
 
         newOfficerEmbed
             .setColor(Colours.Black)
-            .setThumbnail(link)
+            .setThumbnail(playerImage)
             .setTimestamp()
             .setDescription(`**${interaction.member}, New Officer Selection Successful**`)
             .addFields(
@@ -1927,7 +1925,6 @@ module.exports = {
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
-        const link = `http://phfamily.co.uk/img/${image}`  
         let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
@@ -1968,7 +1965,7 @@ module.exports = {
             console.log(`Officer Upgrade Needed`),
             skillUpgradeEmbed
                     .setColor(CampColour)
-                    .setThumbnail(link)
+                    .setThumbnail(playerImage)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **Officer** to apply this **Skill** Upgrade.`)
@@ -1989,7 +1986,7 @@ module.exports = {
                 difference = cost - wallet
             skillUpgradeEmbed
                 .setColor(CampColour)
-                .setThumbnail(link)
+                .setThumbnail(playerImage)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
@@ -2007,7 +2004,7 @@ module.exports = {
         const newSkillLevel = skillLevel + 1
         skillUpgradeEmbed
             .setColor(CampColour)
-            .setThumbnail(link)
+            .setThumbnail(playerImage)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Officer Skill Upgrade Successful**`)
             .addFields(

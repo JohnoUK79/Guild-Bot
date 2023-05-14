@@ -157,9 +157,8 @@ if (Attacker.Speed < Defender.Speed) {
         console.log('Attack Multiplier', interaction.Attacker.Multiplier )
         attackSelection(interaction)
         officerSkills(interaction)
-        campSelection(Attacker, Defender) 
+        campSelection(interaction) 
         interaction.Defender.BattleHealth = interaction.Defender.BattleHealth - interaction.Attacker.AttackPower
-        console.log(interaction.Attacker.ImageFile)
 
         embed
             .setColor(interaction.Attacker.Color)
@@ -198,7 +197,6 @@ if (Attacker.Speed < Defender.Speed) {
     Defender.AttackPower = (defendPower * interaction.Defender.Multiplier)
     console.log('Defend Multiplier', interaction.Defender.Multiplier )
     interaction.Attacker.BattleHealth = interaction.Attacker.BattleHealth - interaction.Defender.AttackPower
-        console.log(interaction.Defender.ImageFile)
         attackSelection(interaction)
         officerSkills(interaction)
         campSelection(interaction) 

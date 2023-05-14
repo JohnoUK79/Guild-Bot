@@ -235,7 +235,7 @@ if (interaction.Defender.BattleHealth < 0) {
             .setImage(`attachment://${interaction.Attacker.ImageFile}`)
             .addFields(
                 { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
-                { name: `Battle Duration`, value: `**${battleLength}**` },
+                { name: `Battle Duration`, value: `||${battleLength}||` },
             )        
             .setDescription(`${defender}'s **${interaction.Defender.Name}** has been killed by ${interaction.member}'s **${interaction.Attacker.Name} & ${interaction.Attacker.Officer} using ${interaction.Attacker.OfficerSkill}**.`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
@@ -264,7 +264,7 @@ if (interaction.Attacker.BattleHealth < 0) {
             .setImage(`attachment://${interaction.Defender.ImageFile}`)
             .addFields(
                 { name: `Defenders War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${defender}` },
-                { name: `Battle Duration`, value: `**${battleLength}**` },
+                { name: `Battle Duration`, value: `||${battleLength}||` },
             )     
             .setDescription(`${interaction.member}'s **${interaction.Attacker.Name}** has been killed by ${defender}'s **${interaction.Defender.Name} & ${interaction.Defender.Officer} using ${interaction.Defender.OfficerSkill}**.`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });

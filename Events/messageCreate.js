@@ -50,7 +50,7 @@ module.exports = {
 			const configuration = new Configuration({
 				apiKey: OPENAI_API_KEY,
 			  });
-			  const openai = new OpenAIApi(configuration);
+			const openai = new OpenAIApi(configuration);
 			async function runCompletion () {
 			const reponse = await openai.createCompletion({
 			model: "text-davinci-003",

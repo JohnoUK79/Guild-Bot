@@ -2,27 +2,37 @@ const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder , AttachmentBuild
 const sql = require("../config/Database");
 //const Canvas = require('@napi-rs/canvas');
 const { sleep } = require('../functions/discordFunctions');
+const { chatResponse } = require('../functions/chatBot');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
         .setName("update")
-        .setDescription("Database Update Tool!"),
+        .setDescription("Database Update Tool!")
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('question')
+				.setDescription('Question for the Bot!')
+			),
 
     async execute(interaction) {
         const { client } = require('../bot')
         guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
+        // const text = interaction.options.getString('question');
+        // interaction.content = text
+        chatResponse(interaction)
 
         const guildByID = await sql.Execute(`SELECT * FROM settings WHERE 1`) //level_up_channel_id = '1000526899124117535'
         const updateEmbed = new EmbedBuilder()
             .setColor('#4ec9b0')
             .setTitle(`Database Update`)
+            .setDescription(`${interaction.completion}`)
             .setURL('http://www.phfamily.co.uk/')
             .setAuthor({ name: 'Database Update', iconURL: 'http://phfamily.co.uk/img/gifs/Influencer.gif'})
             .setThumbnail('http://phfamily.co.uk/img/gifs/Influencer.gif')
             .addFields(
-                { name: `Database`, value: `Updated` },
+                { name: `${interaction.target}`, value: `${interaction.completion}` },
             )
             .setTimestamp()
             .setFooter({ text: `Database Update.`, iconURL: `http://phfamily.co.uk/img/gifs/Influencer.gif` });
@@ -80,8 +90,6 @@ module.exports = {
         const { Colours } = require('../data/colours')
         updateEmbed
                 .setColor(Colours.LimeGreen)
-        console.log(interaction)
-
         await interaction.reply({
             ephemeral: true,
             embeds: [updateEmbed],

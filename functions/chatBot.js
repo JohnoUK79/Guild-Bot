@@ -1,11 +1,12 @@
 const { Configuration, OpenAIApi } = require("openai");
-const { OPENAI_API_KEY } = require('../config.json')
+const { OPENAI_API_KEY, OPEN_AI_ORGANISATION } = require('../config.json')
 module.exports = {
     chatResponse: async function (message) {
 		target = message.content
 
         const configuration = new Configuration({
             apiKey: OPENAI_API_KEY,
+            organization: OPEN_AI_ORGANISATION,
           });
           const openai = new OpenAIApi(configuration);
     async function runCompletion () {

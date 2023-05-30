@@ -682,6 +682,16 @@ module.exports = {
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+        let CampColour = Colours.Black
+        if (Level[0].unit_camp === 'Vanguard') {
+            CampColour = Colours.VanguardBoost
+        }
+        if (Level[0].unit_camp === 'Liberty') {
+            CampColour = Colours.LibertyBoost
+        }
+        if (Level[0].unit_camp === 'MartyrsW') {
+            CampColour = Colours.MartyrsWBoost
+        }
 
         const selectOfficerEmbed = new EmbedBuilder();
         const selectOfficerButtons = new ActionRowBuilder()
@@ -711,7 +721,7 @@ module.exports = {
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-        const addOfficer = await sql.Execute(`INSERT INTO playerofficers (Discord_ID, Officer_ID, Officer_Type, Officer_Name, Officer_Camp, Skill, Skill_Level, Image) VALUES ('${interaction.member.id}', '${officerSelection.Officer_ID}', '${officerSelection.Officer_Type}', '${officerSelection.Officer_Name}', '${officerSelection.Officer_Camp}', '${officerSelection.Skill}', '${officerSelection.Image}', '0')`)
+        const addOfficer = await sql.Execute(`INSERT INTO playerofficers (Discord_ID, Officer_ID, Officer_Type, Officer_Name, Officer_Camp, Skill, Skill_Level, Image) VALUES ('${interaction.member.id}', '${officerSelection.Officer_ID}', '${officerSelection.Officer_Type}', '${officerSelection.Officer_Name}', '${officerSelection.Officer_Camp}', '${officerSelection.Skill}', '0', '${officerSelection.Image}')`)
         const updateOfficer = await sql.Execute(`UPDATE levels SET officer_name	= '${officerSelection.Officer_Name}', officer_level = '1' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Add Officer: ${addOfficer.info}`)
         console.log(`Officer Select: ${updateOfficer.info}`)
@@ -1365,12 +1375,33 @@ module.exports = {
         if (prestige === 7) return newUnitLevel = '4.0', newUnitType = 'LightTanks'
         if (prestige === 8) return newUnitLevel = '4.0', newUnitType = 'HeavyTanks'
         if (prestige === 9) return newUnitLevel = '4.0', newUnitType = 'AntiTankGuns'
+
+        if (prestige === 10) return newUnitLevel = '4.0', newUnitType = 'MediumTanks'//2
+        if (prestige === 11) return newUnitLevel = '5.0', newUnitType = 'Fighters'//2
+        if (prestige === 12) return newUnitLevel = '4.0', newUnitType = 'Infantry'//2
+        if (prestige === 13) return newUnitLevel = '4.0', newUnitType = 'Howitzers'//2
+        if (prestige === 14) return newUnitLevel = '5.0', newUnitType = 'Bombers'//2
+        if (prestige === 15) return newUnitLevel = '4.0', newUnitType = 'TankHunters'//2
+        if (prestige === 16) return newUnitLevel = '4.0', newUnitType = 'HeavyTanks'//2
+
+        if (prestige === 17) return newUnitLevel = '4.0', newUnitType = 'MediumTanks'//3
+        if (prestige === 18) return newUnitLevel = '5.0', newUnitType = 'Fighters'//3
+        if (prestige === 19) return newUnitLevel = '4.0', newUnitType = 'Infantry'//3
+        if (prestige === 20) return newUnitLevel = '4.0', newUnitType = 'Howitzers'//3
+        if (prestige === 21) return newUnitLevel = '5.0', newUnitType = 'Bombers'//3
+        if (prestige === 22) return newUnitLevel = '4.0', newUnitType = 'TankHunters'//3
+        if (prestige === 23) return newUnitLevel = '4.0', newUnitType = 'HeavyTanks'//3
+        if (prestige < 23) return interaction.update({
+            content: `You have collected all available Units`
+        })
+
+
         module.exports.newUnitLevel = newUnitLevel
         module.exports.newUnitType = newUnitType
         }
         newUnitSelection(prestige)
 
-        let presigeRequired = newPrestige * 20
+        let presigeRequired = newPrestige * 50
         if (presigeRequired > Level[0].officer_level) {
             console.log(`Officer Upgrade Required`)
             newUnitEmbed
@@ -1385,9 +1416,20 @@ module.exports = {
             return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons], files: [playerImage] })
         } else console.log(`No Officer Upgrade Required`)
 
-        const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '${newUnitLevel}' AND Unit_Type LIKE '%${newUnitType}%'`)
-        const unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
-		const newUnitImage = new AttachmentBuilder(`./img/${unitSelection.Image}`)
+        if (prestige > 9) {
+            const Current = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}' AND unit_type = '${newUnitType}'`)
+            const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '${newUnitLevel}' AND Unit_Type LIKE '%${newUnitType}%' AND '${Current[0].camp}' NOT IN (Camp)`)
+            unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
+            newUnitImage = new AttachmentBuilder(`./img/${unitSelection.Image}`)
+            module.exports = unitSelection = unitSelection, newUnitImage = newUnitImage    
+        } else {
+            const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '${newUnitLevel}' AND Unit_Type LIKE '%${newUnitType}%'`)
+            unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
+            newUnitImage = new AttachmentBuilder(`./img/${unitSelection.Image}`)
+            module.exports.unitSelection = unitSelection
+            module.exports.newUnitImage = newUnitImage
+        }
+
 
         newUnitEmbed
             .setColor(CampColour)
@@ -1490,7 +1532,7 @@ module.exports = {
             unitChoices.push({
                 label: type,
                 description: `${camp} - ${type} - ${level}`,
-                value: type.toString(),
+                value: type + '_' + camp.toString(),
                 emoji: image.toString(),
             })
         }
@@ -1510,7 +1552,9 @@ module.exports = {
     },
     selectunitmenu: async function (interaction) {
         const selected = interaction.values[0]
-        const selectedUnit = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}' AND unit_type = '${selected}'`)
+        const choice = selected.split('_')
+        console.log(choice[1])
+        const selectedUnit = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}' AND unit_type = '${choice[0]}'`)
         const newUnitSelect = await sql.Execute(`SELECT * FROM units WHERE Camp = '${selectedUnit[0].camp}' AND Unit_Type = '${selectedUnit[0].unit_type}' AND Unit_Level = '${selectedUnit[0].unit_level}'`)
         const playerProfile = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const firepower = newUnitSelect[0].Firepower * (playerProfile[0].officer_level / 10)

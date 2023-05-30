@@ -19,8 +19,9 @@ module.exports = {
         const { client } = require('../bot')
         guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
-        // const text = interaction.options.getString('question');
-        // interaction.content = text
+        const text = interaction.options.getString('question');
+        interaction.content = text
+        console.log(interaction)
         chatResponse(interaction)
 
         const guildByID = await sql.Execute(`SELECT * FROM settings WHERE 1`) //level_up_channel_id = '1000526899124117535'

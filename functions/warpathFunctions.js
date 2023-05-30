@@ -1460,7 +1460,7 @@ module.exports = {
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
 
         let CampColour = Colours.Black
-        const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
+        const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE officer_type = 'Ground' AND discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
         const selectOfficerButtons = new ActionRowBuilder()
         .addComponents(
             new ButtonBuilder()

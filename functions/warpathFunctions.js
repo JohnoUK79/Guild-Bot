@@ -1456,11 +1456,142 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
+        const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
+        const selectOfficerButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("cancel")
+                .setLabel('Upgrade Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectunit")
+                .setLabel('Select Unit Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectgroundofficer")
+                .setLabel('Ground Officer Menu')
+                .setStyle(ButtonStyle.Primary), 
+            new ButtonBuilder()
+                .setCustomId("selectairofficer")
+                .setLabel('Air Officer Menu')
+                .setStyle(ButtonStyle.Primary),    
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Show Profile')
+                .setStyle(ButtonStyle.Secondary),
+                )
+        const selectOfficerEmbed = new EmbedBuilder()
+                .setColor(CampColour)
+                .setThumbnail(playerThumbnail)
+                .setTimestamp()
+                .setTitle(`Select from your Ground or Air Officers!`)
+
+        if (playerOfficers.length === 0) {
+            selectOfficerEmbed
+                .setTitle(`No Officer Available!`)
+                .setDescription(`You have not selected your **Officer**.\nUpgrade your **War-Chest** & **War-Base** to get your **First Unit**!`)
+            return interaction.update({
+            embeds: [selectOfficerEmbed],
+            components: [selectOfficerButtons],
+            files: [playerImage]
+            })
+        }
+
+
+        interaction.update({
+            embeds: [selectOfficerEmbed],
+            components: [selectOfficerButtons],
+            files: [playerImage]
+        })
+    },
+    selectgroundofficer: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
 
         let CampColour = Colours.Black
         const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE officer_type = 'Ground' AND discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
+        const selectOfficerButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("cancel")
+                .setLabel('Upgrade Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectunit")
+                .setLabel('Select Unit Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectofficer")
+                .setLabel('Select Officer Menu')
+                .setStyle(ButtonStyle.Success),    
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Show Profile')
+                .setStyle(ButtonStyle.Secondary),
+                )
+        const selectOfficerEmbed = new EmbedBuilder()
+                .setColor(CampColour)
+                .setThumbnail(playerThumbnail)
+                .setTimestamp()
+                .setTitle(`Select Your Officer!`)
+
+        if (playerOfficers.length === 0) {
+            selectOfficerEmbed
+                .setTitle(`No Officer Available!`)
+                .setDescription(`You have not selected your **Officer**.\nUpgrade your **War-Chest** & **War-Base** to get your **First Unit**!`)
+            return interaction.update({
+            embeds: [selectOfficerEmbed],
+            components: [selectOfficerButtons],
+            files: [playerImage]
+            })
+        }
+
+        const officerChoices = [];
+        for (const entry in playerOfficers) {
+            const name = playerOfficers[entry].Officer_Name
+            const type = playerOfficers[entry].Officer_Type
+            const camp = playerOfficers[entry].Officer_Camp
+            const skill = playerOfficers[entry].Skill
+            const level = playerOfficers[entry].Officer_Level
+            const skill_level = playerOfficers[entry].Skill_Level
+            const image = await interaction.client.emojis.cache.find(emoji => emoji.name == camp)
+
+            officerChoices.push({
+                label: name,
+                description: `${level} - ${camp} - ${type} - ${skill} - ${skill_level}`,
+                value: name.toString(),
+                emoji: image.toString()
+            })
+        }
+
+        const officerMenu = new ActionRowBuilder()
+            .addComponents(
+                new StringSelectMenuBuilder()
+                    .setCustomId("selectofficermenu")
+                    .setPlaceholder('Select your Officer')
+                    .addOptions(officerChoices),
+            )
+        interaction.update({
+            embeds: [selectOfficerEmbed],
+            components: [officerMenu, selectOfficerButtons],
+            files: [playerImage]
+        })
+    },
+    selectairofficer: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const link = `http://phfamily.co.uk/img/${image}`
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
+        const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE officer_type = 'Air' AND discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
         const selectOfficerButtons = new ActionRowBuilder()
         .addComponents(
             new ButtonBuilder()

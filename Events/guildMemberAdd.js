@@ -25,7 +25,7 @@ module.exports = {
         // This is just to simplify the message being sent below (inviter doesn't have a tag property)
         const inviter = await member.guild.members.fetch(invite.inviter.id);
 
-
+        const starterCoins = 3000000
 		if (!playerDisplayName){ var playerDisplayName = member.username}
         console.log("Member Joined")
         if (member.partial) {
@@ -40,16 +40,16 @@ module.exports = {
         
         const newMemberEmbed = new EmbedBuilder()
             .setColor("#d81e5b")
-            .setTitle("New Player!")
-            .setDescription(`<@${member.id}> has joined the server! \nWe hope you enjoy your time here.`)
+            .setTitle("New Warrior!")
+            .setDescription(`<@${member.id}> has joined the server! \nWe are a **Battle-Bot** Server\nUse the command **/register** to start your **Battle-Bot** Adventure.\nMention ${member.client.user} for Help!`)
             .setThumbnail(member.user.displayAvatarURL())
             .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();
             
         const welcomeEmbed = new EmbedBuilder()
             .setColor("#d81e5b")
-            .setTitle(`Welcome to ${GUILD}`)
-            .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here.`)
+            .setTitle(`Welcome to the Battle Server - ${GUILD}`)
+            .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here\nUse the command **/register** in server to start your **Battle-Bot** Adventure.\nYou Will receive **$${starterCoins.toLocaleString()} War-Coins** Upon registering.`)
             .setThumbnail(guildIcon)
             .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();

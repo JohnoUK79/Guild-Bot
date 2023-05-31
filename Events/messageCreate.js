@@ -21,32 +21,9 @@ module.exports = {
 		}
 
 		//Chat Bot Message
-		if (message.content.startsWith(`Battle-Bot`)) {
-			const target = message.content.slice(11)			
-			async function runCompletion () {
-			const reponse = await openai.createCompletion({
-			model: "text-davinci-003",
-			prompt: target,
-			max_tokens:4000
-			});
-			console.log(`Battle-Bot Prefix:${target}`)
-			const reply = reponse.data.choices[0].text
-			if (!reply) return
-			message.reply({
-				content: `${reply}`
-			})}
-			runCompletion();
-
-			console.log(`Battle-Bot AI Text Chat`)
-		}
-
-
-		const units = await sql.Execute(`SELECT * FROM units WHERE camp = 'Vanguard'`)
-		const officers = await sql.Execute(`SELECT * FROM officers WHERE 1`)
-		console.log(units)
 		const { client } = require('../bot')
 		if (message.mentions.users.has(client.user.id)){
-			const target = message.content.slice(23)
+			const target = message.content.replace(`<@${client.user.id}>`, '')
 			const chats = [
 				{
 				  role: "user",
@@ -88,7 +65,7 @@ module.exports = {
 					  },
 					  {
 						"role": "assistant",
-						"content": "The aim of **Battle Bot™** is to grow your empire until you have a strong compilation of Officers & Units to be able to take on not only the members in your discord server but also challenge the strongest members from across the game in the Bot's home discord server.",
+						"content": "The aim of **Battle Bot™** is to grow your empire until you have a strong compilation of **Officers** & **Units** to be able to take on not only the members in your discord server but also challenge the strongest members from across the game in the Bot's home discord server.",
 					  },
 					  {
 						"role": "user",
@@ -108,11 +85,11 @@ module.exports = {
 					  },
 					  {
 						"role": "user",
-						"content": "Can I trade with other players?",
+						"content": "What Units are there?",
 					  },
 					  {
 						"role": "assistant",
-						"content": "Currently, trading with other players is not supported in **Battle Bot™**. The focus is on battling and growing your empire. However, you can engage in strategic alliances and cooperative gameplay to strengthen your position.",
+						"content": "Currently, there are 3 **Camps** in **Battle Bot™**. Each has there own version of Infantry, Medium Tanks, Heavy Tanks, Tank Hunters , Howitzers, Fighters & Bombers. However, each **Camp** has a specialised **Unit**.\nThis is 1. **Super Heavy Tank** for **Vanguard Camp**. 2. **Rocket Launchers** for MartyrsW Camp**. 3. **Light Tanks** for **Liberty Camp**.",
 					  },
 					  {
 						"role": "user",
@@ -128,15 +105,15 @@ module.exports = {
 					  },
 					  {
 						"role": "assistant",
-						"content": "Yes, **Battle Bot™** features leaderboards where you can see how you rank among other players. There are leaderboards for PvP battles won in each server. There is also a Global Leaderboard of Players from All Servers",
+						"content": "Yes, **Battle Bot™** features **Leaderboards** where you can see how you rank among other players. There are **Leaderboards** for **PvP Battles** won in each server. There is also a **Global Leaderboard** of Players from All Servers",
 					  },
 					  {
 						"role": "user",
-						"content": "What about the Units & Officers?",
+						"content": "What about the Officers?",
 					  },
 					  {
 						"role": "assistant",
-						"content": `Yes, **Battle Bot™** has a wide range of **Units** ${units}.\nAs well as an impressive selection of **Officers** ${officers}.`,
+						"content": `Yes, **Battle Bot™** has an impressive selection of **Officers** 1. **[Sergeant Spanner]**, **Liberty**, **Ground**, Awoken Skill **Idomitable**. 2. **[White Wolf]**, **MartyrsW**, **Ground**, Awoken Skill **Vengeance**. 3. **[Thorn Countess]**, **Vanguard**, **Ground**, Awoken Skill **Beauty Worth Preserving**. 4. **[Tip of the Spear]**, **Liberty**, **Ground**, Awoken Skill **Undaunted**. 5. **[Antonina Shevchenko]**, **MartyrsW**, **Ground**, Awoken Skill **The Motherland**. 6. **[Professor Pain]**, **Vanguard**, **Ground**, Awoken Skill **Forlorn Hope**. 7. **[Silver Comet]**, **Vanguard**, **Air**, Awoken Skill **Twin Fangs**. 8. **[The Witcher]**, **MartyrsW**, **Air**, Awoken Skill **Unleashed Justice**. 9. **[Rictus Reaper]**, **Vanguard**, **Air**, Awoken Skill **Last Gasp**.`,
 					  },
 					  ...chats,
 					],

@@ -8,7 +8,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 const newFile = async function () {
 const response = await openai.createFile(
-  fs.createReadStream("training.txt"),
+  fs.createReadStream("newTrainingData.jsonl"),
   "fine-tune"
 );
 console.log(response.data)

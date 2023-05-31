@@ -22,11 +22,7 @@ module.exports = {
 
 		//Chat Bot Message
 		if (message.content.startsWith(`Battle-Bot`)) {
-			const target = message.content.slice(11)
-			const configuration = new Configuration({
-				apiKey: OPENAI_API_KEY,
-			  });
-			  const openai = new OpenAIApi(configuration);
+			const target = message.content.slice(11)			
 			async function runCompletion () {
 			const reponse = await openai.createCompletion({
 			model: "text-davinci-003",
@@ -53,15 +49,19 @@ module.exports = {
 			const openai = new OpenAIApi(configuration);
 			async function runCompletion () {
 			const reponse = await openai.createCompletion({
-			model: "text-davinci-003",
+			model: "davinci:ft-battle-bot-2023-05-31-13-02-44",
 			prompt: target,
-			max_tokens:4000
+			max_tokens:2000
 			});
-	
+			
 			const reply = reponse.data.choices[0].text
+			console.log(reply)
+			const length = 2000;
+			const shortReply = reply.substring(0, length);
+
 			if (!reply) return
 			message.reply({
-				content: `${reply}`
+				content: `${shortReply}`
 			})}
 			runCompletion();
 

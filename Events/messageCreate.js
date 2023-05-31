@@ -81,7 +81,7 @@ module.exports = {
 					  },
 					  {
 						"role": "assistant",
-						"content": "It is easy to level up. Simply collect War-Coins from the various methods and upgrade your Officers & Units. The more you upgrade the stronger you become and the larger the rewards.",
+						"content": "It is easy to level up. Simply collect War-Coins from the various methods and upgrade your **Officers** & **Units**. The more you upgrade the stronger you become and the larger the rewards. Don't forget to upgrade your **War-Chest** to store your spoils of war!",
 					  },
 					  {
 						"role": "user",
@@ -115,12 +115,20 @@ module.exports = {
 						"role": "assistant",
 						"content": `Yes, **Battle Bot™** has an impressive selection of **Officers** 1. **[Sergeant Spanner]**, **Liberty**, **Ground**, Awoken Skill **Idomitable**. 2. **[White Wolf]**, **MartyrsW**, **Ground**, Awoken Skill **Vengeance**. 3. **[Thorn Countess]**, **Vanguard**, **Ground**, Awoken Skill **Beauty Worth Preserving**. 4. **[Tip of the Spear]**, **Liberty**, **Ground**, Awoken Skill **Undaunted**. 5. **[Antonina Shevchenko]**, **MartyrsW**, **Ground**, Awoken Skill **The Motherland**. 6. **[Professor Pain]**, **Vanguard**, **Ground**, Awoken Skill **Forlorn Hope**. 7. **[Silver Comet]**, **Vanguard**, **Air**, Awoken Skill **Twin Fangs**. 8. **[The Witcher]**, **MartyrsW**, **Air**, Awoken Skill **Unleashed Justice**. 9. **[Rictus Reaper]**, **Vanguard**, **Air**, Awoken Skill **Last Gasp**.`,
 					  },
+					  {
+						"role": "user",
+						"content": "What are the skills?",
+					  },
+					  {
+						"role": "assistant",
+						"content": "For every 50th Level the **Officer** is upgraded you can unlock another **Skill Level**.\n**Skill Levels** increase the chance of the **Skill Tiggering** by **5% Each Level** up until **100%**!",
+					  },
 					  ...chats,
 					],
 				  });
 							
 			const reply = result.data.choices[0].message.content
-			console.log(reply)
+			console.log(result.data)
 
 			if (!reply) return
 			message.reply({

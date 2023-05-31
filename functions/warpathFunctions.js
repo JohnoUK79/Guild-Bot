@@ -1553,8 +1553,9 @@ module.exports = {
     selectunitmenu: async function (interaction) {
         const selected = interaction.values[0]
         const choice = selected.split('_')
-        console.log(choice[1])
-        const selectedUnit = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}' AND unit_type = '${choice[0]}'`)
+        console.log(choice[0])
+        const selectedUnit = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}' AND camp = '${choice[1]}' AND unit_type = '${choice[0]}'`)
+        console.log(selectedUnit)
         const newUnitSelect = await sql.Execute(`SELECT * FROM units WHERE Camp = '${selectedUnit[0].camp}' AND Unit_Type = '${selectedUnit[0].unit_type}' AND Unit_Level = '${selectedUnit[0].unit_level}'`)
         const playerProfile = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const firepower = newUnitSelect[0].Firepower * (playerProfile[0].officer_level / 10)
@@ -1598,7 +1599,7 @@ module.exports = {
                 .setStyle(ButtonStyle.Secondary),
         )
         const selectedUnitEmbed = new EmbedBuilder()
-            .setTitle(`${selected} chosen`)
+            .setTitle(`${choice[0]} chosen`)
             .setColor(CampColour)
             .setThumbnail(playerThumbnail)
             .setTimestamp()

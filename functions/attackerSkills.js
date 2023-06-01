@@ -15,99 +15,53 @@ module.exports = {
             console.log(`Officer Not Levelled Up`)
         }
 
-        if (interaction.Attacker.UnitCamp === 'Vanguard') {
-            interaction.Attacker.SkillColor = Colours.Vanguard
+        const campColors = {
+            Vanguard: Colours.Vanguard,
+            Liberty: Colours.Liberty,
+            MartyrsW: Colours.MartyrsW,
+        };
+        
+        if (interaction.Attacker.UnitCamp && campColors[interaction.Attacker.UnitCamp]) {
+            interaction.Attacker.SkillColor = campColors[interaction.Attacker.UnitCamp];
         }
-        if (interaction.Attacker.UnitCamp === 'Liberty') {
-            interaction.Attacker.SkillColor = Colours.Liberty
+        
+        if (interaction.Attacker.UnitCamp && interaction.Attacker.OfficerCamp) {
+            const boostColor = `${interaction.Attacker.UnitCamp}Boost`;
+            if (campColors[interaction.Attacker.OfficerCamp + boostColor]) {
+                interaction.Attacker.SkillColor = campColors[interaction.Attacker.OfficerCamp + boostColor];
+            }
         }
-        if (interaction.Attacker.UnitCamp === 'MartyrsW') {
-            interaction.Attacker.SkillColor = Colours.MartyrsW
+        //Skill Chance
+        chance = chance0
+        const chances = [
+            chance0, chance5, chance10, chance15, chance20,
+            chance25, chance30, chance35, chance40, chance45,
+            chance50, chance55, chance60, chance65, chance70,
+            chance75, chance80, chance85, chance90, chance95,
+            chance100
+        ];
+        
+        if (interaction.Attacker.SkillLevel >= 0 && interaction.Attacker.SkillLevel <= 19) {
+            chance = chances[interaction.Attacker.SkillLevel];
+        } else if (interaction.Attacker.SkillLevel > 19) {
+            chance = chances[chances.length - 1];
         }
-        if (interaction.Attacker.UnitCamp && interaction.Attacker.OfficerCamp === 'Vanguard') {
-            interaction.Attacker.SkillColor = Colours.VanguardBoost
-        }
-        if (interaction.Attacker.UnitCamp && interaction.Attacker.OfficerCamp === 'Liberty') {
-            interaction.Attacker.SkillColor = Colours.LibertyBoost
-        }
-        if (interaction.Attacker.UnitCamp && interaction.Attacker.OfficerCamp === 'MartyrsW') {
-            interaction.Attacker.SkillColor = Colours.MartyrsWBoost
-        }
-        let chance = chance0
-        if (interaction.Attacker.SkillLevel === 0) {
-            chance = chance0
-        }
-        if (interaction.Attacker.SkillLevel === 1) {
-            chance = chance5
-        }
-        if (interaction.Attacker.SkillLevel === 2) {
-            chance = chance10
-        }
-        if (interaction.Attacker.SkillLevel === 3) {
-            chance = chance15
-        }
-        if (interaction.Attacker.SkillLevel === 4) {
-            chance = chance20
-        }
-        if (interaction.Attacker.SkillLevel === 5) {
-            chance = chance25
-        }
-        if (interaction.Attacker.SkillLevel === 6) {
-            chance = chance30
-        }
-        if (interaction.Attacker.SkillLevel === 7) {
-            chance = chance35
-        }
-        if (interaction.Attacker.SkillLevel === 8) {
-            chance = chance40
-        }
-        if (interaction.Attacker.SkillLevel === 9) {
-            chance = chance45
-        }
-        if (interaction.Attacker.SkillLevel === 10) {
-            chance = chance50
-        }
-        if (interaction.Attacker.SkillLevel === 11) {
-            chance = chance55
-        }
-        if (interaction.Attacker.SkillLevel === 12) {
-            chance = chance60
-        }
-        if (interaction.Attacker.SkillLevel === 13) {
-            chance = chance65
-        }
-        if (interaction.Attacker.SkillLevel === 14) {
-            chance = chance70
-        }
-        if (interaction.Attacker.SkillLevel === 15) {
-            chance = chance75
-        }
-        if (interaction.Attacker.SkillLevel === 16) {
-            chance = chance80
-        }
-        if (interaction.Attacker.SkillLevel === 17) {
-            chance = chance85
-        }
-        if (interaction.Attacker.SkillLevel === 18) {
-            chance = chance90
-        }
-        if (interaction.Attacker.SkillLevel === 19) {
-            chance = chance95
-        }
-        if (interaction.Attacker.SkillLevel > 19) {
-            chance = chance100
-        }
-
+        
         const skillEmbed = new EmbedBuilder();
-            skillEmbed 
-                    .setColor('#ff5b05')
-                    .setThumbnail(guildIcon)
-                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-                    .setFooter({ text: `Battle ID:${interaction.id} - ${interaction.Defender.Player || interaction.member.displayName}`, iconURL: `${guildIcon}`})
-                    
+        skillEmbed.setColor('#ff5b05');
+        skillEmbed.setThumbnail(guildIcon);
+        skillEmbed.setAuthor({
+            name: interaction.member.displayName,
+            iconURL: interaction.member.displayAvatarURL({ dynamic: true })
+        });
+        skillEmbed.setFooter({
+            text: `Battle ID:${interaction.id} - ${interaction.Defender.Player || interaction.member.displayName}`,
+            iconURL: guildIcon
+        });
+                            
         //Sergeant Spanner
         if (interaction.Attacker.OfficerSkill === 'Indomitable') { //Awoken Skill
-                if (interaction.Attacker.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
+                if (interaction.Attacker.UnitType === 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
                     const Damage = Math.round(interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1)) 
                     interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                     console.log(`Attacker Skill Unit Buff`, Damage.toLocaleString())
@@ -136,14 +90,14 @@ module.exports = {
         }            
         //Angel of Light
         if (interaction.Attacker.OfficerSkill === 'Caring Angel') { // Awoken Skill 5
-            if (interaction.Attacker.UnitType = 'Infantry') {
+            if (interaction.Attacker.UnitType === 'Infantry') {
                 const Damage = interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1)
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
             }   
             if (interaction.Defender.SkillUsed === 'Attack') {
                 console.log(`Caring Angel`)
-                const Health = math.round(interaction.Attacker.SkillMultiplier * (interaction.Attacker.BattleHealth * 0.35)) 
+                const Health = Math.round(interaction.Attacker.SkillMultiplier * (interaction.Attacker.BattleHealth * 0.35)) 
                 if (interaction.Attacker.BattleHealth > 0) {
                     interaction.Attacker.BattleHealth = interaction.Attacker.BattleHealth + Health
                     console.log(`Health Increased`, Health)
@@ -162,7 +116,7 @@ module.exports = {
         }        
         // War Machine
         if (interaction.Attacker.OfficerSkill === `The Soldier's Soldier`) {
-            if (interaction.Attacker.AttackType = 'Ground') {
+            if (interaction.Attacker.AttackType === 'Ground') {
                 const Damage = Math.round(interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1)) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
@@ -187,7 +141,7 @@ module.exports = {
         }        
         //Tip of the Spear 
         if (interaction.Attacker.OfficerSkill === 'Undaunted') { // Awoken Skill 5
-            if (interaction.Attacker.AttackType = 'Ground') {
+            if (interaction.Attacker.AttackType === 'Ground') {
                 const Damage = interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
@@ -212,7 +166,7 @@ module.exports = {
         }        
         //Valkyrie
         if (interaction.Attacker.OfficerSkill === 'Who Dares Wins') { // Awoken Skill 5
-            if (interaction.Attacker.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
+            if (interaction.Attacker.UnitType === 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
                 const Damage = Math.round(interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1)) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
@@ -238,7 +192,7 @@ module.exports = {
         }
         //Lady Justice        
         if (interaction.Attacker.OfficerSkill === 'Guardian Angel') { // Awoken Skill 5
-            if (interaction.Attacker.AttackType = 'Ground') {
+            if (interaction.Attacker.AttackType === 'Ground') {
                 const Damage = interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
@@ -290,7 +244,7 @@ module.exports = {
         }        
         // Percy
         if (interaction.Attacker.OfficerSkill === 'Frontline Fire') { // Awoken Skill 5
-            if (interaction.Attacker.AttackType = 'Ground') {
+            if (interaction.Attacker.AttackType === 'Ground') {
                 const Damage = Math.round(interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1)) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
@@ -443,7 +397,7 @@ module.exports = {
         }                
         // Steel Fighter
         if (interaction.Attacker.OfficerSkill === 'Inpenetrable') { // Awoken Skill 5 
-            if (interaction.Attacker.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
+            if (interaction.Attacker.UnitType === 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
                 const Damage = interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
@@ -536,7 +490,7 @@ module.exports = {
         }        
         // Guardian of Truth
         if (interaction.Attacker.OfficerSkill === 'Master of War') { // Awoken Skill 5
-            if (interaction.Attacker.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
+            if (interaction.Attacker.UnitType === 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
                 const Damage = Math.round(interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1)) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
@@ -670,7 +624,7 @@ module.exports = {
         }}}        
         // Thorn Countess
         if (interaction.Attacker.OfficerSkill === 'Beauty Worth Preserving') { // Awoken Skill 5
-            if (interaction.Attacker.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
+            if (interaction.Attacker.UnitType === 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
                 const Damage = interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
@@ -700,7 +654,7 @@ module.exports = {
         }        
         // Professor Pain 
         if (interaction.Attacker.OfficerSkill === 'Forlorn Hope') { // Awoken Skill 5
-            if (interaction.Attacker.UnitType = 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
+            if (interaction.Attacker.UnitType === 'MediumTanks' || 'LightTanks' || 'HeavyTanks' || 'TankHunters' || 'SuperHeavyTanks') {
                 const Damage = Math.round(interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1)) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
@@ -726,7 +680,7 @@ module.exports = {
         }        
         // Wings of Glory
         if (interaction.Attacker.OfficerSkill === 'Sky Dancer') { // Awoken Skill 5 
-            if (interaction.Attacker.UnitType = 'Fighters') {
+            if (interaction.Attacker.UnitType === 'Fighters') {
                 const Damage = Math.round(interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1)) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
@@ -753,7 +707,7 @@ module.exports = {
         }        
         // Brisk Eagle
         if (interaction.Attacker.OfficerSkill === 'Untouchable') { // Awoken Skill 5
-            if (interaction.Attacker.UnitType = 'Fighters' || 'Bombers') {
+            if (interaction.Attacker.UnitType === 'Fighters' || 'Bombers') {
                 const Damage = Math.round(interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1)) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
@@ -782,7 +736,7 @@ module.exports = {
             }        
         // Heavens Saviour
         if (interaction.Attacker.OfficerSkill === 'Heavenly Rays') { // Awoken Skill 5 
-            if (interaction.Attacker.UnitType = 'Fighters') {
+            if (interaction.Attacker.UnitType === 'Fighters') {
                 const Damage = Math.round(interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1)) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
@@ -810,7 +764,7 @@ module.exports = {
         }        
         // Silver Comet
         if (interaction.Attacker.OfficerSkill === 'Twin Fangs') { // Awoken Skill 5 
-            if (interaction.Attacker.UnitType = 'Fighters') { 
+            if (interaction.Attacker.UnitType === 'Fighters') { 
                 const Damage = Math.round(interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1)) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)
@@ -997,7 +951,7 @@ module.exports = {
         }}}
         // Vox Veritatis
         if (interaction.Attacker.OfficerSkill === 'Winning Mentality') { // Awoken Skill 5
-            if (interaction.Attacker.AttackType = 'Ground') {
+            if (interaction.Attacker.AttackType === 'Ground') {
                 const Damage = Math.round(interaction.Attacker.SkillMultiplier * (interaction.Attacker.AttackPower * .1)) 
                 interaction.Attacker.AttackPower = interaction.Attacker.AttackPower + Damage
                 console.log(`Attacker Skill Unit Buff`, Damage)

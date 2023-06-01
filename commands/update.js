@@ -1,28 +1,16 @@
 const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder , AttachmentBuilder} = require('discord.js');
 const sql = require("../config/Database");
 //const Canvas = require('@napi-rs/canvas');
-const { sleep } = require('../functions/discordFunctions');
-const { chatResponse } = require('../functions/chatBot');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild)
         .setName("update")
-        .setDescription("Database Update Tool!")
-		.addSubcommand(subcommand =>
-			subcommand
-				.setName('question')
-				.setDescription('Question for the Bot!')
-			),
+        .setDescription("Database Update Tool!"),
 
     async execute(interaction) {
-        const { client } = require('../bot')
         guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
-        const text = interaction.options.getString('question');
-        interaction.content = text
-        console.log(interaction)
-        chatResponse(interaction)
 
         const guildByID = await sql.Execute(`SELECT * FROM settings WHERE 1`) //level_up_channel_id = '1000526899124117535'
         const updateEmbed = new EmbedBuilder()
@@ -77,20 +65,31 @@ module.exports = {
         // }
         // main()
         // }
+        interaction.Attacker = 'Dekes'
+        interaction.Defender = "The Might Bot"
 
-        // const Attacker = {
-        //     Name: 'Attacker',
-        //     Power: 10,
-        //     Health: 10
-        // }
-        // const Defender = {
-        //     Name: 'Defender',
-        //     Power: 10,
-        //     Health: 10
-        // }
+        class Battle {
+            constructor(interaction) {
+              this._id = interaction.id;
+              this._Attacker = interaction.Attacker;
+              this._Defender = interaction.Defender;
+            }
+            start() {
+              console.log(currentBattles);
+            }
+          }
+          const currentBattles = [];
+          currentBattles[interaction.id] = new Battle({
+            id: interaction.id,
+            Attacker: interaction.Attacker,
+            Defender: interaction.Defender
+          });
+          currentBattles[interaction.id].start();
+          
+
         const { Colours } = require('../data/colours')
         updateEmbed
-                .setColor(Colours.LimeGreen)
+                .setColor(Colours.Red)
         await interaction.reply({
             ephemeral: true,
             embeds: [updateEmbed],

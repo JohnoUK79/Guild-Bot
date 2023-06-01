@@ -1,6 +1,6 @@
 const {EmbedBuilder} = require(`discord.js`);
 const sql = require(`../config/Database`)
-
+const { sleep } = require('../functions/discordFunctions')
 module.exports = {
     name: "guildMemberAdd",
     async execute(member) {
@@ -12,8 +12,8 @@ module.exports = {
         CHANNEL_ID = Data[0].welcome_channel_id
         ROLE_ID = Data[0].welcome_role_id
         GUILD = member.guild.name
-        var playerDisplayName = member.displayName
-
+        playerDisplayName = member.displayName
+        sleep(2000)
         //Track the Invite Used
         const { invites } = require('./ready')
         // To compare, we need to load the current invite list.
@@ -26,7 +26,7 @@ module.exports = {
         const inviter = await member.guild.members.fetch(invite.inviter.id);
 
         const starterCoins = 3000000
-		if (!playerDisplayName){ var playerDisplayName = member.username}
+		if (!playerDisplayName){ playerDisplayName = member.username}
         console.log("Member Joined")
         if (member.partial) {
             try {

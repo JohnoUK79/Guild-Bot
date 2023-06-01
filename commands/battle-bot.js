@@ -40,7 +40,7 @@ module.exports = {
 			)
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('main')
+				.setName('profile')
 				.setDescription('Upgrade your Empire!')
 			)
 		.addSubcommand(subcommand =>
@@ -207,7 +207,7 @@ module.exports = {
 				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
 		}
 
-		else if (interaction.options.getSubcommand() === 'main')
+		else if (interaction.options.getSubcommand() === 'profile')
 		{
 		const upgradeButtons = new ActionRowBuilder()
 			.addComponents(

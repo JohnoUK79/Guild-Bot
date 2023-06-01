@@ -176,7 +176,7 @@ while (Battles[interaction.id].Defender.BattleHealth >= 0 && Battles[interaction
         .setColor(Battles[interaction.id].Defender.Color)
         .setThumbnail(`attachment://${Battles[interaction.id].Defender.ImageFile}`)
         .setImage(`attachment://${Battles[interaction.id].Defender.ImageFile}`)
-        .setDescription(`**${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}** hit ${Battles[interaction.id].member}'s **${Attacker.Name}**! Dealing **${Battles[interaction.id].Defender.AttackPower.toLocaleString()}** damage!\n${Battles[interaction.id].member}'s **${Battles[interaction.id].Attacker.Name}** has **${Battles[interaction.id].Attacker.BattleHealth.toLocaleString()}** health remaining!`)
+        .setDescription(`**${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}** hit ${Battles[interaction.id].Attacker.Player}'s **${Battles[interaction.id].Attacker.Name}**! Dealing **${Battles[interaction.id].Defender.AttackPower.toLocaleString()}** damage!\n${Battles[interaction.id].member}'s **${Battles[interaction.id].Attacker.Name}** has **${Battles[interaction.id].Attacker.BattleHealth.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [defendImage] });
     console.log(`Defender hit for ${Battles[interaction.id].Defender.AttackPower.toLocaleString()}`)    
     await sleep(800)       
@@ -191,7 +191,7 @@ while (Battles[interaction.id].Defender.BattleHealth >= 0 && Battles[interaction
         .setColor(Battles[interaction.id].Attacker.Color)
         .setThumbnail(`attachment://${Battles[interaction.id].Attacker.ImageFile}`)
         .setImage(`attachment://${Battles[interaction.id].Attacker.ImageFile}`)
-        .setDescription(`${Battles[interaction.id].member}'s **${Battles[interaction.id].Attacker.Name}** hit **${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}**! Dealing **${Battles[interaction.id].Attacker.AttackPower.toLocaleString()}** damage!\n**${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}** has **${Battles[interaction.id].Defender.BattleHealth.toLocaleString()}** health remaining!`)
+        .setDescription(`${Battles[interaction.id].Attacker.Player}'s **${Battles[interaction.id].Attacker.Name}** hit **${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}**! Dealing **${Battles[interaction.id].Attacker.AttackPower.toLocaleString()}** damage!\n**${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}** has **${Battles[interaction.id].Defender.BattleHealth.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [attackImage] });
     console.log(`Attacker hit for ${Battles[interaction.id].Attacker.AttackPower.toLocaleString()}`)
     await sleep(800)      
@@ -227,7 +227,7 @@ while (Battles[interaction.id].Defender.BattleHealth >= 0 && Battles[interaction
             .setColor(Battles[interaction.id].Defender.Color)
             .setThumbnail(`attachment://${Battles[interaction.id].Defender.ImageFile}`)
             .setImage(`attachment://${Battles[interaction.id].Defender.ImageFile}`)
-            .setDescription(`**${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}** hit ${Battles[interaction.id].member}'s **${Battles[interaction.id].Attacker.Name}**! Dealing **${Battles[interaction.id].Defender.AttackPower.toLocaleString()}** damage!\n${Battles[interaction.id].member}'s **${Battles[interaction.id].Attacker.Name}** has **${Battles[interaction.id].Attacker.BattleHealth.toLocaleString()}** health remaining!`)
+            .setDescription(`**${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}** hit ${Battles[interaction.id].Attacker.Player}'s **${Battles[interaction.id].Attacker.Name}**! Dealing **${Battles[interaction.id].Defender.AttackPower.toLocaleString()}** damage!\n${Battles[interaction.id].Attacker.Player}'s **${Battles[interaction.id].Attacker.Name}** has **${Battles[interaction.id].Attacker.BattleHealth.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
     console.log(`Defender hit for ${Battles[interaction.id].Defender.AttackPower.toLocaleString()}`)
     await sleep(800)      
@@ -256,10 +256,10 @@ if (Battles[interaction.id].Defender.BattleHealth < 0) {
         .setImage(`attachment://${Battles[interaction.id].Attacker.ImageFile}`)
         .addFields(
             { name: `Congratulations`, value: `You have defeated **${campaignOfficer}**! You can now challenge the next campaign` },
-            { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${Battles[interaction.id].member}` },
+            { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${Battles[interaction.id].Attacker.Player}` },
             { name: `Battle Duration`, value: `||${battleLength}||` },
         )        
-        .setDescription(`**${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}** has been killed by ${Battles[interaction.id].member}'s **${Battles[interaction.id].Attacker.Name} & ${Battles[interaction.id].Attacker.Officer} using ${Battles[interaction.id].Attacker.OfficerSkill}**.`)
+        .setDescription(`**${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}** has been killed by ${Battles[interaction.id].Attacker.Player}'s **${Battles[interaction.id].Attacker.Name} & ${Battles[interaction.id].Attacker.Officer} using ${Battles[interaction.id].Attacker.OfficerSkill}**.`)
 
     interaction.editReply({ embeds: [embed], files: [attackImage] });
 
@@ -284,7 +284,7 @@ if (Battles[interaction.id].Attacker.BattleHealth < 0) {
             { name: `You Were Unsuccessful`, value: `**You Failed**! You were unable to defeat **${campaignOfficer}**` },
             { name: `Battle Duration`, value: `||${battleLength}||` },
         )     
-        .setDescription(`${Battles[interaction.id].member}'s **${Battles[interaction.id].Attacker.Name}** has been killed by **${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name} & ${Battles[interaction.id].Defender.Officer} using ${Battles[interaction.id].Defender.OfficerSkill}**.`)
+        .setDescription(`${Battles[interaction.id].Attacker.Player.displayName}'s **${Battles[interaction.id].Attacker.Name}** has been killed by **${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name} & ${Battles[interaction.id].Defender.Officer} using ${Battles[interaction.id].Defender.OfficerSkill}**.`)
     interaction.editReply({ embeds: [embed], files: [defendImage] });
     const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)
     console.log(`Winner: ${campaignOfficer}`,`\nLoser: ${Battles[interaction.id].Attacker.Player.displayName}`, loss.info)

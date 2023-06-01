@@ -25,7 +25,6 @@ module.exports = {
 		chatResponse(message)
 		} catch (err) {console.log(err)}
 		} 
-
 		//Translate Prefix
 		if (message.content.startsWith(`!t`)) {
 		try {

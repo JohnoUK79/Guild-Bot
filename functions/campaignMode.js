@@ -146,8 +146,17 @@ class Battle {
       this.Attacker = interaction.Attacker;
       this.Defender = interaction.Defender;
     }
-    start() {
-      console.log(Battles[interaction.id]);
+    win() {
+        interaction.followUp({
+            content: `**Congratulations on the Win** 🏆🏆🏆`,
+            ephemeral: true
+        })
+    }
+    lose() {
+        interaction.followUp({
+            content: `**Better Luck Next Time** ❌❌❌`,
+            ephemeral: true
+        })
     }
   }
   const Battles = [];
@@ -156,9 +165,6 @@ class Battle {
     Attacker: interaction.Attacker,
     Defender: interaction.Defender
   });
-  Battles[interaction.id].start();
-console.log(Battles[interaction.id].Attacker)
-
 if (Battles[interaction.id].Attacker.Speed < Battles[interaction.id].Defender.Speed) {
 console.log(`Attacker Speed: ${Battles[interaction.id].Attacker.Speed} Defender Speed: ${Battles[interaction.id].Defender.Speed}`)
 while (Battles[interaction.id].Defender.BattleHealth >= 0 && Battles[interaction.id].Attacker.BattleHealth >= 0) {
@@ -212,7 +218,7 @@ while (Battles[interaction.id].Defender.BattleHealth >= 0 && Battles[interaction
             .setColor(Battles[interaction.id].Attacker.Color)
             .setThumbnail(`attachment://${Battles[interaction.id].Attacker.ImageFile}`)
             .setImage(`attachment://${Battles[interaction.id].Attacker.ImageFile}`)
-            .setDescription(`${Battles[interaction.id].member}'s **${Battles[interaction.id].Attacker.Name}** hit ${campaignOfficer}'s **${Battles[interaction.id].Defender.Name}**! Dealing **${Battles[interaction.id].Attacker.AttackPower.toLocaleString()}** damage!\n${campaignOfficer}'s **${Battles[interaction.id].Defender.Name}** has **${Battles[interaction.id].Defender.BattleHealth.toLocaleString()}** health remaining!`)
+            .setDescription(`${Battles[interaction.id].Attacker.Player}'s **${Battles[interaction.id].Attacker.Name}** hit ${campaignOfficer}'s **${Battles[interaction.id].Defender.Name}**! Dealing **${Battles[interaction.id].Attacker.AttackPower.toLocaleString()}** damage!\n${campaignOfficer}'s **${Battles[interaction.id].Defender.Name}** has **${Battles[interaction.id].Defender.BattleHealth.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
     console.log(`Attacker hit for ${Battles[interaction.id].Attacker.AttackPower.toLocaleString()}`)    
     await sleep(800)      
@@ -265,6 +271,7 @@ if (Battles[interaction.id].Defender.BattleHealth < 0) {
 
 const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
 console.log(`Winner: ${Battles[interaction.id].Attacker.Player.displayName}`, win.info,`\nLoser: ${campaignOfficer}`)
+Battles[interaction.id].win();
 } else
 if (Battles[interaction.id].Attacker.BattleHealth < 0) {
     await sleep(1000)      
@@ -288,6 +295,8 @@ if (Battles[interaction.id].Attacker.BattleHealth < 0) {
     interaction.editReply({ embeds: [embed], files: [defendImage] });
     const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)
     console.log(`Winner: ${campaignOfficer}`,`\nLoser: ${Battles[interaction.id].Attacker.Player.displayName}`, loss.info)
+    Battles[interaction.id].lose();
+
 }
 }
 }

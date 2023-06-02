@@ -13,7 +13,7 @@ module.exports = {
         ROLE_ID = Data[0].welcome_role_id
         GUILD = member.guild.name
         playerDisplayName = member.displayName
-        sleep(2000)
+        await sleep(2000)
         //Track the Invite Used
         const { invites } = require('./ready')
         // To compare, we need to load the current invite list.

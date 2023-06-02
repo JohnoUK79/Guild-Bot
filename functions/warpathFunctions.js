@@ -1327,7 +1327,99 @@ module.exports = {
 
 
         return interaction.update({ empheral: true, embeds: [profileEmbed], components: [profileButtons], files: [playerImage] })
+    },
+    profileMenu: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
 
+        let CampColour = Colours.Black
+        if (Level[0].unit_camp === 'Vanguard') {
+            CampColour = Colours.VanguardBoost
+        }
+        if (Level[0].unit_camp === 'Liberty') {
+            CampColour = Colours.LibertyBoost
+        }
+        if (Level[0].unit_camp === 'MartyrsW') {
+            CampColour = Colours.MartyrsWBoost
+        }
+        const profileEmbed = new EmbedBuilder();
+        const profileButtons = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId("campaign")
+                    .setLabel('Campaign Menu')
+                    .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
+                    .setCustomId("selectunit")
+                    .setLabel('Select Unit Menu')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("selectofficer")
+                    .setLabel('Select Officer Menu')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("cancel")
+                    .setLabel('Upgrade Menu')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Show Profile')
+                    .setStyle(ButtonStyle.Secondary),
+            )
+        const guildIcon = interaction.member.guild.iconURL();
+        const guildName = interaction.member.guild.name
+        const officerLevel = Level[0].officer_level || 'No Officer Chosen'
+        const officer = Level[0].officer_name || 'No Officer Chosen'
+        const unitType = Level[0].unit_type || 'No Unit Trained'
+        const unitLevel = Level[0].unit_level || 'No Unit Trained'
+        const unitCamp = Level[0].unit_camp || 'No Unit Trained'
+        const officerDetails = await sql.Execute(`SELECT * from officers WHERE Officer_Name = '${officer}'`)
+        officerType = 'No Officer Chosen'
+        officerCamp = 'No Officer Chosen'
+        officerSkill = 'No Officer Chosen'    
+        if (officerDetails.length > 0) {
+            officerType = officerDetails[0].Officer_Type
+            officerCamp = officerDetails[0].Officer_Camp
+            officerSkill = officerDetails[0].Skill 
+        }
+        const skillLevel = Level[0].skill_level 
+
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const link = `http://phfamily.co.uk/img/${image}`
+        const triggerRate = skillLevel * 5
+        attackType = 'No Unit Selected'
+        if (unitDetails.length > 0) {
+            attackType = unitDetails[0].Attack_Type
+        }
+        
+        profileEmbed
+            .setThumbnail(playerThumbnail)
+            .setColor(CampColour)
+            .setTimestamp()
+            .setDescription(`**${interaction.member}'s Profile**`)
+            .addFields(
+                { name: `War-Coins:`, value: `$${Level[0].war_coins.toLocaleString()}`, inline: false },
+                { name: `War-Chest:`, value: `$${Level[0].war_chest.toLocaleString()}`, inline: false },
+                { name: `War-Chest Level:`, value: `${Level[0].chest_level.toLocaleString()}`, inline: false },
+                { name: `Base Level:`, value: `${Level[0].base_level}`, inline: false },
+                { name: `Officer:`, value: `${officer}`, inline: false },
+                { name: `Officer Level:`, value: `${officerLevel}`, inline: false },
+                { name: `Officer Type:`, value: `${officerType}`, inline: false },
+                { name: `Officer Camp:`, value: `${officerCamp}`, inline: false },
+                { name: `Officer Skill:`, value: `${officerSkill}`, inline: false },
+                { name: `Skill Level:`, value: `${skillLevel}`, inline: false },
+                { name: `Skill Trigger Rate:`, value: `${triggerRate}%`, inline: false },
+                { name: `Unit Type:`, value: `${unitType}`, inline: false },
+                { name: `Unit Level:`, value: `${unitLevel}`, inline: false },
+                { name: `Attack Type:`, value: `${attackType}`, inline: false },
+                { name: `Unit Camp:`, value: `${unitCamp}`, inline: false },
+            )
+            .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
+
+
+        return interaction.editReply({ empheral: true, embeds: [profileEmbed], components: [profileButtons], files: [playerImage] })
     },
     newUnit: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)

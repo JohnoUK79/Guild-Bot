@@ -138,8 +138,17 @@ class Battle {
       this.Attacker = interaction.Attacker;
       this.Defender = interaction.Defender;
     }
-    start() {
-      console.log(Battles[interaction.id]);
+    win() {
+        interaction.followUp({
+            content: `**Congratulations on the Win** 🏆🏆🏆`,
+            ephemeral: true
+        })
+    }
+    lose() {
+        interaction.followUp({
+            content: `**Better Luck Next Time** ❌❌❌`,
+            ephemeral: true
+        })
     }
   }
   const Battles = [];
@@ -148,9 +157,7 @@ class Battle {
     Attacker: interaction.Attacker,
     Defender: interaction.Defender
   });
-  Battles[interaction.id].start();
-console.log(Battles[interaction.id].Attacker)
-if (Battles[interaction.id].Attacker.Speed < Battles[interaction.id].Defender.Speed) {
+  if (Battles[interaction.id].Attacker.Speed < Battles[interaction.id].Defender.Speed) {
     console.log(`Attacker Speed: ${Battles[interaction.id].Attacker.Speed} Defender Speed: ${Battles[interaction.id].Defender.Speed}`)
     while (Battles[interaction.id].Defender.BattleHealth >= 0 && Battles[interaction.id].Attacker.BattleHealth >= 0) {
         console.count(`Battle ID: ${interaction.id} Round`)
@@ -261,6 +268,8 @@ if (Battles[interaction.id].Defender.BattleHealth < 0) {
     const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
     const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${defender.id}`)
     console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${defender.username}`, loss.info)
+    Battles[interaction.id].win();
+
 } else
 if (interaction.Attacker.BattleHealth < 0) {
         await sleep(1200)
@@ -289,6 +298,7 @@ if (interaction.Attacker.BattleHealth < 0) {
         const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${defender.id}`)
         const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)
         console.log(`Winner: ${defender.username}`, win.info,`\nLoser: ${interaction.member.displayName}`, loss.info)
+        Battles[interaction.id].lose();
     }
 }
 }

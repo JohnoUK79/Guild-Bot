@@ -16,6 +16,8 @@ module.exports = {
 
 		const embed = new EmbedBuilder();
 			embed
+                .setURL('http://www.battle-bot.com')
+                .setTitle(`Battle Bot™`)
 				.setColor(Colours.Green)
 				.setThumbnail(guildIcon)
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})

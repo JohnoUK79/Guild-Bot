@@ -59,6 +59,8 @@ campaignMode: async function (interaction) {
         }
         const embed = new EmbedBuilder();
         embed
+            .setURL('http://www.battle-bot.com')
+            .setTitle(`Battle Bot™`)
             .setColor(Colours.Black)
             .setThumbnail(guildIcon)
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})

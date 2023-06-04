@@ -77,6 +77,8 @@ module.exports = {
                 console.log(Health)
 
             skillEmbed
+                .setURL('http://www.battle-bot.com')
+                .setTitle(`Battle Bot™`)
                 .setColor(interaction.Defender.SkillColor)
                 .setThumbnail(Boom)
                 .addFields(

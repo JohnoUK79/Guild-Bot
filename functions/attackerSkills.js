@@ -48,6 +48,8 @@ module.exports = {
         }
         
         const skillEmbed = new EmbedBuilder();
+        skillEmbed.setURL('http://www.battle-bot.com')
+        skillEmbed.setTitle(`Battle Bot™`)
         skillEmbed.setColor('#ff5b05');
         skillEmbed.setThumbnail(guildIcon);
         skillEmbed.setAuthor({

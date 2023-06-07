@@ -5,8 +5,8 @@ const { sleep } = require('../functions/discordFunctions')
 const { chance0, chance5, chance10, chance15, chance20, chance25, chance30, chance35, chance40, chance45, chance50, chance55, chance60, chance65, chance70, chance75, chance80, chance85, chance90, chance95, chance100 } = require('../data/chance');
 module.exports = {
     attackerSkills: async function (interaction) {
-        const Boom = 'http://phfamily.co.uk/img/Boom.jpg'
-        const RedCross = 'http://phfamily.co.uk/img/RedCross.png'
+        const Boom = 'http://battle-bot.com/img/Boom.jpg'
+        const RedCross = 'http://battle-bot.com/img/RedCross.png'
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
         interaction.Attacker.SkillUsed, interaction.Defender.SkillUsed = ''

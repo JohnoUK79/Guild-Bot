@@ -1,15 +1,20 @@
 const { Configuration, OpenAIApi } = require("openai");
 const { OPENAI_API_KEY } = require('../config.json')
+const sql = require('../config/Database')
 module.exports = {
     chatResponse: async function (message) {
       const { client } = require('../bot')
 			const target = message.content.replace(`<@${client.user.id}>`, '')
+			const Levels = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${message.member.id}`)
+			const { officer_name, officer_level, skill_level, unit_camp, unit_type, unit_level, unit_image, discord_avatar } = Levels[0];
+			console.log(officer_name, officer_level, skill_level, unit_camp, unit_type, unit_level, unit_image, discord_avatar)
 			const chats = [
 				{
 				  role: "user",
 				  content: `${target}`,
 				},
 			  ]
+
 			console.log(`Mention:${target}`)
 			const configuration = new Configuration({
 				apiKey: OPENAI_API_KEY,
@@ -103,13 +108,56 @@ module.exports = {
 						"role": "assistant",
 						"content": "For every 50th Level the **Officer** is upgraded you can unlock another **Skill Level**.\n**Skill Levels** increase the chance of the **Skill Tiggering** by **5% Each Level** up until **100%**!",
 					  },
+
+					  {
+						"role": "user",
+						"content": "What are my Profile details?",
+					  },
+					  {
+						"role": "assistant",
+						"content": `Your Profile details are as follows:
+						Officer Name: {{officer_name}}
+						Officer Level: {{officer_level}}
+						Skill Level: {{skill_level}}
+						Unit Type: {{unit_type}}
+						Unit Camp: {{unit_camp}}
+						Unit Level: {{unit_level}}
+						Discord: {{discord_avatar}}
+						Unit Image: /img/{{unit_image}}.`
+						},
+						{
+							"role": "user",
+							"content": "Show me my Profile.",
+						  },
+						  {
+							"role": "assistant",
+							"content": `Your Profile details are as follows:
+							Officer Name: {{officer_name}}
+							Officer Level: {{officer_level}}
+							Skill Level: {{skill_level}}
+							Unit Type: {{unit_type}}
+							Unit Camp: {{unit_camp}}
+							Unit Level: {{unit_level}}
+							Discord: {{discord_avatar}}
+							Unit Image: /img/{{unit_image}}.`
+							},
 					  ...chats,
 					],
 				  });
-							
-			const reply = result.data.choices[0].message.content
-			console.log(result.data)
 
+				  
+			// Add the user's processed request to the conversation
+			let reply = result.data.choices[0].message.content
+			console.log(reply)
+			  reply = reply
+			  .replace('{{officer_name}}', officer_name)
+			  .replace('{{officer_level}}', officer_level.toString())
+			  .replace('{{skill_level}}', skill_level.toString())
+			  .replace('{{unit_type}}', unit_type)
+			  .replace('{{unit_camp}}', unit_camp)
+			  .replace('{{unit_level}}', unit_level.toString())
+			  .replace('{{discord_avatar}}', discord_avatar)
+			  .replace('{{unit_image}}', unit_image);
 			if (!reply) return
 			message.reply({
 				content: `${reply}`

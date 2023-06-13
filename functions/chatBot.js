@@ -123,24 +123,40 @@ module.exports = {
 						Unit Camp: {{unit_camp}}
 						Unit Level: {{unit_level}}
 						Discord: {{discord_avatar}}
-						Unit Image: /img/{{unit_image}}.`
+						Unit Image: http://battle-bot.com/img/gallery/Units/{{unit_image}}.`
+					   },
+					   {
+						"role": "user",
+						"content": "Show me my Profile.",
 						},
 						{
-							"role": "user",
-							"content": "Show me my Profile.",
-						  },
-						  {
-							"role": "assistant",
-							"content": `Your Profile details are as follows:
-							Officer Name: {{officer_name}}
-							Officer Level: {{officer_level}}
-							Skill Level: {{skill_level}}
-							Unit Type: {{unit_type}}
-							Unit Camp: {{unit_camp}}
-							Unit Level: {{unit_level}}
-							Discord: {{discord_avatar}}
-							Unit Image: /img/{{unit_image}}.`
-							},
+						"role": "assistant",
+						"content": `Your Profile details are as follows:
+						Officer Name: {{officer_name}}
+						Officer Level: {{officer_level}}
+						Skill Level: {{skill_level}}
+						Unit Type: {{unit_type}}
+						Unit Camp: {{unit_camp}}
+						Unit Level: {{unit_level}}
+						Discord: {{discord_avatar}}
+						Unit Image: http://battle-bot.com/img/gallery/Units/{{unit_image}}.`
+						},
+					   {
+						"role": "user",
+						"content": "Can I see my Profile?",
+						},
+						{
+						"role": "assistant",
+						"content": `Your Profile details are as follows:
+						Officer Name: {{officer_name}}
+						Officer Level: {{officer_level}}
+						Skill Level: {{skill_level}}
+						Unit Type: {{unit_type}}
+						Unit Camp: {{unit_camp}}
+						Unit Level: {{unit_level}}
+						Discord: {{discord_avatar}}
+						Unit Image: http://battle-bot.com/img/gallery/Units/{{unit_image}}.`
+						},
 					  ...chats,
 					],
 				  });

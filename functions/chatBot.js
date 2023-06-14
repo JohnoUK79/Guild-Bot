@@ -6,8 +6,8 @@ module.exports = {
       const { client } = require('../bot')
 			const target = message.content.replace(`<@${client.user.id}>`, '')
 			const Levels = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${message.member.id}`)
-			const { officer_name, officer_level, skill_level, unit_camp, unit_type, unit_level, unit_image, discord_avatar } = Levels[0];
-			console.log(officer_name, officer_level, skill_level, unit_camp, unit_type, unit_level, unit_image, discord_avatar)
+			const { war_coins, war_chest, officer_name, officer_level, skill_level, unit_camp, unit_type, unit_level, unit_image, discord_avatar } = Levels[0];
+			console.log(war_coins, war_chest, officer_name, officer_level, skill_level, unit_camp, unit_type, unit_level, unit_image, discord_avatar)
 			const chats = [
 				{
 				  role: "user",
@@ -115,48 +115,8 @@ module.exports = {
 					  },
 					  {
 						"role": "assistant",
-						"content": `Your Profile details are as follows:
-						Officer Name: {{officer_name}}
-						Officer Level: {{officer_level}}
-						Skill Level: {{skill_level}}
-						Unit Type: {{unit_type}}
-						Unit Camp: {{unit_camp}}
-						Unit Level: {{unit_level}}
-						Discord: {{discord_avatar}}
-						Unit Image: http://battle-bot.com/img/gallery/Units/{{unit_image}}.`
+						"content": `Your Profile details are as follows:\nOfficer Name: {{officer_name}}\nOfficer Level: {{officer_level}}\nSkill Level: {{skill_level}}\nUnit Type: {{unit_type}}\nUnit Camp: {{unit_camp}}\nUnit Level: {{unit_level}}\nBattle Member: {{discord_avatar}}\nUnit Image: http://battle-bot.com/img/gallery/Units/{{unit_image}}\nWar Coins: {{war_coins}}\nWar Chest: {{war_chest}}`
 					   },
-					   {
-						"role": "user",
-						"content": "Show me my Profile.",
-						},
-						{
-						"role": "assistant",
-						"content": `Your Profile details are as follows:
-						Officer Name: {{officer_name}}
-						Officer Level: {{officer_level}}
-						Skill Level: {{skill_level}}
-						Unit Type: {{unit_type}}
-						Unit Camp: {{unit_camp}}
-						Unit Level: {{unit_level}}
-						Discord: {{discord_avatar}}
-						Unit Image: http://battle-bot.com/img/gallery/Units/{{unit_image}}.`
-						},
-					   {
-						"role": "user",
-						"content": "Can I see my Profile?",
-						},
-						{
-						"role": "assistant",
-						"content": `Your Profile details are as follows:
-						Officer Name: {{officer_name}}
-						Officer Level: {{officer_level}}
-						Skill Level: {{skill_level}}
-						Unit Type: {{unit_type}}
-						Unit Camp: {{unit_camp}}
-						Unit Level: {{unit_level}}
-						Discord: {{discord_avatar}}
-						Unit Image: http://battle-bot.com/img/gallery/Units/{{unit_image}}.`
-						},
 					  ...chats,
 					],
 				  });
@@ -166,6 +126,8 @@ module.exports = {
 			let reply = result.data.choices[0].message.content
 			console.log(reply)
 			  reply = reply
+			  .replace('{{war_coins}}', '$' + war_coins.toLocaleString())
+			  .replace('{{war_chest}}', '$' + war_chest.toLocaleString())
 			  .replace('{{officer_name}}', officer_name)
 			  .replace('{{officer_level}}', officer_level.toString())
 			  .replace('{{skill_level}}', skill_level.toString())
@@ -178,6 +140,7 @@ module.exports = {
 			message.reply({
 				content: `${reply}`
 			})}
+			Avatar = 'Avatar'
 			runCompletion();
 			console.log(`Battle-Bot AI Mentioned Chat`)
 		}

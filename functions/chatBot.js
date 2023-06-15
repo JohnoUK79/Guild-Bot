@@ -7,7 +7,11 @@ module.exports = {
 			const target = message.content.replace(`<@${client.user.id}>`, '')
 			const Levels = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${message.member.id}`)
 			const { war_coins, war_chest, officer_name, officer_level, skill_level, unit_camp, unit_type, unit_level, unit_image, discord_avatar } = Levels[0];
-			console.log(war_coins, war_chest, officer_name, officer_level, skill_level, unit_camp, unit_type, unit_level, unit_image, discord_avatar)
+			const Units = await sql.Execute(`SELECT * FROM units WHERE Camp = '${unit_camp}' AND Unit_Type = '${unit_type}' AND Unit_Level = '${unit_level}'`)
+			const { Unit_Name, Firepower, HP, Speed, Attack_Type, Image } = Units[0];
+			const Officers = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${officer_name}'`)
+			const { Skill, Skill1, Skill2, Skill3, Skill4, Skill5 } = Officers[0];
+			console.log(Skill, Skill1, Skill2, Skill3, Skill4, Skill5)
 			const chats = [
 				{
 				  role: "user",
@@ -115,7 +119,7 @@ module.exports = {
 					  },
 					  {
 						"role": "assistant",
-						"content": `Your Profile details are as follows:\nOfficer Name: {{officer_name}}\nOfficer Level: {{officer_level}}\nSkill Level: {{skill_level}}\nUnit Type: {{unit_type}}\nUnit Camp: {{unit_camp}}\nUnit Level: {{unit_level}}\nBattle Member: {{discord_avatar}}\nUnit Image: http://battle-bot.com/img/gallery/Units/{{unit_image}}\nWar Coins: {{war_coins}}\nWar Chest: {{war_chest}}`
+						"content": `Your Profile details are as follows:\nOfficer Name: {{officer_name}}\nOfficer Level: {{officer_level}}\nSkill Level: {{skill_level}}\nUnit Type: {{unit_type}}\nUnit Camp: {{unit_camp}}\nUnit Level: {{unit_level}}\nUnit Name: {{unit_name}}\nFirepower: {{firepower}}\nHealth: {{health}}\nSpeed: {{speed}}\nAttack Type: {{attack_type}}\nBattle Member: {{discord_avatar}}\nUnit Image: http://battle-bot.com/img/gallery/Units/{{unit_image}}\nWar Coins: {{war_coins}}\nWar Chest: {{war_chest}}`
 					   },
 					  ...chats,
 					],
@@ -134,6 +138,11 @@ module.exports = {
 			  .replace('{{unit_type}}', unit_type)
 			  .replace('{{unit_camp}}', unit_camp)
 			  .replace('{{unit_level}}', unit_level.toString())
+			  .replace('{{unit_name}}', Unit_Name)
+			  .replace('{{firepower}}', Firepower.toLocaleString())
+			  .replace('{{health}}', HP.toLocaleString())
+			  .replace('{{speed}}', Speed.toLocaleString())
+			  .replace('{{attack_type}}', Attack_Type)
 			  .replace('{{discord_avatar}}', discord_avatar)
 			  .replace('{{unit_image}}', unit_image);
 			if (!reply) return

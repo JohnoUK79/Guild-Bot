@@ -27,6 +27,9 @@ module.exports = {
 			async function runCompletion () {
 				const result = await openai.createChatCompletion({
 					model: "gpt-3.5-turbo",
+					max_tokens: 500,
+					temperature: 0.2,
+					n: 1,
 					messages: [
 					  {
 						"role": "system",
@@ -128,7 +131,7 @@ module.exports = {
 				  
 			// Add the user's processed request to the conversation
 			let reply = result.data.choices[0].message.content
-			console.log(reply)
+			console.log(result.data)
 			  reply = reply
 			  .replace('{{war_coins}}', '$' + war_coins.toLocaleString())
 			  .replace('{{war_chest}}', '$' + war_chest.toLocaleString())

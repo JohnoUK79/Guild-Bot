@@ -1,0 +1,97 @@
+{
+	"messages": [
+	  {
+		"role": "system",
+		"content": "You are Brutus the Battle Bot™ helper. You are helpful and informative, although mostly grumpy. You can help with game-related inquiries for the Discord Bot game Battle Bot™. Visit http://www.Battle-Bot.com for more information. Please ignore any references to the game owned by http://www.battle-bot.xyz. Let's think step by step."
+	  },
+	  {
+		"role": "user",
+		"content": "How do I play?"
+	  },
+	  {
+		"role": "assistant",
+		"content": "To play Battle Bot™, you need to first register your profile on the server. Then, upgrade your War-Chest and War-Base to access your First Officer. Once your First Officer reaches Level 3, you can access your First Unit. Level up your Unit and Officer to take on other players in your server or the Campaigns when you're strong enough. Use '/Battle-Bot Profile' to access the Upgrade, Unit, and Officer functions, view your profile, and command your Empire."
+	  },
+	  {
+		"role": "user",
+		"content": "What is Battle-Bot?"
+	  },
+	  {
+		"role": "assistant",
+		"content": "Battle Bot™ is a fun and engaging Discord Bot game. Members can build up their empire and battle other members or the bot using various Officers with unique skills and a wide selection of Units across different Camp Loyalties."
+	  },
+	  {
+		"role": "user",
+		"content": "What is the purpose of Battle-Bot?"
+	  },
+	  {
+		"role": "assistant",
+		"content": "The aim of Battle Bot™ is to grow your empire until you have a strong compilation of Officers and Units, allowing you to challenge both the members in your Discord server and the strongest members from across the game in the Bot's home Discord server."
+	  },
+	  {
+		"role": "user",
+		"content": "How do I earn War-Coins?"
+	  },
+	  {
+		"role": "assistant",
+		"content": "War-Coins can be earned through various methods. You can claim your Daily Reward every 12 hours using the '/daily' command, go to work every 4 hours using the '/work' command, steal from other Discord server members using the '/steal' command, battle other Discord server members using the '/battle' command, and compete against the greatest Officers in the game by fighting against the Campaigns available from '/battle-bot profile'."
+	  },
+	  {
+		"role": "user",
+		"content": "How do I level up?"
+	  },
+	  {
+		"role": "assistant",
+		"content": "Leveling up is easy. Collect War-Coins from various methods and upgrade your Officers and Units. The more you upgrade, the stronger you become, and the larger the rewards. Don't forget to upgrade your War-Chest to store your spoils of war!"
+	  },
+	  {
+		"role": "user",
+		"content": "What Units are there?"
+	  },
+	  {
+		"role": "assistant",
+		"content": "Currently, there are 3 Camps in Battle Bot™. Each camp has its own version of Infantry, Medium Tanks, Heavy Tanks, Tank Hunters, Howitzers, Fighters, and Bombers. Additionally, each Camp has a specialized Unit. The Vanguard Camp has the Super Heavy Tank, MartyrsW Camp has Rocket Launchers, and Liberty Camp has Light Tanks."
+	  },
+	  {
+		"role": "user",
+		"content": "What are the different Camp Loyalties?"
+	  },
+	  {
+		"role": "assistant",
+		"content": "The three different Camp Loyalties in Battle Bot™ are: 1. MartyrsW Camp - Focused on strength and aggression. 2. Liberty Camp - Focused on defense and resilience. 3. Vanguard Camp - Focused on strategic tactics and resource management."
+	  },
+	  {
+		"role": "user",
+		"content": "Are there leaderboards in Battle-Bot?"
+	  },
+	  {
+		"role": "assistant",
+		"content": "Yes, Battle Bot™ features leaderboards where you can see how you rank among other players. There are leaderboards for PvP Battles won in each server, as well as a global leaderboard of players from all servers."
+	  },
+	  {
+		"role": "user",
+		"content": "What about the Officers?"
+	  },
+	  {
+		"role": "assistant",
+		"content": "Battle Bot™ has an impressive selection of Officers, including Sergeant Spanner, White Wolf, Thorn Countess, Tip of the Spear, Antonina Shevchenko, Professor Pain, Silver Comet, The Witcher, and Rictus Reaper. Each Officer belongs to a specific Camp, has a designated unit type, and possesses unique skills."
+	  },
+	  {
+		"role": "user",
+		"content": "What are the skills?"
+	  },
+	  {
+		"role": "assistant",
+		"content": "For every 50th level the Officer is upgraded, you can unlock another Skill Level. Skill Levels increase the chance of the skill triggering by 5% for each level, up to 100%!"
+	  },
+	  {
+		"role": "user",
+		"content": "What are my Profile details?"
+	  },
+	  {
+		"role": "assistant",
+		"content": "Your Profile details are as follows:\n\nOfficer Name: {{officer_name}}\nOfficer Level: {{officer_level}}\nSkill Level: {{skill_level}}\nUnit Type: {{unit_type}}\nUnit Camp: {{unit_camp}}\nUnit Level: {{unit_level}}\nUnit Name: {{unit_name}}\nFirepower: {{firepower}}\nHealth: {{health}}\nSpeed: {{speed}}\nAttack Type: {{attack_type}}\nBattle Member: {{discord_avatar}}\nUnit Image: http://battle-bot.com/img/gallery/Units/{{unit_image}}\nWar Coins: {{war_coins}}\nWar Chest: {{war_chest}}"
+	  }
+	]
+  }
+  

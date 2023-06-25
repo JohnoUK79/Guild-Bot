@@ -1,6 +1,8 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, AttachmentBuilder } = require('discord.js');
 const sql = require("../config/Database");
 const time = require('../config/timestamp')
+const nodemailer = require('nodemailer');
+
 module.exports = {
     dmReceived: async function(message) {
         const setDate = time.UTCdefault()
@@ -153,6 +155,53 @@ module.exports = {
 		if (scoreLevel > 999) {
 			if (roleRank1000) await message.member.roles.add(roleRank100).catch((e) => console.log(e))
 		} 
+
+	},
+	sendEmail: async function (interaction) {
+		const transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+			  user: 'johnouk79@gmail.com',
+			  pass: 'rhtnneqghwneywwi'
+			}
+		  });
+		  const recipient = interaction.options.getString('recipient')
+		  const mailSubject = interaction.options.getString('subject')
+		  const mailContent = interaction.options.getString('content')
+		  const mailOptions = {
+			from: 'johnouk79@gmail.com',
+			to: recipient,
+			subject: mailSubject,
+			text: mailContent
+		  };
+		  
+		  transporter.sendMail(mailOptions, function(error, info){
+			if (error) {
+			  console.log(error);
+			} else {
+			  console.log('Email sent: ' + info.response);
+			}
+		  });
+		  const addRole = new EmbedBuilder()
+		  .setColor('#0099ff')
+		  .setTitle(`${guildName} - Bot Emails`)
+		  .setURL('http://www.phfamily.co.uk/')
+		  .setThumbnail(interaction.user.displayAvatarURL())
+		  .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
+		  .setDescription(`**Email Sent!**`)
+		  .setThumbnail('http://battle-bot.com/Poll.gif')
+		  .addFields(
+			  { name: `Recipient`, value: `${recipient}` },
+			  { name: `Subject`, value: `${mailSubject}` },
+			  { name: `Content`, value: `${mailContent}` },
+		  )
+		  //.setImage(`${guildIcon}`)
+		  .setTimestamp()
+		  .setFooter({ text: `Battle Bot™`, iconURL: `http://battle-bot.com/img/GeneralDeath.png` });
+		  await interaction.reply({
+		  ephemeral: true,
+		  embeds: [addRole],
+	  });
 
 	}
 }

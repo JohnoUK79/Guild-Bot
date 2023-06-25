@@ -120,14 +120,15 @@ module.exports = {
         for (let i = 0; i < 2 && Board[i]; i++) {
             try {
                 const rewards = 50000 / (i + 1) * Board[i].officer_level
-                const winnings = Board[i].war_coins + rewards
+                const winnings = Board[i].war_chest + rewards
                 const sendDM = await client.users.cache.get(`${Board[i].discord_id}`)   
                 weeklyRewardsEmbed
                     .setTitle(`You have placed ${i + 1} in this Week's Battle Rewards`)
-                    .setDescription(`Congratulations ${sendDM}, Your **${rewards.toLocaleString()} Rewards** have been added to your **War-Chest**!`)
+                    .setDescription(`Congratulations ${sendDM}, Your **$${rewards.toLocaleString()} Rewards** have been added to your **War-Chest**!`)
                     .setFooter({ text: `Battle Rewards - Wins ${Board[i].battle_wins} Losses ${Board[i].battle_losses} `, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });    
-                const updateWinnings = await sql.Execute(`UPDATE levels SET war_coins = '${winnings}' WHERE discord_id = ${Board[i].discord_id}`)
+                const updateWinnings = await sql.Execute(`UPDATE levels SET war_chest = '${winnings}' WHERE discord_id = ${Board[i].discord_id}`)
                 sendDM.send({ embeds: [weeklyRewardsEmbed]})
+                console.log(`Weekly Rewards:${sendDM} ${updateWinnings.info}`)
             }
             catch (e) {
                 console.log(e);
@@ -154,7 +155,7 @@ module.exports = {
             .setFooter({ text: `Battle Rewards.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
 
         for (let i = 0; i < levelUpChannels.length; i++) {
-            let levelUpChannel = levelUpChannels[i].level_up_channel_id;
+            const levelUpChannel = levelUpChannels[i].level_up_channel_id;
             try {  
                 let sendChannel = client.channels.cache.get(levelUpChannel)                
                 console.log(levelUpChannel);

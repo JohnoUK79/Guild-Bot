@@ -23,8 +23,8 @@ module.exports = {
         console.log(Channel_ID)
             const goodByeEmbed = new EmbedBuilder()
             .setColor("#d81e5b")
-            .setTitle("Player Left!")
-            .setDescription(`<@${member.id}> has left the server! \nThey could not handle the TRUTH!.`)
+            .setTitle("Fallen Warrior Left!")
+            .setDescription(`<@${member.id}> has left the server! \nThey could not handle the Heat of the **Battle-Bot**!.`)
             .setThumbnail(member.user.displayAvatarURL())
             .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();

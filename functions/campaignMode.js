@@ -1,10 +1,11 @@
 const ms = require('ms-prettify').default
-const { campSelection, campaignSelection, attackSelection } = require('../functions/warpathFunctions');
+const { campSelection, campaignSelection, attackSelection, skillColours } = require('../functions/warpathFunctions');
 const { sleep } = require('../functions/discordFunctions')
 const { Colours } = require('../data/colours')
-const { officerSkills } = require('../functions/officerSkills');
 const sql = require("../config/Database");
 const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
+const { attackerSkills } = require('./attackerSkills');
+const { defenderSkills} = require('./defenderSkills');
 module.exports = {
 campaignMode: async function (interaction) {
     await interaction.deferReply({
@@ -48,7 +49,7 @@ campaignMode: async function (interaction) {
         if (Date.now() - t < 0) {
         const campaigncooldownEmbed = new EmbedBuilder()
             campaigncooldownEmbed
-                .setColor('#ff5b05')
+                .setColor(Colours.Black)
                 .setThumbnail(guildIcon)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
@@ -58,11 +59,12 @@ campaignMode: async function (interaction) {
         }
         const embed = new EmbedBuilder();
         embed
-            .setColor('#ff5b05')
+            .setURL('http://www.battle-bot.com')
+            .setTitle(`Battle Bot™`)
+            .setColor(Colours.Black)
             .setThumbnail(guildIcon)
-            .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
-            .setFooter({ text: `${guildName} - ${campaignOfficer}`, iconURL: `${guildIcon}`});
+            .setFooter({ text: `Battle ID:${interaction.id} - ${campaignOfficer}`, iconURL: `${guildIcon}`});
 
     
         const DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${campaignUnitCamp}' AND Unit_Type = '${campaignUnitType}' AND Unit_Level = '${campaignUnitLevel}'`)
@@ -131,161 +133,172 @@ campaignMode: async function (interaction) {
                 console.log(`Campiagn Prestige Buff`, Attacker.Prestige)
                 Defender.Multiplier = Attacker.Prestige
             }
-            if (Attacker.UnitCamp === 'Vanguard') {
-                Attacker.Color = Colours.Vanguard
-            }
-            if (Attacker.UnitCamp === 'Liberty') {
-                Attacker.Color = Colours.Liberty
-            }
-            if (Attacker.UnitCamp === 'MartyrsW') {
-                Attacker.Color = Colours.MartyrsW
-            }
-            if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Vanguard') {
-                Attacker.SkillColor = Colours.VanguardBoost
-            }
-            if (Attacker.UnitCamp && Attacker.OfficerCamp === 'Liberty') {
-                Attacker.SkillColor = Colours.LibertyBoost
-            }
-            if (Attacker.UnitCamp && Attacker.OfficerCamp === 'MartyrsW') {
-                Attacker.SkillColor = Colours.MartyrsWBoost
-            }
-            if (Defender.UnitCamp === 'Vanguard') {
-                Defender.Color = Colours.Vanguard
-            }
-            if (Defender.UnitCamp === 'Liberty') {
-                Defender.Color = Colours.Liberty
-            }
-            if (Defender.UnitCamp === 'MartyrsW') {
-                Defender.Color = Colours.MartyrsW
-            }
-            if (Defender.UnitCamp && Defender.OfficerCamp === 'Vanguard') {
-                Defender.SkillColor = Colours.VanguardBoost
-            }
-            if (Defender.UnitCamp && Defender.OfficerCamp === 'Liberty') {
-                Defender.SkillColor = Colours.LibertyBoost
-            }
-            if (Defender.UnitCamp && Defender.OfficerCamp === 'MartyrsW') {
-                Defender.SkillColor = Colours.MartyrsWBoost
-            }
 
-const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)
-const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)
-console.log(Attacker, Defender)
-Attacker.BattleHealth = Attacker.Health, Defender.BattleHealth = Defender.Health
+            const attackImage = new AttachmentBuilder(`./img/${Attacker.ImageFile}`)
+            const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)
+            Attacker.BattleHealth = Attacker.Health, Defender.BattleHealth = Defender.Health
+            interaction.Attacker = Attacker, interaction.Defender = Defender
+            console.log(interaction)
+            skillColours(interaction)
 
-if (Attacker.Speed < Defender.Speed) {
-console.log(`Attacker Speed: ${Attacker.Speed} Defender Speed: ${Defender.Speed}`)
-while (Defender.BattleHealth >= 0 && Attacker.BattleHealth >= 0) {
-    attackSelection(Attacker, Defender)
-    campSelection(Attacker, Defender) 
-    officerSkills(interaction, Attacker, Defender)
-    console.count(`Battle ID: ${interaction.id} Round`)
-    await sleep(1600)      
-    Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
-    const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
-    Defender.AttackPower = (defendPower * Defender.Multiplier)
-    Attacker.BattleHealth = Attacker.BattleHealth - Defender.AttackPower
+const startTime = Date.now();
+class Battle {
+    constructor(interaction) {
+      this.id = interaction.id;
+      this.Attacker = interaction.Attacker;
+      this.Defender = interaction.Defender;
+    }
+    win() {
+        interaction.followUp({
+            content: `**Congratulations on the Win** 🏆🏆🏆`,
+            ephemeral: true
+        })
+    }
+    lose() {
+        interaction.followUp({
+            content: `**Better Luck Next Time** ❌❌❌`,
+            ephemeral: true
+        })
+    }
+  }
+  const Battles = [];
+  Battles[interaction.id] = new Battle({
+    id: interaction.id,
+    Attacker: interaction.Attacker,
+    Defender: interaction.Defender
+  });
+if (Battles[interaction.id].Attacker.Speed < Battles[interaction.id].Defender.Speed) {
+console.log(`Attacker Speed: ${Battles[interaction.id].Attacker.Speed} Defender Speed: ${Battles[interaction.id].Defender.Speed}`)
+while (Battles[interaction.id].Defender.BattleHealth >= 0 && Battles[interaction.id].Attacker.BattleHealth >= 0) {
+    console.count(`Battle ID: ${Battles[interaction.id].id} Round`)
+    await sleep(800)
+    Battles[interaction.id].Defender.Multiplier = Battles[interaction.id].Defender.Multiplier + Battles[interaction.id].Defender.Multiplier
+    const defendPower = Math.floor(Math.random() * (Battles[interaction.id].Defender.Power - Battles[interaction.id].Defender.Power/2)) + Battles[interaction.id].Defender.Power/2
+    Battles[interaction.id].Defender.AttackPower = (defendPower * Battles[interaction.id].Defender.Multiplier)
+    attackSelection(interaction)
+    campSelection(interaction) 
+    attackerSkills(interaction)
+    Battles[interaction.id].Attacker.BattleHealth = Battles[interaction.id].Attacker.BattleHealth - Battles[interaction.id].Defender.AttackPower
 
     embed
-        .setColor(Defender.Color)
-        .setTitle(`${campaignOfficer}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
-        .setThumbnail(`attachment://${Defender.ImageFile}`)
-        .setImage(`attachment://${Defender.ImageFile}`)
-        .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${Attacker.BattleHealth.toLocaleString()}** health remaining!`)
+        .setColor(Battles[interaction.id].Defender.Color)
+        .setThumbnail(`attachment://${Battles[interaction.id].Defender.ImageFile}`)
+        .setImage(`attachment://${Battles[interaction.id].Defender.ImageFile}`)
+        .setDescription(`**${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}** hit ${Battles[interaction.id].Attacker.Player}'s **${Battles[interaction.id].Attacker.Name}**! Dealing **${Battles[interaction.id].Defender.AttackPower.toLocaleString()}** damage!\n${Battles[interaction.id].member}'s **${Battles[interaction.id].Attacker.Name}** has **${Battles[interaction.id].Attacker.BattleHealth.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [defendImage] });
-    console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)     
-    const  attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
-    Attacker.AttackPower = (attackPower * Attacker.Multiplier)
-    Defender.BattleHealth = Defender.BattleHealth - Attacker.AttackPower
+    console.log(`Defender hit for ${Battles[interaction.id].Defender.AttackPower.toLocaleString()}`)    
+    await sleep(800)       
+    const  attackPower = Math.floor(Math.random() * (Battles[interaction.id].Attacker.Power - Battles[interaction.id].Attacker.Power/2)) + Battles[interaction.id].Attacker.Power/2
+    Battles[interaction.id].Attacker.AttackPower = (attackPower * Battles[interaction.id].Attacker.Multiplier)
+    attackSelection(interaction)
+    campSelection(interaction) 
+    defenderSkills(interaction)
+    Battles[interaction.id].Defender.BattleHealth = Battles[interaction.id].Defender.BattleHealth - Battles[interaction.id].Attacker.AttackPower
 
     embed
-        .setColor(Attacker.Color)
-        .setThumbnail(`attachment://${Attacker.ImageFile}`)
-        .setImage(`attachment://${Attacker.ImageFile}`)
-        .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${campaignOfficer}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
-        .setDescription(`**${campaignOfficer}**'s **${Defender.Name}** has **${Defender.BattleHealth.toLocaleString()}** health remaining!`)
+        .setColor(Battles[interaction.id].Attacker.Color)
+        .setThumbnail(`attachment://${Battles[interaction.id].Attacker.ImageFile}`)
+        .setImage(`attachment://${Battles[interaction.id].Attacker.ImageFile}`)
+        .setDescription(`${Battles[interaction.id].Attacker.Player}'s **${Battles[interaction.id].Attacker.Name}** hit **${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}**! Dealing **${Battles[interaction.id].Attacker.AttackPower.toLocaleString()}** damage!\n**${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}** has **${Battles[interaction.id].Defender.BattleHealth.toLocaleString()}** health remaining!`)
     interaction.editReply({ embeds: [embed], files: [attackImage] });
-    console.log(`Attacker hit for ${Attacker.AttackPower.toLocaleString()}`)
+    console.log(`Attacker hit for ${Battles[interaction.id].Attacker.AttackPower.toLocaleString()}`)
+    await sleep(800)      
 }
 } else {
-console.log(`Defender Speed: ${Defender.Speed} Attacker Speed: ${Attacker.Speed}`)
-    while (Defender.BattleHealth >= 0 && Attacker.BattleHealth >= 0) {
-    attackSelection(Attacker, Defender)
-    campSelection(Attacker, Defender) 
-    officerSkills(interaction, Attacker, Defender)
-    console.count(`Battle ID: ${interaction.id} Round`)
-    await sleep(1600)      
-    Defender.Multiplier = Defender.Multiplier + Defender.Multiplier
-    const attackPower = Math.floor(Math.random() * (Attacker.Power - Attacker.Power/2)) + Attacker.Power/2
-    Attacker.AttackPower = (attackPower * Attacker.Multiplier)
-    Defender.BattleHealth = Defender.BattleHealth - Attacker.AttackPower
+    console.log(`Defender Speed: ${Battles[interaction.id].Defender.Speed} Attacker Speed: ${Battles[interaction.id].Attacker.Speed}`)
+    while (Battles[interaction.id].Defender.BattleHealth >= 0 && Battles[interaction.id].Attacker.BattleHealth >= 0) {
+    attackSelection(interaction)
+    campSelection(interaction) 
+    defenderSkills(interaction)
+    console.count(`Battle ID: ${Battles[interaction.id].id} Round`)
+    await sleep(800)      
+    Battles[interaction.id].Defender.Multiplier = Battles[interaction.id].Defender.Multiplier + Battles[interaction.id].Defender.Multiplier
+    const attackPower = Math.floor(Math.random() * (Battles[interaction.id].Attacker.Power - Battles[interaction.id].Attacker.Power/2)) + Battles[interaction.id].Attacker.Power/2
+    Battles[interaction.id].Attacker.AttackPower = (attackPower * Battles[interaction.id].Attacker.Multiplier)
+    Battles[interaction.id].Defender.BattleHealth = Battles[interaction.id].Defender.BattleHealth - Battles[interaction.id].Attacker.AttackPower
         embed
-            .setColor(Attacker.Color)
-            .setThumbnail(`attachment://${Attacker.ImageFile}`)
-            .setImage(`attachment://${Attacker.ImageFile}`)
-            .setTitle(`${interaction.member}'s **${Attacker.Name}** hit ${campaignOfficer}'s **${Defender.Name}**! Dealing **${Attacker.AttackPower.toLocaleString()}** damage!`)
-            .setDescription(`${campaignOfficer}'s **${Defender.Name}** has **${Defender.BattleHealth.toLocaleString()}** health remaining!`)
+            .setColor(Battles[interaction.id].Attacker.Color)
+            .setThumbnail(`attachment://${Battles[interaction.id].Attacker.ImageFile}`)
+            .setImage(`attachment://${Battles[interaction.id].Attacker.ImageFile}`)
+            .setDescription(`${Battles[interaction.id].Attacker.Player}'s **${Battles[interaction.id].Attacker.Name}** hit ${campaignOfficer}'s **${Battles[interaction.id].Defender.Name}**! Dealing **${Battles[interaction.id].Attacker.AttackPower.toLocaleString()}** damage!\n${campaignOfficer}'s **${Battles[interaction.id].Defender.Name}** has **${Battles[interaction.id].Defender.BattleHealth.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [attackImage] });
-    console.log(`Attacker hit for ${Attacker.AttackPower.toLocaleString()}`)    
-    const defendPower = Math.floor(Math.random() * (Defender.Power - Defender.Power/2)) + Defender.Power/2
-    Defender.AttackPower = (defendPower * Defender.Multiplier)
-    Attacker.BattleHealth = Attacker.BattleHealth - Defender.AttackPower
+    console.log(`Attacker hit for ${Battles[interaction.id].Attacker.AttackPower.toLocaleString()}`)    
+    await sleep(800)      
+    const defendPower = Math.floor(Math.random() * (Battles[interaction.id].Defender.Power - Battles[interaction.id].Defender.Power/2)) + Battles[interaction.id].Defender.Power/2
+    Battles[interaction.id].Defender.AttackPower = (defendPower * Battles[interaction.id].Defender.Multiplier)
+    attackSelection(interaction)
+    campSelection(interaction) 
+    attackerSkills(interaction)
+    Battles[interaction.id].Attacker.BattleHealth = Battles[interaction.id].Attacker.BattleHealth - Battles[interaction.id].Defender.AttackPower
 
         embed
-            .setColor(Defender.Color)
-            .setThumbnail(`attachment://${Defender.ImageFile}`)
-            .setImage(`attachment://${Defender.ImageFile}`)
-            .setTitle(`${campaignOfficer}'s **${Defender.Name}** hit ${interaction.member}'s **${Attacker.Name}**! Dealing **${Defender.AttackPower.toLocaleString()}** damage!`)
-            .setDescription(`${interaction.member}'s **${Attacker.Name}** has **${Attacker.BattleHealth.toLocaleString()}** health remaining!`)
+            .setColor(Battles[interaction.id].Defender.Color)
+            .setThumbnail(`attachment://${Battles[interaction.id].Defender.ImageFile}`)
+            .setImage(`attachment://${Battles[interaction.id].Defender.ImageFile}`)
+            .setDescription(`**${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}** hit ${Battles[interaction.id].Attacker.Player}'s **${Battles[interaction.id].Attacker.Name}**! Dealing **${Battles[interaction.id].Defender.AttackPower.toLocaleString()}** damage!\n${Battles[interaction.id].Attacker.Player}'s **${Battles[interaction.id].Attacker.Name}** has **${Battles[interaction.id].Attacker.BattleHealth.toLocaleString()}** health remaining!`)
         interaction.editReply({ embeds: [embed], files: [defendImage] });
-    console.log(`Defender hit for ${Defender.AttackPower.toLocaleString()}`)
+    console.log(`Defender hit for ${Battles[interaction.id].Defender.AttackPower.toLocaleString()}`)
+    await sleep(800)      
     }
 }
-if (Defender.BattleHealth < 0) {
-    await sleep(2000)      
-    console.count(`Battle ID: ${interaction.id} Round`)
+if (Battles[interaction.id].Defender.BattleHealth < 0) {
+    await sleep(1000)      
+    console.count(`Battle ID: ${Battles[interaction.id].id} Round`)
     if (AttackerDB[0].officer_level === 0) {
         attackOfficerLevel = 1
     } else attackOfficerLevel = AttackerDB[0].officer_level
-    const winnings = (attackOfficerLevel * 10000) * (campaignOfficerLevel / 10)
+    const winnings = (attackOfficerLevel * 1000) * (campaignOfficerLevel / 10)
     const wallet = AttackerDB[0].war_coins
     const wins = AttackerDB[0].battle_wins
     const newWins = parseInt(wins + 1)
     const newWallet = parseInt(wallet + winnings)
+    const endTime = Date.now();
+    const duration = endTime - startTime
+    const battleLength = ms(duration)
+
     commandCooldowns.set(`${interaction.member.id}_${interaction.customId}`, Date.now() + 60 * 60 * 1000 * 12)
 
     embed 
-        .setColor(Attacker.Color)
-        .setThumbnail(`attachment://${Attacker.ImageFile}`)
-        .setImage(`attachment://${Attacker.ImageFile}`)
+        .setColor(Battles[interaction.id].Attacker.Color)
+        .setThumbnail(`attachment://${Battles[interaction.id].Attacker.ImageFile}`)
+        .setImage(`attachment://${Battles[interaction.id].Attacker.ImageFile}`)
         .addFields(
             { name: `Congratulations`, value: `You have defeated **${campaignOfficer}**! You can now challenge the next campaign` },
-            { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${interaction.member}` },
+            { name: `Attackers War-Coins Earned`, value: `**$${winnings.toLocaleString()}**! Well Done ${Battles[interaction.id].Attacker.Player}` },
+            { name: `Battle Duration`, value: `||${battleLength}||` },
         )        
-        .setDescription(`${campaignOfficer}'s **${Defender.Name}** has been killed by ${interaction.member}'s **${Attacker.Name} & ${Attacker.Officer} using ${Attacker.OfficerSkill}**.`)
+        .setDescription(`**${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name}** has been killed by ${Battles[interaction.id].Attacker.Player}'s **${Battles[interaction.id].Attacker.Name} & ${Battles[interaction.id].Attacker.Officer} using ${Battles[interaction.id].Attacker.OfficerSkill}**.`)
 
     interaction.editReply({ embeds: [embed], files: [attackImage] });
 
 const win = await sql.Execute(`UPDATE levels SET battle_wins = '${newWins}', war_coins = '${newWallet}' WHERE discord_id = ${interaction.member.id}`)
-console.log(`Winner: ${interaction.member.displayName}`, win.info,`\nLoser: ${campaignOfficer}`)
+console.log(`Winner: ${Battles[interaction.id].Attacker.Player.displayName}`, win.info,`\nLoser: ${campaignOfficer}`)
+Battles[interaction.id].win();
 } else
-if (Attacker.BattleHealth < 0) {
-    await sleep(2000)      
-    console.count(`Battle ID: ${interaction.id} Round`)
+if (Battles[interaction.id].Attacker.BattleHealth < 0) {
+    await sleep(1000)      
+    console.count(`Battle ID: ${Battles[interaction.id].id} Round`)
     const losses = AttackerDB[0].battle_losses
     const newLosses = parseInt(losses + 1)
+    const endTime = Date.now();
+    const duration = endTime - startTime
+    const battleLength = ms(duration)
+
 
     embed
-        .setColor(Defender.Color)
-        .setThumbnail(`attachment://${Defender.ImageFile}`)
-        .setImage(`attachment://${Defender.ImageFile}`)
+        .setColor(Battles[interaction.id].Defender.Color)
+        .setThumbnail(`attachment://${Battles[interaction.id].Defender.ImageFile}`)
+        .setImage(`attachment://${Battles[interaction.id].Defender.ImageFile}`)
         .addFields(
             { name: `You Were Unsuccessful`, value: `**You Failed**! You were unable to defeat **${campaignOfficer}**` },
+            { name: `Battle Duration`, value: `||${battleLength}||` },
         )     
-        .setDescription(`${interaction.member}'s **${Attacker.Name}** has been killed by **${campaignOfficer}**'s **${Defender.Name} & ${Defender.Officer} using ${Defender.OfficerSkill}**.`)
+        .setDescription(`${Battles[interaction.id].Attacker.Player.displayName}'s **${Battles[interaction.id].Attacker.Name}** has been killed by **${campaignOfficer}**'s **${Battles[interaction.id].Defender.Name} & ${Battles[interaction.id].Defender.Officer} using ${Battles[interaction.id].Defender.OfficerSkill}**.`)
     interaction.editReply({ embeds: [embed], files: [defendImage] });
     const loss = await sql.Execute(`UPDATE levels SET battle_losses = '${newLosses}' WHERE discord_id = ${interaction.member.id}`)
-    console.log(`Winner: ${campaignOfficer}`,`\nLoser: ${interaction.member.displayName}`, loss.info)
+    console.log(`Winner: ${campaignOfficer}`,`\nLoser: ${Battles[interaction.id].Attacker.Player.displayName}`, loss.info)
+    Battles[interaction.id].lose();
+
 }
 }
 }

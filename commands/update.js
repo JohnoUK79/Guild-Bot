@@ -1,6 +1,6 @@
 const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder , AttachmentBuilder} = require('discord.js');
 const sql = require("../config/Database");
-const Canvas = require("discord-canvas")
+//const Canvas = require('@napi-rs/canvas');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -9,7 +9,6 @@ module.exports = {
         .setDescription("Database Update Tool!"),
 
     async execute(interaction) {
-        const { client } = require('../bot')
         guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
 
@@ -17,11 +16,12 @@ module.exports = {
         const updateEmbed = new EmbedBuilder()
             .setColor('#4ec9b0')
             .setTitle(`Database Update`)
+            .setDescription(`${interaction.completion}`)
             .setURL('http://www.phfamily.co.uk/')
             .setAuthor({ name: 'Database Update', iconURL: 'http://phfamily.co.uk/img/gifs/Influencer.gif'})
             .setThumbnail('http://phfamily.co.uk/img/gifs/Influencer.gif')
             .addFields(
-                { name: `Database`, value: `Updated` },
+                { name: `${interaction.target}`, value: `${interaction.completion}` },
             )
             .setTimestamp()
             .setFooter({ text: `Database Update.`, iconURL: `http://phfamily.co.uk/img/gifs/Influencer.gif` });
@@ -40,32 +40,60 @@ module.exports = {
         //         console.log(guildID);
         //     }
         // }
-        let image = await new Canvas.RankCard()
-            .setAddon("xp", false)
-            .setAddon("rank", false)
-            .setAvatar(interaction.member.avatarURL)
-            .setLevel(7)
-            .setReputation(450)
-            .setRankName("professional")
-            .setUsername(interaction.member)
-            .setBadge(1, "gold")
-            .setBadge(2, "gold")
-            .setBadge(3, "diamond")
-            .setBadge(4, "diamond")
-            .setBadge(5, "silver")
-            .setBadge(6, "silver")
-            .setBadge(7, "bronze")
-            .setBadge(8, "bronze")
-            .setBadge(9, "diamond")
-            .setBackground("http://www.phfamily.co.uk/img/GeneralDeath.png")
-            .toAttachment();
+
+
+        //Image Resizing 
+        // const maxUnits = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '9.2' AND Camp = 'Vanguard' ORDER BY Unit_Type DESC`)
+        // const { promises } = require('fs')
+        // const { join } = require('path')
+        // const { createCanvas, loadImage } = require('@napi-rs/canvas')
         
-        const attachment = new AttachmentBuilder(image.toBuffer(), "rank-card.png");
-        
+        // for (let i = 0; i < maxUnits.length; i++) {
+        // const unit = maxUnits[i];
+        // console.log(unit)
+        // const canvas = createCanvas(300, 200)
+        // const context = canvas.getContext('2d')
+        // sleep(2000)
+        // const background = await loadImage(`./img/${unit.Image}`);
+        // context.drawImage(background, 0, 0, canvas.width, canvas.height);
+        // const attachment = new AttachmentBuilder(await canvas.encode('jpeg'), { name: `New${unit.Image}` });
+
+        // async function main() {
+        //   const jpgData = await canvas.encode('jpeg') // JPEG, AVIF and WebP are also supported
+        //   // encoding in libuv thread pool, non-blocking
+        //   await promises.writeFile(join(__dirname, `${unit.Image}`), jpgData)
+        // }
+        // main()
+        // }
+        interaction.Attacker = 'Dekes'
+        interaction.Defender = "The Might Bot"
+
+        class Battle {
+            constructor(interaction) {
+              this._id = interaction.id;
+              this._Attacker = interaction.Attacker;
+              this._Defender = interaction.Defender;
+            }
+            start() {
+              console.log(currentBattles);
+            }
+          }
+          const currentBattles = [];
+          currentBattles[interaction.id] = new Battle({
+            id: interaction.id,
+            Attacker: interaction.Attacker,
+            Defender: interaction.Defender
+          });
+          currentBattles[interaction.id].start();
+          
+
+        const { Colours } = require('../data/colours')
+        updateEmbed
+                .setColor(Colours.Red)
         await interaction.reply({
             ephemeral: true,
             embeds: [updateEmbed],
-            files: [attachment]
+            //files: [attachment]
         });
 
     },

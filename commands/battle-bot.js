@@ -1,6 +1,7 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
 const { Colours } = require('../data/colours')
 const sql = require("../config/Database");
+const { profileMenu } = require('../functions/warpathFunctions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -35,18 +36,28 @@ module.exports = {
 			)
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('shop')
-				.setDescription('Shop Coming Soon!')
+				.setName('help')
+				.setDescription('How to Play!')
 			)
 		.addSubcommand(subcommand =>
 			subcommand
-				.setName('main')
+				.setName('profile')
 				.setDescription('Upgrade your Empire!')
+			)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('alliance')
+				.setDescription('Alliances Coming Soon!')
+			)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('shop')
+				.setDescription('Shop Coming Soon!')
 			),
-
 				
 	async execute(interaction) {
 		await interaction.deferReply({
+			content: 'Prepare for Battle!',
 			fetchReply: true,
 			ephemeral: true,
 		})
@@ -54,12 +65,12 @@ module.exports = {
 		const guildName = interaction.member.guild.name
 		const Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
 		const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Economy[0].unit_camp}' AND Unit_type = '${Economy[0].unit_type}' AND Unit_Level = '${Economy[0].unit_level}'`)
-        const image = Economy[0].unit_image || 'Guardian_of_the_Truth.png'
-		console.log(unitDetails)
-		console.log(image)
-        const link = `http://phfamily.co.uk/img/${image}` 
-		console.log(link)
-		CampColour = Colours.Green
+        const image = Economy[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+
+		const link = `http://phfamily.co.uk/img/${image}` 
+
+		CampColour = Colours.Black
 		if (Economy[0].unit_camp === 'Vanguard') {
 			CampColour = Colours.Vanguard
 		}
@@ -72,7 +83,6 @@ module.exports = {
 		const embed = new EmbedBuilder();
 			embed
 				.setColor(CampColour)
-				.setImage(link)
 				.setThumbnail(link)
 				.setTimestamp()
 				.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
@@ -82,12 +92,56 @@ module.exports = {
 			const balance = Economy[0].war_coins
 			const bank = Economy[0].war_chest
 			embed			
+				.setColor(Colours.Blue)
 				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`})
 				.addFields(
 					{ name: `War-Coins:`, value: `$${balance.toLocaleString()}`, inline: true }, 
 					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
 				);
 
+		}
+		if (interaction.options.getSubcommand() === 'help')
+		{
+			const helpButtons = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId("bank")
+                    .setLabel('Upgrade War-Chest')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("base")
+                    .setLabel('Upgrade War-Base')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("officer")
+                    .setLabel('Upgrade Officer')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("troop")
+                    .setLabel('Upgrade Unit')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Show Profile')
+                    .setStyle(ButtonStyle.Secondary),
+            )
+			embed			
+				.setColor(Colours.Black)
+				.setTitle(`Battle Bot™ Help Menu`)
+				.setDescription(`**Battle Bot™** has an integrated **AI help system**.\nMention ${interaction.client.user} with any **Battle Bot™** related questions.\nBelow are the **Basic Commands & Options** in **Battle Bot™**!`)
+				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`})
+				.addFields(
+					{ name: `Battle-Bot Profile:`, value: `**/Battle-Bot Profile** is the **Main Menu** of the game. From here you can switch between **Officers** & **Units** as well as **Challenge Yourself** against the **Campaigns** every **12 Hours**. You can also upgrade your **War-Chest** & **War-Base**. Recruit and power up your **Officers** as well as train and skill your **Units**.`, inline: true },
+					{ name: `War-Coins:`, value: `**War-Coins** are the **Currency** of the **Battle Bot™**.\nNeeded for upgrading your **War-Chest** & **War_Base** to gain access to **Officers, Units & Skills**`, inline: true },
+					{ name: `War-Chest:`, value: `Your **War-Chest** is your secure storage for the **War-Coins** earned on your adventures.\nHigher level **War-Chest** allows you to safely store even more **War-Coins**.`, inline: true },
+					{ name: `Battle:`, value: `**/Battle** allows to to compare your best **Officer & Unit** combinations on fellow battlers in your server. All **Winnings** are system generated and not taken from the player.\nEach victory goes towards your **Weekly Battle Score** and this command has a **Cooldown** of **15 minutes**.\n**Top 3 Warriors** in each server will receive a reward of **War-Coins** each week. Use **/Battle-LB** for more information.`, inline: true },
+					{ name: `Daily Reward:`, value: `Active Warriors can claim their **Daily Reward** once every **12 Hours** using **/daily**.\nBetter rewards are offered to high level **Officers**.`, inline: true },
+					{ name: `Work:`, value: `To help with supplies, you can carry out random **Work Orders** every **4 Hours**. The rewards increase with a higher appointed **Officer**. Use **/work**.`, inline: true },
+					{ name: `Steal:`, value: `Use the **/Steal** command every **15 Minutes** to take **War-Coins** from any player who has not secured them into their **War-Chest**.`, inline: true },
+					{ name: `Battle Bot™ AI:`, value: `**Battle Bot™** has a comprehensive **AI help function**.\nSimply mention ${interaction.client.user} with your queries!`, inline: true },
+				);
+				await interaction.editReply({embeds: [embed], files: [playerImage], components: [helpButtons] })
+				return;		
 		}
 		
 		else if (interaction.options.getSubcommand() === 'deposit')
@@ -103,9 +157,10 @@ module.exports = {
 
 			if (amount <= 0) {
 			embed
+				.setColor(Colours.Yellow)
 				.setDescription(`${interaction.member} are you **Broke**? Try adding some **War-Coins** to the **War-Chest**!`)
 				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
-			return interaction.editReply({ embeds: [embed] })
+			return interaction.editReply({ embeds: [embed], files: [playerImage] })
 			}
 			
 			if (amount + bank > bankMax) {
@@ -113,21 +168,24 @@ module.exports = {
 			embed
 				.setDescription(`${interaction.member} your **War-Chest** can't hold that many **War-Coins**, try upgrading your **War-Chest** to hold more!\nYou have space for **$${difference.toLocaleString()}** **War-Coins** in your **War-Chest**!`)
 				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
-			return interaction.editReply({ embeds: [embed] })
+			return interaction.editReply({ embeds: [embed], files: [playerImage] })
 			}
 
 			try {
 				if (amount > wallet) {
 				embed
+					.setColor(Colours.Red)
+
 					.setDescription(`${interaction.member} You do not have enough **War-Coins** for that Deposit!\nYou have **$${wallet.toLocaleString()} War-Coins** available!`)
 					.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
-				return interaction.editReply({ embeds: [embed] });
+				return interaction.editReply({ embeds: [embed], files: [playerImage] });
 				} 
 
 				const newWallet = wallet - amount
 				const newBank = bank + amount
 
 				embed
+					.setColor(Colours.Green)
 					.addFields(
 						{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
 						{ name: `War-Chest:`, value: `$${newBank.toLocaleString()}`, inline: true },
@@ -153,6 +211,7 @@ module.exports = {
 				const newWallet = wallet + amount
 				const newBank = bank - amount
 				embed
+					.setColor(Colours.Red)
 					.setDescription(`**Withdrawal Sucessful**!`)
 					.addFields(
 						{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
@@ -174,45 +233,13 @@ module.exports = {
 				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
 		}
 
-		else if (interaction.options.getSubcommand() === 'main')
-		{
-		const upgradeButtons = new ActionRowBuilder()
-			.addComponents(
-                new ButtonBuilder()
-                    .setCustomId("bank")
-					.setLabel('War-Chest')
-					.setStyle(ButtonStyle.Primary),
-				new ButtonBuilder()
-					.setCustomId("base")
-					.setLabel('War-Base')
-					.setStyle(ButtonStyle.Primary),
-				new ButtonBuilder()
-					.setCustomId("officer")
-					.setLabel('Officer')
-					.setStyle(ButtonStyle.Success),
-				new ButtonBuilder()
-					.setCustomId("troop")
-					.setLabel('Unit')
-					.setStyle(ButtonStyle.Success),
-				new ButtonBuilder()
-					.setCustomId("profile")
-					.setLabel('Profile')
-					.setStyle(ButtonStyle.Secondary),
-				)
-		const wallet = Economy[0].war_coins
-		const bank = Economy[0].war_chest
-			embed
-				.setDescription(`**What would you like to do today**?`)
-				.addFields(
-					{ name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true }, 
-					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
-				)
-				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`});
-				
-		return interaction.editReply({embeds: [embed], components: [upgradeButtons]})
-		}
+		else if (interaction.options.getSubcommand() === 'profile')
+		try {
+		profileMenu(interaction)
+		return
+		} catch (err) {console.log(err)}
 
-		await interaction.editReply({embeds: [embed] })
+		await interaction.editReply({embeds: [embed], files: [playerImage] })
 		return;
 	},
 };

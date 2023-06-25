@@ -12,6 +12,10 @@
     "@discord-player/extractor": "^4.1.2",
     "@discordjs/voice": "^0.13.0",
     "@google-cloud/translate": "^7.0.5",
+    "@huggingface/hub": "^0.8.0",
+    "@napi-rs/canvas": "^0.1.40",
+    "axios": "^1.4.0",
+    "cheerio": "^1.0.0-rc.12",
     "discord-canvas": "^1.5.2",
     "discord-player": "^6.1.1",
     "discord-rpc": "^4.0.1",
@@ -23,10 +27,13 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
     "node-cron": "^3.0.1",
+    "nodemailer": "^6.9.3",
+    "openai": "^3.2.1",
     "opusscript": "^0.0.8",
+    "pdfkit": "^0.13.0",
     "pm2": "^5.2.0"
   },
-  "description": "",
+  "description": "Battle Bot™ is a Fun and Engaging experience to bring to your Servers. Members can Build Up their Empire and Battle other Members or the Bot using any combination from the Selection of 24 Officers with 5 Unique Skills Each, 344 Unique Units across 3 different Camp Loyalties. Battle Bot™ gives weekly rewards to Top Battlers in each server and regular hosted competitions on the Bot's home server.\r # The Bot is under constant development right now so any issues will be temporary\r #\r # Dekes#1470 on discord for more info!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JohnoUK79/PH-Family-2.git"

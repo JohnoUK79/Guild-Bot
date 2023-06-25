@@ -1,18 +1,22 @@
 const sql = require("../config/Database");
 const { GUILD_ID } = require('../config.json')
 const { Colours } = require('../data/colours')
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, Collection, embedLength } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, AttachmentBuilder } = require('discord.js');
 module.exports = {
     baseUpgrade: async function (interaction) {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const warbase = `http://phfamily.co.uk/img/war-base.jpg`
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
         const wallet = Level[0].war_coins
         const bank = Level[0].war_chest
         const baseLevel = Level[0].base_level
         const cost = (baseLevel + 1) * 25000
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.Vanguard
         }
@@ -26,45 +30,44 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('War-Chest')
+                    .setLabel('Upgrade War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('War-Base')
+                    .setLabel('Upgrade War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Officer')
+                    .setLabel('Upgrade Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Unit')
+                    .setLabel('Upgrade Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const upgradeBase = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("buybase")
-                    .setLabel('Upgrade')
+                    .setLabel('Confirm Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Cancel')
+                    .setLabel('Cancel Upgrade')
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Profile')
+                .setLabel('Show Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
         const upgradeEmbed = new EmbedBuilder();
         upgradeEmbed
             .setColor(CampColour)
-            .setThumbnail(warbase)
-            .setImage(warbase)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
             .addFields(
@@ -74,12 +77,16 @@ module.exports = {
                 { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-        return interaction.update({ embeds: [upgradeEmbed], components: [upgradeBase] })
+        return interaction.update({ embeds: [upgradeEmbed], components: [upgradeBase], files: [playerImage] })
     },
     buyBank: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const warchest = `http://phfamily.co.uk/img/war-chest.jpg`
-        let CampColour = Colours.Green
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -94,38 +101,38 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('War-Chest')
+                    .setLabel('Upgrade War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('War-Base')
+                    .setLabel('Upgrade War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Officer')
+                    .setLabel('Upgrade Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Unit')
+                    .setLabel('Upgrade Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const upgradeBankButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("buybank")
-                    .setLabel('Upgrade')
+                    .setLabel('Confirm Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Cancel')
+                    .setLabel('Cancel Upgrade')
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Profile')
+                .setLabel('Show Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -139,8 +146,7 @@ module.exports = {
             console.log(`Base Upgrade Needed`),
                 upgradeBankEmbed
                     .setColor(CampColour)
-                    .setThumbnail(warchest)
-                    .setImage(warchest)
+                    .setThumbnail(playerThumbnail)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **War-Base** for this upgrade.`)
@@ -152,15 +158,14 @@ module.exports = {
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-            return interaction.update({ embeds: [upgradeBankEmbed], components: [upgradeButtons] })
+            return interaction.update({ embeds: [upgradeBankEmbed], components: [upgradeButtons], files: [playerImage] })
         }
         if (cost > wallet) {
             console.log(`No Money`),
                 difference = cost - wallet
             upgradeBankEmbed
                 .setColor(CampColour)
-                .setThumbnail(warchest)
-                .setImage(warchest)
+                .setThumbnail(playerThumbnail)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins short**!\nTry withdrawing from your **War-Chest**!`)
@@ -172,14 +177,13 @@ module.exports = {
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-            return interaction.update({ embeds: [upgradeBankEmbed], components: [upgradeBankButtons] })
+            return interaction.update({ embeds: [upgradeBankEmbed], components: [upgradeBankButtons], files: [playerImage] })
         }
         const newWallet = wallet - cost
         const newBank = bankLevel + 1
         upgradeBankEmbed
             .setColor(CampColour)
-            .setThumbnail(warchest)
-            .setImage(warchest)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
             .setDescription(`**${interaction.member}, War-Chest Upgrade Successful**`)
@@ -191,12 +195,16 @@ module.exports = {
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
         const bankUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, chest_level = '${newBank}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Bank: ${bankUpgrade.info}`)
-        return interaction.update({ embeds: [upgradeBankEmbed], components: [upgradeButtons] })
+        return interaction.update({ embeds: [upgradeBankEmbed], components: [upgradeButtons], files: [playerImage] })
     },
     buyBase: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const warbase = `http://phfamily.co.uk/img/war-base.jpg`
-        let CampColour = Colours.Green
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -211,38 +219,38 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('War-Chest')
+                    .setLabel('Upgrade War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('War-Base')
+                    .setLabel('Upgrade War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Officer')
+                    .setLabel('Upgrade Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Unit')
+                    .setLabel('Upgrade Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const upgradeBaseButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("buybase")
-                    .setLabel('Upgrade')
+                    .setLabel('Confirm Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Cancel')
+                    .setLabel('Cancel Upgrade')
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Profile')
+                .setLabel('Show Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -256,8 +264,7 @@ module.exports = {
             console.log(`Chest Upgrade Needed`),
                 upgradeBaseEmbed
                     .setColor(CampColour)
-                    .setThumbnail(warbase)
-                    .setImage(warbase)
+                    .setThumbnail(playerThumbnail)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **War-Chest** for this upgrade.`)
@@ -268,7 +275,7 @@ module.exports = {
                         { name: `Bank Level:`, value: `${bankLevel}`, inline: true },
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [upgradeBaseEmbed], components: [upgradeButtons] })
+            return interaction.update({ embeds: [upgradeBaseEmbed], components: [upgradeButtons], files: [playerImage] })
         }
 
 
@@ -277,8 +284,7 @@ module.exports = {
                 difference = cost - wallet
             upgradeBaseEmbed
                 .setColor(CampColour)
-                .setThumbnail(warbase)
-                .setImage(warbase)
+                .setThumbnail(playerThumbnail)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins short**!\nTry withdrawing from your **War-Chest**!`)
@@ -289,14 +295,13 @@ module.exports = {
                     { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [upgradeBaseEmbed], components: [upgradeBaseButtons] })
+            return interaction.update({ embeds: [upgradeBaseEmbed], components: [upgradeBaseButtons], files: [playerImage] })
         }
         const newWallet = wallet - cost
         const newBase = baseLevel + 1
         upgradeBaseEmbed
             .setColor(CampColour)
-            .setThumbnail(warbase)
-            .setImage(warbase)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Base Upgrade Successful**`)
             .addFields(
@@ -307,13 +312,17 @@ module.exports = {
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
         const baseUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, base_level = '${newBase}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Base ${baseUpgrade.info}`)
-        return interaction.update({ embeds: [upgradeBaseEmbed], components: [upgradeButtons] })
+        return interaction.update({ embeds: [upgradeBaseEmbed], components: [upgradeButtons], files: [playerImage] })
 
     },
     buyOfficer: async function (interaction) {
         const GOT = `http://phfamily.co.uk/img/GeneralDeath.png`
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        let CampColour = Colours.Green
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -328,38 +337,38 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('War-Chest')
+                    .setLabel('Upgrade War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('War-Base')
+                    .setLabel('Upgrade War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Officer')
+                    .setLabel('Upgrade Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Unit')
+                    .setLabel('Upgrade Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const upgradeOfficerButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("buyofficer")
-                    .setLabel('Upgrade')
+                    .setLabel('Confirm Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Cancel')
+                    .setLabel('Cancel Upgrade')
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Profile')
+                .setLabel('Show Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -374,8 +383,7 @@ module.exports = {
             console.log(`Base Upgrade Needed`),
                 upgradeOfficerEmbed
                     .setColor(CampColour)
-                    .setThumbnail(GOT)
-                    .setImage(GOT)
+                    .setThumbnail(playerThumbnail)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **War-Base** for this upgrade.`)
@@ -385,7 +393,7 @@ module.exports = {
                         { name: `Base Level:`, value: `${baseLevel}`, inline: true },
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons] })
+            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons], files: [playerImage] })
         }
 
 
@@ -394,8 +402,7 @@ module.exports = {
                 difference = cost - wallet
             upgradeOfficerEmbed
                 .setColor(CampColour)
-                .setThumbnail(GOT)
-                .setImage(GOT)
+                .setThumbnail(playerThumbnail)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
@@ -406,14 +413,13 @@ module.exports = {
                     { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeOfficerButtons] })
+            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeOfficerButtons], files: [playerImage] })
         }
         const newWallet = wallet - cost
         const newOfficer = officerLevel + 1
         upgradeOfficerEmbed
             .setColor(CampColour)
-            .setImage(GOT)
-            .setThumbnail(GOT)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Officer Upgrade Successful**`)
             .addFields(
@@ -428,7 +434,130 @@ module.exports = {
             console.log(`Update Player Officer: ${playerOfficerUpgrade.info}`)
             console.log(`Officer Upgrade: ${officerUpgrade.info}`)
 
-        return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons] })
+        return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons], files: [playerImage] })
+
+    },
+    buyOfficer10: async function (interaction) {
+        const GOT = `http://phfamily.co.uk/img/GeneralDeath.png`
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
+        if (Level[0].unit_camp === 'Vanguard') {
+            CampColour = Colours.VanguardBoost
+        }
+        if (Level[0].unit_camp === 'Liberty') {
+            CampColour = Colours.LibertyBoost
+        }
+        if (Level[0].unit_camp === 'MartyrsW') {
+            CampColour = Colours.MartyrsWBoost
+        }
+        const upgradeOfficerEmbed = new EmbedBuilder();
+        const upgradeButtons = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId("bank")
+                    .setLabel('Upgrade War-Chest')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("base")
+                    .setLabel('Upgrade War-Base')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("officer")
+                    .setLabel('Upgrade Officer')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("troop")
+                    .setLabel('Upgrade Unit')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Show Profile')
+                    .setStyle(ButtonStyle.Secondary),
+            )
+        const upgradeOfficerButtons = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId("buyofficer10")
+                    .setLabel('Upgrade x 10')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("cancel")
+                    .setLabel('Cancel Upgrade')
+                    .setStyle(ButtonStyle.Danger),
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Show Profile')
+                .setStyle(ButtonStyle.Secondary),
+            )
+        const guildIcon = interaction.member.guild.iconURL();
+        const guildName = interaction.member.guild.name
+        const wallet = Level[0].war_coins
+        const bank = Level[0].war_chest
+        const officerLevel = Level[0].officer_level
+        const baseLevel = Level[0].base_level
+        const price = 10 * 50000
+        const cost = price * officerLevel
+
+        if (officerLevel + 10 > baseLevel) {
+            console.log(`Base Upgrade Needed`),
+                upgradeOfficerEmbed
+                    .setColor(CampColour)
+                    .setThumbnail(playerThumbnail)
+                    .setTimestamp()
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
+                    .setDescription(`${interaction.member}, You need to upgrade your **War-Base** for this upgrade.`)
+                    .addFields(
+                        { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true },
+                        { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
+                        { name: `Base Level:`, value: `${baseLevel}`, inline: true },
+                    )
+                    .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
+            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons], files: [playerImage] })
+        }
+
+
+        if (cost > wallet) {
+            console.log(`No Money`),
+                difference = cost - wallet
+            upgradeOfficerEmbed
+                .setColor(CampColour)
+                .setThumbnail(playerThumbnail)
+                .setTimestamp()
+                .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
+                .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
+                .addFields(
+                    { name: `War-Coins:`, value: `$${wallet.toLocaleString()}`, inline: true },
+                    { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
+                    { name: `Officer Level:`, value: `${officerLevel}`, inline: true },
+                    { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
+                )
+                .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
+            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeOfficerButtons], files: [playerImage] })
+        }
+        const newWallet = wallet - cost
+        const newOfficer = officerLevel + 10
+        upgradeOfficerEmbed
+            .setColor(CampColour)
+            .setThumbnail(playerThumbnail)
+            .setTimestamp()
+            .setDescription(`**${interaction.member}, Officer Upgrade Successful**`)
+            .addFields(
+                { name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true },
+                { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
+                { name: `New Level:`, value: `${newOfficer}`, inline: true },
+            )
+            .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
+
+            const playerOfficerUpgrade = await sql.Execute(`UPDATE playerofficers SET Officer_Level = '${newOfficer}' WHERE Discord_ID = '${interaction.member.id}' AND Officer_Name = '${Level[0].officer_name}'`)
+            const officerUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, officer_level = '${newOfficer}' WHERE discord_id = '${interaction.member.id}'`)
+            console.log(`Update Player Officer: ${playerOfficerUpgrade.info}`)
+            console.log(`Officer Upgrade: ${officerUpgrade.info}`)
+
+        return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons], files: [playerImage] })
 
     },
     cancel: async function (interaction) {
@@ -436,8 +565,10 @@ module.exports = {
         const guildName = interaction.member.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
         const link = `http://phfamily.co.uk/img/${image}`
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -454,30 +585,29 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('War-Chest')
+                    .setLabel('Upgrade War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('War-Base')
+                    .setLabel('Upgrade War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Officer')
+                    .setLabel('Upgrade Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Unit')
+                    .setLabel('Upgrade Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const upgradeEmbed = new EmbedBuilder();
         upgradeEmbed
             .setColor(CampColour)
-            .setThumbnail(link)
-            .setImage(link)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
             .setDescription(`**${interaction.member}, What would you like to upgrade**?`)
@@ -486,7 +616,7 @@ module.exports = {
                 { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-        return interaction.update({ embeds: [upgradeEmbed], components: [upgradeButtons] })
+        return interaction.update({ embeds: [upgradeEmbed], components: [upgradeButtons], files: [playerImage] })
 
     },
     chestUpgrade: async function (interaction) {
@@ -494,7 +624,11 @@ module.exports = {
         const guildName = interaction.guild.name
         const warchest = `http://phfamily.co.uk/img/war-chest.jpg`
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        let CampColour = Colours.Green
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -507,30 +641,28 @@ module.exports = {
         const wallet = Level[0].war_coins
         const bank = Level[0].war_chest
         const bankLevel = Level[0].chest_level
-        const baseLevel = Level[0].base_level
         const cost = (bankLevel + 1) * 10000
 
         const upgradeChestButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("buybank")
-                    .setLabel('Upgrade')
+                    .setLabel('Confirm Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Cancel')
+                    .setLabel('Cancel Upgrade')
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Profile')
+                .setLabel('Show Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
 
         const upgradeChestEmbed = new EmbedBuilder();
         upgradeChestEmbed
             .setColor(CampColour)
-            .setThumbnail(warchest)
-            .setImage(warchest)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
             .setDescription(`**${interaction.member}, Confirm the upgrade your War-Chest**?`)
@@ -542,19 +674,36 @@ module.exports = {
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-        return interaction.update({ embeds: [upgradeChestEmbed], components: [upgradeChestButtons] })
+        return interaction.update({ embeds: [upgradeChestEmbed], components: [upgradeChestButtons], files: [playerImage] })
     },
     officerSelect: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+        let CampColour = Colours.Black
+        if (Level[0].unit_camp === 'Vanguard') {
+            CampColour = Colours.VanguardBoost
+        }
+        if (Level[0].unit_camp === 'Liberty') {
+            CampColour = Colours.LibertyBoost
+        }
+        if (Level[0].unit_camp === 'MartyrsW') {
+            CampColour = Colours.MartyrsWBoost
+        }
+
         const selectOfficerEmbed = new EmbedBuilder();
         const selectOfficerButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade')
+                    .setLabel('Upgrade Menu')
                     .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Show Profile')
+                    .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
@@ -562,8 +711,7 @@ module.exports = {
         const officerSelection = Officer[Math.floor(Math.random() * Officer.length)]
         selectOfficerEmbed
             .setColor(CampColour)
-            .setThumbnail(link)
-            .setImage(link)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Officer Selection Successful**`)
             .addFields(
@@ -573,11 +721,11 @@ module.exports = {
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-        const addOfficer = await sql.Execute(`INSERT INTO playerofficers (Discord_ID, Officer_ID, Officer_Type, Officer_Name, Officer_Camp, Skill, Skill_Level, Image) VALUES ('${interaction.member.id}', '${officerSelection.Officer_ID}', '${officerSelection.Officer_Type}', '${officerSelection.Officer_Name}', '${officerSelection.Officer_Camp}', '${officerSelection.Skill}', '${officerSelection.Image}', '0')`)
+        const addOfficer = await sql.Execute(`INSERT INTO playerofficers (Discord_ID, Officer_ID, Officer_Type, Officer_Name, Officer_Camp, Skill, Skill_Level, Image) VALUES ('${interaction.member.id}', '${officerSelection.Officer_ID}', '${officerSelection.Officer_Type}', '${officerSelection.Officer_Name}', '${officerSelection.Officer_Camp}', '${officerSelection.Skill}', '0', '${officerSelection.Image}')`)
         const updateOfficer = await sql.Execute(`UPDATE levels SET officer_name	= '${officerSelection.Officer_Name}', officer_level = '1' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Add Officer: ${addOfficer.info}`)
         console.log(`Officer Select: ${updateOfficer.info}`)
-        return interaction.update({ embeds: [selectOfficerEmbed], components: [selectOfficerButtons] })
+        return interaction.update({ embeds: [selectOfficerEmbed], components: [selectOfficerButtons], files: [playerImage] })
 
     },
     officerUpgrade: async function (interaction) {
@@ -586,8 +734,11 @@ module.exports = {
         const guildName = interaction.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`
-        let CampColour = Colours.Green
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -607,69 +758,68 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("buyofficer")
-                    .setLabel('Upgrade')
+                    .setLabel('Confirm Upgrade')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("buyofficer10")
+                    .setLabel('Upgrade x 10')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("newofficer")
-                    .setLabel('New Officer')
+                    .setLabel('Select New Officer')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("skillupgrade")
                     .setLabel('Upgrade Skill')
-                    .setStyle(ButtonStyle.Danger),
+                    .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Cancel')
+                    .setLabel('Cancel Upgrade')
                     .setStyle(ButtonStyle.Danger),
-                new ButtonBuilder()
-                    .setCustomId("profile")
-                    .setLabel('Profile')
-                    .setStyle(ButtonStyle.Secondary),
             )
         const chooseOfficerButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("officerselect")
-                    .setLabel('Select')
+                    .setLabel('Select Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Cancel')
+                    .setLabel('Upgrade Menu')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
                 )
-        const upgradeButtons = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId("bank")
-                    .setLabel('War-Chest')
-                    .setStyle(ButtonStyle.Primary),
-                new ButtonBuilder()
-                    .setCustomId("base")
-                    .setLabel('War-Base')
-                    .setStyle(ButtonStyle.Primary),
-                new ButtonBuilder()
-                    .setCustomId("officer")
-                    .setLabel('Officer')
-                    .setStyle(ButtonStyle.Success),
-                new ButtonBuilder()
-                    .setCustomId("troop")
-                    .setLabel('Unit')
-                    .setStyle(ButtonStyle.Success),
-                new ButtonBuilder()
-                    .setCustomId("profile")
-                    .setLabel('Profile')
-                    .setStyle(ButtonStyle.Secondary),
-            )
-
+                const upgradeButtons = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId("bank")
+                        .setLabel('Upgrade War-Chest')
+                        .setStyle(ButtonStyle.Primary),
+                    new ButtonBuilder()
+                        .setCustomId("base")
+                        .setLabel('Upgrade War-Base')
+                        .setStyle(ButtonStyle.Primary),
+                    new ButtonBuilder()
+                        .setCustomId("officer")
+                        .setLabel('Upgrade Officer')
+                        .setStyle(ButtonStyle.Success),
+                    new ButtonBuilder()
+                        .setCustomId("troop")
+                        .setLabel('Upgrade Unit')
+                        .setStyle(ButtonStyle.Success),
+                    new ButtonBuilder()
+                        .setCustomId("profile")
+                        .setLabel('Show Profile')
+                        .setStyle(ButtonStyle.Secondary),
+                )
+    
         if (baseLevel < 1) {
             upgradeOfficerEmbed
                 .setColor(CampColour)
-                .setThumbnail(link)
-                .setImage(link)
+                .setThumbnail(playerThumbnail)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You need to upgrade your **Base** to Select your **Officer**?`)
@@ -679,7 +829,7 @@ module.exports = {
                     { name: `Base Level:`, value: `${baseLevel}`, inline: true },
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons] })
+            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeButtons], files: [playerImage] })
         }
         const officer = Level[0].officer_name
 
@@ -687,8 +837,7 @@ module.exports = {
 
             upgradeOfficerEmbed
                 .setColor(CampColour)
-                .setThumbnail(link)
-                .setImage(link)
+                .setThumbnail(playerThumbnail)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`**${interaction.member}**, First you need to select your **Officer**!`)
@@ -697,13 +846,12 @@ module.exports = {
                     { name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [chooseOfficerButtons] })
+            return interaction.update({ embeds: [upgradeOfficerEmbed], components: [chooseOfficerButtons], files: [playerImage] })
 
         } else
             upgradeOfficerEmbed
                 .setColor(CampColour)
-                .setThumbnail(link)
-                .setImage(link)
+                .setThumbnail(playerThumbnail)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`**${interaction.member}, Confirm the upgrade your Officer**?`)
@@ -715,7 +863,7 @@ module.exports = {
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-        return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeOfficerButtons] })
+        return interaction.update({ embeds: [upgradeOfficerEmbed], components: [upgradeOfficerButtons], files: [playerImage] })
     },
     unitUpgrade: async function (interaction) {
         const upgradeUnitEmbed = new EmbedBuilder();
@@ -723,8 +871,11 @@ module.exports = {
         const guildName = interaction.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`
-        let CampColour = Colours.Green
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -746,61 +897,60 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("buyunit")
-                    .setLabel('Upgrade')
+                    .setLabel('Confirm Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Cancel')
+                    .setLabel('Cancel Upgrade')
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Profile')
+                .setLabel('Show Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
         const chooseUnitButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("unitselect")
-                    .setLabel('Select')
+                    .setLabel('Select Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Cancel')
+                    .setLabel('Upgrade Menu')
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Profile')
+                .setLabel('Show Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
-        const upgradeButtons = new ActionRowBuilder()
+            const upgradeButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('War-Chest')
+                    .setLabel('Upgrade War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('War-Base')
+                    .setLabel('Upgrade War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Officer')
+                    .setLabel('Upgrade Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Unit')
+                    .setLabel('Upgrade Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
 
         if (officerLevel < 1) {
             upgradeUnitEmbed
                 .setColor(CampColour)
-                .setThumbnail(link)
-                .setImage(link)
+                .setThumbnail(playerThumbnail)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You need to upgrade your **Officer** to Select your **Unit**?`)
@@ -811,14 +961,13 @@ module.exports = {
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-            return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeButtons] })
+            return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeButtons], files: [playerImage] })
         } else
             if (unitLevel === '0.0') {
 
                 upgradeUnitEmbed
                     .setColor(CampColour)
-                    .setImage(link)
-                    .setThumbnail(link)
+                    .setThumbnail(playerThumbnail)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`**${interaction.member}**, First you need to select your **Unit**!`)
@@ -828,13 +977,12 @@ module.exports = {
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-                return interaction.update({ embeds: [upgradeUnitEmbed], components: [chooseUnitButtons] })
+                return interaction.update({ embeds: [upgradeUnitEmbed], components: [chooseUnitButtons], files: [playerImage] })
 
             } else
                 upgradeUnitEmbed
                     .setColor(CampColour)
-                    .setImage(link)
-                    .setThumbnail(link)
+                    .setThumbnail(playerThumbnail)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`**${interaction.member}, Confirm the upgrade your Unit**?`)
@@ -845,14 +993,15 @@ module.exports = {
                         { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-        return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeUnitButtons] })
+        return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeUnitButtons], files: [playerImage] })
     },
     unitSelect: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
-        const link = `http://phfamily.co.uk/img/${image}`
-        let CampColour = Colours.Green
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -867,19 +1016,24 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade')
+                    .setLabel('Upgrade Menu')
                     .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Show Profile')
+                    .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
         const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '4.0' AND Unit_Type = 'MediumTanks'`)
         const unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
-
+		const playerImage = new AttachmentBuilder(`./img/${unitSelection.Image}`)
+        const footer = ` - `
         selectUnitEmbed
             .setColor(CampColour)
-            .setImage(link)
-            .setThumbnail(link)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
+            .setFooter({ text: `${unitSelection.Unit_Type} - ${unitSelection.Unit_Name} - ${unitSelection.Unit_Level}`, iconURL: `${guildIcon}`})
             .setDescription(`**${interaction.member}, Unit Selection Successful**`)
             .addFields(
                 { name: `Unit Name:`, value: `${unitSelection.Unit_Name}`, inline: true },
@@ -890,20 +1044,22 @@ module.exports = {
                 { name: `HP:`, value: `${unitSelection.HP}`, inline: true },
                 { name: `Speed:`, value: `${unitSelection.Speed}`, inline: true },
             )
-            .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
         const saveUnit = await sql.Execute(`INSERT INTO playerunits (discord_id, camp, unit_type, unit_level, unit_id) VALUES ('${interaction.member.id}', '${unitSelection.Camp}', '${unitSelection.Unit_Type}', '${unitSelection.Unit_Level}', '${unitSelection.Unit_ID}')`)
         console.log(`Save Unit:${saveUnit.info}`)
         const updateOfficer = await sql.Execute(`UPDATE levels SET unit_camp = '${unitSelection.Camp}', unit_type = '${unitSelection.Unit_Type}', unit_level = '${unitSelection.Unit_Level}', unit_image = '${unitSelection.Image}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Update Officer:${updateOfficer.info}`)
-        return interaction.update({ embeds: [selectUnitEmbed], components: [selectUnitButtons] })
+        return interaction.update({ embeds: [selectUnitEmbed], components: [selectUnitButtons], files: [playerImage] })
     },
     buyUnit: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = unitDetails[0].Image || 'GeneralDeath.png'
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+        
         const camp = Level[0].unit_camp
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -918,38 +1074,38 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('War-Chest')
+                    .setLabel('Upgrade War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('War-Base')
+                    .setLabel('Upgrade War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Officer')
+                    .setLabel('Upgrade Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Unit')
+                    .setLabel('Upgrade Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const newUnitButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('War-Chest')
+                    .setLabel('Upgrade War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('War-Base')
+                    .setLabel('Upgrade War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Officer')
+                    .setLabel('Upgrade Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("newUnit")
@@ -957,7 +1113,7 @@ module.exports = {
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
 
@@ -965,16 +1121,16 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("buyunit")
-                    .setLabel('Upgrade')
+                    .setLabel('Confirm Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Cancel')
+                    .setLabel('Cancel Upgrade')
                     .setStyle(ButtonStyle.Danger),
-            new ButtonBuilder()
-                .setCustomId("profile")
-                .setLabel('Profile')
-                .setStyle(ButtonStyle.Secondary),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Show Profile')
+                    .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
@@ -991,8 +1147,7 @@ module.exports = {
 
                 upgradeUnitEmbed
                     .setColor(CampColour)
-                    .setImage(link)
-                    .setThumbnail(link)
+                    .setThumbnail(playerThumbnail)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You have already **Maxed** your **${unitType}**.\nUpgrade your **Officer** to increase your **Battle Rewards**!\nUpgrade your **War-Base** to increase your **Unit Strength**!\nSelect **New Unit** below to receive your next **Unit**`)
@@ -1003,15 +1158,14 @@ module.exports = {
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-            return interaction.update({ embeds: [upgradeUnitEmbed], components: [newUnitButtons] })
+            return interaction.update({ embeds: [upgradeUnitEmbed], components: [newUnitButtons], files: [playerImage] })
         }
 
         if (unitLevel > officerLevel) {
             console.log(`Officer Upgrade Needed`),
                 upgradeUnitEmbed
                     .setColor(CampColour)
-                    .setImage(link)
-                    .setThumbnail(link)
+                    .setThumbnail(playerThumbnail)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **Officer** for this upgrade.`)
@@ -1023,7 +1177,7 @@ module.exports = {
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
-            return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeButtons] })
+            return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeButtons], files: [playerImage] })
         } else
 
 
@@ -1032,8 +1186,7 @@ module.exports = {
                     difference = cost - wallet
                 upgradeUnitEmbed
                     .setColor(CampColour)
-                    .setImage(link)
-                    .setThumbnail(link)
+                    .setThumbnail(playerThumbnail)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
@@ -1044,7 +1197,7 @@ module.exports = {
                         { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-                return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeUnitButtons] })
+                return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeUnitButtons], files: [playerImage] })
             }
         const newWallet = (wallet - cost)
         const newUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${camp}' AND Unit_Type = '${unitType}' AND Unit_Level > '${unitLevel}'`)
@@ -1061,8 +1214,7 @@ module.exports = {
 
         upgradeUnitEmbed
             .setColor(CampColour)
-            .setImage(link)
-            .setThumbnail(link)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Unit Upgrade Successful**`)
             .addFields(
@@ -1081,11 +1233,15 @@ module.exports = {
         console.log(`Levels Unit Update${unitUpgrade.info}`)
         const updateUnit = await sql.Execute(`UPDATE playerunits SET emoji = '${newEmoji}', unit_level = '${newLevel}', unit_id = '${newID}' WHERE discord_id = '${interaction.member.id}' AND camp = '${Level[0].unit_camp}' AND unit_type = '${Level[0].unit_type}'`)
         console.log(`Player Unit Update ${updateUnit.info}`)
-        return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeButtons] })
+        return interaction.update({ embeds: [upgradeUnitEmbed], components: [upgradeButtons], files: [playerImage] })
     },
     profile: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        let CampColour = Colours.Green
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -1100,23 +1256,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("campaign")
-                    .setLabel('Campaign')
+                    .setLabel('Campaign Menu')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("selectunit")
-                    .setLabel('Select Unit')
+                    .setLabel('Select Unit Menu')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("selectofficer")
-                    .setLabel('Select Officer')
+                    .setLabel('Select Officer Menu')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade')
+                    .setLabel('Upgrade Menu')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -1127,19 +1283,26 @@ module.exports = {
         const unitLevel = Level[0].unit_level || 'No Unit Trained'
         const unitCamp = Level[0].unit_camp || 'No Unit Trained'
         const officerDetails = await sql.Execute(`SELECT * from officers WHERE Officer_Name = '${officer}'`)
-        const officerType = officerDetails[0].Officer_Type || 'No Officer Chosen'
-        const officerCamp = officerDetails[0].Officer_Camp || 'No Officer Chosen'
-        const officerSkill = officerDetails[0].Skill || 'No Officer Chosen'
+        officerType = 'No Officer Chosen'
+        officerCamp = 'No Officer Chosen'
+        officerSkill = 'No Officer Chosen'    
+        if (officerDetails.length > 0) {
+            officerType = officerDetails[0].Officer_Type
+            officerCamp = officerDetails[0].Officer_Camp
+            officerSkill = officerDetails[0].Skill 
+        }
         const skillLevel = Level[0].skill_level 
 
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const image = Level[0].unit_image || 'GeneralDeath.png'
         const link = `http://phfamily.co.uk/img/${image}`
-        const triggerRate = 5 + (skillLevel * 5)
+        const triggerRate = skillLevel * 5
+        attackType = 'No Unit Selected'
+        if (unitDetails.length > 0) {
+            attackType = unitDetails[0].Attack_Type
+        }
         
         profileEmbed
-            .setImage(link)
-            .setThumbnail(link)
+            .setThumbnail(playerThumbnail)
             .setColor(CampColour)
             .setTimestamp()
             .setDescription(`**${interaction.member}'s Profile**`)
@@ -1157,21 +1320,115 @@ module.exports = {
                 { name: `Skill Trigger Rate:`, value: `${triggerRate}%`, inline: false },
                 { name: `Unit Type:`, value: `${unitType}`, inline: false },
                 { name: `Unit Level:`, value: `${unitLevel}`, inline: false },
-                { name: `Attack Type:`, value: `${unitDetails[0].Attack_Type}`, inline: false },
+                { name: `Attack Type:`, value: `${attackType}`, inline: false },
                 { name: `Unit Camp:`, value: `${unitCamp}`, inline: false },
             )
             .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
 
 
-        return interaction.update({ empheral: true, embeds: [profileEmbed], components: [profileButtons] })
+        return interaction.update({ empheral: true, embeds: [profileEmbed], components: [profileButtons], files: [playerImage] })
+    },
+    profileMenu: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
 
+        let CampColour = Colours.Black
+        if (Level[0].unit_camp === 'Vanguard') {
+            CampColour = Colours.VanguardBoost
+        }
+        if (Level[0].unit_camp === 'Liberty') {
+            CampColour = Colours.LibertyBoost
+        }
+        if (Level[0].unit_camp === 'MartyrsW') {
+            CampColour = Colours.MartyrsWBoost
+        }
+        const profileEmbed = new EmbedBuilder();
+        const profileButtons = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId("campaign")
+                    .setLabel('Campaign Menu')
+                    .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
+                    .setCustomId("selectunit")
+                    .setLabel('Select Unit Menu')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("selectofficer")
+                    .setLabel('Select Officer Menu')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("cancel")
+                    .setLabel('Upgrade Menu')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Show Profile')
+                    .setStyle(ButtonStyle.Secondary),
+            )
+        const guildIcon = interaction.member.guild.iconURL();
+        const guildName = interaction.member.guild.name
+        const officerLevel = Level[0].officer_level || 'No Officer Chosen'
+        const officer = Level[0].officer_name || 'No Officer Chosen'
+        const unitType = Level[0].unit_type || 'No Unit Trained'
+        const unitLevel = Level[0].unit_level || 'No Unit Trained'
+        const unitCamp = Level[0].unit_camp || 'No Unit Trained'
+        const officerDetails = await sql.Execute(`SELECT * from officers WHERE Officer_Name = '${officer}'`)
+        officerType = 'No Officer Chosen'
+        officerCamp = 'No Officer Chosen'
+        officerSkill = 'No Officer Chosen'    
+        if (officerDetails.length > 0) {
+            officerType = officerDetails[0].Officer_Type
+            officerCamp = officerDetails[0].Officer_Camp
+            officerSkill = officerDetails[0].Skill 
+        }
+        const skillLevel = Level[0].skill_level 
+
+        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
+        const link = `http://phfamily.co.uk/img/${image}`
+        const triggerRate = skillLevel * 5
+        attackType = 'No Unit Selected'
+        if (unitDetails.length > 0) {
+            attackType = unitDetails[0].Attack_Type
+        }
+        
+        profileEmbed
+            .setThumbnail(playerThumbnail)
+            .setColor(CampColour)
+            .setTimestamp()
+            .setDescription(`**${interaction.member}'s Profile**`)
+            .addFields(
+                { name: `War-Coins:`, value: `$${Level[0].war_coins.toLocaleString()}`, inline: false },
+                { name: `War-Chest:`, value: `$${Level[0].war_chest.toLocaleString()}`, inline: false },
+                { name: `War-Chest Level:`, value: `${Level[0].chest_level.toLocaleString()}`, inline: false },
+                { name: `Base Level:`, value: `${Level[0].base_level}`, inline: false },
+                { name: `Officer:`, value: `${officer}`, inline: false },
+                { name: `Officer Level:`, value: `${officerLevel}`, inline: false },
+                { name: `Officer Type:`, value: `${officerType}`, inline: false },
+                { name: `Officer Camp:`, value: `${officerCamp}`, inline: false },
+                { name: `Officer Skill:`, value: `${officerSkill}`, inline: false },
+                { name: `Skill Level:`, value: `${skillLevel}`, inline: false },
+                { name: `Skill Trigger Rate:`, value: `${triggerRate}%`, inline: false },
+                { name: `Unit Type:`, value: `${unitType}`, inline: false },
+                { name: `Unit Level:`, value: `${unitLevel}`, inline: false },
+                { name: `Attack Type:`, value: `${attackType}`, inline: false },
+                { name: `Unit Camp:`, value: `${unitCamp}`, inline: false },
+            )
+            .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
+
+
+        return interaction.editReply({ empheral: true, embeds: [profileEmbed], components: [profileButtons], files: [playerImage] })
     },
     newUnit: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`
-        let CampColour = Colours.Green
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -1189,11 +1446,11 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade')
+                    .setLabel('Upgrade Menu')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Primary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -1210,34 +1467,65 @@ module.exports = {
         if (prestige === 7) return newUnitLevel = '4.0', newUnitType = 'LightTanks'
         if (prestige === 8) return newUnitLevel = '4.0', newUnitType = 'HeavyTanks'
         if (prestige === 9) return newUnitLevel = '4.0', newUnitType = 'AntiTankGuns'
+
+        if (prestige === 10) return newUnitLevel = '4.0', newUnitType = 'MediumTanks'//2
+        if (prestige === 11) return newUnitLevel = '5.0', newUnitType = 'Fighters'//2
+        if (prestige === 12) return newUnitLevel = '4.0', newUnitType = 'Infantry'//2
+        if (prestige === 13) return newUnitLevel = '4.0', newUnitType = 'Howitzers'//2
+        if (prestige === 14) return newUnitLevel = '5.0', newUnitType = 'Bombers'//2
+        if (prestige === 15) return newUnitLevel = '4.0', newUnitType = 'TankHunters'//2
+        if (prestige === 16) return newUnitLevel = '4.0', newUnitType = 'HeavyTanks'//2
+
+        if (prestige === 17) return newUnitLevel = '4.0', newUnitType = 'MediumTanks'//3
+        if (prestige === 18) return newUnitLevel = '5.0', newUnitType = 'Fighters'//3
+        if (prestige === 19) return newUnitLevel = '4.0', newUnitType = 'Infantry'//3
+        if (prestige === 20) return newUnitLevel = '4.0', newUnitType = 'Howitzers'//3
+        if (prestige === 21) return newUnitLevel = '5.0', newUnitType = 'Bombers'//3
+        if (prestige === 22) return newUnitLevel = '4.0', newUnitType = 'TankHunters'//3
+        if (prestige === 23) return newUnitLevel = '4.0', newUnitType = 'HeavyTanks'//3
+        if (prestige < 23) return interaction.update({
+            content: `You have collected all available Units`
+        })
+
+
         module.exports.newUnitLevel = newUnitLevel
         module.exports.newUnitType = newUnitType
         }
         newUnitSelection(prestige)
 
-        let presigeRequired = newPrestige * 10 + 1
+        let presigeRequired = newPrestige * 50
         if (presigeRequired > Level[0].officer_level) {
             console.log(`Officer Upgrade Required`)
             newUnitEmbed
                 .setColor(CampColour)
-                .setImage(link)
-                .setThumbnail(link)
+                .setThumbnail(playerThumbnail)
                 .setTimestamp()
                 .addFields(
-                    { name: `Required Level: ${presigeRequired}`, value: `Current Level: ${Level[0].officer_level}` },
+                    { name: `Required Level: ${presigeRequired + 1}`, value: `Current Level: ${Level[0].officer_level}` },
                 )  
                 .setDescription(`**${interaction.member}, Officer Upgrade Required**`)
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons] })
+            return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons], files: [playerImage] })
         } else console.log(`No Officer Upgrade Required`)
 
-        const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '${newUnitLevel}' AND Unit_Type LIKE '%${newUnitType}%'`)
-        const unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
+        if (prestige > 9) {
+            const Current = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}' AND unit_type = '${newUnitType}'`)
+            const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '${newUnitLevel}' AND Unit_Type LIKE '%${newUnitType}%' AND '${Current[0].camp}' NOT IN (Camp)`)
+            unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
+            newUnitImage = new AttachmentBuilder(`./img/${unitSelection.Image}`)
+            module.exports = unitSelection = unitSelection, newUnitImage = newUnitImage    
+        } else {
+            const Unit = await sql.Execute(`SELECT * FROM units WHERE Unit_Level = '${newUnitLevel}' AND Unit_Type LIKE '%${newUnitType}%'`)
+            unitSelection = Unit[Math.floor(Math.random() * Unit.length)]
+            newUnitImage = new AttachmentBuilder(`./img/${unitSelection.Image}`)
+            module.exports.unitSelection = unitSelection
+            module.exports.newUnitImage = newUnitImage
+        }
+
 
         newUnitEmbed
             .setColor(CampColour)
-            .setImage(link)
-            .setThumbnail(link)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
             .setDescription(`**${interaction.member}, New Unit Selection Successful**`)
             .addFields(
@@ -1258,38 +1546,74 @@ module.exports = {
         console.log(`Update New Unit:${updateNewUnit.info}`)
         console.log(`Save New Unit:${saveNewUnit.info}`)
 
-        return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons] })
+        return interaction.update({ embeds: [newUnitEmbed], components: [newUnitButtons], files: [newUnitImage] })
     },
-    attackSelection: async function (Attacker, Defender) {
-        if (Attacker.AttackType === Attacker.OfficerType) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier, console.log(`Attacker Unit Buff:`, Attacker.Multiplier)
-        if (Defender.AttackType === Defender.OfficerType) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier, console.log(`Defender Unit Buff:`, Defender.Multiplier)
-        if (Attacker.AttackType === 'Air' && Defender.AttackType === 'Ground') return Attacker.Multiplier = Attacker.Multiplier * 2, Defender.Multiplier = Defender.Multiplier / 2, Defender.Power = Defender.Power / 2, console.log(`Attacker Air Buff:`, Attacker.Multiplier + `\nDefender Ground Debuff:`, Defender.Multiplier, Defender.Power)
-        if (Defender.AttackType === 'Air' && Attacker.AttackType === 'Ground') return Defender.Multiplier = Defender.Multiplier * 2, Attacker.Multiplier = Attacker.Multiplier / 2, Attacker.Power = Attacker.Power / 2, console.log(`Defender Air Buff:`, Defender.Multiplier, `\nDefender Ground Debuff:`, Attacker.Multiplier, Attacker.Power)
+    attackSelection: async function (interaction) {
+        if (interaction.Attacker.AttackType === interaction.Attacker.OfficerType) return interaction.Attacker.Multiplier = interaction.Attacker.Multiplier + interaction.Attacker.Multiplier, console.log(`Attacker Unit Selection Buff:`, interaction.Attacker.Multiplier)
+        if (interaction.Defender.AttackType === interaction.Defender.OfficerType) return interaction.Defender.Multiplier = interaction.Defender.Multiplier + interaction.Defender.Multiplier, console.log(`Defender Unit Selection Buff:`, interaction.Defender.Multiplier)
+        if (interaction.Attacker.AttackType === 'Air' && interaction.Defender.AttackType === 'Ground') return interaction.Attacker.Multiplier = interaction.Attacker.Multiplier * 2, interaction.Defender.Multiplier = interaction.Defender.Multiplier / 2, interaction.Defender.Power = interaction.Defender.Power / 2, console.log(`Attacker Air Selection Buff:`, interaction.Attacker.Multiplier + `\nDefender Ground Debuff:`, interaction.Defender.Multiplier, interaction.Defender.Power)
+        if (interaction.Defender.AttackType === 'Air' && interaction.Attacker.AttackType === 'Ground') return interaction.Defender.Multiplier = interaction.Defender.Multiplier * 2, interaction.Attacker.Multiplier = interaction.Attacker.Multiplier / 2, interaction.Attacker.Power = interaction.Attacker.Power / 2, console.log(`Defender Air Selection Buff:`, interaction.Defender.Multiplier, `\nDefender Ground Debuff:`, interaction.Attacker.Multiplier, interaction.Attacker.Power)
     },
-    campSelection: async function (Attacker, Defender) {
-        if (Attacker.UnitCamp === Attacker.OfficerCamp) return Attacker.Multiplier = Attacker.Multiplier + Attacker.Multiplier, console.log(`Attacker Camp Buff:`, Attacker.Multiplier)
-        if (Defender.UnitCamp === Defender.OfficerCamp) return Defender.Multiplier = Defender.Multiplier + Defender.Multiplier, console.log(`Defender Camp Buff:`, Defender.Multiplier)
+    campSelection: async function (interaction) {
+        if (interaction.Attacker.UnitCamp === interaction.Attacker.OfficerCamp) return interaction.Attacker.Multiplier = interaction.Attacker.Multiplier + interaction.Attacker.Multiplier, console.log(`Attacker Camp Buff:`, interaction.Attacker.Multiplier)
+        if (interaction.Defender.UnitCamp === interaction.Defender.OfficerCamp) return interaction.Defender.Multiplier = interaction.Defender.Multiplier + interaction.Defender.Multiplier, console.log(`Defender Camp Buff:`, interaction.Defender.Multiplier)
     },
     newUnitSelection: async function (prestige) { //Medium is Starter Troop
-        if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters'
-        if (prestige === 1) return newUnitLevel = '4.0', newUnitType = 'Infantry'
-        if (prestige === 2) return newUnitLevel = '5.0', newUnitType = 'SuperHeavy'
-        if (prestige === 3) return newUnitLevel = '4.0', newUnitType = 'Howitzers'
-        if (prestige === 4) return newUnitLevel = '5.0', newUnitType = 'Bombers'
-        if (prestige === 5) return newUnitLevel = '4.0', newUnitType = 'TankHunters'
-        if (prestige === 6) return newUnitLevel = '5.0', newUnitType = 'RocketLaunchers'
-        if (prestige === 7) return newUnitLevel = '4.0', newUnitType = 'LightTanks'
-        if (prestige === 8) return newUnitLevel = '4.0', newUnitType = 'HeavyTanks'
-        if (prestige === 9) return newUnitLevel = '4.0', newUnitType = 'AntiTankGuns'
+        if (prestige === 0) return newUnitLevel = '5.0', newUnitType = 'Fighters', console.log(`New Unit Fighters`)
+        if (prestige === 1) return newUnitLevel = '4.0', newUnitType = 'Infantry', console.log(`New Unit Infantry`)
+        if (prestige === 2) return newUnitLevel = '5.0', newUnitType = 'SuperHeavy', console.log(`New Unit SuperHeavy`)
+        if (prestige === 3) return newUnitLevel = '4.0', newUnitType = 'Howitzers', console.log(`New Unit Howitzers`)
+        if (prestige === 4) return newUnitLevel = '5.0', newUnitType = 'Bombers', console.log(`New Unit Bombers`)
+        if (prestige === 5) return newUnitLevel = '4.0', newUnitType = 'TankHunters', console.log(`New Unit TankHunters`)
+        if (prestige === 6) return newUnitLevel = '5.0', newUnitType = 'RocketLaunchers', console.log(`New Unit RocketLaunchers`)
+        if (prestige === 7) return newUnitLevel = '4.0', newUnitType = 'LightTanks', console.log(`New Unit LightTanks`)
+        if (prestige === 8) return newUnitLevel = '4.0', newUnitType = 'HeavyTanks', console.log(`New Unit HeavyTanks`)
+        if (prestige === 9) return newUnitLevel = '4.0', newUnitType = 'AntiTankGuns', console.log(`New Unit AntiTankGuns`)
         module.exports.newUnitLevel = newUnitLevel
         module.exports.newUnitType = newUnitType
     },
     selectunit: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
-        const link = `http://phfamily.co.uk/img/${image}`
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        const selectUnitButtons = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId("cancel")
+                    .setLabel('Upgrade Menu')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("selectunit")
+                    .setLabel('Select Unit Menu')
+                    .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("selectofficer")
+                    .setLabel('Select Officer Menu')
+                    .setStyle(ButtonStyle.Success),    
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Show Profile')
+                    .setStyle(ButtonStyle.Secondary),
+            )
+            const selectUnitEmbed = new EmbedBuilder()
+                .setThumbnail(playerThumbnail)
+                .setColor(Colours.Black)
+                .setTimestamp()
+                .setTitle(`Select Your Unit!`)
+
         const playerUnits = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}'`)
+        if (playerUnits.length === 0 ) {
+            selectUnitEmbed
+                .setTitle(`No Unit Available!`)
+                .setDescription(`You have not selected your **Unit**.\nUpgrade your **War-Base** & **Officer** to get your **First Unit**!`)
+                return interaction.update({
+                embeds: [selectUnitEmbed],
+                components: [selectUnitButtons],
+                files: [playerImage]
+            })
+        }
         const unitChoices = [];
         for (const entry in playerUnits) {
             const camp = playerUnits[entry].camp
@@ -1300,7 +1624,7 @@ module.exports = {
             unitChoices.push({
                 label: type,
                 description: `${camp} - ${type} - ${level}`,
-                value: type.toString(),
+                value: type + '_' + camp.toString(),
                 emoji: image.toString(),
             })
         }
@@ -1311,40 +1635,33 @@ module.exports = {
                     .setPlaceholder('Select your Unit')
                     .addOptions(unitChoices),
             )
-        const selectUnitButtons = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId("cancel")
-                    .setLabel('Upgrade')
-                    .setStyle(ButtonStyle.Success),
-            new ButtonBuilder()
-                .setCustomId("profile")
-                .setLabel('Profile')
-                .setStyle(ButtonStyle.Secondary),
-            )
-        const selectUnitEmbed = new EmbedBuilder()
-            .setColor(Colours.Green)
-            .setImage(link)
-            .setThumbnail(link)
-            .setTimestamp()
-            .setTitle(`Select Your Unit!`)
+
         interaction.update({
             embeds: [selectUnitEmbed],
-            components: [unitMenu]
+            components: [unitMenu, selectUnitButtons],
+            files: [playerImage]
         })
     },
     selectunitmenu: async function (interaction) {
         const selected = interaction.values[0]
-        const selectedUnit = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}' AND unit_type = '${selected}'`)
+        const choice = selected.split('_')
+        console.log(choice[0])
+        const selectedUnit = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}' AND camp = '${choice[1]}' AND unit_type = '${choice[0]}'`)
+        console.log(selectedUnit)
         const newUnitSelect = await sql.Execute(`SELECT * FROM units WHERE Camp = '${selectedUnit[0].camp}' AND Unit_Type = '${selectedUnit[0].unit_type}' AND Unit_Level = '${selectedUnit[0].unit_level}'`)
         const playerProfile = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const firepower = newUnitSelect[0].Firepower * (playerProfile[0].officer_level / 10)
         const HP = newUnitSelect[0].HP * playerProfile[0].base_level * 10
+        const image = playerProfile[0].unit_image || 'GeneralDeath.png'
         const unitImage = `${newUnitSelect[0].Image}`
-        const link = 'http://phfamily.co.uk/img/' + unitImage
+		const playerImage = new AttachmentBuilder(`./img/${unitImage}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+
+        const link = 'http://phfamily.co.uk/img/' + image
         const updateUnit = await sql.Execute(`UPDATE levels SET unit_level = '${selectedUnit[0].unit_level}', unit_camp = '${selectedUnit[0].camp}', unit_type = '${selectedUnit[0].unit_type}', unit_image = '${unitImage}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Updated Unit:${updateUnit.info}`)
-        let CampColour = Colours.Green
+        let CampColour = Colours.Black
         if (selectedUnit[0].camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -1358,23 +1675,25 @@ module.exports = {
         .addComponents(
             new ButtonBuilder()
                 .setCustomId("cancel")
-                .setLabel('Upgrade')
+                .setLabel('Upgrade Menu')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
                 .setCustomId("selectunit")
-                .setLabel('Select Unit')
-                .setStyle(ButtonStyle.Primary),
+                .setLabel('Select Unit Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectofficer")
+                .setLabel('Select Officer Menu')
+                .setStyle(ButtonStyle.Success),    
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Profile')
+                .setLabel('Show Profile')
                 .setStyle(ButtonStyle.Secondary),
-
         )
         const selectedUnitEmbed = new EmbedBuilder()
-            .setTitle(`${selected} chosen`)
+            .setTitle(`${choice[0]} chosen`)
             .setColor(CampColour)
-            .setImage(link)
-            .setThumbnail(link)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
             .addFields(
                 { name: `Unit Name:`, value: `${newUnitSelect[0].Unit_Name.toLocaleString()}`, inline: true },
@@ -1388,15 +1707,111 @@ module.exports = {
         
         interaction.update({
             embeds: [selectedUnitEmbed],
-            components: [selectUnitMenuButtons]
+            components: [selectUnitMenuButtons],
+            files: [playerImage]
         })
 
     },
     selectofficer: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
-        const link = `http://phfamily.co.uk/img/${image}`
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
         const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
+        const selectOfficerButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("cancel")
+                .setLabel('Upgrade Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectunit")
+                .setLabel('Select Unit Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectgroundofficer")
+                .setLabel('Ground Officer Menu')
+                .setStyle(ButtonStyle.Primary), 
+            new ButtonBuilder()
+                .setCustomId("selectairofficer")
+                .setLabel('Air Officer Menu')
+                .setStyle(ButtonStyle.Primary),    
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Show Profile')
+                .setStyle(ButtonStyle.Secondary),
+                )
+        const selectOfficerEmbed = new EmbedBuilder()
+                .setColor(CampColour)
+                .setThumbnail(playerThumbnail)
+                .setTimestamp()
+                .setTitle(`Select from your Ground or Air Officers!`)
+
+        if (playerOfficers.length === 0) {
+            selectOfficerEmbed
+                .setTitle(`No Officer Available!`)
+                .setDescription(`You have not selected your **Officer**.\nUpgrade your **War-Chest** & **War-Base** to get your **First Unit**!`)
+            return interaction.update({
+            embeds: [selectOfficerEmbed],
+            components: [selectOfficerButtons],
+            files: [playerImage]
+            })
+        }
+
+
+        interaction.update({
+            embeds: [selectOfficerEmbed],
+            components: [selectOfficerButtons],
+            files: [playerImage]
+        })
+    },
+    selectgroundofficer: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const link = `http://phfamily.co.uk/img/${image}`
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
+        const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE officer_type = 'Ground' AND discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
+        const selectOfficerButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("cancel")
+                .setLabel('Upgrade Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectunit")
+                .setLabel('Select Unit Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectofficer")
+                .setLabel('Select Officer Menu')
+                .setStyle(ButtonStyle.Success),    
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Show Profile')
+                .setStyle(ButtonStyle.Secondary),
+                )
+        const selectOfficerEmbed = new EmbedBuilder()
+                .setColor(CampColour)
+                .setThumbnail(playerThumbnail)
+                .setTimestamp()
+                .setTitle(`Select Your Officer!`)
+
+        if (playerOfficers.length === 0) {
+            selectOfficerEmbed
+                .setTitle(`No Officer Available!`)
+                .setDescription(`You have not selected your **Officer**.\nUpgrade your **War-Chest** & **War-Base** to get your **First Unit**!`)
+            return interaction.update({
+            embeds: [selectOfficerEmbed],
+            components: [selectOfficerButtons],
+            files: [playerImage]
+            })
+        }
+
         const officerChoices = [];
         for (const entry in playerOfficers) {
             const name = playerOfficers[entry].Officer_Name
@@ -1407,8 +1822,6 @@ module.exports = {
             const skill_level = playerOfficers[entry].Skill_Level
             const image = await interaction.client.emojis.cache.find(emoji => emoji.name == camp)
 
-
-
             officerChoices.push({
                 label: name,
                 description: `${level} - ${camp} - ${type} - ${skill} - ${skill_level}`,
@@ -1416,7 +1829,6 @@ module.exports = {
                 emoji: image.toString()
             })
         }
-        let CampColour = Colours.Green
 
         const officerMenu = new ActionRowBuilder()
             .addComponents(
@@ -1425,26 +1837,86 @@ module.exports = {
                     .setPlaceholder('Select your Officer')
                     .addOptions(officerChoices),
             )
-        const selectOfficerButtons = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId("cancel")
-                    .setLabel('Upgrade')
-                    .setStyle(ButtonStyle.Success),
-            new ButtonBuilder()
-                .setCustomId("profile")
-                .setLabel('Profile')
-                .setStyle(ButtonStyle.Secondary),
-            )
-        const selectOfficerEmbed = new EmbedBuilder()
-            .setColor(CampColour)
-            .setImage(link)
-            .setThumbnail(link)
-            .setTimestamp()
-            .setTitle(`Select Your Officer!`)
         interaction.update({
             embeds: [selectOfficerEmbed],
-            components: [officerMenu]
+            components: [officerMenu, selectOfficerButtons],
+            files: [playerImage]
+        })
+    },
+    selectairofficer: async function (interaction) {
+        const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
+        const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const link = `http://phfamily.co.uk/img/${image}`
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
+        const playerOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE officer_type = 'Air' AND discord_id = '${interaction.member.id}' ORDER BY officer_level DESC`)
+        const selectOfficerButtons = new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId("cancel")
+                .setLabel('Upgrade Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectunit")
+                .setLabel('Select Unit Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectofficer")
+                .setLabel('Select Officer Menu')
+                .setStyle(ButtonStyle.Success),    
+            new ButtonBuilder()
+                .setCustomId("profile")
+                .setLabel('Show Profile')
+                .setStyle(ButtonStyle.Secondary),
+                )
+        const selectOfficerEmbed = new EmbedBuilder()
+                .setColor(CampColour)
+                .setThumbnail(playerThumbnail)
+                .setTimestamp()
+                .setTitle(`Select Your Officer!`)
+
+        if (playerOfficers.length === 0) {
+            selectOfficerEmbed
+                .setTitle(`No Officer Available!`)
+                .setDescription(`You have not selected your **Officer**.\nUpgrade your **War-Chest** & **War-Base** to get your **First Unit**!`)
+            return interaction.update({
+            embeds: [selectOfficerEmbed],
+            components: [selectOfficerButtons],
+            files: [playerImage]
+            })
+        }
+
+        const officerChoices = [];
+        for (const entry in playerOfficers) {
+            const name = playerOfficers[entry].Officer_Name
+            const type = playerOfficers[entry].Officer_Type
+            const camp = playerOfficers[entry].Officer_Camp
+            const skill = playerOfficers[entry].Skill
+            const level = playerOfficers[entry].Officer_Level
+            const skill_level = playerOfficers[entry].Skill_Level
+            const image = await interaction.client.emojis.cache.find(emoji => emoji.name == camp)
+
+            officerChoices.push({
+                label: name,
+                description: `${level} - ${camp} - ${type} - ${skill} - ${skill_level}`,
+                value: name.toString(),
+                emoji: image.toString()
+            })
+        }
+
+        const officerMenu = new ActionRowBuilder()
+            .addComponents(
+                new StringSelectMenuBuilder()
+                    .setCustomId("selectofficermenu")
+                    .setPlaceholder('Select your Officer')
+                    .addOptions(officerChoices),
+            )
+        interaction.update({
+            embeds: [selectOfficerEmbed],
+            components: [officerMenu, selectOfficerButtons],
+            files: [playerImage]
         })
     },
     selectofficermenu: async function (interaction) {
@@ -1453,7 +1925,9 @@ module.exports = {
         const link = `http://phfamily.co.uk/img/${image}`
         const selected = interaction.values[0]
         const selectedOfficer = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' AND Officer_Name = '${selected}'`)
-        const officerImage = `http://phfamily.co.uk/img/${selectedOfficer[0].Image}` || link
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
         const updateOfficer = await sql.Execute(`UPDATE levels SET officer_name = '${selectedOfficer[0].Officer_Name}', officer_level = '${selectedOfficer[0].Officer_Level}', skill_level = '${selectedOfficer[0].Skill_Level}' WHERE discord_id = '${interaction.member.id}'`)
         let CampColour = Colours.Green
         if (selectedOfficer[0].Unit_Camp === 'Vanguard') {
@@ -1470,21 +1944,25 @@ module.exports = {
         .addComponents(
             new ButtonBuilder()
                 .setCustomId("cancel")
-                .setLabel('Upgrade')
+                .setLabel('Upgrade Menu')
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
+                .setCustomId("selectunit")
+                .setLabel('Select Unit Menu')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
                 .setCustomId("selectofficer")
-                .setLabel('Select Officer')
-                .setStyle(ButtonStyle.Primary),
+                .setLabel('Select Officer Menu')
+                .setStyle(ButtonStyle.Success),    
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Profile')
+                .setLabel('Show Profile')
                 .setStyle(ButtonStyle.Secondary),
         )
         const selectedOfficerEmbed = new EmbedBuilder()
+            .setThumbnail(playerThumbnail)
             .setTitle(`${selected} chosen`)
             .setColor(CampColour)
-            .setImage(officerImage)
             .setTimestamp()
             .addFields(
                 { name: `Officer Name:`, value: `${selectedOfficer[0].Officer_Name}`, inline: true },
@@ -1497,7 +1975,8 @@ module.exports = {
         
         interaction.update({
             embeds: [selectedOfficerEmbed],
-            components: [selectOfficerMenuButtons]
+            components: [selectOfficerMenuButtons],
+            files: [playerImage]
         })
 
     },
@@ -1505,97 +1984,100 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const link = `http://phfamily.co.uk/img/${image}`
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
         const campaignButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp1")
-                    .setLabel('Sergeant Spanner (50)')
+                    .setLabel('Sergeant Spanner (Level 50)')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp2")
-                    .setLabel('White Wolf (100)')
+                    .setLabel('White Wolf (Level 100)')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp3")
-                    .setLabel('Death Adder (150)')
+                    .setLabel('Death Adder (Level 150)')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp4")
-                    .setLabel('Angel of Light (200)')
+                    .setLabel('Angel of Light (Level 200)')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("camp5")
-                    .setLabel('The Erupter (250)')
+                    .setLabel('The Erupter (Level 250)')
                     .setStyle(ButtonStyle.Success),
             )
             const campaignButtons2 = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp6")
-                    .setLabel('Bloody Mary (300)')
+                    .setLabel('Bloody Mary (Level 300)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp7")
-                    .setLabel('Tip of the Spear (350)')
+                    .setLabel('Tip of the Spear (Level 350)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp8")
-                    .setLabel('Steel Fighter (400)')
+                    .setLabel('Steel Fighter (Level 400)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp9")
-                    .setLabel('Thorn Countess (450)')
+                    .setLabel('Thorn Countess (Level 450)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp10")
-                    .setLabel('Valkyrie (500)')
+                    .setLabel('Valkyrie (Level 500)')
                     .setStyle(ButtonStyle.Primary),
             )
             const campaignButtons3 = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp11")
-                    .setLabel('Whip Cracker (550)')
+                    .setLabel('Whip Cracker (Level 550)')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("camp12")
-                    .setLabel('Vox Veritatis (600)')
+                    .setLabel('Vox Veritatis (Level 600)')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("camp13")
-                    .setLabel('Lady Justice (650)')
+                    .setLabel('Lady Justice (Level 650)')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("camp14")
-                    .setLabel('Iron Bastion (700)')
+                    .setLabel('Iron Bastion (Level 700)')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("camp15")
-                    .setLabel('Guardian of Truth (750)')
+                    .setLabel('Guardian of Truth (Level 750)')
                     .setStyle(ButtonStyle.Danger),
             )
             const campaignButtons4 = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp16")
-                    .setLabel('Eye of Providence (800)')
+                    .setLabel('Eye of Providence (Level 800)')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
                     .setCustomId("camp17")
-                    .setLabel('Antonina Shevchenko (850)')
+                    .setLabel('Antonina Shevchenko (Level 850)')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
                     .setCustomId("camp18")
-                    .setLabel('Sabre of the Nation (900)')
+                    .setLabel('Sabre of the Nation (Level 900)')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
                     .setCustomId("camp19")
-                    .setLabel('Golden Eagle (950)')
+                    .setLabel('Golden Eagle (Level 950)')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
                     .setCustomId("camp20")
-                    .setLabel('Tiger Marauder (1000)')
+                    .setLabel('Tiger Marauder (Level 1000)')
                     .setStyle(ButtonStyle.Secondary),
             )
 
@@ -1603,23 +2085,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("camp21")
-                    .setLabel('El Cartero (1050)')
+                    .setLabel('El Cartero (Level 1050)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp22")
-                    .setLabel('Brisk Eagle (1100)')
+                    .setLabel('Brisk Eagle (Level 1100)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp23")
-                    .setLabel('The Witcher (1150)')
+                    .setLabel('The Witcher (Level 1150)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp24")
-                    .setLabel('Polar Phantom (1200)')
+                    .setLabel('Polar Phantom (Level 1200)')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("camp25")
-                    .setLabel('Silver Comet (1250)')
+                    .setLabel('Silver Comet (Level 1250)')
                     .setStyle(ButtonStyle.Primary),
             )
 
@@ -1627,23 +2109,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("easy")
-                    .setLabel('Easy')
+                    .setLabel('Easy Mode')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("normal")
-                    .setLabel('Normal')
+                    .setLabel('Normal Mode')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("hard")
-                    .setLabel('Hard')
+                    .setLabel('Hard Mode')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade')
+                    .setLabel('Upgrade Menu')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
 
@@ -1651,23 +2133,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("normal")
-                    .setLabel('Normal')
+                    .setLabel('Normal Mode')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("hard")
-                    .setLabel('Hard')
+                    .setLabel('Hard Mode')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("extreme")
-                    .setLabel('Extreme')
+                    .setLabel('Extreme Mode')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade')
+                    .setLabel('Upgrade Menu')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
 
@@ -1675,30 +2157,29 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("hard")
-                    .setLabel('Hard')
+                    .setLabel('Hard Mode')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("extreme")
-                    .setLabel('Extreme')
+                    .setLabel('Extreme Mode')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
                     .setCustomId("ultra")
-                    .setLabel('Ultra')
+                    .setLabel('Ultra Mode')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade')
+                    .setLabel('Upgrade Menu')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
 
         const campaignEmbed = new EmbedBuilder()
             .setColor(Colours.Green)
-            .setImage(link)
-            .setThumbnail(link)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
             .setDescription(`Pick your Enemy`)
             .setTitle(`Select your opponent!`)
@@ -1726,32 +2207,35 @@ module.exports = {
         buttons = campaignButtons4
         menu = campaignButtonsMenu3
         campaignEmbed
-            .setColor(Colours.Vanguard)
+            .setColor(Colours.Grey)
     }
     if (interaction.customId === 'ultra') { 
         buttons = campaignButtons5
         menu = campaignButtonsMenu3
         campaignEmbed
-            .setColor(Colours.Vanguard)
+            .setColor(Colours.Liberty)
     }
         interaction.update({
             embeds: [campaignEmbed],
-            components: [buttons, menu]
+            components: [buttons, menu],
+            files: [playerImage]
         })
     },
     challenge: async function (interaction) {
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
         const challengeButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade')
+                    .setLabel('Upgrade Menu')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const challengeEmbed = new EmbedBuilder()
+            .setThumbnail(playerThumbnail)
             .setDescription(`Coming Soon...`)
             .setTitle(`Challenge Mode!`)
         interaction.editReply({
@@ -1763,16 +2247,21 @@ module.exports = {
         const Officers = await sql.Execute(`SELECT * FROM officers WHERE Officer_ID NOT IN (SELECT Officer_ID FROM playerofficers WHERE Discord_ID = '${interaction.member.id}');`)            
         const currentOfficers = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}'`)
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)  
-        const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
-        const link = `http://phfamily.co.uk/img/${image}`      
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
         const newOfficerEmbed = new EmbedBuilder();
         const newOfficerButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade')
+                    .setLabel('Upgrade Menu')
                     .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId("profile")
+                    .setLabel('Show Profile')
+                    .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.member.guild.name
@@ -1784,24 +2273,22 @@ module.exports = {
         if (presigeRequired >= Level[0].officer_level) {
             console.log(`Officer Upgrade Required`)
             newOfficerEmbed
-                .setColor('#ff5b05')
-                .setImage(link)
-                .setThumbnail(link)
+                .setColor(Colours.Black)
+                .setThumbnail(playerThumbnail)
                 .setTimestamp()
                 .addFields(
                     { name: `Required Level: ${presigeRequired}`, value: `Current Level: ${Level[0].officer_level}` },
                 )  
                 .setDescription(`**${interaction.member}, Officer Upgrade Required**`)
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons] })
+            return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons], files: [playerImage] })
         } else console.log(`No Officer Upgrade Required`)
 
         const officerSelection = Officers[Math.floor(Math.random() * Officers.length)]
 
         newOfficerEmbed
-            .setColor('#ff5b05')
-            .setImage(link)
-            .setThumbnail(link)
+            .setColor(Colours.Black)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
             .setDescription(`**${interaction.member}, New Officer Selection Successful**`)
             .addFields(
@@ -1818,7 +2305,7 @@ module.exports = {
         console.log(`Update New Officer:${updateNewOfficer.info}`)
         console.log(`Save New Officer:${saveNewOfficer.info}`)
 
-        return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons] })
+        return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons], files: [playerImage] })
     },
     campaignSelection: async function (campaign) { //Medium is Starter Troop
         //if (campaign === 0) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 1500, campaignBaseLevel = 1500, skillLevel = 15
@@ -1861,8 +2348,10 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
-        const link = `http://phfamily.co.uk/img/${image}`  
-        let CampColour = Colours.Green
+		const playerImage = new AttachmentBuilder(`./img/${image}`)
+        const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
+
+        let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
         }
@@ -1877,15 +2366,15 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("skillupgrade")
-                    .setLabel('Upgrade')
+                    .setLabel('Confirm Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Cancel')
+                    .setLabel('Cancel Upgrade')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Profile')
+                    .setLabel('Show Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -1902,8 +2391,7 @@ module.exports = {
             console.log(`Officer Upgrade Needed`),
             skillUpgradeEmbed
                     .setColor(CampColour)
-                    .setImage(link)
-                    .setThumbnail(link)
+                    .setThumbnail(playerThumbnail)
                     .setTimestamp()
                     .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                     .setDescription(`${interaction.member}, You need to upgrade your **Officer** to apply this **Skill** Upgrade.`)
@@ -1915,7 +2403,7 @@ module.exports = {
 
                     )
                     .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons] })
+            return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons], files: [playerImage] })
         }
 
 
@@ -1924,8 +2412,7 @@ module.exports = {
                 difference = cost - wallet
             skillUpgradeEmbed
                 .setColor(CampColour)
-                .setImage(link)
-                .setThumbnail(link)
+                .setThumbnail(playerThumbnail)
                 .setTimestamp()
                 .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true }) })
                 .setDescription(`${interaction.member}, You do not have enough **War-Coins** for this upgrade.\nYou are **$${difference.toLocaleString()} War-Coins** short!\nTry withdrawing from your **War-Chest**!`)
@@ -1937,14 +2424,13 @@ module.exports = {
                     { name: `Upgrade Cost:`, value: `$${cost.toLocaleString()}`, inline: true },
                 )
                 .setFooter({ text: `${guildName} - ${interaction.customId}`, iconURL: `${guildIcon}` });
-            return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons] })
+            return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons], files: [playerImage] })
         }
         const newWallet = wallet - cost
         const newSkillLevel = skillLevel + 1
         skillUpgradeEmbed
             .setColor(CampColour)
-            .setImage(link)
-            .setThumbnail(link)
+            .setThumbnail(playerThumbnail)
             .setTimestamp()
             .setDescription(`**${interaction.member}, Officer Skill Upgrade Successful**`)
             .addFields(
@@ -1958,9 +2444,23 @@ module.exports = {
             const officerUpgrade = await sql.Execute(`UPDATE levels SET war_coins = ${newWallet}, skill_level = '${newSkillLevel}' WHERE discord_id = '${interaction.member.id}'`)
             console.log(`Update Player Officer: ${playerOfficerUpgrade.info}`)
             console.log(`Officer Upgrade: ${officerUpgrade.info}`)
-
-        return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons] })
-
+        return interaction.update({ embeds: [skillUpgradeEmbed], components: [skillUpgradeButtons], files: [playerImage] })
     },
+skillColours: async function (interaction) {    
+        if (interaction.Attacker.UnitCamp === 'Vanguard') {interaction.Attacker.Color = Colours.Vanguard}
+        if (interaction.Attacker.UnitCamp === 'Liberty') {interaction.Attacker.Color = Colours.Liberty}
+        if (interaction.Attacker.UnitCamp === 'MartyrsW') {interaction.Attacker.Color = Colours.MartyrsW}
 
+        if (interaction.Attacker.UnitCamp && interaction.Attacker.OfficerCamp === 'Vanguard') {interaction.Attacker.SkillColor = Colours.VanguardBoost}
+        if (interaction.Attacker.UnitCamp && interaction.Attacker.OfficerCamp === 'Liberty') {interaction.Attacker.SkillColor = Colours.LibertyBoost}
+        if (interaction.Attacker.UnitCamp && interaction.Attacker.OfficerCamp === 'MartyrsW') {interaction.Attacker.SkillColor = Colours.MartyrsWBoost}
+        
+        if (interaction.Defender.UnitCamp === 'Vanguard') {interaction.Defender.Color = Colours.Vanguard}
+        if (interaction.Defender.UnitCamp === 'Liberty') {interaction.Defender.Color = Colours.Liberty}
+        if (interaction.Defender.UnitCamp === 'MartyrsW') {interaction.Defender.Color = Colours.MartyrsW}
+
+        if (interaction.Defender.UnitCamp && interaction.Defender.OfficerCamp === 'Vanguard') {interaction.Defender.SkillColor = Colours.VanguardBoost}
+        if (interaction.Defender.UnitCamp && interaction.Defender.OfficerCamp === 'Liberty') {interaction.Defender.SkillColor = Colours.LibertyBoost}
+        if (interaction.Defender.UnitCamp && interaction.Defender.OfficerCamp === 'MartyrsW') {interaction.Defender.SkillColor = Colours.MartyrsWBoost}
+    }
 }

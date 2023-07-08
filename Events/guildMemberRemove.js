@@ -1,5 +1,6 @@
 let {EmbedBuilder} = require(`discord.js`)
 const sql = require(`../config/Database`)
+const { sleep } = require('../functions/discordFunctions')
 
 module.exports = {
     name: "guildMemberRemove",
@@ -18,13 +19,16 @@ module.exports = {
         guildIcon = member.guild.iconURL();
         const Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         GUILD = member.guild.name
-        
+        await sleep(2000)
+        playerDisplayName = member.displayName
+		if (!playerDisplayName){ playerDisplayName = member.username}
+
         const Channel_ID = Data[0].welcome_channel_id
         console.log(Channel_ID)
             const goodByeEmbed = new EmbedBuilder()
             .setColor("#d81e5b")
-            .setTitle("Fallen Warrior Left!")
-            .setDescription(`<@${member.id}> has left the server! \nThey could not handle the Heat of the **Battle-Bot**!.`)
+            .setTitle("Weak Warrior Left!")
+            .setDescription(`${playerDisplayName} has left the server! \nThey could not handle the Heat of the **Battle Bot™**!.`)
             .setThumbnail(member.user.displayAvatarURL())
             .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();

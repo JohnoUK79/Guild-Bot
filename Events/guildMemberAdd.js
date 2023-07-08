@@ -49,7 +49,7 @@ module.exports = {
         const welcomeEmbed = new EmbedBuilder()
             .setColor("#d81e5b")
             .setTitle(`Welcome to the Battle Server - ${GUILD}`)
-            .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here\nUse the command **/register** in server to start your **Battle-Bot** Adventure.\nYou Will receive **$${starterCoins.toLocaleString()} War-Coins** Upon registering.`)
+            .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here\nUse the command **/register** in server to start your **Battle Bot™** Adventure.\nYou Will receive **$${starterCoins.toLocaleString()} War-Coins** Upon registering.`)
             .setThumbnail(guildIcon)
             .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();

@@ -26,7 +26,7 @@ module.exports = {
 		.addFields(
 			{ name: `Buy Now!:`, value: `https://www.buymeacoffee.com/johnouk79` },
 			)
-		.setFooter({ text: 'Buy Dekes A Beer!.', iconURL: 'http://phfamily.co.uk/img/gifs/SE17-Logo.jpg' });
+		.setFooter({ text: 'Buy Dekes A Beer!.', iconURL: 'http://battle-bot.com/img/GeneralDeath.png' });
 
 
 		const newPlayer = new EmbedBuilder()

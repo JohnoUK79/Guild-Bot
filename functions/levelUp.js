@@ -40,7 +40,7 @@ module.exports = {
 			{ name: `Name:`, value: `${message.member.displayName}` },
 			{ name: `XP:`, value: `${score}` },
 			{ name: `You will gain XP the more active you are in ${guildName}.`, value: `Stay active in our servers for regular rewards!`, inline: true },
-			{ name: `You have been provided $150,000 War-Coins to use in the Battle Bot ${guildName}.`, value: `use **/warpath upgrade** for more information!`, inline: true },
+			{ name: `You have been provided $3,000,000 War-Coins to use in the Battle Bot in ${guildName}.`, value: `use **/Battle-Bot Profile** for more information!`, inline: true },
 			)
 		.setImage(guildIcon)
 		.setTimestamp()

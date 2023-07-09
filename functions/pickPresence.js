@@ -5,7 +5,7 @@ module.exports = {
     const options = [
         {
             type: ActivityType.Watching,
-            text: `the Empires of ${myMembers.toLocaleString()} Warriors, flourish with /battle-bot-main!`,
+            text: `the Empires of ${myMembers.toLocaleString()} Warriors, flourish with /Battle-Bot Profile!`,
             status: 'Online'
         },
         {
@@ -15,13 +15,13 @@ module.exports = {
         },
         {
             type: ActivityType.Listening,
-            text: `${myMembers.toLocaleString()} Warriors in need with /battle-bot-help`,
+            text: `${myMembers.toLocaleString()} Warriors in need with /Battle-Bot Help`,
             status: 'Online'
         },
         {
             type: ActivityType.Competing,
-            text: `Campaigns with ${myMembers.toLocaleString()} Warriors across the Globe with /battle-bot-profile!`,
-            status: 'Online'
+            text: `Campaigns with ${myMembers.toLocaleString()} Warriors across the Globe with /Battle-Bot Profile!`,
+            status: 'idle'
         }
     ]
     const option = options[Math.floor(Math.random() * options.length)];
@@ -31,7 +31,8 @@ module.exports = {
             activities: [
                 {
                     name: option.text,
-                    type: option.type        
+                    type: option.type,
+                    status: option.status    
                 },
             ],
             status: option.status

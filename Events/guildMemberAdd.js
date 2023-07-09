@@ -41,7 +41,7 @@ module.exports = {
         const newMemberEmbed = new EmbedBuilder()
             .setColor("#d81e5b")
             .setTitle("New Warrior!")
-            .setDescription(`<@${member.id}> has joined the server! \nWe are a **Battle-Bot** Server\nUse the command **/register** to start your **Battle-Bot** Adventure.\nMention ${member.client.user} for Help!`)
+            .setDescription(`<@${member.id}> has joined the server! \nWe are a **Battle-Bot** Server\nUse the command **/register** to start your **Battle-Bot** Adventure.\nUse **Battle-Bot Help** to get started.\nMention ${member.client.user} for further gameplay advice!`)
             .setThumbnail(member.user.displayAvatarURL())
             .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();
@@ -49,7 +49,7 @@ module.exports = {
         const welcomeEmbed = new EmbedBuilder()
             .setColor("#d81e5b")
             .setTitle(`Welcome to the Battle Server - ${GUILD}`)
-            .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here\nUse the command **/register** in server to start your **Battle-Bot** Adventure.\nYou Will receive **$${starterCoins.toLocaleString()} War-Coins** Upon registering.`)
+            .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here\nUse the command **/register** in server to start your **Battle Bot™** Adventure.\nYou Will receive **$${starterCoins.toLocaleString()} War-Coins** Upon registering.`)
             .setThumbnail(guildIcon)
             .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();

@@ -23,8 +23,8 @@ module.exports = {
 		.setThumbnail(interaction.user.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
 		.setDescription(`<@${interaction.member.id}> has **Slapped** ${target}`)
-		.setThumbnail(randomGif)
 		.setImage(randomGif)
+		.setThumbnail(target.displayAvatarURL({ dynamic: true }))
 		.setTimestamp()
 		.setFooter({ text: `${guildName} - You Got Bitch Slapped!!.`, iconURL: `${guildIcon}` });
 		await interaction.reply({

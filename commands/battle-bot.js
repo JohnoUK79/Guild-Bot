@@ -1,7 +1,7 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
+	const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
 const { Colours } = require('../data/colours')
 const sql = require("../config/Database");
-const { profileMenu } = require('../functions/warpathFunctions');
+const { profileMenu, battleBotHelp } = require('../functions/warpathFunctions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -68,7 +68,7 @@ module.exports = {
         const image = Economy[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
 
-		const link = `http://phfamily.co.uk/img/${image}` 
+		const link = `http://battle-bot.com/img/${image}` 
 
 		CampColour = Colours.Black
 		if (Economy[0].unit_camp === 'Vanguard') {
@@ -98,52 +98,7 @@ module.exports = {
 					{ name: `War-Coins:`, value: `$${balance.toLocaleString()}`, inline: true }, 
 					{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
 				);
-
 		}
-		if (interaction.options.getSubcommand() === 'help')
-		{
-			const helpButtons = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId("bank")
-                    .setLabel('Upgrade War-Chest')
-                    .setStyle(ButtonStyle.Primary),
-                new ButtonBuilder()
-                    .setCustomId("base")
-                    .setLabel('Upgrade War-Base')
-                    .setStyle(ButtonStyle.Primary),
-                new ButtonBuilder()
-                    .setCustomId("officer")
-                    .setLabel('Upgrade Officer')
-                    .setStyle(ButtonStyle.Success),
-                new ButtonBuilder()
-                    .setCustomId("troop")
-                    .setLabel('Upgrade Unit')
-                    .setStyle(ButtonStyle.Success),
-                new ButtonBuilder()
-                    .setCustomId("profile")
-                    .setLabel('Show Profile')
-                    .setStyle(ButtonStyle.Secondary),
-            )
-			embed			
-				.setColor(Colours.Black)
-				.setTitle(`Battle Bot™ Help Menu`)
-				.setDescription(`**Battle Bot™** has an integrated **AI help system**.\nMention ${interaction.client.user} with any **Battle Bot™** related questions.\nBelow are the **Basic Commands & Options** in **Battle Bot™**!`)
-				.setFooter({ text: `${guildName} - ${interaction.options.getSubcommand()}`, iconURL: `${guildIcon}`})
-				.addFields(
-					{ name: `Battle-Bot Profile:`, value: `**/Battle-Bot Profile** is the **Main Menu** of the game. From here you can switch between **Officers** & **Units** as well as **Challenge Yourself** against the **Campaigns** every **12 Hours**. You can also upgrade your **War-Chest** & **War-Base**. Recruit and power up your **Officers** as well as train and skill your **Units**.`, inline: true },
-					{ name: `War-Coins:`, value: `**War-Coins** are the **Currency** of the **Battle Bot™**.\nNeeded for upgrading your **War-Chest** & **War_Base** to gain access to **Officers, Units & Skills**`, inline: true },
-					{ name: `War-Chest:`, value: `Your **War-Chest** is your secure storage for the **War-Coins** earned on your adventures.\nHigher level **War-Chest** allows you to safely store even more **War-Coins**.`, inline: true },
-					{ name: `Battle:`, value: `**/Battle** allows to to compare your best **Officer & Unit** combinations on fellow battlers in your server. All **Winnings** are system generated and not taken from the player.\nEach victory goes towards your **Weekly Battle Score** and this command has a **Cooldown** of **15 minutes**.\n**Top 3 Warriors** in each server will receive a reward of **War-Coins** each week. Use **/Battle-LB** for more information.`, inline: true },
-					{ name: `Daily Reward:`, value: `Active Warriors can claim their **Daily Reward** once every **12 Hours** using **/daily**.\nBetter rewards are offered to high level **Officers**.`, inline: true },
-					{ name: `Work:`, value: `To help with supplies, you can carry out random **Work Orders** every **4 Hours**. The rewards increase with a higher appointed **Officer**. Use **/work**.`, inline: true },
-					{ name: `Steal:`, value: `Use the **/Steal** command every **15 Minutes** to take **War-Coins** from any player who has not secured them into their **War-Chest**.`, inline: true },
-					{ name: `Battle Bot™ AI:`, value: `**Battle Bot™** has a comprehensive **AI help function**.\nSimply mention ${interaction.client.user} with your queries!`, inline: true },
-				);
-				await interaction.editReply({embeds: [embed], files: [playerImage], components: [helpButtons] })
-				return;		
-		}
-		
 		else if (interaction.options.getSubcommand() === 'deposit')
 		{
 			const amount = interaction.options.getInteger('dep_amount');
@@ -242,4 +197,5 @@ module.exports = {
 		await interaction.editReply({embeds: [embed], files: [playerImage] })
 		return;
 	},
+
 };

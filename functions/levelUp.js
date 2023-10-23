@@ -185,7 +185,7 @@ module.exports = {
 		level = Math.floor((score + points) / 3666 )
 
 		if (level > initiallevel) {
-			console.log("Level Up")
+			console.log(`Level Up - ${level} - ${guildName} - ${message.member.displayName}`)
  			await message.guild.channels.cache.get(LevelUpChannel).send({
 				embeds: [levelup],
 				components: [updatePlayer],

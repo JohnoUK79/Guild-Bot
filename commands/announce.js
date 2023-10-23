@@ -24,7 +24,7 @@ module.exports = {
             .setColor('#4ec9b0')
             .setTitle(`Announcement`)
             .setURL('http://www.phfamily.co.uk/')
-            .setAuthor({ name: 'WarPath Announcement', iconURL: 'http://phfamily.co.uk/img/gifs/Influencer.gif'})
+            .setAuthor({ name: 'Battle-Bot Announcement', iconURL: 'http://phfamily.co.uk/img/gifs/Influencer.gif'})
             .setThumbnail('http://phfamily.co.uk/img/gifs/Influencer.gif')
             .addFields(
                 { name: `Announcement`, value: `${message}` },

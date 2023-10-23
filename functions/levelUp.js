@@ -108,7 +108,10 @@ module.exports = {
 		const points = Levels[0].points
 		const newPoints = (points + score)
 		const newLevel = (Levels[0].level + 1)
-		const LevelUpChannel = Settings[0].level_up_channel_id
+		let LevelUpChannel = Settings[0].level_up_channel_id
+		if (!LevelUpChannel) {
+			LevelUpChannel = Settings[0].system_channel
+		}
 
 		const levelup = new EmbedBuilder()
 		.setColor('#ffbd00')

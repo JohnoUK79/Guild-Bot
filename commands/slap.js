@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const gifs = require('../data/slaps').gifs
 
 module.exports = {
+	cooldown: 300000,
 	data: new SlashCommandBuilder()
 		.setName('slap')
 		.setDescription('Select a member to SLAP!.')

@@ -38,7 +38,7 @@ module.exports = {
 				}
 				const DefenderDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${defender.id}`)
 
-                if (!DefenderDB[0].unit_type) {
+                if (DefenderDB.length === 0) {
                     commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, 0)
 
                     embed

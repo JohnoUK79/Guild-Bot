@@ -5,7 +5,7 @@ const { Colours } = require('../data/colours');
 setDate = timestamp.UTCdefault()
 
 module.exports = {
-    cooldown: 900000,
+    cooldown: 14400000,
     data: new SlashCommandBuilder()
         .setName("work")
         .setDescription("Go to Work for War-Coins!"),
@@ -13,7 +13,12 @@ module.exports = {
     async execute(interaction) {
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
+		let Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
+	if (Economy.length === 0) {
+		const warcoins = 5000000
+		const newRegistration = await sql.Execute(`INSERT INTO levels (discord_id, war_coins) VALUES ('${interaction.member.id}', '${warcoins}');`)
 		Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
+	}
 		const wallet = Economy[0].war_coins
 		let officerlevel = Economy[0].officer_level;
 		if (officerlevel === 0) {officerlevel = 1}

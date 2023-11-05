@@ -9,10 +9,29 @@ module.exports = {
         //Load Guild Settings
         const Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         guildIcon = member.guild.iconURL();
-        CHANNEL_ID = Data[0].welcome_channel_id
-        ROLE_ID = Data[0].welcome_role_id
+        CHANNEL_ID = Data[0].system_channel        
         GUILD = member.guild.name
         playerDisplayName = member.displayName
+        let roleBattleBot = member.guild.roles.cache.find(role => role.name === "Battle_Bot");
+            if (!roleBattleBot) {
+                console.log(`No Role Found`)
+                let roleBattleBot = await member.guild.roles.create({ 
+                    name: 'Battle_Bot',
+                    color: '#72ddf7', //Light Blue
+                    mentionable: true,
+                    hoist: true,
+            })
+            console.log(`New Role Created`)
+
+            } else {
+                console.log(`Existing Role`)
+                roleBattleBot.edit({
+                    color: '#72ddf7', //Light Blue
+                    mentionable: true,
+                    hoist: true,
+                })
+                }
+
         await sleep(2000)
         //Track the Invite Used
         const { invites } = require('./ready')
@@ -25,7 +44,7 @@ module.exports = {
         // This is just to simplify the message being sent below (inviter doesn't have a tag property)
         const inviter = await member.guild.members.fetch(invite.inviter.id);
 
-        const starterCoins = 3000000
+        const starterCoins = 5000000
 		if (!playerDisplayName){ playerDisplayName = member.username}
         console.log("Member Joined")
         if (member.partial) {
@@ -41,7 +60,7 @@ module.exports = {
         const newMemberEmbed = new EmbedBuilder()
             .setColor("#d81e5b")
             .setTitle("New Warrior!")
-            .setDescription(`<@${member.id}> has joined the server! \nWe are a **Battle-Bot** Server\nUse the command **/register** to start your **Battle-Bot** Adventure.\nUse **Battle-Bot Help** to get started.\nMention ${member.client.user} for further gameplay advice!`)
+            .setDescription(`<@${member.id}> has joined the server! \nWe are a **Battle-Bot** Server\nUse the command **/register** to start your **Battle-Bot** Adventure.\nUse **/Battle-Bot Profile** to get started.\nMention ${member.client.user} for further gameplay advice!`)
             .setThumbnail(member.user.displayAvatarURL())
             .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();
@@ -49,7 +68,7 @@ module.exports = {
         const welcomeEmbed = new EmbedBuilder()
             .setColor("#d81e5b")
             .setTitle(`Welcome to the Battle Server - ${GUILD}`)
-            .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here\nUse the command **/register** in server to start your **Battle Bot™** Adventure.\nYou Will receive **$${starterCoins.toLocaleString()} War-Coins** Upon registering.`)
+            .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here\nUse the command **/register** in server to start your **Battle Bot™** Adventure.\nYou Will receive **$${starterCoins.toLocaleString()} War-Coins** Upon first registering.`)
             .setThumbnail(guildIcon)
             .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();
@@ -65,7 +84,7 @@ module.exports = {
                     );
         
 
-            await member.roles.add(ROLE_ID).catch((e) => console.log(e));
+            await member.roles.add(roleBattleBot).catch((e) => console.log(e));
             await member.guild.channels.cache.get(CHANNEL_ID).send(
                 {
                     embeds: [newMemberEmbed]

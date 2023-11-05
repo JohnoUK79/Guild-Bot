@@ -1,5 +1,7 @@
 const { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const sql = require("../config/Database");
+const { OWNER } = require('../config.json');
+const { Colours } = require('../data/colours')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,10 +20,17 @@ module.exports = {
         const { client } = require('../bot')
         guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
+        if (interaction.member.id != OWNER) {
+            return await interaction.reply({
+                empheral: true,
+                content: `Only the Bot Owner Can Send Announcements! Contact <@${OWNER}> for more details.`,
+            })
+        }
+
         var message = interaction.options.getString('message');
         const levelUpChannelIds = await sql.Execute(`SELECT level_up_channel_id FROM settings WHERE 1`) //level_up_channel_id = '1000526899124117535'
         const announceEmbed = new EmbedBuilder()
-            .setColor('#4ec9b0')
+            .setColor(Colours.BurntOrange)
             .setTitle(`Announcement`)
             .setURL('http://www.phfamily.co.uk/')
             .setAuthor({ name: 'Battle-Bot Announcement', iconURL: 'http://phfamily.co.uk/img/gifs/Influencer.gif'})
@@ -48,7 +57,6 @@ module.exports = {
             .setTitle(`Announcement Sent`)
 
             await interaction.reply({
-            ephemeral: true,
             embeds: [announceEmbed],
         });
 

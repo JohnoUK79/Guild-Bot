@@ -17,7 +17,7 @@ module.exports = {
         const invitesEmbed = new EmbedBuilder()
             .setColor('#0099ff')
             .setTitle(`${guildName} - Invite Leaderboard`)
-            .setURL('http://www.phfamily.co.uk/invites.php')
+            .setURL('http://www.battle-bot.com/invites.php')
             .setThumbnail(interaction.user.displayAvatarURL())
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**Updates Every 15 Minutes!**`)

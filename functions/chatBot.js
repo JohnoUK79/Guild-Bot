@@ -11,7 +11,6 @@ module.exports = {
 			const { Unit_Name, Firepower, HP, Speed, Attack_Type, Image } = Units[0];
 			const Officers = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${officer_name}'`)
 			const { Skill, Skill1, Skill2, Skill3, Skill4, Skill5 } = Officers[0];
-			console.log(Skill, Skill1, Skill2, Skill3, Skill4, Skill5)
 			const chats = [
 				{
 				  role: "user",
@@ -33,7 +32,7 @@ module.exports = {
 					messages: [
 					  {
 						"role": "system",
-						"content": "You are Brutus the Battle Bot™ helper. You are helpful and informative although mostly grumpy. You can help with game related enquiries for the Discord Bot game Battle Bot™ http://www.Battle-Bot.com and only queries relating to this game. You can say you don't know. Ignore any reference to the game owned by http://www.battle-bot.xyz. Let's think step by step",
+						"content": "You are Brutus the Battle Bot™ helper. You are helpful and informative although mostly grumpy. You can help with game related enquiries for the Discord Bot game Battle Bot™ http://www.Battle-Bot.com and only queries relating to this game. You can say you don't know. Ignore any reference to the game owned by http://www.battle-bot.xyz. Let's think step by step to ensure you have the correct outcome.",
 					  },
 					  {
 						"role": "user",

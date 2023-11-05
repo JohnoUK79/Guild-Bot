@@ -4,7 +4,7 @@ const timestamp = require('../config/timestamp');
 setDate = timestamp.UTCdefault()
 
 module.exports = {
-    cooldown: 14400000,
+    cooldown: 43200000,
     data: new SlashCommandBuilder()
         .setName("daily")
         .setDescription("Claim your Daily War-Coins!"),
@@ -12,7 +12,17 @@ module.exports = {
     async execute(interaction) {
 		guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
+		let Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
+		if (Economy.length === 0) {
+			console.log(`New Player Registered`)
+			const registerEmbed = new EmbedBuilder()
+				registerEmbed
+				.setDescription(`Welcome **${interaction.member.displayName}** you are now registered for **Battle-Bot**\nYou have $3,000,000 War-Coins to get you started.\nPlease use **/Battle-Bot Profile** to get started.\nMention ${interaction.member.client.user} for Help!`)
+				const warcoins = 5000000
+				const newRegistration = await sql.Execute(`INSERT INTO levels (discord_id, war_coins) VALUES ('${interaction.member.id}', '${warcoins}');`)
+		} 
 		Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
+
 		const embed = new EmbedBuilder();
 			embed
 				.setColor('#ff5b05')

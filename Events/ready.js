@@ -19,26 +19,10 @@ module.exports = {
                 console.log(`Successfully registered Global Commands!`);
             })
             .catch(console.error);
-        console.log(`================ Warpath BOT Ready! ================`);  
-        const serverTimeChannelIDs = [
-            '1099378914503184384',//FIRE
-            '1099445994048999454',//PHU
-        ]
-        // const servertimeupdate = nodeCron.schedule("4,9,14,19,24,29,34,39,44,49,54,59 * * * *", () => {   
-        //     for (let i = 0; i < serverTimeChannelIDs.length; i++) {
-        //     let serverTimeChannelID = serverTimeChannelIDs[i];
-        //     try {  
-        //         const timeChannel = client.channels.cache.get(serverTimeChannelID)
-        //         timeChannel.setName(`UTC-TIME-${timestamp.UTChours()}:${timestamp.UTCminutes()}`)            }
-        //     catch (e) {
-        //         console.log(e);
-        //         console.log(serverTimeChannelID);
-        //     }
-        //     }
-        // })
+        console.log(`================ Battle-Bot Ready! ================`);  
         //Presence Updates
         updatePresence(client)
-        const mymMemberRefresh = nodeCron.schedule("0,15,30,45 * * * *", () => {
+        const mymMemberRefresh = nodeCron.schedule("7,22,37,52 * * * *", () => {
             updatePresence(client)
         })
         //Create Invite Cache
@@ -115,7 +99,7 @@ module.exports = {
         const weeklyRewardsEmbed = new EmbedBuilder();
         weeklyRewardsEmbed
             .setColor('#00FF80')
-            .setURL('http://www.phfamily.co.uk')
+            .setURL('http://www.battle-bot.com')
             .setTimestamp()
         for (let i = 0; i < 2 && Board[i]; i++) {
             try {
@@ -125,7 +109,7 @@ module.exports = {
                 weeklyRewardsEmbed
                     .setTitle(`You have placed ${i + 1} in this Week's Battle Rewards`)
                     .setDescription(`Congratulations ${sendDM}, Your **$${rewards.toLocaleString()} Rewards** have been added to your **War-Chest**!`)
-                    .setFooter({ text: `Battle Rewards - Wins ${Board[i].battle_wins} Losses ${Board[i].battle_losses} `, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });    
+                    .setFooter({ text: `Battle Rewards - Wins ${Board[i].battle_wins} Losses ${Board[i].battle_losses} `, iconURL: 'http://battle-bot.com/img/gifs/Warpath.jpg' });    
                 const updateWinnings = await sql.Execute(`UPDATE levels SET war_chest = '${winnings}' WHERE discord_id = ${Board[i].discord_id}`)
                 sendDM.send({ embeds: [weeklyRewardsEmbed]})
                 console.log(`Weekly Rewards:${sendDM} ${updateWinnings.info}`)
@@ -144,7 +128,7 @@ module.exports = {
             .setColor('#00FF80')
             .setTitle(`Battle Rewards`)
             .setDescription(`This Week's **Battle Reward Winners** Are:`)
-            .setURL('http://www.phfamily.co.uk')
+            .setURL('http://www.battle-bot.com')
             .addFields(
                 { name: `Rank 1:`, value: `<@${Board[0].discord_id}> **Wins:** ${Board[0].battle_wins}`, inline: true },
                 { name: `Rank 2:`, value: `<@${Board[1].discord_id}> **Wins:** ${Board[1].battle_wins}`, inline: true },
@@ -152,7 +136,7 @@ module.exports = {
                 { name: `All Rewards have been sent to the Winners via DM`, value: `The **Leaderboard** has been **Reset**, who will **Lead** this week?`, inline: true },
             )
             .setTimestamp()
-            .setFooter({ text: `Battle Rewards.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
+            .setFooter({ text: `Battle Rewards.`, iconURL: 'http://battle-bot.com/img/gifs/Warpath.jpg' });
 
         for (let i = 0; i < levelUpChannels.length; i++) {
             const levelUpChannel = levelUpChannels[i].level_up_channel_id;
@@ -168,7 +152,7 @@ module.exports = {
         }   
         })
 
-        const guildSettingsUpdate = nodeCron.schedule("0 22 * * *", () => {
+        const guildSettingsUpdate = nodeCron.schedule("0,15,30,45 * * * *", () => {
                 console.log("Guild Settings Update")
 
                 client.guilds.cache.map(r => {
@@ -180,65 +164,9 @@ module.exports = {
                     const system = r.systemChannelId
                     const rules = r.rulesChannelId
                     const updates = r.publicUpdatesChannelId
+                    //const fetch = await client.guilds.fetch(r.i);
                     guildUpdate = sql.Execute(`INSERT INTO settings (guild_id, guild_name, owner_id, guild_description, updates_channel, system_channel, rules_channel, guild_icon) VALUES ('${id}', '${name}', '${owner}', '${description}', '${updates}', '${system}', '${rules}', '${icon}') ON DUPLICATE KEY UPDATE guild_name = '${name}', owner_id = '${owner}', guild_description = '${description}', updates_channel = '${updates}', system_channel = '${system}', rules_channel = '${rules}', last_updated = '${setDate}', guild_icon = '${icon}'`)
                 })       
                 console.log(`Guild Settings Updated`)      
             })  
-            const job = nodeCron.schedule("0 0,4,8,12,16,20 * * *", () => {
-                const jurisdictions = require('../data/jurisdictions');
-                const jurisdictionsChannelIDs = require(`../data/jurisdictionsChannelIDs`).jurisdictionsChannelIDs
-                console.log(jurisdictionsChannelIDs)
-                const hourUTC = (new Date()).getUTCHours();
-                const dayOfWeeek = (new Date()).getDay();
-
-            console.log(new Date().toLocaleString(), "Jurisdiction Event Starting");
-            const { EmbedBuilder } = require('discord.js');
-                    
-                    if( (hourUTC % 4) !== 0) return console.log('Jurisdiction Already Running!');
-
-                    const padHour = (hour) => (hour.length === 1) ? '0'+hour : hour;
-                    const startHour = padHour(hourUTC+'');
-                    const endHour = padHour((hourUTC === 20) ? '00' : (hourUTC+4)+'');
-
-                    const jurisdiction = jurisdictions[dayOfWeeek+'-'+startHour];
-
-                    if(!jurisdiction) {
-                    console.log(`ERROR: ${dayOfWeeek+'-'+startHour} not found`);
-                    return;
-                    }
-
-                    const jurisdictionEmbed = new EmbedBuilder()
-                        .setColor('#00FF80')
-                        .setTitle(jurisdiction.title)
-                        .setURL('http://www.phfamily.co.uk')
-                        .setDescription(`Start: ${startHour}H00 UTC    -    End: ${endHour}H00 UTC`)
-                        .addFields(
-                            { name: `Missions:`, value: jurisdiction.missions.join('\n'), inline: false },
-                            { name: `Rank 1`, value: `${jurisdiction.rank1} Points`, inline: true },
-                            { name: `Rank 2`, value: `${jurisdiction.rank2} Points`, inline: true },
-                            { name: `Rank 3`, value: `${jurisdiction.rank3} Points`, inline: true },
-
-                        )
-                        .setTimestamp()
-                        .setFooter({ text: `${jurisdiction.title}.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
-
-
-                    for (let i = 0; i < jurisdictionsChannelIDs.length; i++) {
-                    let jurisdictionsChannelID = jurisdictionsChannelIDs[i];
-                    
-                    try {  
-                        let sendChannel = client.channels.cache.get(jurisdictionsChannelID)                
-                        console.log(jurisdictionsChannelID);
-                        sendChannel.send({ content: '**New Jurisdiction**', embeds: [jurisdictionEmbed] })
-
-                    }
-                    catch (e) {
-                        console.log(e);
-                        console.log(jurisdictionsChannelID);
-                    }
-                    }
-                  });
-    },
-
-}
-
+        }}

@@ -3,8 +3,6 @@ const sql = require("../config/Database");
 const { EmbedBuilder } = require('discord.js');
 const ms = require('ms-prettify').default
 const { battleBotHelp, buyBank, buyBase, chestUpgrade, baseUpgrade, cancel, buyOfficer, buyOfficer10, officerUpgrade, officerSelect, unitUpgrade, unitSelect, buyUnit, profile, newUnit, selectunit, selectofficer, selectgroundofficer, selectairofficer, skillupgrade, campaign, challenge, selectunitmenu, selectofficermenu, newOfficer} = require('../functions/warpathFunctions');
-const { selfUpdateModal, playerUpdateModal, selfUpdateResponses, playerUpdateResponses } = require('../functions/playerDatabaseFunctions');
-const { top10, top20, top30, top40, top50 } = require('../functions/discordFunctions');
 const { campaignMode } = require('../functions/campaignMode');
 const { updatePresence } = require('../functions/pickPresence');
 module.exports = {
@@ -372,9 +370,9 @@ module.exports = {
 		return interaction.reply({ embeds: [cooldownEmbed] })
 		}
 		commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, Date.now() + command.cooldown || 0)
-		if (interaction.guild.id === '964496256057630720') {
-			commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, 0)
-		}
+		// if (interaction.guild.id === '964496256057630720') {
+		// 	commandCooldowns.set(`${interaction.user.id}_${interaction.commandName}`, 0)
+		// }
         await command.execute(interaction);
         
     } catch (error) {

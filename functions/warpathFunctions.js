@@ -30,23 +30,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('Upgrade War-Chest')
+                    .setLabel('War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('Upgrade War-Base')
+                    .setLabel('War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Upgrade Officer')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Upgrade Unit')
+                    .setLabel('Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const upgradeBase = new ActionRowBuilder()
@@ -61,7 +61,7 @@ module.exports = {
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Show Profile')
+                .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
         const upgradeEmbed = new EmbedBuilder();
@@ -101,23 +101,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('Upgrade War-Chest')
+                    .setLabel('War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('Upgrade War-Base')
+                    .setLabel('War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Upgrade Officer')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Upgrade Unit')
+                    .setLabel('Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const upgradeBankButtons = new ActionRowBuilder()
@@ -132,7 +132,7 @@ module.exports = {
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Show Profile')
+                .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -219,23 +219,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('Upgrade War-Chest')
+                    .setLabel('War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('Upgrade War-Base')
+                    .setLabel('War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Upgrade Officer')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Upgrade Unit')
+                    .setLabel('Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const upgradeBaseButtons = new ActionRowBuilder()
@@ -250,7 +250,7 @@ module.exports = {
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Show Profile')
+                .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -337,23 +337,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('Upgrade War-Chest')
+                    .setLabel('War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('Upgrade War-Base')
+                    .setLabel('War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Upgrade Officer')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Upgrade Unit')
+                    .setLabel('Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const upgradeOfficerButtons = new ActionRowBuilder()
@@ -368,7 +368,7 @@ module.exports = {
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Show Profile')
+                .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -459,23 +459,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('Upgrade War-Chest')
+                    .setLabel('War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('Upgrade War-Base')
+                    .setLabel('War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Upgrade Officer')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Upgrade Unit')
+                    .setLabel('Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const upgradeOfficerButtons = new ActionRowBuilder()
@@ -490,7 +490,7 @@ module.exports = {
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Show Profile')
+                .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -585,23 +585,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('Upgrade War-Chest')
+                    .setLabel('War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('Upgrade War-Base')
+                    .setLabel('War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Upgrade Officer')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Upgrade Unit')
+                    .setLabel('Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const upgradeEmbed = new EmbedBuilder();
@@ -655,7 +655,7 @@ module.exports = {
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Show Profile')
+                .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
 
@@ -698,11 +698,11 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
+                    .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -781,38 +781,38 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("officerselect")
-                    .setLabel('Select Officer')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
+                    .setLabel('Menu')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
                 )
                 const upgradeButtons = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
                         .setCustomId("bank")
-                        .setLabel('Upgrade War-Chest')
+                        .setLabel('War-Chest')
                         .setStyle(ButtonStyle.Primary),
                     new ButtonBuilder()
                         .setCustomId("base")
-                        .setLabel('Upgrade War-Base')
+                        .setLabel('War-Base')
                         .setStyle(ButtonStyle.Primary),
                     new ButtonBuilder()
                         .setCustomId("officer")
-                        .setLabel('Upgrade Officer')
+                        .setLabel('Officer')
                         .setStyle(ButtonStyle.Success),
                     new ButtonBuilder()
                         .setCustomId("troop")
-                        .setLabel('Upgrade Unit')
+                        .setLabel('Unit')
                         .setStyle(ButtonStyle.Success),
                     new ButtonBuilder()
                         .setCustomId("profile")
-                        .setLabel('Show Profile')
+                        .setLabel('Profile')
                         .setStyle(ButtonStyle.Secondary),
                 )
     
@@ -905,7 +905,7 @@ module.exports = {
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Show Profile')
+                .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
         const chooseUnitButtons = new ActionRowBuilder()
@@ -916,34 +916,34 @@ module.exports = {
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
+                    .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Show Profile')
+                .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
             )
             const upgradeButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('Upgrade War-Chest')
+                    .setLabel('War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('Upgrade War-Base')
+                    .setLabel('War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Upgrade Officer')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Upgrade Unit')
+                    .setLabel('Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
 
@@ -1016,11 +1016,11 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
+                    .setLabel('Menu')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -1074,46 +1074,46 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('Upgrade War-Chest')
+                    .setLabel('War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('Upgrade War-Base')
+                    .setLabel('War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Upgrade Officer')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Upgrade Unit')
+                    .setLabel('Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const newUnitButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('Upgrade War-Chest')
+                    .setLabel('War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('Upgrade War-Base')
+                    .setLabel('War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Upgrade Officer')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("newUnit")
-                    .setLabel('Select New Unit')
+                    .setLabel('New Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
 
@@ -1129,7 +1129,7 @@ module.exports = {
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -1256,19 +1256,19 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("campaign")
-                    .setLabel('Campaign Menu')
+                    .setLabel('Campaign')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("selectunit")
-                    .setLabel('Select Unit Menu')
+                    .setLabel('Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("selectofficer")
-                    .setLabel('Select Officer Menu')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
+                    .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("help")
@@ -1349,19 +1349,19 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("campaign")
-                    .setLabel('Campaign Menu')
+                    .setLabel('Campaign')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("selectunit")
-                    .setLabel('Select Unit Menu')
+                    .setLabel('Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("selectofficer")
-                    .setLabel('Select Officer Menu')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
+                    .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("help")
@@ -1446,11 +1446,11 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
+                    .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Primary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -1582,19 +1582,19 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
+                    .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("selectunit")
-                    .setLabel('Select Unit Menu')
+                    .setLabel('Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("selectofficer")
-                    .setLabel('Select Officer Menu')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),    
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
             const selectUnitEmbed = new EmbedBuilder()
@@ -1675,19 +1675,19 @@ module.exports = {
         .addComponents(
             new ButtonBuilder()
                 .setCustomId("cancel")
-                .setLabel('Upgrade Menu')
+                .setLabel('Upgrade')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
                 .setCustomId("selectunit")
-                .setLabel('Select Unit Menu')
+                .setLabel('Unit')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
                 .setCustomId("selectofficer")
-                .setLabel('Select Officer Menu')
+                .setLabel('Officer')
                 .setStyle(ButtonStyle.Success),    
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Show Profile')
+                .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
         )
         const selectedUnitEmbed = new EmbedBuilder()
@@ -1724,23 +1724,23 @@ module.exports = {
         .addComponents(
             new ButtonBuilder()
                 .setCustomId("cancel")
-                .setLabel('Upgrade Menu')
+                .setLabel('Upgrade')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
                 .setCustomId("selectunit")
-                .setLabel('Select Unit Menu')
+                .setLabel('Unit')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
                 .setCustomId("selectgroundofficer")
-                .setLabel('Ground Officer Menu')
+                .setLabel('Ground Officer')
                 .setStyle(ButtonStyle.Primary), 
             new ButtonBuilder()
                 .setCustomId("selectairofficer")
-                .setLabel('Air Officer Menu')
+                .setLabel('Air Officer')
                 .setStyle(ButtonStyle.Primary),    
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Show Profile')
+                .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
                 )
         const selectOfficerEmbed = new EmbedBuilder()
@@ -1780,19 +1780,19 @@ module.exports = {
         .addComponents(
             new ButtonBuilder()
                 .setCustomId("cancel")
-                .setLabel('Upgrade Menu')
+                .setLabel('Upgrade')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
                 .setCustomId("selectunit")
-                .setLabel('Select Unit Menu')
+                .setLabel('Unit')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
                 .setCustomId("selectofficer")
-                .setLabel('Select Officer Menu')
+                .setLabel('Officer')
                 .setStyle(ButtonStyle.Success),    
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Show Profile')
+                .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
                 )
         const selectOfficerEmbed = new EmbedBuilder()
@@ -1856,19 +1856,19 @@ module.exports = {
         .addComponents(
             new ButtonBuilder()
                 .setCustomId("cancel")
-                .setLabel('Upgrade Menu')
+                .setLabel('Upgrade')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
                 .setCustomId("selectunit")
-                .setLabel('Select Unit Menu')
+                .setLabel('Unit')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
                 .setCustomId("selectofficer")
-                .setLabel('Select Officer Menu')
+                .setLabel('Officer')
                 .setStyle(ButtonStyle.Success),    
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Show Profile')
+                .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
                 )
         const selectOfficerEmbed = new EmbedBuilder()
@@ -1944,19 +1944,19 @@ module.exports = {
         .addComponents(
             new ButtonBuilder()
                 .setCustomId("cancel")
-                .setLabel('Upgrade Menu')
+                .setLabel('Upgrade')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
                 .setCustomId("selectunit")
-                .setLabel('Select Unit Menu')
+                .setLabel('Unit')
                 .setStyle(ButtonStyle.Success),
             new ButtonBuilder()
                 .setCustomId("selectofficer")
-                .setLabel('Select Officer Menu')
+                .setLabel('Officer')
                 .setStyle(ButtonStyle.Success),    
             new ButtonBuilder()
                 .setCustomId("profile")
-                .setLabel('Show Profile')
+                .setLabel('Profile')
                 .setStyle(ButtonStyle.Secondary),
         )
         const selectedOfficerEmbed = new EmbedBuilder()
@@ -2109,23 +2109,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("easy")
-                    .setLabel('Easy Mode')
+                    .setLabel('Easy')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("normal")
-                    .setLabel('Normal Mode')
+                    .setLabel('Normal')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("hard")
-                    .setLabel('Hard Mode')
+                    .setLabel('Hard')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
+                    .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
 
@@ -2133,23 +2133,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("normal")
-                    .setLabel('Normal Mode')
+                    .setLabel('Normal')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("hard")
-                    .setLabel('Hard Mode')
+                    .setLabel('Hard')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("extreme")
-                    .setLabel('Extreme Mode')
+                    .setLabel('Extreme')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
+                    .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
 
@@ -2157,23 +2157,23 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("hard")
-                    .setLabel('Hard Mode')
+                    .setLabel('Hard')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("extreme")
-                    .setLabel('Extreme Mode')
+                    .setLabel('Extreme')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
                     .setCustomId("ultra")
-                    .setLabel('Ultra Mode')
+                    .setLabel('Ultra')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
+                    .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
 
@@ -2227,17 +2227,17 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
+                    .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const challengeEmbed = new EmbedBuilder()
             .setThumbnail(playerThumbnail)
             .setDescription(`Coming Soon...`)
-            .setTitle(`Challenge Mode!`)
+            .setTitle(`Challenge!`)
         interaction.editReply({
             embeds: [challengeEmbed],
             //components: [challengeButtons]
@@ -2256,11 +2256,11 @@ module.exports = {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("cancel")
-                    .setLabel('Upgrade Menu')
+                    .setLabel('Upgrade')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -2374,7 +2374,7 @@ module.exports = {
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
         const guildIcon = interaction.member.guild.iconURL();
@@ -2474,23 +2474,23 @@ battleBotHelp: async function (interaction) {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId("bank")
-                    .setLabel('Upgrade War-Chest')
+                    .setLabel('War-Chest')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("base")
-                    .setLabel('Upgrade War-Base')
+                    .setLabel('War-Base')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId("officer")
-                    .setLabel('Upgrade Officer')
+                    .setLabel('Officer')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("troop")
-                    .setLabel('Upgrade Unit')
+                    .setLabel('Unit')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId("profile")
-                    .setLabel('Show Profile')
+                    .setLabel('Profile')
                     .setStyle(ButtonStyle.Secondary),
             )
 			embed			

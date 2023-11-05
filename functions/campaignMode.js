@@ -76,7 +76,7 @@ campaignMode: async function (interaction) {
                 commandCooldowns.set(`${interaction.member.id}_${interaction.customId}`, 0)
 
                 embed
-                    .setDescription(`${interaction.member} you haven't selected your **Unit**!\nUse **warpath-upgrade** to level up and get your **Unit**!`)
+                    .setDescription(`${interaction.member} you haven't selected your **Unit**!\nUse **battle-bot profile** to level up and get your **Unit**!`)
                     return interaction.editReply({ embeds: [embed] });
             }
         const attackOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${AttackerDB[0].officer_name}'`)

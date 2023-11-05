@@ -9,7 +9,7 @@ module.exports = {
         //Load Guild Settings
         const Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         guildIcon = member.guild.iconURL();
-        CHANNEL_ID = Data[0].system_channel        
+        CHANNEL_ID = Data[0].level_up_channel_id || Data[0].system_channel        
         GUILD = member.guild.name
         playerDisplayName = member.displayName
         let roleBattleBot = member.guild.roles.cache.find(role => role.name === "Battle_Bot");

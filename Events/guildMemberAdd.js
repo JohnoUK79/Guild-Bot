@@ -1,15 +1,15 @@
 const {EmbedBuilder} = require(`discord.js`);
 const sql = require(`../config/Database`)
 const { sleep } = require('../functions/discordFunctions')
+const { Colours } = require('../data/colours')
+
 module.exports = {
     name: "guildMemberAdd",
     async execute(member) {
-        console.log(member)
-        //console.log('Guild Member Add', member)
         //Load Guild Settings
         const Data = await sql.Execute(`select * from settings where guild_id = '${member.guild.id}';`); 
         guildIcon = member.guild.iconURL();
-        CHANNEL_ID = Data[0].system_channel        
+        CHANNEL_ID = Data[0].level_up_channel_id || Data[0].system_channel        
         GUILD = member.guild.name
         playerDisplayName = member.displayName
         let roleBattleBot = member.guild.roles.cache.find(role => role.name === "Battle_Bot");
@@ -17,7 +17,7 @@ module.exports = {
                 console.log(`No Role Found`)
                 let roleBattleBot = await member.guild.roles.create({ 
                     name: 'Battle_Bot',
-                    color: '#72ddf7', //Light Blue
+                    color: Colours.LightBlue,
                     mentionable: true,
                     hoist: true,
             })
@@ -26,7 +26,7 @@ module.exports = {
             } else {
                 console.log(`Existing Role`)
                 roleBattleBot.edit({
-                    color: '#72ddf7', //Light Blue
+                    color: Colours.LightBlue,
                     mentionable: true,
                     hoist: true,
                 })
@@ -58,7 +58,7 @@ module.exports = {
         }
         
         const newMemberEmbed = new EmbedBuilder()
-            .setColor("#d81e5b")
+            .setColor(Colours.Yellow)
             .setTitle("New Warrior!")
             .setDescription(`<@${member.id}> has joined the server! \nWe are a **Battle-Bot** Server\nUse the command **/register** to start your **Battle-Bot** Adventure.\nUse **/Battle-Bot Profile** to get started.\nMention ${member.client.user} for further gameplay advice!`)
             .setThumbnail(member.user.displayAvatarURL())
@@ -66,7 +66,7 @@ module.exports = {
             .setTimestamp();
             
         const welcomeEmbed = new EmbedBuilder()
-            .setColor("#d81e5b")
+            .setColor(Colours.Orange)
             .setTitle(`Welcome to the Battle Server - ${GUILD}`)
             .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here\nUse the command **/register** in server to start your **Battle Bot™** Adventure.\nYou Will receive **$${starterCoins.toLocaleString()} War-Coins** Upon first registering.`)
             .setThumbnail(guildIcon)

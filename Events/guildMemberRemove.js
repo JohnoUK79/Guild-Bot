@@ -1,6 +1,7 @@
 let {EmbedBuilder} = require(`discord.js`)
 const sql = require(`../config/Database`)
 const { sleep } = require('../functions/discordFunctions')
+const { Colours } = require('../data/colours')
 
 module.exports = {
     name: "guildMemberRemove",
@@ -23,30 +24,10 @@ module.exports = {
         playerDisplayName = member.displayName
 		if (!playerDisplayName){ playerDisplayName = member.username}
 
-        const Channel_ID = Data[0].system_channel
-
-		let battleBotRole = interaction.guild.roles.cache.find(role => role.name === "Battle-Bot");
-            if (!battleBotRole) {
-                console.log(`No Role Found`)
-                let battleBotRole = await interaction.guild.roles.create({ 
-                    name: 'Battle-Bot',
-                    color: '#72ddf7', //Light Blue
-                    mentionable: true,
-                    hoist: true,
-            })
-                console.log(`New Role Created`)
-                } else {
-                console.log(`Existing Role`)
-                battleBotRole.edit({
-                    color: '#72ddf7', //Light Blue
-                    mentionable: true,
-                    hoist: true,
-                })
-            }
-            await sleep(2000)
+        const Channel_ID = Data[0].level_up_channel_id || Data[0].system_channel
 
         const goodByeEmbed = new EmbedBuilder()
-            .setColor("#d81e5b")
+            .setColor(Colours.LimeGreen)
             .setTitle("Weak Warrior Left!")
             .setDescription(`${playerDisplayName} has left the server! \nThey could not handle the Heat of the **Battle Bot™**!.`)
             .setThumbnail(member.user.displayAvatarURL())

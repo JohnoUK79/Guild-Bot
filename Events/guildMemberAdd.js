@@ -22,7 +22,7 @@ module.exports = {
                     hoist: true,
             })
             console.log(`New Role Created`)
-
+            await sleep(2000)
             } else {
                 console.log(`Existing Role`)
                 roleBattleBot.edit({

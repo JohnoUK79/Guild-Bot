@@ -17,7 +17,7 @@ module.exports = {
         ),
 
     async execute(interaction) {
-        const { client } = require('../bot')
+        const client = interaction.client
         guildIcon = interaction.member.guild.iconURL();
 		guildName = interaction.member.guild.name
         if (interaction.member.id != OWNER) {
@@ -26,9 +26,11 @@ module.exports = {
                 content: `Only the Bot Owner Can Send Announcements! Contact <@${OWNER}> for more details.`,
             })
         }
-
+        interaction.deferReply({
+            empheral:true
+        })
         var message = interaction.options.getString('message');
-        const levelUpChannelIds = await sql.Execute(`SELECT level_up_channel_id FROM settings WHERE 1`) //level_up_channel_id = '1000526899124117535'
+        const guildChannels = await sql.Execute(`SELECT level_up_channel_id FROM settings WHERE 1`) //level_up_channel_id = '1000526899124117535'
         const announceEmbed = new EmbedBuilder()
             .setColor(Colours.BurntOrange)
             .setTitle(`Announcement`)
@@ -42,21 +44,23 @@ module.exports = {
             .setFooter({ text: `Announcement.`, iconURL: `http://phfamily.co.uk/img/gifs/Influencer.gif` });
 
         //Loop through announcement channels
-        for (let i = 0; i < levelUpChannelIds.length; i++) {
-            let levelUpChannelId = levelUpChannelIds[i];
+        for (let i = 0; i < guildChannels.length; i++) {
+            const levelUpChannelId = guildChannels[i].level_up_channel_id || guildChannels[i].system_channel;
             try {
-                const sendChannel = client.channels.cache.get(levelUpChannelId.level_up_channel_id)                
-                console.log(sendChannel);
+                const sendChannel = client.channels.cache.get(levelUpChannelId)                
+                //console.log(sendChannel);
                 sendChannel.send({ embeds: [announceEmbed] })
             }
             catch (e) {
                 console.log(e);
                 console.log(levelUpChannelId);
             }
-        }announceEmbed
+        }
+        announceEmbed
             .setTitle(`Announcement Sent`)
 
-            await interaction.reply({
+            interaction.editReply({
+            empheral: true,
             embeds: [announceEmbed],
         });
 

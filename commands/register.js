@@ -3,7 +3,7 @@ const sql = require("../config/Database");
 const timestamp = require('../config/timestamp');
 const { sendEmail, emailAlert } = require('../functions/messageFunctions');
 setDate = timestamp.UTCdefault()
-const { client } = require('../bot')
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("register")

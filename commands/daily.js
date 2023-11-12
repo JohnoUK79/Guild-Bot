@@ -20,6 +20,7 @@ module.exports = {
 				.setDescription(`Welcome **${interaction.member.displayName}** you are now registered for **Battle-Bot**\nYou have $3,000,000 War-Coins to get you started.\nPlease use **/Battle-Bot Profile** to get started.\nMention ${interaction.member.client.user} for Help!`)
 				const warcoins = 5000000
 				const newRegistration = await sql.Execute(`INSERT INTO levels (discord_id, war_coins) VALUES ('${interaction.member.id}', '${warcoins}');`)
+				console.log(newRegistration)
 		} 
 		Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
 
@@ -43,10 +44,6 @@ module.exports = {
 			console.log(`Daily: ${interaction.member.displayName} ${dailyUpdate.info}`)
 			embed
 				.setDescription(`${interaction.member} You sucessfully claimed **$${daily.toLocaleString()} War-Coins** as a **Daily Bonus** for being **Active**!`)
-				// .addFields(
-				// 	{ name: `War-Coins:`, value: `$${newWallet.toLocaleString()}`, inline: true }, 
-				// 	{ name: `War-Chest:`, value: `$${bank.toLocaleString()}`, inline: true },
-				// )
-		return interaction.reply({ embeds: [embed] });
+			return interaction.reply({ embeds: [embed] });
 			} 
 		}

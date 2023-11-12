@@ -15,7 +15,7 @@ module.exports = {
         const wallet = Level[0].war_coins
         const bank = Level[0].war_chest
         const baseLevel = Level[0].base_level
-        const cost = (baseLevel + 1) * 25000
+        const cost = (baseLevel + 1) * 10000
         let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.Vanguard

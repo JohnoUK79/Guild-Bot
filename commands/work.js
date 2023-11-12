@@ -18,11 +18,12 @@ module.exports = {
 		const warcoins = 5000000
 		const newRegistration = await sql.Execute(`INSERT INTO levels (discord_id, war_coins) VALUES ('${interaction.member.id}', '${warcoins}');`)
 		Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
+		console.log(newRegistration)
 	}
 		const wallet = Economy[0].war_coins
 		let officerlevel = Economy[0].officer_level;
 		if (officerlevel === 0) {officerlevel = 1}
-		const workBonus = Math.floor(Math.random() * (2500 - 1000 + 1)) + 1000
+		const workBonus = Math.floor(Math.random() * (25000 - 10000 + 1)) + 10000
 		const work = Math.round(workBonus * officerlevel)
 
 		const Job = {

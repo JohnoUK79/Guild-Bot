@@ -109,4 +109,5 @@ client.login(token);
 rpc_client.login({ clientId: CLIENT_ID }).catch(console.error);
 module.exports = {
     commandCooldowns: commandCooldowns,
+    client: client
 }

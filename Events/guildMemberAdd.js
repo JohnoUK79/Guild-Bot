@@ -44,7 +44,7 @@ module.exports = {
         // This is just to simplify the message being sent below (inviter doesn't have a tag property)
         const inviter = await member.guild.members.fetch(invite.inviter.id);
 
-        const starterCoins = 5000000
+        const starterCoins = 25000000
 		if (!playerDisplayName){ playerDisplayName = member.username}
         console.log("Member Joined")
         if (member.partial) {
@@ -68,7 +68,7 @@ module.exports = {
         const welcomeEmbed = new EmbedBuilder()
             .setColor(Colours.Orange)
             .setTitle(`Welcome to the Battle Server - ${GUILD}`)
-            .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here\nUse the command **/register** in the DISCORD server to start your **Battle Bot™** Adventure.\nYou Will receive **$${starterCoins.toLocaleString()} War-Coins** Upon first registering.`)
+            .setDescription(`${GUILD} are happy to have you! \nWe hope you enjoy your time here\nUse the command **/register** in the **${GUILD} Discord server** to start your **Battle Bot™** Adventure.\nYou Will receive **$${starterCoins.toLocaleString()} War-Coins** Upon first registering.`)
             .setThumbnail(guildIcon)
             .setFooter({ text: `${GUILD}`, iconURL: `${guildIcon}` })
             .setTimestamp();

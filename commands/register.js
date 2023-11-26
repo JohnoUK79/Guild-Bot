@@ -15,7 +15,7 @@ module.exports = {
         embed
             .setColor('#ff5b05')
             .setThumbnail(guildIcon)
-            .setDescription(`Welcome **${interaction.member.displayName}** you are now registered for **Battle-Bot**\nYou have $5,000,000 War-Coins to get you started.\nPlease use **/Battle-Bot Profile** to get started.\nMention ${interaction.member.client.user} for Help!`)
+            .setDescription(`Welcome **${interaction.member.displayName}** you are now registered for **Battle-Bot**\nYou have $25,000,000 War-Coins to get you started.\nPlease use **/Battle-Bot Profile** to get started.\nMention ${interaction.member.client.user} for Help!`)
             .setTimestamp()
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
             .setFooter({ text: `${guildName} - Welcome to Battle-Bot`, iconURL: `${guildIcon}`});
@@ -24,7 +24,7 @@ module.exports = {
             interaction.reply({
                 embeds: [embed]
             })
-            const warcoins = 5000000
+            const warcoins = 25000000
             const newRegistration = await sql.Execute(`INSERT INTO levels (discord_id, war_coins) VALUES ('${interaction.member.id}', '${warcoins}');`)
             emailAlert(interaction)
         } else {

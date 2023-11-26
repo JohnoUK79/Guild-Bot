@@ -6,7 +6,7 @@ module.exports = {
 ImageCache: async function () {
     const unitLinks = await sql.Execute(`SELECT * FROM units WHERE Image NOT LIKE ''`)
     unitLinks.forEach(u => {
-        fetch(`http://www.phfamily.co.uk/img/${u.Image}`)
+        fetch(`http://www.battle-bot.com/img/${u.Image}`)
         .then(res => {
             const dest = fs.createWriteStream(`./img/${u.Image}`);
             res.body.pipe(dest);

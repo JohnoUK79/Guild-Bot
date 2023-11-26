@@ -105,7 +105,7 @@ campaignMode: async function (interaction) {
                 OfficerType: attackOfficer[0].Officer_Type,
                 Multiplier: 1,
                 Prestige: AttackerDB[0].prestige,
-                Image: `http://phfamily.co.uk/img/${AttackerDB[0].unit_image}`,
+                Image: `http://battle-bot.com/img/${AttackerDB[0].unit_image}`,
                 ImageFile: `${AttackerDB[0].unit_image}`
             }
 
@@ -126,7 +126,7 @@ campaignMode: async function (interaction) {
                 SkillMultiplier: skillLevel,
                 OfficerType: defendOfficer[0].Officer_Type,
                 Multiplier: 1,
-                Image: `http://phfamily.co.uk/img/${DefenderUnit[0].Image}`,
+                Image: `http://battle-bot.com/img/${DefenderUnit[0].Image}`,
                 ImageFile: `${DefenderUnit[0].Image}`
             }
             if (Attacker.Prestige > 1 ) {

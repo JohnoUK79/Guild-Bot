@@ -26,7 +26,7 @@ module.exports = {
 		const leaderBoard = new EmbedBuilder()
 		.setColor(Colours.Black)
 		.setTitle(`Battles Leaderboard`)
-		.setURL('http://www.phfamily.co.uk/leaderboard.php')
+		.setURL('http://www.battle-bot.com/leaderboard.php')
 		.setThumbnail(interaction.member.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
 		.setDescription(`${interaction.member.displayName}! Here's the **Battles Board**\n**Top 3 Receive Rewards 00:00 UTC MONDAYS**\n**Wins - Losses**`)

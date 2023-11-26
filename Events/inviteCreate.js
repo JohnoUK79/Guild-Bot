@@ -25,7 +25,7 @@ module.exports = {
         const inviteEmbed = new EmbedBuilder()
         .setColor('#008000')
         .setTitle(`New Invite.`)
-        .setURL('http://www.phfamily.co.uk/')
+        .setURL('http://www.battle-bot.com/')
         .setThumbnail(guildLogo)
         .setAuthor({ name: invite.inviter.username })
         .setDescription(`Invite Created!`)

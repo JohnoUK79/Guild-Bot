@@ -22,7 +22,7 @@ module.exports = {
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
             .setDescription(`**Updates Every 15 Minutes!**`)
             .setThumbnail(guildIcon)
-            .setImage(`http://phfamily.co.uk/img/gifs/Influencer.gif`)
+            .setImage(`http://battle-bot.com/img/gifs/Influencer.gif`)
             .setTimestamp()
             .setFooter({ text: `${guildName} - Invites Leaderboard.`, iconURL: `${guildIcon}` });
             

@@ -20,7 +20,7 @@ module.exports = {
 	const slapEmbed = new EmbedBuilder()
 		.setColor('#2e8f37')
 		.setTitle(`**SLAP!!**`)
-		.setURL('http://www.phfamily.co.uk/')
+		.setURL('http://www.battle-bot.com/')
 		.setThumbnail(interaction.user.displayAvatarURL())
 		.setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
 		.setDescription(`<@${interaction.member.id}> has **Slapped** ${target}`)

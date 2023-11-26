@@ -88,7 +88,7 @@ module.exports = {
                     SkillMultiplier: AttackSkillMultiplier,
                     OfficerType: attackOfficer[0].Officer_Type,
                     Multiplier: 1,
-                    Image: `http://phfamily.co.uk/img/${AttackerDB[0].unit_image}`,
+                    Image: `http://battle-bot.com/img/${AttackerDB[0].unit_image}`,
                     ImageFile: `${AttackerDB[0].unit_image}`
                 }
 
@@ -122,7 +122,7 @@ module.exports = {
                     SkillMultiplier: DefendSkillMultiplier,
                     OfficerType: defendOfficer[0].Officer_Type,
                     Multiplier: DefendSkillMultiplier,
-                    Image: `http://phfamily.co.uk/img/${DefenderDB[0].unit_image}`,
+                    Image: `http://battle-bot.com/img/${DefenderDB[0].unit_image}`,
                     ImageFile: `${DefenderDB[0].unit_image}`
                 }
 

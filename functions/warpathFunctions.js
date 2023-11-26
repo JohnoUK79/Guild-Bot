@@ -7,7 +7,7 @@ module.exports = {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.guild.name
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const warbase = `http://phfamily.co.uk/img/war-base.jpg`
+        const warbase = `http://battle-bot.com/img/war-base.jpg`
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
@@ -81,7 +81,7 @@ module.exports = {
     },
     buyBank: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const warchest = `http://phfamily.co.uk/img/war-chest.jpg`
+        const warchest = `http://battle-bot.com/img/war-chest.jpg`
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
@@ -199,7 +199,7 @@ module.exports = {
     },
     buyBase: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
-        const warbase = `http://phfamily.co.uk/img/war-base.jpg`
+        const warbase = `http://battle-bot.com/img/war-base.jpg`
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
@@ -316,7 +316,7 @@ module.exports = {
 
     },
     buyOfficer: async function (interaction) {
-        const GOT = `http://phfamily.co.uk/img/GeneralDeath.png`
+        const GOT = `http://battle-bot.com/img/GeneralDeath.png`
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
@@ -438,7 +438,7 @@ module.exports = {
 
     },
     buyOfficer10: async function (interaction) {
-        const GOT = `http://phfamily.co.uk/img/GeneralDeath.png`
+        const GOT = `http://battle-bot.com/img/GeneralDeath.png`
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
@@ -567,7 +567,7 @@ module.exports = {
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
-        const link = `http://phfamily.co.uk/img/${image}`
+        const link = `http://battle-bot.com/img/${image}`
         let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
             CampColour = Colours.VanguardBoost
@@ -622,7 +622,7 @@ module.exports = {
     chestUpgrade: async function (interaction) {
         const guildIcon = interaction.member.guild.iconURL();
         const guildName = interaction.guild.name
-        const warchest = `http://phfamily.co.uk/img/war-chest.jpg`
+        const warchest = `http://battle-bot.com/img/war-chest.jpg`
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
@@ -680,7 +680,7 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
-        const link = `http://phfamily.co.uk/img/${image}`
+        const link = `http://battle-bot.com/img/${image}`
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
         let CampColour = Colours.Black
         if (Level[0].unit_camp === 'Vanguard') {
@@ -735,7 +735,7 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
-        const link = `http://phfamily.co.uk/img/${image}`
+        const link = `http://battle-bot.com/img/${image}`
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
 
         let CampColour = Colours.Black
@@ -872,7 +872,7 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
-        const link = `http://phfamily.co.uk/img/${image}`
+        const link = `http://battle-bot.com/img/${image}`
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
 
         let CampColour = Colours.Black
@@ -1055,7 +1055,7 @@ module.exports = {
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
-        const link = `http://phfamily.co.uk/img/${image}`
+        const link = `http://battle-bot.com/img/${image}`
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
         
         const camp = Level[0].unit_camp
@@ -1294,7 +1294,7 @@ module.exports = {
         const skillLevel = Level[0].skill_level 
 
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const link = `http://phfamily.co.uk/img/${image}`
+        const link = `http://battle-bot.com/img/${image}`
         const triggerRate = skillLevel * 5
         attackType = 'No Unit Selected'
         if (unitDetails.length > 0) {
@@ -1387,7 +1387,7 @@ module.exports = {
         const skillLevel = Level[0].skill_level 
 
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
-        const link = `http://phfamily.co.uk/img/${image}`
+        const link = `http://battle-bot.com/img/${image}`
         const triggerRate = skillLevel * 5
         attackType = 'No Unit Selected'
         if (unitDetails.length > 0) {
@@ -1425,7 +1425,7 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
-        const link = `http://phfamily.co.uk/img/${image}`
+        const link = `http://battle-bot.com/img/${image}`
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
 
         let CampColour = Colours.Black
@@ -1658,7 +1658,7 @@ module.exports = {
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
 
 
-        const link = 'http://phfamily.co.uk/img/' + image
+        const link = 'http://battle-bot.com/img/' + image
         const updateUnit = await sql.Execute(`UPDATE levels SET unit_level = '${selectedUnit[0].unit_level}', unit_camp = '${selectedUnit[0].camp}', unit_type = '${selectedUnit[0].unit_type}', unit_image = '${unitImage}' WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Updated Unit:${updateUnit.info}`)
         let CampColour = Colours.Black
@@ -1771,7 +1771,7 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
-        const link = `http://phfamily.co.uk/img/${image}`
+        const link = `http://battle-bot.com/img/${image}`
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
 
         let CampColour = Colours.Black
@@ -1847,7 +1847,7 @@ module.exports = {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
-        const link = `http://phfamily.co.uk/img/${image}`
+        const link = `http://battle-bot.com/img/${image}`
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
 
         let CampColour = Colours.Black
@@ -1922,7 +1922,7 @@ module.exports = {
     selectofficermenu: async function (interaction) {
         const Level = await sql.Execute(`SELECT * FROM levels WHERE discord_id = '${interaction.member.id}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
-        const link = `http://phfamily.co.uk/img/${image}`
+        const link = `http://battle-bot.com/img/${image}`
         const selected = interaction.values[0]
         const selectedOfficer = await sql.Execute(`SELECT * FROM playerofficers WHERE discord_id = '${interaction.member.id}' AND Officer_Name = '${selected}'`)
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
@@ -1985,7 +1985,7 @@ module.exports = {
         const unitDetails = await sql.Execute(`SELECT * FROM units WHERE Camp = '${Level[0].unit_camp}' AND Unit_type = '${Level[0].unit_type}' AND Unit_Level = '${Level[0].unit_level}'`)
         const image = Level[0].unit_image || 'GeneralDeath.png'
 		const playerImage = new AttachmentBuilder(`./img/${image}`)
-        const link = `http://phfamily.co.uk/img/${image}`
+        const link = `http://battle-bot.com/img/${image}`
         const playerThumbnail = interaction.member.displayAvatarURL({ dynamic: true })
 
         const campaignButtons = new ActionRowBuilder()

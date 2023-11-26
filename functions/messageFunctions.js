@@ -13,7 +13,7 @@ module.exports = {
 			const dmReceived = new EmbedBuilder()
 			.setColor('#0099ff')
 			.setTitle('Direct Message Received!')
-			.setURL('http://phfamily.co.uk/')
+			.setURL('http://battle-bot.com/')
 			.setThumbnail(message.author.displayAvatarURL())
 			.setAuthor({ name: `${message.author.username}#${message.author.discriminator}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
 			.setDescription(`Message Received By the Bot!`)
@@ -22,7 +22,7 @@ module.exports = {
 				{ name: `Sent By:`, value: `<@${message.author.id}>` },
 				)
 			.setTimestamp()
-			.setFooter({ text: 'Message Received!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
+			.setFooter({ text: 'Message Received!.', iconURL: 'http://battle-bot.com/img/gifs/Warpath.jpg' });
 
 			//970409125227950110 PH Family Bot Messages
 			//1033492139964895302 SE17 Bot Messages
@@ -31,7 +31,7 @@ module.exports = {
 				embeds: [dmReceived],
 			})
 			dmReceived.setDescription('Your messaged will be reviewed by our BOT Team and we will come back to you if we need further information!')
-			dmReceived.setFooter({ text: 'Message Sent!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' })
+			dmReceived.setFooter({ text: 'Message Sent!.', iconURL: 'http://battle-bot.com/img/gifs/Warpath.jpg' })
 			dmReceived.setTitle('Your Message Has Been Sent!')
 
 			await message.reply ({
@@ -41,12 +41,12 @@ module.exports = {
 			const attachmentReceived = new EmbedBuilder()
 				.setColor('#0099ff')
 				.setTitle('Direct Message Received!')
-				.setURL('http://phfamily.co.uk/')
+				.setURL('http://battle-bot.com/')
 				.setThumbnail(message.author.displayAvatarURL())
 				.setAuthor({ name: `${message.author.username}#${message.author.discriminator}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
 				.setDescription(`Attachment Received By the Bot!`)
 				.setTimestamp()
-				.setFooter({ text: 'Attachment Received!.', iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
+				.setFooter({ text: 'Attachment Received!.', iconURL: 'http://battle-bot.com/img/gifs/Warpath.jpg' });
 
 			let attachments = message.attachments
 			for (const attachment of attachments) {
@@ -85,7 +85,7 @@ module.exports = {
 		const translationEmbed = new EmbedBuilder()
 			.setColor('#C32148')
 			.setTitle(`${guildName} - Translator`)
-			.setURL('http://www.phfamily.co.uk')
+			.setURL('http://www.battle-bot.com')
 			.setThumbnail(guildIcon)
 			.setAuthor({ name: message.member.displayName, iconURL: message.member.displayAvatarURL({ dynamic: true })})
 
@@ -126,7 +126,7 @@ module.exports = {
 		  const addRole = new EmbedBuilder()
 		  .setColor('#0099ff')
 		  .setTitle(`${guildName} - Bot Emails`)
-		  .setURL('http://www.phfamily.co.uk/')
+		  .setURL('http://www.battle-bot.com/')
 		  .setThumbnail(interaction.user.displayAvatarURL())
 		  .setAuthor({ name: interaction.member.displayName, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
 		  .setDescription(`**Email Sent!**`)

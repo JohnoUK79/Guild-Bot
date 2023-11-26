@@ -15,7 +15,7 @@ module.exports = {
 		guildName = interaction.member.guild.name
 		let Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
 	if (Economy.length === 0) {
-		const warcoins = 5000000
+		const warcoins = 25000000
 		const newRegistration = await sql.Execute(`INSERT INTO levels (discord_id, war_coins) VALUES ('${interaction.member.id}', '${warcoins}');`)
 		Economy = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`)
 		console.log(newRegistration)

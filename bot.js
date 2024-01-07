@@ -14,23 +14,23 @@ jukeBoxEventsEmbed
 const client = new Client({
 
     makeCache: Options.cacheWithLimits({
-		MessageManager: 200,
-		PresenceManager: 200,
-        UserManager: 1000,
-        ReactionUserManager: 200,
-        GuildInviteManager: 200,
-        GuildBanManager: 200,
-        GuildEmojiManager: 200,
+		MessageManager: 0,
+		PresenceManager: 0,
+        UserManager: 500,
+        ReactionUserManager: 0,
+        GuildInviteManager: 0,
+        GuildBanManager: 0,
+        GuildEmojiManager: 0,
         GuildMemberManager: {
-            maxSize: 1000,
+            maxSize: 500,
             keepOverLimit: member => member.id === client.user.id,
         },
-        GuildScheduledEventManager: 200,
-        ApplicationCommandManager: 200,
-        BaseGuildEmojiManager: 200,
-        GuildStickerManager: 200,
-        StageInstanceManager: 200,
-        InviteManager: 200,
+        GuildScheduledEventManager: 0,
+        ApplicationCommandManager: 0,
+        BaseGuildEmojiManager: 0,
+        GuildStickerManager: 0,
+        StageInstanceManager: 0,
+        InviteManager: 0,
 		// Add more class names here
 
         sweepers: {

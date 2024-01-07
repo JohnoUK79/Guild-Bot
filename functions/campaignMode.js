@@ -66,9 +66,6 @@ campaignMode: async function (interaction) {
             .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL({ dynamic: true })})
             .setFooter({ text: `Battle ID:${interaction.id} - ${campaignOfficer}`, iconURL: `${guildIcon}`});
 
-    
-        const DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${campaignUnitCamp}' AND Unit_Type = '${campaignUnitType}' AND Unit_Level = '${campaignUnitLevel}'`)
-
         const AttackerDB = await sql.Execute(`SELECT * FROM levels WHERE discord_id = ${interaction.member.id}`);
         const AttackerUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${AttackerDB[0].unit_camp}' AND Unit_Type = '${AttackerDB[0].unit_type}' AND Unit_Level = '${AttackerDB[0].unit_level}'`)
 
@@ -86,6 +83,14 @@ campaignMode: async function (interaction) {
             if (AttackerDB[0].skill_level === 0) {
                 AttackSkillMultiplier = 1
             } else AttackSkillMultiplier = AttackerDB[0].skill_level
+        
+        //Number of Units Unlocked (Used to Reduce Campaign Unit Level for New Players)
+        const numberOfUnits = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}'`)
+        console.log(`Units Unlocked: ${numberOfUnits.length}`)
+        if (numberOfUnits === 1) {
+            let DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${campaignUnitCamp}' AND Unit_Type = '${campaignUnitType}' AND Unit_Level = '${AttackerDB[0].unit_level}'`)
+        } let DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${campaignUnitCamp}' AND Unit_Type = '${campaignUnitType}' AND Unit_Level = '${campaignUnitLevel}'`)
+
 
             const Attacker = {
                 Player: interaction.member,

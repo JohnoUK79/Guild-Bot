@@ -77,7 +77,7 @@ campaignMode: async function (interaction) {
                     return interaction.editReply({ embeds: [embed] });
             }
         const attackOfficer = await sql.Execute(`SELECT * FROM officers WHERE Officer_Name = '${AttackerDB[0].officer_name}'`)
-            if (AttackerDB[0].officer_level === 0) {
+            if (AttackerDB[0].officer_level === 1) {
                 OfficerLevel = 1
             } else OfficerLevel = AttackerDB[0].officer_level
             if (AttackerDB[0].skill_level === 0) {

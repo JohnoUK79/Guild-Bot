@@ -1626,7 +1626,7 @@ module.exports = {
                 label: type,
                 description: `${camp} - ${type} - ${level}`,
                 value: type + '_' + camp.toString(),
-                //emoji: image.toString(),
+                emoji: image.toString(),
             })
         }
         const unitMenu = new ActionRowBuilder()

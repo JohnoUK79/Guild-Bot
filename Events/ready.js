@@ -22,7 +22,7 @@ module.exports = {
         console.log(`================ Battle-Bot Ready! ================`);  
         //Presence Updates
         updatePresence(client)
-        const mymMemberRefresh = nodeCron.schedule("7,22,37,52 * * * *", () => {
+        nodeCron.schedule("7,22,37,52 * * * *", () => {
             updatePresence(client)
         })
         //Create Invite Cache
@@ -36,7 +36,6 @@ module.exports = {
             module.exports.invites = invites
         });
         // Add Invites to Database
-        const InvitesDB = new Map();
         client.guilds.cache.forEach(guild => {
             guild.invites.fetch()
                 .then(invites => {
@@ -61,9 +60,8 @@ module.exports = {
                 })
         })  
 
-        const invitesRefresh = nodeCron.schedule("0,15,30,45 * * * *", () => {
+        nodeCron.schedule("0,15,30,45 * * * *", () => {
         console.log("Invite Leaderboard Update")
-        const InvitesDB = new Map();
         client.guilds.cache.forEach(guild => {
             guild.invites.fetch()
                 .then(invites => {

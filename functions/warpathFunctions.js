@@ -1820,8 +1820,9 @@ module.exports = {
             const skill = playerOfficers[entry].Skill
             const level = playerOfficers[entry].Officer_Level
             const skill_level = playerOfficers[entry].Skill_Level
-            const image = await interaction.client.emojis.cache.find(emoji => emoji.name == camp)
-
+            
+            const image = await interaction.client.emojis.cache.find(emoji => emoji.name === camp)
+            console.log(image)
             officerChoices.push({
                 label: name,
                 description: `${level} - ${camp} - ${type} - ${skill} - ${skill_level}`,

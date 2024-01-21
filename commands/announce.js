@@ -22,8 +22,8 @@ module.exports = {
 		guildName = interaction.member.guild.name
         if (interaction.member.id != OWNER) {
             return await interaction.reply({
-                empheral: true,
-                content: `Only the Bot Owner Can Send Announcements! Contact <@${OWNER}> for more details.`,
+                ephemeral: true,
+                content: `Only the Bot Owner Can Send Bot Announcements! Contact <@${OWNER}> for more details.`,
             })
         }
 
@@ -56,7 +56,7 @@ module.exports = {
         announceEmbed
             .setTitle(`Announcement Sent`)
             await interaction.reply({
-            empheral: true,
+            ephemeral: true,
             embeds: [announceEmbed],
         });
 

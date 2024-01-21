@@ -1800,12 +1800,11 @@ module.exports = {
                 .setColor(CampColour)
                 .setThumbnail(playerThumbnail)
                 .setTimestamp()
-                .setTitle(`Select Your Officer!`)
+                .setDescription(`**Choose your Ground Officer!**\n\nPairing your **Officer Type** & **Unit Type** will give you additional **Combat Buffs!**\n\nPairing your **Officer Camp** & **Unit Camp** will give you additional **Combat Buffs!**`)
 
         if (playerOfficers.length === 0) {
             selectOfficerEmbed
-                .setTitle(`No Officer Available!`)
-                .setDescription(`You have not selected your **Officer**.\nUpgrade your **War-Chest** & **War-Base** to get your **First Unit**!`)
+                .setDescription(`**No Ground Officer Available!**\n\nYou have no **Ground Officers**.\nUpgrade your **War-Chest** & **War-Base** to get your **First Ground Officer**!`)
             return interaction.update({
             embeds: [selectOfficerEmbed],
             components: [selectOfficerButtons],
@@ -1835,7 +1834,7 @@ module.exports = {
             .addComponents(
                 new StringSelectMenuBuilder()
                     .setCustomId("selectofficermenu")
-                    .setPlaceholder('Select your Officer')
+                    .setPlaceholder('Select your Ground Officer')
                     .addOptions(officerChoices),
             )
         interaction.update({
@@ -1876,12 +1875,11 @@ module.exports = {
                 .setColor(CampColour)
                 .setThumbnail(playerThumbnail)
                 .setTimestamp()
-                .setTitle(`Select Your Officer!`)
+                .setDescription(`**Choose your Air Officer!**\n\nPairing your **Officer Type** & **Unit Type** will give you additional **Combat Buffs!**\n\nPairing your **Officer Camp** & **Unit Camp** will give you additional **Combat Buffs!**`)
 
         if (playerOfficers.length === 0) {
             selectOfficerEmbed
-                .setTitle(`No Officer Available!`)
-                .setDescription(`You have not selected your **Officer**.\nUpgrade your **War-Chest** & **War-Base** to get your **First Unit**!`)
+                .setDescription(`**No Air Officer Available!**\n\nYou have no **Air Officers**.\nUpgrade your **War-Chest** & **War-Base** to get your **First Air Officer**!`)
             return interaction.update({
             embeds: [selectOfficerEmbed],
             components: [selectOfficerButtons],
@@ -1911,7 +1909,7 @@ module.exports = {
             .addComponents(
                 new StringSelectMenuBuilder()
                     .setCustomId("selectofficermenu")
-                    .setPlaceholder('Select your Officer')
+                    .setPlaceholder('Select your Air Officer')
                     .addOptions(officerChoices),
             )
         interaction.update({

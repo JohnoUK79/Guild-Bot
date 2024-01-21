@@ -1484,7 +1484,7 @@ module.exports = {
         if (prestige === 22) return newUnitLevel = '4.0', newUnitType = 'TankHunters'//3
         if (prestige === 23) return newUnitLevel = '4.0', newUnitType = 'HeavyTanks'//3
         if (prestige < 23) return interaction.update({
-            content: `You have collected all available Units`
+            content: `You have collected the Maximums available Units`
         })
 
 

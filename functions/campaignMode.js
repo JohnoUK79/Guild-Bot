@@ -135,7 +135,7 @@ campaignMode: async function (interaction) {
                 Image: `http://battle-bot.com/img/${DefenderUnit[0].Image}`,
                 ImageFile: `${DefenderUnit[0].Image}`
             }
-            if (Attacker.Prestige > 1 ) {
+            if (Attacker.Prestige > 0 ) {
                 console.log(`Campiagn Prestige Buff`, Attacker.Prestige)
                 Defender.Multiplier = Attacker.Prestige
             }

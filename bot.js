@@ -1,15 +1,8 @@
 const fs = require('node:fs');
-const { Client, GatewayIntentBits, Partials, Collection, EmbedBuilder, Options } = require("discord.js");
+const { Client, GatewayIntentBits, Collection, Options } = require("discord.js");
 const rpc = require("discord-rpc");
 const { token, CLIENT_ID } = require('./config.json');
-const { Player, useMetadata, Track } = require('discord-player');
-const { title } = require('node:process');
 const { ImageCache } = require('./functions/imageCache');
-const jukeBoxEventsEmbed = new EmbedBuilder();
-jukeBoxEventsEmbed
-    .setColor('#ffff00')
-    .setFooter({ text: `Jukebox`, iconURL: `http://phfamily.co.uk/img/gifs/Warpath.jpg`});
-
 //Discord client
 const client = new Client({
 
@@ -20,7 +13,7 @@ const client = new Client({
         ReactionUserManager: 0,
         GuildInviteManager: 0,
         GuildBanManager: 0,
-        GuildEmojiManager: 50,
+        GuildEmojiManager: 100,
         GuildMemberManager: {
             maxSize: 500,
             keepOverLimit: member => member.id === client.user.id,
@@ -47,6 +40,7 @@ const client = new Client({
         repliedUser: false
       },
       intents: [
+        GatewayIntentBits.GuildEmojisAndStickers, // for manage emojis and stickers
         GatewayIntentBits.Guilds, // for guild related things
         GatewayIntentBits.GuildMembers, // for guild members related things
         GatewayIntentBits.GuildMessages, // for guild messages things

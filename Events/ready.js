@@ -28,6 +28,7 @@ module.exports = {
         //Create Invite Cache
         const invites = new Collection();
         // Loop over all the guilds
+        try {
         client.guilds.cache.forEach(async (guild) => {
             // Fetch all Guild Invites
             const firstInvites = await guild.invites.fetch();
@@ -35,6 +36,9 @@ module.exports = {
             invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, invite.uses])));
             module.exports.invites = invites
         });
+    } catch {(err => {
+        console.log("Invite Cache Error:", err)
+    })}
         // Add Invites to Database
         const InvitesDB = new Map();
         client.guilds.cache.forEach(guild => {

@@ -144,7 +144,6 @@ campaignMode: async function (interaction) {
             const defendImage = new AttachmentBuilder(`./img/${Defender.ImageFile}`)
             Attacker.BattleHealth = Attacker.Health, Defender.BattleHealth = Defender.Health
             interaction.Attacker = Attacker, interaction.Defender = Defender
-            console.log(interaction)
             skillColours(interaction)
 
 const startTime = Date.now();

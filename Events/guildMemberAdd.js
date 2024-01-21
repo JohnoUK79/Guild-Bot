@@ -12,17 +12,18 @@ module.exports = {
         CHANNEL_ID = Data[0].level_up_channel_id || Data[0].system_channel        
         GUILD = member.guild.name
         playerDisplayName = member.displayName
-        let roleBattleBot = member.guild.roles.cache.find(role => role.name === "Battle_Bot");
+        let roleBattleBot = member.guild.roles.cache.find(role => role.name === "BattleBot");
             if (!roleBattleBot) {
                 console.log(`No Role Found`)
-                let roleBattleBot = await member.guild.roles.create({ 
-                    name: 'Battle_Bot',
+                roleBattleBot = await member.guild.roles.create({ 
+                    name: 'BattleBot',
                     color: Colours.LightBlue,
                     mentionable: true,
                     hoist: true,
             })
             console.log(`New Role Created`)
             await sleep(2000)
+            
             } else {
                 console.log(`Existing Role`)
                 roleBattleBot.edit({

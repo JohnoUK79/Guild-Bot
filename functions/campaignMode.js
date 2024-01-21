@@ -96,7 +96,7 @@ campaignMode: async function (interaction) {
             const Attacker = {
                 Player: interaction.member,
                 Name: AttackerUnit[0].Unit_Name,
-                Power: AttackerUnit[0].Firepower * OfficerLevel / 10,
+                Power: AttackerUnit[0].Firepower * (OfficerLevel / 10),
                 Health: (AttackerUnit[0].HP * AttackerDB[0].base_level) * 10,
                 UnitCamp: AttackerDB[0].unit_camp,
                 Speed: AttackerUnit[0].Speed,

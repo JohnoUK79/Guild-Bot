@@ -88,9 +88,11 @@ campaignMode: async function (interaction) {
         const numberOfUnits = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Units Unlocked: ${numberOfUnits.length}`)
         let DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${campaignUnitCamp}' AND Unit_Type = '${campaignUnitType}' AND Unit_Level = '${AttackerDB[0].unit_level}'`)
-        if (numberOfUnits < 0) {
+        if (numberOfUnits < 1) {
             let DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${campaignUnitCamp}' AND Unit_Type = '${campaignUnitType}' AND Unit_Level = '${campaignUnitLevel}'`)
         } 
+        console.log("Defender Unit Log")
+        console.log(DefenderUnit[0])
 
 
             const Attacker = {

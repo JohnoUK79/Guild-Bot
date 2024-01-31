@@ -35,8 +35,7 @@ module.exports = {
 		.setFooter({ text: `${guildName} - Battles Leaderboard.`, iconURL: `${guildIcon}` });
 
         for (let i = 0; i < 25 && board[i]; i++) leaderBoard.addFields(
-            { name: `Rank ${i + 1} ${board[i].discord_username}`, value: `${board[i].battle_wins} - ${board[i].battle_losses}` })
-
+            { name: `Rank ${i + 1} `, value: `<@${board[i].discord_id}> ${board[i].battle_wins} - ${board[i].battle_losses}` })
 		return interaction.reply({ embeds: [leaderBoard]})
 	},
 };

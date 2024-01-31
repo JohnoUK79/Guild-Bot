@@ -1493,7 +1493,7 @@ module.exports = {
         }
         newUnitSelection(prestige)
 
-        let presigeRequired = newPrestige * 50
+        let presigeRequired = newPrestige * 25
         if (presigeRequired > Level[0].officer_level) {
             console.log(`Officer Upgrade Required`)
             newUnitEmbed

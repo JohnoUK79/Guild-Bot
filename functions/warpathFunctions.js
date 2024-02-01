@@ -2308,39 +2308,40 @@ module.exports = {
         return interaction.update({ embeds: [newOfficerEmbed], components: [newOfficerButtons], files: [playerImage] })
     },
     campaignSelection: async function (campaign) { //Medium is Starter Troop
-        let unitCamps = [
-            "Liberty",
-            "MartyrsW",
-            "Vanguard"
-        ]
-        const unitCampSelection = unitCamps[Math.floor(Math.random() * unitCamps.length)]
-        console.log(unitCampSelection)
+        // let unitCamps = [
+        //     "Liberty",
+        //     "MartyrsW",
+        //     "Vanguard"
+        // ]
+        //Random Campaign Camp Selection
+        //const unitCampSelection = unitCamps[Math.floor(Math.random() * unitCamps.length)]
+        //console.log(unitCampSelection)
         //if (campaign === 0) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 1500, campaignBaseLevel = 1500, skillLevel = 15
-        if (campaign === 1) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 50, campaignBaseLevel = 50, skillLevel = 0
-        if (campaign === 2) return campaignUnitLevel = '9.2', campaignUnitType = 'Infantry', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'White Wolf', campaignOfficerLevel = 100, campaignBaseLevel = 100, skillLevel = 1
-        if (campaign === 3) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Death Adder', campaignOfficerLevel = 150, campaignBaseLevel = 150, skillLevel = 2
-        if (campaign === 4) return campaignUnitLevel = '9.2', campaignUnitType = 'Infantry', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Angel of Light', campaignOfficerLevel = 200, campaignBaseLevel = 200, skillLevel = 3
-        if (campaign === 5) return campaignUnitLevel = '9.2', campaignUnitType = 'Howitzers', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'The Erupter', campaignOfficerLevel = 250, campaignBaseLevel = 250, skillLevel = 4
-        if (campaign === 6) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Bloody Mary', campaignOfficerLevel = 300, campaignBaseLevel = 300, skillLevel = 5
-        if (campaign === 7) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Tip of the Spear', campaignOfficerLevel = 350, campaignBaseLevel = 350, skillLevel = 6
-        if (campaign === 8) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Steel Fighter', campaignOfficerLevel = 400, campaignBaseLevel = 400, skillLevel = 7
-        if (campaign === 9) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Thorn Countess', campaignOfficerLevel = 450, campaignBaseLevel = 450, skillLevel = 8
-        if (campaign === 10) return campaignUnitLevel = '9.2', campaignUnitType = 'LightTanks', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Valkyrie', campaignOfficerLevel = 500, campaignBaseLevel = 500, skillLevel = 9
-        if (campaign === 11) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Whip Cracker', campaignOfficerLevel = 550, campaignBaseLevel = 550, skillLevel = 10
-        if (campaign === 12) return campaignUnitLevel = '9.2', campaignUnitType = 'Infantry', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Vox Veritatis', campaignOfficerLevel = 600, campaignBaseLevel = 600, skillLevel = 11
-        if (campaign === 13) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Lady Justice', campaignOfficerLevel = 650, campaignBaseLevel = 650, skillLevel = 12
-        if (campaign === 14) return campaignUnitLevel = '9.2', campaignUnitType = 'Infantry', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Iron Bastion', campaignOfficerLevel = 700, campaignBaseLevel = 700, skillLevel = 13
-        if (campaign === 15) return campaignUnitLevel = '9.2', campaignUnitType = 'SuperHeavyTanks', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Guardian of Truth', campaignOfficerLevel = 750, campaignBaseLevel = 750, skillLevel = 14
-        if (campaign === 16) return campaignUnitLevel = '9.2', campaignUnitType = 'Howitzers', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Eye of Providence', campaignOfficerLevel = 800, campaignBaseLevel = 800, skillLevel = 15
-        if (campaign === 17) return campaignUnitLevel = '9.2', campaignUnitType = 'Howitzers', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Antonina Shevchenko', campaignOfficerLevel = 850, campaignBaseLevel = 850, skillLevel = 16
-        if (campaign === 18) return campaignUnitLevel = '9.2', campaignUnitType = 'AntiTankGuns', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Saber of the Nation', campaignOfficerLevel = 900, campaignBaseLevel = 900, skillLevel = 17
-        if (campaign === 19) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Golden Eagle', campaignOfficerLevel = 950, campaignBaseLevel = 950, skillLevel = 18
-        if (campaign === 20) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Tiger Marauder', campaignOfficerLevel = 1000, campaignBaseLevel = 1000, skillLevel = 18
-        if (campaign === 21) return campaignUnitLevel = '9.2', campaignUnitType = 'Bombers', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'El Cartero', campaignOfficerLevel = 1050, campaignBaseLevel = 1050, skillLevel = 19
-        if (campaign === 22) return campaignUnitLevel = '9.2', campaignUnitType = 'Fighters', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Brisk Eagle', campaignOfficerLevel = 1100, campaignBaseLevel = 1100, skillLevel = 19
-        if (campaign === 23) return campaignUnitLevel = '9.2', campaignUnitType = 'Fighters', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'The Witcher', campaignOfficerLevel = 1150, campaignBaseLevel = 1150, skillLevel = 20
-        if (campaign === 24) return campaignUnitLevel = '9.2', campaignUnitType = 'Fighters', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Polar Phantom', campaignOfficerLevel = 1200, campaignBaseLevel = 1200, skillLevel = 20
-        if (campaign === 25) return campaignUnitLevel = '9.2', campaignUnitType = 'Fighters', campaignUnitCamp = `${unitCampSelection}`, campaignOfficer = 'Silver Comet', campaignOfficerLevel = 1250, campaignBaseLevel = 1250, skillLevel = 20
+        if (campaign === 1) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Sergeant Spanner', campaignOfficerLevel = 50, campaignBaseLevel = 50, skillLevel = 0
+        if (campaign === 2) return campaignUnitLevel = '9.2', campaignUnitType = 'Infantry', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'White Wolf', campaignOfficerLevel = 100, campaignBaseLevel = 100, skillLevel = 1
+        if (campaign === 3) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Death Adder', campaignOfficerLevel = 150, campaignBaseLevel = 150, skillLevel = 2
+        if (campaign === 4) return campaignUnitLevel = '9.2', campaignUnitType = 'Infantry', campaignUnitCamp = 'Liberty', campaignOfficer = 'Angel of Light', campaignOfficerLevel = 200, campaignBaseLevel = 200, skillLevel = 3
+        if (campaign === 5) return campaignUnitLevel = '9.2', campaignUnitType = 'Howitzers', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'The Erupter', campaignOfficerLevel = 250, campaignBaseLevel = 250, skillLevel = 4
+        if (campaign === 6) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Bloody Mary', campaignOfficerLevel = 300, campaignBaseLevel = 300, skillLevel = 5
+        if (campaign === 7) return campaignUnitLevel = '9.2', campaignUnitType = 'TankHunters', campaignUnitCamp = 'Liberty', campaignOfficer = 'Tip of the Spear', campaignOfficerLevel = 350, campaignBaseLevel = 350, skillLevel = 6
+        if (campaign === 8) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Steel Fighter', campaignOfficerLevel = 400, campaignBaseLevel = 400, skillLevel = 7
+        if (campaign === 9) return campaignUnitLevel = '9.2', campaignUnitType = 'MediumTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Thorn Countess', campaignOfficerLevel = 450, campaignBaseLevel = 450, skillLevel = 8
+        if (campaign === 10) return campaignUnitLevel = '9.2', campaignUnitType = 'LightTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Valkyrie', campaignOfficerLevel = 500, campaignBaseLevel = 500, skillLevel = 9
+        if (campaign === 11) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Whip Cracker', campaignOfficerLevel = 550, campaignBaseLevel = 550, skillLevel = 10
+        if (campaign === 12) return campaignUnitLevel = '9.2', campaignUnitType = 'Infantry', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Vox Veritatis', campaignOfficerLevel = 600, campaignBaseLevel = 600, skillLevel = 11
+        if (campaign === 13) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Lady Justice', campaignOfficerLevel = 650, campaignBaseLevel = 650, skillLevel = 12
+        if (campaign === 14) return campaignUnitLevel = '9.2', campaignUnitType = 'Infantry', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Iron Bastion', campaignOfficerLevel = 700, campaignBaseLevel = 700, skillLevel = 13
+        if (campaign === 15) return campaignUnitLevel = '9.2', campaignUnitType = 'SuperHeavyTanks', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Guardian of Truth', campaignOfficerLevel = 750, campaignBaseLevel = 750, skillLevel = 14
+        if (campaign === 16) return campaignUnitLevel = '9.2', campaignUnitType = 'Howitzers', campaignUnitCamp = 'Liberty', campaignOfficer = 'Eye of Providence', campaignOfficerLevel = 800, campaignBaseLevel = 800, skillLevel = 15
+        if (campaign === 17) return campaignUnitLevel = '9.2', campaignUnitType = 'Howitzers', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Antonina Shevchenko', campaignOfficerLevel = 850, campaignBaseLevel = 850, skillLevel = 16
+        if (campaign === 18) return campaignUnitLevel = '9.2', campaignUnitType = 'AntiTankGuns', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Saber of the Nation', campaignOfficerLevel = 900, campaignBaseLevel = 900, skillLevel = 17
+        if (campaign === 19) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'Liberty', campaignOfficer = 'Golden Eagle', campaignOfficerLevel = 950, campaignBaseLevel = 950, skillLevel = 18
+        if (campaign === 20) return campaignUnitLevel = '9.2', campaignUnitType = 'HeavyTanks', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'Tiger Marauder', campaignOfficerLevel = 1000, campaignBaseLevel = 1000, skillLevel = 18
+        if (campaign === 21) return campaignUnitLevel = '9.2', campaignUnitType = 'Bombers', campaignUnitCamp = 'Vanguard', campaignOfficer = 'El Cartero', campaignOfficerLevel = 1050, campaignBaseLevel = 1050, skillLevel = 19
+        if (campaign === 22) return campaignUnitLevel = '9.2', campaignUnitType = 'Fighters', campaignUnitCamp = 'Liberty', campaignOfficer = 'Brisk Eagle', campaignOfficerLevel = 1100, campaignBaseLevel = 1100, skillLevel = 19
+        if (campaign === 23) return campaignUnitLevel = '9.2', campaignUnitType = 'Fighters', campaignUnitCamp = 'MartyrsW', campaignOfficer = 'The Witcher', campaignOfficerLevel = 1150, campaignBaseLevel = 1150, skillLevel = 20
+        if (campaign === 24) return campaignUnitLevel = '9.2', campaignUnitType = 'Fighters', campaignUnitCamp = 'Vanguard', campaignOfficer = 'Polar Phantom', campaignOfficerLevel = 1200, campaignBaseLevel = 1200, skillLevel = 20
+        if (campaign === 25) return campaignUnitLevel = '9.2', campaignUnitType = 'Fighters', campaignUnitCamp = 'Liberty', campaignOfficer = 'Silver Comet', campaignOfficerLevel = 1250, campaignBaseLevel = 1250, skillLevel = 20
         module.exports = {
             campaignUnitLevel: campaignUnitLevel,
             campaignUnitType: campaignUnitType,

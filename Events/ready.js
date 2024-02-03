@@ -199,7 +199,7 @@ module.exports = {
                     const jurisdictionEmbed = new EmbedBuilder()
                         .setColor('#00FF80')
                         .setTitle(jurisdiction.title)
-                        .setURL('http://www.phfamily.co.uk')
+                        .setURL('http://www.battle-bot.com')
                         .setDescription(`Start: ${startHour}H00 UTC    -    End: ${endHour}H00 UTC`)
                         .addFields(
                             { name: `Missions:`, value: jurisdiction.missions.join('\n'), inline: false },
@@ -209,7 +209,7 @@ module.exports = {
 
                         )
                         .setTimestamp()
-                        .setFooter({ text: `${jurisdiction.title}.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
+                        .setFooter({ text: `${jurisdiction.title}.`, iconURL: 'http://battle-bot.com/img/gifs/Warpath.jpg' });
 
 
                     for (let i = 0; i < jurisdictionsChannelIDs.length; i++) {

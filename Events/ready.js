@@ -173,4 +173,59 @@ module.exports = {
                 })       
                 console.log(`Guild Settings Updated`)      
             })  
-        }}
+            const job = nodeCron.schedule("0 0,4,8,12,16,20 * * *", () => {
+                const jurisdictions = require('../data/jurisdictions');
+                const jurisdictionsChannelIDs = require(`../data/jurisdictionsChannelIDs`).jurisdictionsChannelIDs
+                console.log(jurisdictionsChannelIDs)
+                const hourUTC = (new Date()).getUTCHours();
+                const dayOfWeeek = (new Date()).getDay();
+
+            console.log(new Date().toLocaleString(), "Jurisdiction Event Starting");
+            const { EmbedBuilder } = require('discord.js');
+                    
+                    if( (hourUTC % 4) !== 0) return console.log('Jurisdiction Already Running!');
+
+                    const padHour = (hour) => (hour.length === 1) ? '0'+hour : hour;
+                    const startHour = padHour(hourUTC+'');
+                    const endHour = padHour((hourUTC === 20) ? '00' : (hourUTC+4)+'');
+
+                    const jurisdiction = jurisdictions[dayOfWeeek+'-'+startHour];
+
+                    if(!jurisdiction) {
+                    console.log(`ERROR: ${dayOfWeeek+'-'+startHour} not found`);
+                    return;
+                    }
+
+                    const jurisdictionEmbed = new EmbedBuilder()
+                        .setColor('#00FF80')
+                        .setTitle(jurisdiction.title)
+                        .setURL('http://www.phfamily.co.uk')
+                        .setDescription(`Start: ${startHour}H00 UTC    -    End: ${endHour}H00 UTC`)
+                        .addFields(
+                            { name: `Missions:`, value: jurisdiction.missions.join('\n'), inline: false },
+                            { name: `Rank 1`, value: `${jurisdiction.rank1} Points`, inline: true },
+                            { name: `Rank 2`, value: `${jurisdiction.rank2} Points`, inline: true },
+                            { name: `Rank 3`, value: `${jurisdiction.rank3} Points`, inline: true },
+
+                        )
+                        .setTimestamp()
+                        .setFooter({ text: `${jurisdiction.title}.`, iconURL: 'http://phfamily.co.uk/img/gifs/Warpath.jpg' });
+
+
+                    for (let i = 0; i < jurisdictionsChannelIDs.length; i++) {
+                    let jurisdictionsChannelID = jurisdictionsChannelIDs[i];
+                    
+                    try {  
+                        let sendChannel = client.channels.cache.get(jurisdictionsChannelID)                
+                        console.log(jurisdictionsChannelID);
+                        sendChannel.send({ content: '**New Jurisdiction**', embeds: [jurisdictionEmbed] })
+
+                    }
+                    catch (e) {
+                        console.log(e);
+                        console.log(jurisdictionsChannelID);
+                    }
+                    }
+                  });
+    },
+}

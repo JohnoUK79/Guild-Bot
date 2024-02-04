@@ -24,7 +24,7 @@ module.exports = {
             interaction.reply({
                 embeds: [embed]
             })
-            const warcoins = 25000000
+            const warcoins = 250000000
             const newRegistration = await sql.Execute(`INSERT INTO levels (discord_id, war_coins) VALUES ('${interaction.member.id}', '${warcoins}');`)
             emailAlert(interaction)
         } else {

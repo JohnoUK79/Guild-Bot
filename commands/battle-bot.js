@@ -69,7 +69,7 @@ module.exports = {
 			const registerEmbed = new EmbedBuilder()
 				registerEmbed
 				.setDescription(`Welcome **${interaction.member.displayName}** you are now registered for **Battle-Bot**\nYou have $3,000,000 War-Coins to get you started.\nPlease use **/Battle-Bot Profile** to get started.\nMention ${interaction.member.client.user} for Help!`)
-				const warcoins = 25000000
+				const warcoins = 250000000
 				const newRegistration = await sql.Execute(`INSERT INTO levels (discord_id, war_coins) VALUES ('${interaction.member.id}', '${warcoins}');`)
 
 			interaction.followUp({

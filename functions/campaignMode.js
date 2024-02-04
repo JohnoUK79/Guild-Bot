@@ -87,7 +87,12 @@ campaignMode: async function (interaction) {
         //Number of Units Unlocked (Used to Reduce Campaign Unit Level for New Players)
         const numberOfUnits = await sql.Execute(`SELECT * FROM playerunits WHERE discord_id = '${interaction.member.id}'`)
         console.log(`Units Unlocked: ${numberOfUnits.length}`)
-        let DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${campaignUnitCamp}' AND Unit_Type = '${campaignUnitType}' AND Unit_Level = '${AttackerDB[0].unit_level}'`)
+        let newPlayerLevel = AttackerDB[0].unit_level
+        if (AttackerDB[0].unit_level = '4.0' || '4.1') {
+            newPlayerLevel = '5.0' 
+        } 
+        console.log(newPlayerLevel)
+        let DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${campaignUnitCamp}' AND Unit_Type = '${campaignUnitType}' AND Unit_Level = '${newPlayerLevel}'`)
         if (numberOfUnits < 1) {
             let DefenderUnit = await sql.Execute(`SELECT * FROM units WHERE Camp = '${campaignUnitCamp}' AND Unit_Type = '${campaignUnitType}' AND Unit_Level = '${campaignUnitLevel}'`)
         } 
